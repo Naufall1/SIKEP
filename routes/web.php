@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\PengajuanController;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,23 +44,24 @@ Route::prefix('penduduk')->group(function () {
 });
 
 Route::prefix('pengajuan')->group(function () {
-    Route::get('/', [, 'index']); // Menampilkan halaman utama menu Pengajuan
+    Route::get('/', [ 'index']); // Menampilkan halaman utama menu Pengajuan
+    
 
     /**
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
-    Route::get('/data-baru', [, 'dataBaru'])->name('dataBaru'); // memberikan data request penambahan data baru
-    Route::get('/perubahan-warga', [, 'perubahanWarga'])->name('perubahanWarga'); // memberikan data request perubahan data warga
-    Route::get('/perubahan-keluarga', [, 'perubahanKeluarga'])->name('perubahanKeluarga'); // memberikan data request perubahan data keluarga
+    Route::get('/data-baru', [ 'dataBaru'])->name('dataBaru'); // memberikan data request penambahan data baru
+    Route::get('/perubahan-warga', [ 'perubahanWarga'])->name('perubahanWarga'); // memberikan data request perubahan data warga
+    Route::get('/perubahan-keluarga', [ 'perubahanKeluarga'])->name('perubahanKeluarga'); // memberikan data request perubahan data keluarga
 
     /**
      * Route untuk menangani proses konfirmasi dan tolak sebuah data pengajuan
      */
-    Route::get('/detail/{id}', [, 'detail'])->name('detail'); // memberikan halaman detail sebuah data pengajuan
-    Route::get('/detail/{id}/keluarga', [, 'detail'])->name('detailKeluarga'); // memberikan halaman detail keluarga dari sebuah data pengajuan
-    Route::get('/detail/{id}/warga/{nik}', [, 'detail'])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
-    Route::get('/konfirmasi/{id}', [, 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
-    Route::post('/tolak/{id}', [, 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
+    Route::get('/detail/{id}', [ 'detail'])->name('detail'); // memberikan halaman detail sebuah data pengajuan
+    Route::get('/detail/{id}/keluarga', [ 'detail'])->name('detailKeluarga'); // memberikan halaman detail keluarga dari sebuah data pengajuan
+    Route::get('/detail/{id}/warga/{nik}', [ 'detail'])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
+    Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
+    Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
 });
 
 Route::prefix('bansos')->group(function () {

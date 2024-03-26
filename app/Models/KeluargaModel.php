@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class KeluargaModel extends Model
 {
@@ -27,4 +29,13 @@ class KeluargaModel extends Model
         'tagihan_listrik',
         'luas_bangunan'
     ];
+    public function keluargaHistory():HasMany // isok akeh soale iso due histori lg dan lg anjayyy
+    {
+        return $this->hasMany(KeluargaHistory::class, 'no_kk', 'no_kk');
+    }
+
+    public function keluargaModified():HasOne // mek siji soale keluarga sg isok d edit iku mek siji slebew
+    {
+        return $this->hasOne(KeluargaModifiedModel::class, 'no_kk', 'no_kk');
+    }
 }
