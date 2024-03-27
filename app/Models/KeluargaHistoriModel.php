@@ -34,6 +34,6 @@ class KeluargaHistory extends Model
 
     public function keluarga():BelongsTo
     {
-        return $this->belongsTo(KeluargaModel::class, 'no_kk', 'no_kk');
+        return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
     }
 }

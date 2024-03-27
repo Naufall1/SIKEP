@@ -27,6 +27,6 @@ class User extends Model
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
     public function keluargaModified():HasMany {
-        return $this->hasMany(KeluargaModifiedModel::class, 'user_id', 'user_id');
+        return $this->hasMany(KeluargaModified::class, 'user_id', 'user_id');
     }
 }

@@ -6,26 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class KeluargaModified extends Model
+class WargaModified extends Model
 {
     use HasFactory;
-    protected $table = 'keluargaModified';
-    protected $primaryKey = 'id_modify_keluarga';
-    public $timestamps = false;
 
+    protected $table = 'wargaModified';
+    protected $primaryKey = 'id_modify_warga';
+    public $timestamps = false;
     protected $fillable = [
-        'no_kk',
+        'NIK',
         'user_id',
-        'kepala_keluarga',
-        'image_kk',
-        'tagihan_listrik',
+        'agama',
+        'status_perkawinan',
+        'status_keluarga',
+        'status_warga',
+        'jenis_pekerjaan',
+        'penghasilan',
+        'pendidikan',
         'tanggal_request',
         'status_request',
     ];
 
-    public function keluarga():BelongsTo
+    public function warga():BelongsTo
     {
-        return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
+        return $this->belongsTo(Warga::class, 'NIK', 'NIK');
     }
 
     public function user():BelongsTo

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class KeluargaModel extends Model
+class Keluarga extends Model
 {
     use HasFactory;
+
     protected $table = 'keluarga';
     protected $primaryKey = 'no_kk';
     public $timestamps = false;
@@ -29,13 +30,24 @@ class KeluargaModel extends Model
         'tagihan_listrik',
         'luas_bangunan'
     ];
-    public function keluargaHistory():HasMany // isok akeh soale iso due histori lg dan lg anjayyy
+
+    public function keluargaHistory(): HasMany
     {
         return $this->hasMany(KeluargaHistory::class, 'no_kk', 'no_kk');
     }
 
-    public function keluargaModified():HasOne // mek siji soale keluarga sg isok d edit iku mek siji slebew
+    public function keluargaModified(): HasOne
     {
-        return $this->hasOne(KeluargaModifiedModel::class, 'no_kk', 'no_kk');
+        return $this->hasOne(KeluargaModified::class, 'no_kk', 'no_kk');
+    }
+
+    public function mightGets(): HasMany
+    {
+        return $this->hasMany(MightGet::class, 'no_kk', 'no_kk');
+    }
+
+    public function warga(): HasMany
+    {
+        return $this->hasMany(Warga::class, 'no_kk', 'no_kk');
     }
 }
