@@ -28,4 +28,13 @@ class User extends Model
     public function keluargaModified():HasMany {
         return $this->hasMany(KeluargaModified::class, 'user_id', 'user_id');
     }
+    public function demografi():HasMany
+    {
+        return $this->hasMany(Demografi::class, 'demografi_id', 'demografi_id');
+    }
+    public function user():HasMany
+    {
+        return $this->hasMany(ArticleAnnouncement::class, 'kode', 'kode');
+    }
+   
 }
