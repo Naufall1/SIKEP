@@ -11,7 +11,6 @@ class KeluargaHistory extends Model
     use HasFactory;
     protected $table = 'keluargahistory';
     protected $primaryKey = 'id_history_keluarga';
-    public $incrementing = true;
     public $timestamps = false;
 
     protected $fillable = [

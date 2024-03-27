@@ -12,7 +12,6 @@ class User extends Model
     use HasFactory;
     protected $table = 'user';
     protected $primaryKey = 'user_id';
-    public $incrementing = true;
     public $timestamps = false;
 
     protected $fillable = [
