@@ -18,7 +18,7 @@ class CekLogin
      *  - Jika request yang masuk telah login tetapi role/level tidak sesuai dengan role yang diatur maka akan diarahkan menuju halaman Home.
      * Contoh penggunaan: Route::get('/home', function () { return 'Home Page';})->middleware('role:admin');
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next: array $roles
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {

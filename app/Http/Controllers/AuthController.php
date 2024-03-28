@@ -23,12 +23,12 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect('test');
+            return redirect()->route('home');
         }
-        return redirect('login');
+        return redirect()->route('login');
     }
     public function logout(){
         Auth::logout();
-        return redirect('login');
+        return redirect()->route('home');
     }
 }
