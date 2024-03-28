@@ -52,7 +52,7 @@ Selesai.
 
 ## Authors
 
-- [@Naufall1](https://www.github.com/octokatherine)
+- [@Naufall1](https://github.com/Naufall1)
 - [@Mandesss](https://github.com/mandesss)
 - [@Reysilvaa](https://github.com/reysilvaa)
 - [@RizkyFitriAndini](https://github.com/RizkyFitriAndini)
