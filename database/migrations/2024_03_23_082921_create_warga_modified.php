@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
             $table->string('status_keluarga', 15);
             $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi']);
-            $table->string('jenis pekerjaan', 50);
+            $table->string('jenis_pekerjaan', 50);
             $table->integer('penghasilan');
             $table->string('pendidikan', 50);
             $table->date('tanggal_request');

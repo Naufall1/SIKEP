@@ -22,12 +22,12 @@ return new class extends Migration
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
             $table->string('status_keluarga', 15);
             $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi']);
-            $table->string('jenis pekerjaan', 50);
+            $table->string('jenis_pekerjaan', 50);
             $table->integer('penghasilan');
             $table->enum('kewarganegaraan', ['WNI', 'WNA']);
             $table->string('pendidikan', 50);
-            $table->char('no_paspor', 10);
-            $table->char('no_kitas', 10);
+            $table->char('no_paspor', 10)->nullable();
+            $table->char('no_kitas', 10)->nullable();
             $table->string('nama_ayah', 100);
             $table->string('nama_ibu', 100);
 
