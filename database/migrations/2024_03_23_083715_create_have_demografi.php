@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('demografi_id');
             $table->date('tanggal_kejadian');
             $table->date('tanggal_request');
-            $table->text('catatan');
+            $table->text('catatan')->nullable();
             $table->text('dokumen_pendukung');
             $table->string('status_request', 20);
 
