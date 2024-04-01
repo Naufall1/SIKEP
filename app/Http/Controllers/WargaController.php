@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WargaModel;
-use App\Models\WargaModifiedModel;
+use App\Models\Warga;
+use App\Models\WargaModified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WargaController extends Controller
 {
     public function index(){
-        $warga = WargaModel::all();
+        $warga = Warga::all();
         return view('penduduk.warga.index', compact('warga'));
     }
     public function create(){
         return view('penduduk.warga.tambah');
     }
     public function store(Request $request){
-        WargaModel::create($request->only([
+        Warga::create($request->only([
             'NIK',
             'no_kk',
             'nama',
@@ -40,11 +40,11 @@ class WargaController extends Controller
         return redirect()->route('warga');
     }
     public function edit($nik){
-        $warga = WargaModel::find($nik);
+        $warga = Warga::find($nik);
         return view('penduduk.warga.edit', compact('warga'));
     }
     public function update(Request $request, $nik){
-        WargaModifiedModel::create([
+        WargaModified::create([
             'NIK' => $request->nik,
             'user_id' => Auth::user()->user_id,
             'agama' => $request->agama,
