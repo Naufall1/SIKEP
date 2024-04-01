@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'username' => 'ketuart',
                 'password' => Hash::make('admin'),
                 'nama' => 'Pak RT',
-                'keterangan' => 'ketua',
+                'keterangan' => 1,
             ],
             [
                 'level_id' => 3,
