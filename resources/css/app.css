@@ -1,3 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .btn-primary {
+        @apply ;
+    }
+
+    .input-enabled{
+        @apply box-border border-[1px] border-n400 w-full h-11 rounded-lg px-3 bg-n100 placeholder:placeholder hover:border-n600 focus-visible:outline-none focus-visible:border-2 focus-visible:border-b500;
+    }
+
+    input{
+        @apply focus-visible:outline-none;
+    }
+
+    .h1 {
+        @apply font-sans font-bold text-2xl;
+    }
+    h2 {
+        @apply font-sans font-bold text-xl;
+    }
+    h3 {
+        @apply font-sans font-bold text-base;
+    }
+    
+    .label{
+        @apply font-sans font-medium text-base;
+    }
+    .body{
+        @apply font-sans font-medium text-base;
+    }
+    input{
+        @apply font-sans font-medium text-base;
+    }
+    .placeholder{
+        @apply font-sans font-medium text-base;
+    }
+    .caption{
+        @apply font-sans font-medium text-sm
+    }
+    
+}
+
