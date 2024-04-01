@@ -48,7 +48,7 @@
 
     {{-- @@section('navbar') --}}
 
-    <div class="bg-n100 h-20 w-full mx-[100px] flex content-center items-center border-b-[1px] border-n400 fixed">
+    <div class="bg-n100 h-20 w-full px-5 md:px-[100px] flex content-center items-center border-b-[1px] border-n400 fixed">
         <svg xmlns="http://www.w3.org/2000/svg" width="118" height="15" viewBox="0 0 118 15" fill="none">
             <path
                 d="M106.881 5.14453C106.881 2.55176 108.92 0.811523 112.058 0.811523C115.134 0.811523 117.024 2.36719 117.024 4.66992C117.024 6.41016 115.565 7.72852 114.888 8.32617L111.909 10.9629V11.0332H117.173V13.8457H107.101V11.3672L112.199 6.8584C113.051 6.09375 113.438 5.4873 113.438 4.78418C113.438 4.09863 112.884 3.5625 111.926 3.5625C110.959 3.5625 110.274 4.21289 110.274 5.13574V5.21484H106.881V5.14453Z"
@@ -86,9 +86,9 @@
 
     {{-- @endsection --}}
 
-    <div class="pt-20 mx-auto flex h-[100vh] w-full items-center justify-center">
+    <div class="pt-20 px-5 flex h-[100vh] w-full items-center justify-center">
 
-        <div class="flex flex-col w-1/2 max-w-[702px] gap-7">
+        <div class="flex flex-col w-full sm:w-1/2 sm:max-w-[702px] gap-7">
             <div class="flex flex-col items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"
                     fill="none">
@@ -155,7 +155,7 @@
                             placeholder="Masukkan Kata Sandi" required>
                         <span id="togglePassword"
                             class="absolute top-1/2 -translate-y-1/2 right-3 flex items-center pl-2 cursor-pointer">
-                            <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
+                            <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye-slash.svg') }}"
                                 alt="eye">
                         </span>
                     </div>
@@ -192,7 +192,6 @@
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            console.log("tes123");
 
             // Ganti gambar mata tergantung pada tipe input
             if (type === 'password') {
