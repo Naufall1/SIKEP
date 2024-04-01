@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Form Login</title>
+@vite('resources/css/app.css')
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -43,7 +44,7 @@
 </head>
 <body>
 <div class="login-container">
-    <h2>Login</h2>
+    <h2 class="p-">Login</h2>
     <form action="{{route('login')}}" method="post">
         {{ csrf_field() }}
         <input type="text" name="username" placeholder="Username" required>
