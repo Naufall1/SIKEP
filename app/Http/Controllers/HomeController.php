@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HaveDemografiModel;
-use App\Models\KeluargaModel;
-use App\Models\KeluargaModifiedModel;
-use App\Models\WargaModel;
-use App\Models\WargaModifiedModel;
+use App\Models\HaveDemografi;
+use App\Models\Keluarga;
+use App\Models\KeluargaModified;
+use App\Models\Warga;
+use App\Models\WargaModified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,16 +31,16 @@ class HomeController extends Controller
         // dd(WargaModel::with('keluarga')->where('RT', $rt));
     }
     private function dashboardRW() {
-        $countPenduduk = WargaModel::count();
-        $countKeluarga = KeluargaModel::count();
-        $countPengajuan = HaveDemografiModel::count() + KeluargaModifiedModel::count() + WargaModifiedModel::count();
+        $countPenduduk = Warga::count();
+        $countKeluarga = Keluarga::count();
+        $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
         // dd($countPengajuan);
         return view('dashboard.index', ['title' => 'RW','text' => 'Ketua RW']);
     }
     private function dashboardRT(int $rt) {
-        $countPenduduk = WargaModel::with('keluarga')->where('RT', $rt)->count();
-        $countKeluarga = KeluargaModel::where('RT', $rt)->count();
-        $countPengajuan = HaveDemografiModel::count() + KeluargaModifiedModel::count() + WargaModifiedModel::count();
+        $countPenduduk = Warga::with('keluarga')->where('RT', $rt)->count();
+        $countKeluarga = Keluarga::where('RT', $rt)->count();
+        $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
         return view('dashboard.index', ['title' => 'RT','text' => 'Ketua RT']);
     }
     private function dashboardADM() {

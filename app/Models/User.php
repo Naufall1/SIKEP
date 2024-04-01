@@ -36,7 +36,7 @@ class User extends Authenticatable
         return $this->with('hasLevel')->where('level_kode', $role)->exists();
     }
     public function hasLevel():BelongsTo    {
-        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+        return $this->belongsTo(Level::class, 'level_id', 'level_id');
     }
     public function keluargaModified():HasMany {
         return $this->hasMany(KeluargaModified::class, 'user_id', 'user_id');

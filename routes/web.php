@@ -4,6 +4,8 @@ use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\WargaController;
+use App\Models\Warga;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
@@ -37,12 +39,12 @@ Route::prefix('penduduk')->group(function () {
     /**
      * Route untuk manage Warga
      */
-    Route::get('/warga', [PendudukController::class, 'warga'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
+    Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
     Route::middleware('role:rt')->group(function () {
-        Route::get('/warga/ubah/{nik}', [PendudukController::class, 'wargaEdit']); // untuk menampilkan form edit data Warga
-        Route::put('/warga/ubah/{nik}', [PendudukController::class, 'wargaUpdate']); // untuk menangani update data Warga dan menyimpan pada database
-        Route::get('/warga/tambah/', [PendudukController::class, 'wargaCreate']); // untuk menampilkan form penambahan data warga
-        Route::post('/warga/tambah/', [PendudukController::class, 'wargaStore']); // untuk menangani penambahan data Warga
+        Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit']); // untuk menampilkan form edit data Warga
+        Route::put('/warga/ubah/{nik}', [WargaController::class, 'update']); // untuk menangani update data Warga dan menyimpan pada database
+        Route::get('/warga/tambah/', [WargaController::class, 'create']); // untuk menampilkan form penambahan data warga
+        Route::post('/warga/tambah/', [WargaController::class, 'store']); // untuk menangani penambahan data Warga
     });
 
     /**
