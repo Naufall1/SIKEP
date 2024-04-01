@@ -20,7 +20,7 @@ class HomeController extends Controller
             case 'RW':
                 return $this->dashboardRW();
             case 'RT':
-                return $this->dashboardRT(Auth::user()->keterangan);
+                return $this->dashboardRT((int)Auth::user()->keterangan);
             case 'ADM':
                 return $this->dashboardADM();
             default:
@@ -38,7 +38,7 @@ class HomeController extends Controller
         return view('dashboard.index', ['title' => 'RW','text' => 'Ketua RW']);
     }
     private function dashboardRT(int $rt) {
-        $countPenduduk = Warga::with('keluarga')->where('RT', $rt)->count();
+        $countPenduduk = Warga::join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')->where('keluarga.RT', $rt)->count();
         $countKeluarga = Keluarga::where('RT', $rt)->count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
         return view('dashboard.index', ['title' => 'RT','text' => 'Ketua RT']);
