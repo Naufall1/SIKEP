@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KeluargaModel;
+use App\Models\Keluarga;
 use Illuminate\Http\Request;
 
 class PendudukController extends Controller
@@ -45,12 +45,12 @@ class PendudukController extends Controller
             ]
         ];
         foreach ($dummyData as $data) {
-            KeluargaModel::create($data);
+            Keluarga::create($data);
         }
         return 'OK';
     }
     public function keluarga(){
-        $data = KeluargaModel::all();
+        $data = Keluarga::all();
         return view('penduduk.keluarga', ['dataKeluarga' => $data]);
     }
 }
