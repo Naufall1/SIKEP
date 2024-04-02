@@ -48,7 +48,7 @@
 
     {{-- @@section('navbar') --}}
 
-    <div class="bg-n100 h-20 w-full px-5 md:px-[100px] flex content-center items-center border-b-[1px] border-n400 fixed">
+    <div class="tw-bg-n100 tw-h-20 tw-w-full tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-border-b-[1px] tw-border-n400 tw-fixed">
         <svg xmlns="http://www.w3.org/2000/svg" width="118" height="15" viewBox="0 0 118 15" fill="none">
             <path
                 d="M106.881 5.14453C106.881 2.55176 108.92 0.811523 112.058 0.811523C115.134 0.811523 117.024 2.36719 117.024 4.66992C117.024 6.41016 115.565 7.72852 114.888 8.32617L111.909 10.9629V11.0332H117.173V13.8457H107.101V11.3672L112.199 6.8584C113.051 6.09375 113.438 5.4873 113.438 4.78418C113.438 4.09863 112.884 3.5625 111.926 3.5625C110.959 3.5625 110.274 4.21289 110.274 5.13574V5.21484H106.881V5.14453Z"
@@ -86,10 +86,10 @@
 
     {{-- @endsection --}}
 
-    <div class="pt-20 px-5 flex h-[100vh] w-full items-center justify-center">
+    <div class="tw-pt-20 tw-px-5 tw-flex tw-h-[100vh] tw-w-full tw-items-center tw-justify-center">
 
-        <div class="flex flex-col w-full sm:w-1/2 sm:max-w-[702px] gap-7">
-            <div class="flex flex-col items-center">
+        <div class="tw-flex tw-flex-col tw-w-full sm:tw-w-1/2 sm:tw-max-w-[702px] tw-gap-7">
+            <div class="tw-flex tw-flex-col tw-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"
                     fill="none">
                     <g clip-path="url(#clip0_2195_25379)">
@@ -136,42 +136,42 @@
                         </clipPath>
                     </defs>
                 </svg>
-                <div class="flex flex-col gap-1 justify-center">
-                    <h1 class="h1 text-n1000 text-center">Selamat Datang!</h1>
-                    <p class="caption text-n1000 text-center">Masukkan nama pengguna dan kata sandi untuk masuk</p>
+                <div class="tw-flex tw-flex-col tw-gap-1 tw-justify-center">
+                    <h1 class="tw-h1 tw-text-n1000 tw-text-center">Selamat Datang!</h1>
+                    <p class="tw-caption tw-text-n1000 tw-text-center">Masukkan nama pengguna dan kata sandi untuk masuk</p>
                 </div>
             </div>
-            <form class="flex flex-col items-end gap-8" action="{{ route('login') }}" method="post">
+            <form class="tw-flex tw-flex-col tw-items-end tw-gap-8" action="{{ route('login') }}" method="post">
                 {{ csrf_field() }}
-                <label for="username" class="w-full flex flex-col">
-                    <span class="label mb-2 ">Nama Pengguna</span>
-                    <input class="input-enabled" type="text" id="username" name="username"
+                <label for="username" class="tw-w-full tw-flex tw-flex-col">
+                    <span class="tw-label tw-mb-2 ">Nama Pengguna</span>
+                    <input class="tw-input-enabled" type="text" id="username" name="username"
                         placeholder="Masukkan Nama Pengguna" required>
                 </label>
-                <label for="password" class="w-full flex flex-col">
-                    <span class="label mb-2 ">Kata Sandi</span>
-                    <div class="w-full flex flex-col relative group">
-                        <input class="input-enabled" type="text" id="password" name="password"
+                <label for="password" class="tw-w-full tw-flex tw-flex-col">
+                    <span class="tw-label tw-mb-2 ">Kata Sandi</span>
+                    <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
+                        <input class="tw-input-enabled" type="text" id="password" name="password"
                             placeholder="Masukkan Kata Sandi" required>
                         <span id="togglePassword"
-                            class="absolute top-1/2 -translate-y-1/2 right-3 flex items-center pl-2 cursor-pointer">
+                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
                             <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye-slash.svg') }}"
                                 alt="eye">
                         </span>
                     </div>
                 </label>
 
-                <div class="flex gap-3 items-end">
+                <div class="tw-flex tw-gap-3 tw-items-end">
                     <button
-                        class="relative h-11 pl-12 pr-6 bg-n100 border-2 border-n1000 font-sans font-bold text-base rounded-full hover:bg-n200 active:bg-n300"
+                        class="tw-relative tw-h-11 tw-pl-12 tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n1000 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-n200 active:tw-bg-n300"
                         type="button">
-                        <span class="absolute top-1/2 -translate-y-1/2 left-2 flex items-center pl-2 cursor-pointer">
+                        <span class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
                             <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
                         </span>
                         Kembali
                     </button>
                     <button
-                        class="h-11 px-6 bg-b500 text-n100 font-sans font-bold text-base rounded-full hover:bg-b600 active:bg-b700"
+                        class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="submit">Masuk</button>
                 </div>
             </form>
