@@ -6,42 +6,42 @@
 
 
 @layer components {
-    .btn-primary {
+    .tw-btn-primary {
         @apply ;
     }
 
-    .input-enabled{
-        @apply box-border border-[1px] border-n400 w-full h-11 rounded-lg px-3 bg-n100 placeholder:placeholder hover:border-n600 focus-visible:outline-none focus-visible:border-2 focus-visible:border-b500;
+    .tw-input-enabled{
+        @apply tw-box-border tw-border-[1px] tw-border-n400 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n100 placeholder:tw-placeholder hover:tw-border-n600 focus-visible:tw-outline-none focus-visible:tw-border-2 focus-visible:tw-border-b500;
     }
 
     input{
-        @apply focus-visible:outline-none;
+        @apply focus-visible:tw-outline-none;
     }
 
-    .h1 {
-        @apply font-sans font-bold text-2xl;
+    .tw-h1 {
+        @apply tw-font-sans tw-font-bold tw-text-2xl;
     }
     h2 {
-        @apply font-sans font-bold text-xl;
+        @apply tw-font-sans tw-font-bold tw-text-xl;
     }
     h3 {
-        @apply font-sans font-bold text-base;
+        @apply tw-font-sans tw-font-bold tw-text-base;
     }
     
-    .label{
-        @apply font-sans font-medium text-base;
+    .tw-label{
+        @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .body{
-        @apply font-sans font-medium text-base;
+    .tw-body{
+        @apply tw-font-sans tw-font-medium tw-text-base;
     }
     input{
-        @apply font-sans font-medium text-base;
+        @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .placeholder{
-        @apply font-sans font-medium text-base;
+    .tw-placeholder{
+        @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .caption{
-        @apply font-sans font-medium text-sm
+    .tw-caption{
+        @apply tw-font-sans tw-font-medium tw-text-sm
     }
     
 }
