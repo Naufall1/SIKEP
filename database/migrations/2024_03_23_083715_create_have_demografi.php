@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_request');
             $table->text('catatan')->nullable();
             $table->text('dokumen_pendukung');
-            $table->string('status_request', 20);
+            $table->enum('status_request', ['Dikonfirmasi', 'Ditolak', 'Menunggu']);
 
             $table->unique(['NIK', 'demografi_id']);
 
