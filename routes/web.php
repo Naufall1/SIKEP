@@ -90,9 +90,9 @@ Route::prefix('bansos')->group(function () {
 });
 
 Route::prefix('profile')->group(function () {
-    Route::get('/', [ProfilController::class, 'index']);// menampilkan halaman profile user
-    Route::get('/ubah/{user_id}', [ProfilController::class, 'edit']); // untuk menampilkan form edit data user
-    Route::put('/ubah/{user_id}', [ProfilController::class, 'update']); // menangani penerimaan data dari form edit user dan menyimpan pada database
+    Route::get('/', [ProfilController::class, 'index'])->name('profil');// menampilkan halaman profile user
+    Route::get('/ubah/{user_id}', [ProfilController::class, 'edit'])->name('profilFormEdit'); // untuk menampilkan form edit data user
+    Route::put('/ubah/{user_id}', [ProfilController::class, 'update'])->name('profilUpdate'); // menangani penerimaan data dari form edit user dan menyimpan pada database
 })->middleware('role:rt,rw,adm');
 
 Route::prefix('publikasi')->group(function () {

@@ -42,7 +42,8 @@ class ProfilController extends Controller
             'keterangan' => $request->keterangan,
         ]);
         // nyoba flask message (blom di fix bisa karena blom nyoba)
-        return redirect()->route('user.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        return redirect()->route('profil')->with('success', 'Data pengguna berhasil diperbarui.');
+
         }
     }
 

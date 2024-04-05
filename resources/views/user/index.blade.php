@@ -22,6 +22,9 @@
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->nama }}</td>
                 <td>{{ $user->keterangan }}</td>
+                <td>
+                    <a href="{{ route('profilFormEdit', ['user_id' => $user->user_id]) }}">Edit</a>
+                </td>
             </tr>
         </tbody>
     </table>
