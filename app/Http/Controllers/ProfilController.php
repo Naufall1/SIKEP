@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfilController extends Controller
 {
@@ -28,16 +29,21 @@ class ProfilController extends Controller
         ]);
 
         $user = User::where('user_id', $user_id)->firstOrFail();
-
+        // cek lek password lama ga pdo maka di return
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Password lama salah.');
+        }
+        else {
         // gawe update e user ngkok
         $user->update([
             'username' => $request->username,
-            'password' => $request->md5()->password,
+            'password' => bcrypt($request->password), // bcrypt / md5 terserah
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
         ]);
         // nyoba flask message (blom di fix bisa karena blom nyoba)
         return redirect()->route('user.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        }
     }
 
 }
