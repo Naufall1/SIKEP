@@ -19,7 +19,7 @@
         @method('PUT')
 
         <label for="old_password">Password Lama:</label><br>
-        <input type="password" id="old_password" name="old_password"><br>
+        <input type="password" id="old_password" name="old_password" required><br>
 
         <label for="password">Password Baru:</label><br>
         <input type="password" id="password" name="password"><br>
