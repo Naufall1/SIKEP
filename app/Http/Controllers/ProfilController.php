@@ -15,7 +15,7 @@ class ProfilController extends Controller
 }
     public function edit($user_id){
         $user = User::find($user_id);
-        return view('user.edit', compact('user'));
+        return view('user.profile.edit', compact('user'));
     }
 
     public function update(Request $request, $user_id)
@@ -37,7 +37,7 @@ class ProfilController extends Controller
         // gawe update e user ngkok
         $user->update([
             'username' => $request->username,
-            'password' => bcrypt($request->password), // bcrypt / md5 terserah
+            'password' => Hash::make($request->password), // bcrypt / md5 terserah
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
         ]);
