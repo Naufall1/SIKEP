@@ -4,6 +4,7 @@ use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WargaController;
 use App\Models\Warga;
 use Illuminate\Routing\Route as RoutingRoute;
@@ -86,9 +87,9 @@ Route::prefix('bansos')->group(function () {
 });
 
 Route::prefix('profile')->group(function () {
-    Route::get('/', []); // menampilkan halaman profile user
-    Route::get('/ubah', []); // menampilkan halaman form edit user
-    Route::put('/ubah', []); // menangani penerimaan data dari form edit user dan menyimpan pada database
+    Route::get('/', [ProfilController::class, 'index']);// menampilkan halaman profile user
+    Route::get('/ubah/{user_id}', [ProfilController::class, 'edit']); // untuk menampilkan form edit data user
+    Route::put('/ubah/{user_id}', [ProfilController::class, 'update']); // menangani penerimaan data dari form edit user dan menyimpan pada database
 })->middleware('role:rt,rw,adm');
 
 Route::prefix('publikasi')->group(function () {
