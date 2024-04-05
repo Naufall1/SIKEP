@@ -3,10 +3,10 @@
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WargaController;
-use App\Models\Warga;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +35,6 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/', function () {
         return redirect()->route('warga');
     });
-    // Route::get('/loadK', [PendudukController::class, 'loadDummyKeluarga']);
 
     /**
      * Route untuk manage Warga
@@ -51,9 +50,13 @@ Route::prefix('penduduk')->group(function () {
     /**
      * Route untuk manage Keluarga
      */
-    Route::get('/keluarga', [PendudukController::class, 'keluarga'])->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
-    Route::get('/keluarga/ubah/{no_kk}', [PendudukController::class, 'keluargaEdit'])->middleware('role:rt'); // untuk menampilkan form edit data keluarga
-    Route::put('/keluarga/ubah/{no_kk}', [PendudukController::class, 'keluargaUpdate'])->middleware('role:rt'); // untuk menangani update data Keluarga dan menyimpan pada database
+    Route::get('/keluarga', [KeluargaController::class, 'index'])->name('keluarga')->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
+    Route::middleware('role:rt')->group(function () {
+        Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga
+        Route::put('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'update']); // untuk menangani update data Keluarga dan menyimpan pada database
+        Route::get('/keluarga/tambah/', [KeluargaController::class, 'create']); // menampilkan halaman form penambahan data keluarga
+        Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
+    });
 });
 
 Route::prefix('pengajuan')->group(function () {
