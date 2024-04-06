@@ -18,15 +18,12 @@ class ProfilController extends Controller
         return view('user.profile.edit', compact('user'));
     }
 
-    public function update(Request $request, $user_id)
-    {
-        // kudu di isi sesuai karo tipe data e
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-            'nama' => 'required|string',
-            'keterangan' => 'required|string',
-        ]);
+    public function update(Request $request, $user_id) {
+        if ($request->has('keterangan')) {
+            $request->validate([
+                'keterangan' => 'max:100', // iki mosok salah yoo(ga work)
+            ]);
+        }
 
         $user = User::where('user_id', $user_id)->firstOrFail();
         // cek lek password lama ga pdo maka di return
@@ -37,10 +34,11 @@ class ProfilController extends Controller
         // gawe update e user ngkok
         $user->update([
             'username' => $request->username,
-            'password' => Hash::make($request->password), // bcrypt / md5 terserah
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password, // soale lek dikosongi tetep berubah
         ]);
+
         // nyoba flask message (blom di fix bisa karena blom nyoba)
         return redirect()->route('profil')->with('success', 'Data pengguna berhasil diperbarui.');
 
