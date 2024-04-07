@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,7 @@ class Warga extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $table = 'warga';
     protected $primaryKey = 'NIK';
 
@@ -33,10 +35,32 @@ class Warga extends Model
         'no_kitas',
         'nama_ayah',
         'nama_ibu',
-        
     ];
 
+    public function storeTemp() {
+        if (session()->has('daftar_warga')) {
+            $daftarWarga = session()->get('daftar_warga');
+        } else {
+            $daftarWarga = [];
+        }
 
+        $daftarWarga[] = $this;
+
+        session()->put('daftar_warga', $daftarWarga);
+        session()->save();
+        return ;
+    }
+    public static  function getTempWarga(): array | Warga {
+        return session()->get('daftar_warga');
+    }
+    public function saveTemp(){
+        $daftarWarga = session()->get('daftar_warga');
+        foreach ($daftarWarga as $warga) {
+            $warga->save();
+        }
+        session()->forget('daftar_warga');
+        session()->save();
+    }
     public function keluarga():BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
