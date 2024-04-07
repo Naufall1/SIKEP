@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        'disolve': 'fade-in 1s ease-in both',
+        'slide-in': 'slide-in-top 0.6s ease-in-out both',
+      },
       fontWeight: {
         'extralight': '200',
         'light': '300',

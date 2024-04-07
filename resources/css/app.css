@@ -33,6 +33,9 @@
     .tw-label{
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
+    .tw-menu-text{
+        @apply tw-font-sans tw-font-semibold tw-text-sm;
+    }
     .tw-body{
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
