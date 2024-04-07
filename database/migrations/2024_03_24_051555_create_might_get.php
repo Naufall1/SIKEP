@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('might_get', function (Blueprint $table) {
-            $table->char('no_kk', 6);
+            $table->char('no_kk', 16);
             $table->char('bansos_kode', 12);
             $table->date('tanggal_menerima');
 
