@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('image_kk', 100);
             $table->integer('tagihan_listrik');
             $table->integer('luas_bangunan');
+            $table->enum('status', ['Aktif', 'Tidak Aktif', 'Menunggu']);
         });
     }
 

@@ -28,20 +28,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($dataKeluarga as $keluarga)
+                @foreach($keluarga as $k)
                 <tr>
-                    <td>{{ $keluarga->no_kk }}</td>
-                    <td>{{ $keluarga->kepala_keluarga }}</td>
-                    <td>{{ $keluarga->alamat }}</td>
-                    <td>{{ $keluarga->RT }}</td>
-                    <td>{{ $keluarga->RW }}</td>
-                    <td>{{ $keluarga->kode_pos }}</td>
-                    <td>{{ $keluarga->kelurahan }}</td>
-                    <td>{{ $keluarga->kecamatan }}</td>
-                    <td>{{ $keluarga->kota }}</td>
-                    <td>{{ $keluarga->provinsi }}</td>
-                    <td>{{ $keluarga->tagihan_listrik }}</td>
-                    <td>{{ $keluarga->luas_bangunan }}</td>
+                    <td>{{ $k->no_kk }}</td>
+                    <td>{{ $k->kepala_keluarga }}</td>
+                    <td>{{ $k->alamat }}</td>
+                    <td>{{ $k->RT }}</td>
+                    <td>{{ $k->RW }}</td>
+                    <td>{{ $k->kode_pos }}</td>
+                    <td>{{ $k->kelurahan }}</td>
+                    <td>{{ $k->kecamatan }}</td>
+                    <td>{{ $k->kota }}</td>
+                    <td>{{ $k->provinsi }}</td>
+                    <td>{{ $k->tagihan_listrik }}</td>
+                    <td>{{ $k->luas_bangunan }}</td>
                 </tr>
                 @endforeach
             </tbody>

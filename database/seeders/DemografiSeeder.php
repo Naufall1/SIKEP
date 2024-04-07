@@ -22,10 +22,15 @@ class DemografiSeeder extends Seeder
             [
                 'demografi_id'=>2,
                 'user_id' => '2',
-                'jenis' => 'Migrasi Keluar'
+                'jenis' => 'Migrasi Masuk'
             ],
             [
                 'demografi_id' => 3,
+                'user_id' => '2',
+                'jenis' => 'Kelahiran'
+            ],
+            [
+                'demografi_id' => 4,
                 'user_id' => '2',
                 'jenis' => 'Kematian'
             ],
