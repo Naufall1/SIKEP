@@ -1,13 +1,13 @@
 @php
-    switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' ) {
+    switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
         case 'Umum':
             echo '<nav
-    class="tw-bg-n100 tw-h-20 tw-w-full tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
             break;
 
         default:
             echo '<nav
-    class="tw-bg-n100 tw-h-20 tw-w-full tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
             break;
     }
 @endphp
@@ -44,7 +44,7 @@
     <div class="tw-flex tw-gap-3 ">
 
         @php
-            switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' ) {
+            switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
                 case 'RW':
                     echo '
                             <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
@@ -134,7 +134,7 @@
         class="tw-relative nav-profile tw-h-11 tw-min-w-11 tw-justify-center tw-flex md:tw-h-11 md:tw-gap-2 md:tw-px-3 tw-rounded-md tw-items-center tw-cursor-pointer hover:tw-bg-n200">
         <div class="tw-hidden md:tw-inline-block">
             {{-- Nama --}}
-            <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum'  }}</h3>
+            <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}</h3>
 
             {{-- Keterangan --}}
             {{-- <p class="tw-caption tw-text-n600">
@@ -183,7 +183,7 @@
 
 
 <div id="modalBg"
-    class="modal-menu tw-animate-disolve tw-hidden tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+    class="modal-menu tw-z-20 tw-animate-disolve tw-hidden tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
     <div
         class="tw-w-11/12 tw-relative tw-top-5 tw-left-1/2 -tw-translate-x-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] tw-stroke-n400">
         <div class="tw-flex tw-justify-between tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
@@ -221,7 +221,7 @@
         <div class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4 ">
 
             @php
-                switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' ) {
+                switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
                     case 'RW':
                         echo '
                             <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
@@ -318,7 +318,6 @@
             profilMenu.classList.toggle('tw-hidden');
             dropdownProfil.classList.toggle('tw-rotate-180');
         });
-
 
     });
 </script>
