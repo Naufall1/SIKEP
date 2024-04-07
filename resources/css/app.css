@@ -18,6 +18,8 @@
         @apply focus-visible:tw-outline-none;
     }
 
+    /* Typography */
+
     .tw-h1 {
         @apply tw-font-sans tw-font-bold tw-text-2xl;
     }
