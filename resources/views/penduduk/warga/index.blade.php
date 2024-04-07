@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Warga</title>
+    @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 <body>
+
+    @component('components.navbar', ['title'=>'RW', 'text'=>'none'])
+        
+    @endcomponent
+
     <h1>Data Warga</h1>
     <table border="1">
         <thead>
