@@ -13,9 +13,19 @@ use Illuminate\Support\Str;
 class KeluargaController extends Controller
 {
     public function index(){
-        $keluarga = Keluarga::all();
+        $user = Auth::user();
+
+        if ($user->keterangan == 'ketua') {
+            $keluarga = Keluarga::all();
+        } else {
+            $keluarga = Keluarga::select('keluarga.*', 'user.keterangan')
+                ->join('user', 'keluarga.rt', '=', 'user.keterangan')
+                ->where('user.keterangan', $user->keterangan)
+                ->get();
+        }
         return view('penduduk.keluarga.index', compact('keluarga'));
     }
+
     public function create(){
         $default = [
             'kode_pos' => 65115,

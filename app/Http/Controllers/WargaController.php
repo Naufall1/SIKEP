@@ -16,8 +16,23 @@ class WargaController extends Controller
     public function getWarga($nik){
         return Warga::find($nik);
     }
-    public function index(){
-        $warga = Warga::all();
+    public function index()
+    {
+        $user = Auth::user();
+
+        if ($user->keterangan == 'ketua') {
+            $warga = Warga::select('warga.*')
+                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+                ->get();
+        } else {
+            $warga = Warga::select('warga.*', 'keluarga.rt')
+                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+                ->join('user', function ($join) use ($user) {
+                    $join->on('keluarga.rt', '=', 'user.keterangan')
+                        ->where('keluarga.rt', '=', $user->keterangan);
+                })
+                ->get();
+        }
         return view('penduduk.warga.index', compact('warga'));
     }
     public function create($no_kk){
