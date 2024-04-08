@@ -7,10 +7,9 @@
 </head>
 <body>
     <h2>Form Penambahan Data</h2>
-    <form action="{{route('tambah-warga-post')}}" method="POST">
+    <form action="{{route('tambah-warga-post')}}" method="POST" id="formData">
         {{ csrf_field() }}
         <input type="hidden" name="no_kk" id="no_kk" value="{{$no_kk}}">
-        {{-- <input type="hidden" name="temp" id="temp" value="{{$temp}}"> --}}
 
         <label for="jenis-data">Jenis Data</label>
         <select name="jenis-data" id="jenis-data">
@@ -20,6 +19,11 @@
 
         <label for="nik">NIK:</label><br>
         <input type="text" id="nik" name="nik"><br>
+
+        <label for="nik">NIK:</label><br>
+        <select name="nik" id="nik-list" disabled>
+            <option value="data-baru" disabled selected>Pilih Warga</option>
+        </select><br>
 
         <label for="nama">Nama:</label><br>
         <input type="text" id="nama" name="nama"><br>
@@ -73,6 +77,47 @@
         <input type="text" id="nama_ibu" name="nama_ibu"><br>
 
         <input type="submit" value="Submit">
+        <a href="{{url()->previous()}}">Simpan</a>
     </form>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $('#jenis-data').on('change', function() {
+            if (this.value == 'data-lama') {
+                $('#formData').attr('action', '{{route('pindahKK')}}');
+                $('#nik').prop('disabled', true);
+                $('#nik-list').prop('disabled', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/api/warga",
+                    success: function (response) {
+                        response.forEach(warga => {
+                            let optionHTML = `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
+                            $('#nik-list').append(optionHTML);
+                        });
+                    }
+                });
+            }
+            if (this.value == 'data-baru') {
+                $('#formData').attr('action', '{{route('tambah-warga-post')}}');
+                $('#formData')[0].reset();
+                $('#nik').prop('disabled', false);
+                $('#nik-list').prop('disabled', true);
+            }
+        });
+        $('#nik-list').on('change', function() {
+            console.log(this.value);
+            $.ajax({
+                type: "GET",
+                url: "/api/warga/"+this.value,
+                success: function (response) {
+                    console.log(response);
+                    $.each(response, function(key,val) {
+                        // console.log(key+val);
+                        $('#'+key).val(val);
+                    });
+                }
+                });
+        });
+    </script>
 </body>
 </html>

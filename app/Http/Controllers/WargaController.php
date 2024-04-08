@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WargaController extends Controller
 {
+    public function getAll(){
+        return Warga::select(['nik', 'nama'])->get();
+    }
+    public function getWarga($nik){
+        return Warga::find($nik);
+    }
     public function index(){
         $warga = Warga::all();
         return view('penduduk.warga.index', compact('warga'));
@@ -82,5 +88,15 @@ class WargaController extends Controller
             'status_request' => 'Menunggu',
         ]);
         return redirect()->route('warga');
+    }
+    /**
+     * fungsi untuk merubah no_kk dari sebuah warga,
+     * kemudian disimpan sementara pada session daftarWarga sampai dilakukan simpan permanen.
+     */
+    public function pindahKK(Request $request){
+        $warga = Warga::find($request->nik);
+        $warga->no_kk = $request->no_kk;
+        $warga->storeTemp();
+        return redirect()->route('keluarga-tambah');
     }
 }

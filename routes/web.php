@@ -47,6 +47,7 @@ Route::prefix('penduduk')->group(function () {
         Route::put('/warga/ubah/{nik}', [WargaController::class, 'update']); // untuk menangani update data Warga dan menyimpan pada database
         Route::get('/warga/tambah/{no_kk}', [WargaController::class, 'create'])->name('tambah-warga'); // untuk menampilkan form penambahan data warga
         Route::post('/warga/tambah/', [WargaController::class, 'store'])->name('tambah-warga-post');  // untuk menangani penambahan data Warga
+        Route::post('/warga/pindahKK/', [WargaController::class, 'pindahKK'])->name('pindahKK'); // tambah warga dengan data lama akan ditangani oleh route ini
     });
 
     /**
@@ -104,3 +105,6 @@ Route::prefix('publikasi')->group(function () {
     Route::get('/tambah', []); // menampilkan form untuk menambahkan sebuah article atau pengumuman
     Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
 })->middleware('role:adm');
+
+Route::get('/api/warga', [WargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data warga (TODO data warga berdasarkan RT)
+Route::get('/api/warga/{nik}', [WargaController::class, 'getWarga'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi informasi detail dari sebuah data warga
