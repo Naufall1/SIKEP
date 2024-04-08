@@ -10,8 +10,11 @@ class ProfilController extends Controller
 {
     public function index()
     {
-        $user = User::findOrFail(auth()->id()); // ambil user_id dgn cara id()
-        return view('user.index', compact('user'));
+        $user = User::select('user.*', 'level.level_nama')
+        ->join('level', 'user.level_id', '=', 'level.level_id')
+        ->where('user.user_id', auth()->id())
+        ->firstOrFail();
+    return view('user.index', compact('user'));
 }
     public function edit($user_id){
         $user = User::find($user_id);
