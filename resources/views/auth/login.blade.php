@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+@extends('layout.layout', ['isForm' => true])
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Login</title>
-    @vite('resources/css/app.css', 'resources/js/app.js')
+    @vite('resources/css/app.css', 'resources/js/app.js') --}}
     {{-- <style>
     body {
         font-family: Arial, sans-serif;
@@ -42,14 +43,7 @@
         cursor: pointer;
     }
 </style> --}}
-</head>
-
-<body>
-
-
-    @component('components.navbar', ['title'=> 'Umum', 'text'=> 'Warga'])
-        
-    @endcomponent
+@section('content')
 
     <div class="tw-pt-20 tw-px-5 tw-flex tw-h-[100vh] tw-w-full tw-items-center tw-justify-center">
 
@@ -146,9 +140,9 @@
 
     </div>
 
-</body>
+@endsection
 
-</html>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
