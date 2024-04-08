@@ -51,6 +51,10 @@
                         <h2 class="">Kriteria Anggota</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
+                                <input type="text" id="nik" name="nik[]" value="{{ $anggota->nik }}" readonly
+                                    class="tw-input-disabled">
+                            </label>
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
                                 <input type="text" id="nama" name="nama[]" value="{{ $anggota->nama }}" readonly
                                     class="tw-input-disabled">
@@ -58,6 +62,10 @@
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
                                 <input type="text" id="status_keluarga" name="status_keluarga[]"
                                     value="{{ $anggota->status_keluarga }}" readonly class="tw-input-disabled">
+                            </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
+                                <input type="text" id="jenis_pekerjaan" name="jenis_pekerjaan[]" value="{{ $anggota->jenis_pekerjaan }}" readonly
+                                    class="tw-input-disabled">
                             </label>
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
                                 <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
