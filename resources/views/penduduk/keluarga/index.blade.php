@@ -2,14 +2,17 @@
 
 @section('content')
     <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
+        <div class="tw-flex tw-items-center md:tw-items-start {{Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start'}}">
             <h1 class="tw-h1 tw-w-1/2">
                 Daftar Penduduk
             </h1>
 
-            <a
-                href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                Tambah Data</a>
+            @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                <a
+                    href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                    Tambah Data</a>
+            @endif
+            
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">

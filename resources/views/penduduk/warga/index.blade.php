@@ -8,28 +8,33 @@
     ], ] ) --}}
 
     <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
+        <div class="tw-flex tw-items-center md:tw-items-start {{Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start'}}">
             <h1 class="tw-h1 tw-w-1/2">
                 Daftar Penduduk
             </h1>
-    
-           <a href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"> Tambah Data</a>    
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                <a
+                    href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                    Tambah Data</a>
+            @endif
+
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href="{{route('warga')}}"
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'warga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                <a href="{{ route('warga') }}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'warga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Warga
                 </a>
-                <a href="{{route('keluarga')}}"
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'keluarga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                <a href="{{ route('keluarga') }}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'keluarga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Keluarga
                 </a>
                 <div
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
                 </div>
             </div>
-    
+
             <div class="tw-flex tw-flex-col tw-gap-3">
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
@@ -70,10 +75,10 @@
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
-    
+
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-scroll">
-    
+
                     <table class="tw-w-[780px] md:tw-w-full">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
@@ -107,15 +112,15 @@
                             @endforeach
                         </tbody>
                     </table>
-    
+
                     <div>
-    
+
                     </div>
-    
+
                 </div>
                 {{-- End: Table HERE --}}
             </div>
-    
+
             <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
                 <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
                     <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
@@ -136,9 +141,7 @@
                         alt="<">
                 </a>
             </div>
-    
+
         </div>
     </div>
-    
-    
 @endsection
