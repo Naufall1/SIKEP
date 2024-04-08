@@ -26,7 +26,7 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah-bak')->with('default', $default)->with('daftarWarga', Warga::getTempWarga());
+        return view('penduduk.keluarga.tambah')->with('default', $default)->with('daftarWarga', Warga::getTempWarga());
     }
     public function store(Request $request) : RedirectResponse
     {

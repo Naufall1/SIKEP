@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Keluarga;
 use App\Models\Warga;
 use App\Models\WargaModified;
 use Illuminate\Http\Request;
@@ -13,12 +14,12 @@ class WargaController extends Controller
         $warga = Warga::all();
         return view('penduduk.warga.index', compact('warga'));
     }
-    public function create(){
-        return view('penduduk.warga.tambah');
+    public function create($no_kk){
+        return view('penduduk.warga.tambah')->with('no_kk', $no_kk);
     }
     public function store(Request $request){
+        // Validasi data yang masuk
         $request->validate([
-            'temp' => 'required:boolean', // ststus temp bernilai true kerika data warga ditambahkan dari KK baru.
             'NIK' => 'required|size:16',
             'no_kk' => 'required|size:16',
             'nama' => 'required|string|max:100',
@@ -38,7 +39,7 @@ class WargaController extends Controller
             'nama_ayah' => 'required|string|max:100',
             'nama_ibu' => 'required|string|max:100',
         ]);
-
+        // Mapping data dari request menuju objek
         $warga = new Warga();
         $warga->NIK = $request->nik;
         $warga->no_kk = $request->no_kk;
@@ -59,13 +60,8 @@ class WargaController extends Controller
         $warga->nama_ayah = $request->nama_ayah;
         $warga->nama_ibu = $request->nama_ibu;
 
-        if ($request->temp) {
-            $warga->storeTemp();    
-        } else {
-            $warga->save();
-            return redirect()->route('warga')->with('message', 'success');
-        }
-        // dd(session()->get('daftar_warga'));
+        $warga->storeTemp();
+        return redirect()->route('keluarga-tambah');
     }
     public function edit($nik){
         $warga = Warga::find($nik);
@@ -83,7 +79,7 @@ class WargaController extends Controller
             'penghasilan'=> $request->penghasilan,
             'pendidikan'=> $request->pendidikan,
             'tanggal_request' => now(),
-            'status_request' => 'menunggu',
+            'status_request' => 'Menunggu',
         ]);
         return redirect()->route('warga');
     }
