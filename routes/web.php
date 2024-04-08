@@ -43,8 +43,8 @@ Route::prefix('penduduk')->group(function () {
     Route::middleware('role:rt')->group(function () {
         Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit']); // untuk menampilkan form edit data Warga
         Route::put('/warga/ubah/{nik}', [WargaController::class, 'update']); // untuk menangani update data Warga dan menyimpan pada database
-        Route::get('/warga/tambah/', [WargaController::class, 'create']); // untuk menampilkan form penambahan data warga
-        Route::post('/warga/tambah/', [WargaController::class, 'store']); // untuk menangani penambahan data Warga
+        Route::get('/warga/tambah/{no_kk}', [WargaController::class, 'create'])->name('tambah-warga'); // untuk menampilkan form penambahan data warga
+        Route::post('/warga/tambah/', [WargaController::class, 'store'])->name('tambah-warga-post');  // untuk menangani penambahan data Warga
     });
 
     /**
@@ -54,10 +54,11 @@ Route::prefix('penduduk')->group(function () {
     Route::middleware('role:rt')->group(function () {
         Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga
         Route::put('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'update']); // untuk menangani update data Keluarga dan menyimpan pada database
-        Route::get('/keluarga/tambah/', [KeluargaController::class, 'create']); // menampilkan halaman form penambahan data keluarga
+        Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
+        Route::post('/keluarga/tambah/save-state', [KeluargaController::class, 'saveFormState']); // untuk menyimpan data form sementara pada session
     });
-});
+})->name('penduduk');
 
 Route::prefix('pengajuan')->group(function () {
     Route::get('/', [ 'index']); // Menampilkan halaman utama menu Pengajuan
