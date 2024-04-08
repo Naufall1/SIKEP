@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
+use App\Models\Warga;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,16 @@ class KeluargaController extends Controller
         return view('penduduk.keluarga.index', compact('keluarga'));
     }
     public function create(){
-        return view('penduduk.keluarga.tambah');
+        $default = [
+            'kode_pos' => 65115,
+            'rt' => Auth::user()->keterangan,
+            'rw' => '002',
+            'kelurahan' => 'Gadingkasri',
+            'kecamatan' => 'Klojen',
+            'kota' => 'Malang',
+            'provinsi' => 'Jawa Timur',
+        ];
+        return view('penduduk.keluarga.tambah-bak')->with('default', $default)->with('daftarWarga', Warga::getTempWarga());
     }
     public function store(Request $request) : RedirectResponse
     {
@@ -50,14 +60,14 @@ class KeluargaController extends Controller
     public function update(Request $request, $no_kk)
     {
         if (!Keluarga::where('no_kk', $no_kk)->exists()) {
-           return redirect()->route('keluarga.index'); 
+           return redirect()->route('keluarga.index');
         }
         if ($request->hasFile('image_kk')) {
             $image_kk = $this->storeImageKK($request);
         } else {
             $image_kk = Keluarga::where('no_kk', $no_kk)->first()->image_kk;
         }
-        
+
         KeluargaModified::create([
             'no_kk' => $request->no_kk,
             'user_id' => Auth::user()->user_id,
@@ -67,6 +77,10 @@ class KeluargaController extends Controller
             'tanggal_request' => now(),
             'status_request' => 'Menunggu',
         ]);
+    }
+    public function saveFormState(Request $request){
+        session()->put('formState', $request->json()->all());
+        return true;
     }
     private function storeImageKK(Request $request){
         $filename = Str::uuid()->toString();
