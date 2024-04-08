@@ -41,29 +41,29 @@
             d="M0.82666 10.1104H4.35107C4.45654 10.8311 5.33545 11.3057 6.3374 11.3057C7.45361 11.3057 8.13916 10.8574 8.13916 10.2422C8.13916 9.65332 7.67334 9.39844 6.31104 9.15234L4.63232 8.85352C2.30322 8.44922 1.0376 7.11328 1.0376 5.12695C1.0376 2.56055 3.23486 0.943359 6.2583 0.943359C9.6333 0.943359 11.5229 2.49023 11.5405 4.95117H8.13916C8.11279 4.16016 7.33057 3.69434 6.32861 3.69434C5.35303 3.69434 4.73779 4.09863 4.73779 4.73145C4.73779 5.33789 5.25635 5.6543 6.46045 5.86523L8.20068 6.16406C10.6616 6.59473 11.813 7.76367 11.813 9.82031C11.813 12.4131 9.64209 14.0654 6.26709 14.0654C2.86572 14.0654 0.835449 12.6416 0.82666 10.1104Z"
             fill="#027AFF" />
     </svg>
-    <div class="tw-flex tw-gap-3 ">
+    <div id="navMenus" class="tw-flex tw-gap-3">
 
         @php
             switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
                 case 'RW':
                     echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/home.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="../penduduk/warga" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-group tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/people.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="admin" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/users.svg" alt="admin icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Admin</p>
                             </a>
@@ -71,19 +71,19 @@
                     break;
                 case 'RT':
                     echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/home.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-group tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/people.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
                             </a>
@@ -92,7 +92,7 @@
                     break;
                 case 'Admin':
                     echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="publikasi" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/publikasi.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Publikasi</p>
                             </a>
@@ -218,29 +218,29 @@
             <img id="closeModal" class="tw-opacity-45 tw-cursor-pointer tw-h-6 tw-bg-cover hover:tw-opacity-100"
                 src="{{ asset('assets/icons/actionable/close.svg') }}" alt="close icon">
         </div>
-        <div class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4 ">
+        <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
 
             @php
                 switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
                     case 'RW':
                         echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/home.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-group tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/people.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/users.svg" alt="admin icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Admin</p>
                             </a>
@@ -248,19 +248,19 @@
                         break;
                     case 'RT':
                         echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/home.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-group tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/people.svg" alt="overview icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
                             </a>
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
                             </a>
@@ -269,7 +269,7 @@
                         break;
                     case 'Admin':
                         echo '
-                            <a href="#" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                            <a href="#" id="publikasi" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
                                 <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/publikasi.svg" alt="bansos icon">
                                 <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Publikasi</p>
                             </a>
@@ -318,6 +318,6 @@
             profilMenu.classList.toggle('tw-hidden');
             dropdownProfil.classList.toggle('tw-rotate-180');
         });
-
+        
     });
 </script>

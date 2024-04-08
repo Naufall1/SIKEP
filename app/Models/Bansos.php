@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BansosModel extends Model
+class Bansos extends Model
 {
     use HasFactory;
     protected $table = 'bansos';

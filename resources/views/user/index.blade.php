@@ -7,27 +7,13 @@
 </head>
 <body>
     <h1>Profil saya</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Nama</th>
-                <th>Keterangan</th>
-                <th>Aksi</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ $user->username }}</td>
-                <td>{{ $user->nama }}</td>
-                <td>{{ $user->keterangan }}</td>
-                <td>
-                    <a href="{{ route('profilFormEdit', ['user_id' => $user->user_id]) }}">Edit</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <strong>Nama:</strong> {{ $user->nama }}<br>
+        <strong>Username:</strong> {{ $user->username }}<br>
+        <strong>Jabatan:</strong> {{ $user->level_nama }}<br>
+        <strong>Keterangan:</strong> {{ $user->keterangan }}<br>
+        <h2>-------------</h2>
+        <a href="{{ route('profilFormEdit', ['user_id' => $user->user_id]) }}">Edit Profil</a>
+    </div>
 </body>
-
 </html>
