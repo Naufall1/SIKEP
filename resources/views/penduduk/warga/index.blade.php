@@ -17,12 +17,12 @@
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href=""
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
+                <a href="{{route('warga')}}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'warga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Warga
                 </a>
-                <a href=""
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
+                <a href="{{route('keluarga')}}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'keluarga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Keluarga
                 </a>
                 <div
