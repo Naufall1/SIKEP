@@ -107,8 +107,8 @@
                     <input class="tw-input-enabled" type="text" id="username" name="username"
                         placeholder="Masukkan Nama Pengguna" required>
                 </label>
-                <label for="password" class="tw-w-full tw-flex tw-flex-col">
-                    <span class="tw-label tw-mb-2 ">Kata Sandi</span>
+                <label for="password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
+                    <span class="tw-label">Kata Sandi</span>
                     <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
                         <input class="tw-input-enabled" type="text" id="password" name="password"
                             placeholder="Masukkan Kata Sandi" required>

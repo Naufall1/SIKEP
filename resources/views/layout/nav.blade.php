@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    <div class="tw-w-[2px] tw-h-8 tw-bg-n300"></div>
+    <div class="tw-w-[1.5px] tw-h-8 tw-bg-n300"></div>
 
     {{-- <div class="tw-h-11"> --}}
 
@@ -318,6 +318,19 @@
             profilMenu.classList.toggle('tw-hidden');
             dropdownProfil.classList.toggle('tw-rotate-180');
         });
-        
+
+        const navMenus = document.getElementById('navMenus');
+        const navMenuLinks = Array.from(navMenus.children);
+
+        navMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('tes');
+                navMenuLinks.forEach( function() {
+                    item => item.classList.remove('active')
+                }); // Remove active class from all links
+                this.classList.add('active'); // Add active class to the clicked link
+            });
+        });
+
     });
 </script>
