@@ -8,7 +8,6 @@
     <form action="{{ route('kriteriaUpdate', $dataKeluarga->no_kk) }}" method="POST">
         @csrf
         @method('PUT')
-        <!-- Field untuk mengedit kriteria -->
         <label for="kepala_keluarga">Kepala Keluarga:</label>
         <input type="text" id="kepala_keluarga" name="kepala_keluarga" value="{{ $dataKeluarga->kepala_keluarga }}" disabled><br><br>
 
@@ -38,7 +37,6 @@
             <h5>----------------------</h5>
         @endforeach
 
-        <!-- Tombol untuk menyimpan perubahan -->
         <button type="submit">Simpan</button>
     </form>
 </body>

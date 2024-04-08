@@ -29,7 +29,7 @@
                 <th>Jumlah Warga dengan Penghasilan</th>
                 <th>Tanggungan</th>
                 <th>Jumlah Bersekolah</th>
-                <th>Aksi</th> <!-- Kolom tambahan untuk tombol edit -->
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                 <td>{{ $k->jumlah_warga_berpenghasilan }}</td>
                 <td>{{ $k->tanggungan }}</td>
                 <td>{{ $k->jumlah_warga_bersekolah }}</td>
-                <td><a href="{{ route('kriteriaForm', $k->no_kk) }}">Edit</a></td> <!-- Tombol edit dengan route yang sesuai -->
+                <td><a href="{{ route('kriteriaForm', $k->no_kk) }}">Edit</a></td>
             </tr>
             @endforeach
         </tbody>
