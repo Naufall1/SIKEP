@@ -26,6 +26,6 @@ class MightGet extends Model
 
     public function bansos():BelongsTo
     {
-        return $this->belongsTo(BansosModel::class, 'bansos_kode', 'bansos_kode');
+        return $this->belongsTo(Bansos::class, 'bansos_kode', 'bansos_kode');
     }
 }
