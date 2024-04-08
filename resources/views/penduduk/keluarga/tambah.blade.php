@@ -65,12 +65,14 @@
             </tr>
         </thead>
         <tbody>
+            @foreach ($daftarWarga as $warga)
             <tr>
-                <td>1</td>
-                <td>1234567890123456</td>
-                <td>John Doe</td>
-                <td>Ayah</td>
+                <td>{{$loop->index}}</td>
+                <td>{{$warga->NIK}}</td>
+                <td>{{$warga->nama}}</td>
+                <td>{{$warga->status_keluarga}}</td>
             </tr>
+            @endforeach
         </tbody>
     </table>
     <button onclick="tambahAnggotaKeluarga()">Tambah Anggota Keluarga</button>
@@ -102,9 +104,11 @@
                 dataType: "json",
                 success: function (response) {
                     // console.log(response);
+                    window.location.href = url;
                 }
             });
         }
     </script>
+    {{-- {{dd($daftarWarga)}} --}}
 </body>
 </html>

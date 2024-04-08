@@ -45,12 +45,16 @@ class Warga extends Model
         }
 
         $daftarWarga[] = $this;
+        // dd($daftarWarga);
 
         session()->put('daftar_warga', $daftarWarga);
         session()->save();
         return ;
     }
-    public static  function getTempWarga(): array | Warga {
+    public static function getTempWarga(): array | Warga | null {
+        if (empty(session()->get('daftar_warga'))) {
+            return [];
+        }
         return session()->get('daftar_warga');
     }
     public function saveTemp(){
