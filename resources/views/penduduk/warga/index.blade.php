@@ -8,7 +8,7 @@
     @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 
-<body class="tw-bg-n200 scroll">
+<body class="tw-bg-n200 scroll selection:tw-bg-b500 selection:tw-text-n100">
 
     @component('components.navbar', ['title' => 'RW', 'text' => 'none'])
     @endcomponent
@@ -42,7 +42,19 @@
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
                     <button
-                        class="tw-relative tw-min-w-16 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
+                        class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
+                        type="button">
+                        <span class="tw-placeholder">
+                            Semua
+                        </span>
+                        <span
+                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-2 tw-flex tw-items-center  tw-cursor-pointer">
+                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}"
+                                alt="back">
+                        </span>
+                    </button>
+                    <button
+                        class="tw-relative tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
                         type="button">
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center  tw-cursor-pointer">
@@ -53,9 +65,9 @@
                             Filter
                         </span>
                     </button>
-                    <div class="tw-relative">
+                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
-                            class="tw-input-enabled tw-w-auto md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
+                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
                             type="button">
                         </input>
                         <span
