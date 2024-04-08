@@ -43,67 +43,34 @@
     </svg>
     <div id="navMenus" class="tw-flex tw-gap-3">
 
-        @php
-            switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
-                case 'RW':
-                    echo '
-                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/home.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
-                            </a>
-                            <a href="../penduduk/warga" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-group tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/people.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
-                            </a>
-                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
-                            </a>
-                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
-                            </a>
-                            <a href="#" id="admin" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/users.svg" alt="admin icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Admin</p>
-                            </a>
-                        ';
-                    break;
-                case 'RT':
-                    echo '
-                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/home.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
-                            </a>
-                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-group tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/people.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
-                            </a>
-                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
-                            </a>
-                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
-                            </a>
-                        ';
-                    // echo '<h1>HALO</h1>';
-                    break;
-                case 'Admin':
-                    echo '
-                            <a href="#" id="publikasi" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/publikasi.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Publikasi</p>
-                            </a>
-                        ';
-                    break;
-                default:
-                    // echo '<h1>GAK HALO</h1>';
-                    break;
-            }
+        @if (!empty(Auth::user()->hasLevel['level_kode']))
 
-        @endphp
+            @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                @include('layout.menu.overview')
+            @endif
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                @include('layout.menu.penduduk')
+            @endif
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                @include('layout.menu.pengajuan')
+            @endif
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                @include('layout.menu.bansos')
+            @endif
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+                @include('layout.menu.admin')
+            @endif
+
+            @if (Auth::user()->hasLevel['level_kode'] == 'Admin')
+                @include('layout.menu.publikasi')
+            @endif
+
+        @endif
+
     </div>
 
 </div>
@@ -220,67 +187,33 @@
         </div>
         <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
 
-            @php
-                switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
-                    case 'RW':
-                        echo '
-                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/home.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
-                            </a>
-                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-group tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/people.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
-                            </a>
-                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
-                            </a>
-                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
-                            </a>
-                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/users.svg" alt="admin icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Admin</p>
-                            </a>
-                        ';
-                        break;
-                    case 'RT':
-                        echo '
-                            <a href="#" id="overview" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/home.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100" >Overview</p>
-                            </a>
-                            <a href="#" id="penduduk" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-group tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/people.svg" alt="overview icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Penduduk</p>
-                            </a>
-                            <a href="#" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/pengajuan.svg" alt="pengajuan icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Pengajuan</p>
-                            </a>
-                            <a href="#" id="bansos" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/bansos.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Bansos</p>
-                            </a>
-                        ';
-                        // echo '<h1>HALO</h1>';
-                        break;
-                    case 'Admin':
-                        echo '
-                            <a href="#" id="publikasi" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                                <img class="tw-h-5 tw-bg-cover tw-stroke-n800 " src="/assets/icons/actionable/publikasi.svg" alt="bansos icon">
-                                <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Publikasi</p>
-                            </a>
-                        ';
-                        break;
-                    default:
-                        // echo '<h1>GAK HALO</h1>';
-                        break;
-                }
+            @if (!empty(Auth::user()->hasLevel['level_kode']))
 
-            @endphp
+                @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                    @include('layout.menu.overview')
+                @endif
+
+                @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                    @include('layout.menu.penduduk')
+                @endif
+
+                @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                    @include('layout.menu.pengajuan')
+                @endif
+
+                @if (Auth::user()->hasLevel['level_kode'] == 'RW' || Auth::user()->hasLevel['level_kode'] == 'RT')
+                    @include('layout.menu.bansos')
+                @endif
+
+                @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+                    @include('layout.menu.admin')
+                @endif
+
+                @if (Auth::user()->hasLevel['level_kode'] == 'Admin')
+                    @include('layout.menu.publikasi')
+                @endif
+
+            @endif
         </div>
     </div>
 </div>
@@ -325,7 +258,7 @@
         navMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
                 console.log('tes');
-                navMenuLinks.forEach( function() {
+                navMenuLinks.forEach(function() {
                     item => item.classList.remove('active')
                 }); // Remove active class from all links
                 this.classList.add('active'); // Add active class to the clicked link

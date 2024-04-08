@@ -2,23 +2,26 @@
 
 @section('content')
     <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
+        <div class="tw-flex tw-items-center md:tw-items-start {{Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start'}}">
             <h1 class="tw-h1 tw-w-1/2">
                 Daftar Penduduk
             </h1>
 
-            <a
-                href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                Tambah Data</a>
+            @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                <a
+                    href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                    Tambah Data</a>
+            @endif
+            
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href=""
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
+                <a href="{{route('warga')}}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'warga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Warga
                 </a>
-                <a href=""
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
+                <a href="{{route('keluarga')}}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ (Route::currentRouteName() == 'keluarga') ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Keluarga
                 </a>
                 <div
