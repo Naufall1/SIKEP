@@ -63,6 +63,9 @@ class KeluargaController extends Controller
 
         Warga::saveTemp(Keluarga::find($request->no_kk));
 
+        session()->forget('formState');
+        session()->save();
+
         return redirect()->route('keluarga');
     }
     public function edit($no_kk){
@@ -89,6 +92,15 @@ class KeluargaController extends Controller
             'tanggal_request' => now(),
             'status_request' => 'Menunggu',
         ]);
+    }
+    /**
+     * @param Request $request
+     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedapam Keluarga yang sudah ada.
+     */
+    public function tambahWarga(Request $request){
+        // TODO: Add validation
+        Warga::saveTemp(Keluarga::find($request->no_kk));
+        return redirect()->route('keluarga');
     }
     public function saveFormState(Request $request){
         session()->put('formState', $request->json()->all());
