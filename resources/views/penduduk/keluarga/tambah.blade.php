@@ -411,8 +411,11 @@
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: function (response) {
-                    // console.log(response);
-                    window.location.href = url;
+                    if (kk.value != '') {
+                        window.location.href = url;
+                    } else {
+                        alert('Nomor KK Harus diisi');
+                    }
                 }
             });
         }

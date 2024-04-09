@@ -71,7 +71,7 @@ class WargaController extends Controller
         $warga->agama = $request->agama;
         $warga->status_perkawinan = $request->status_perkawinan;
         $warga->status_keluarga = $request->status_keluarga;
-        $warga->status_warga = $request->status_warga;
+        $warga->status_warga = 'Menunggu';
         $warga->jenis_pekerjaan = $request->jenis_pekerjaan;
         $warga->penghasilan = $request->penghasilan;
         $warga->kewarganegaraan = $request->kewarganegaraan;

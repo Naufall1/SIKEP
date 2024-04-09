@@ -46,7 +46,7 @@ class KeluargaController extends Controller
 
         $keluarga = new Keluarga;
         $keluarga->no_kk = $request->no_kk;
-        $keluarga->kepala_keluarga = $request->create;
+        $keluarga->kepala_keluarga = $request->kepala_keluarga;
         $keluarga->alamat = $request->alamat;
         $keluarga->RT = $request->RT;
         $keluarga->RW = $request->RW;
@@ -55,13 +55,18 @@ class KeluargaController extends Controller
         $keluarga->kecamatan = $request->kecamatan;
         $keluarga->kota = $request->kota;
         $keluarga->provinsi = $request->provinsi;
-        $keluarga->image_kk = $this->storeImageKK($request->image_kk);
+        $keluarga->image_kk = $this->storeImageKK($request);
         $keluarga->tagihan_listrik = $request->tagihan_listrik;
         $keluarga->luas_bangunan = $request->luas_bangunan;
-        $keluarga->status = $request->status;
+        $keluarga->status = 'Menunggu';
         $keluarga->save();
 
-        return redirect()->route('penduduk.keluarga.index');
+        Warga::saveTemp(Keluarga::find($request->no_kk));
+
+        session()->forget('formState');
+        session()->save();
+
+        return redirect()->route('keluarga');
     }
     public function edit($no_kk){
         $keluarga = Keluarga::find($no_kk);
@@ -88,6 +93,15 @@ class KeluargaController extends Controller
             'status_request' => 'Menunggu',
         ]);
     }
+    /**
+     * @param Request $request
+     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedapam Keluarga yang sudah ada.
+     */
+    public function tambahWarga(Request $request){
+        // TODO: Add validation
+        Warga::saveTemp(Keluarga::find($request->no_kk));
+        return redirect()->route('keluarga');
+    }
     public function saveFormState(Request $request){
         session()->put('formState', $request->json()->all());
         return true;
@@ -95,8 +109,9 @@ class KeluargaController extends Controller
     private function storeImageKK(Request $request){
         $filename = Str::uuid()->toString();
         $extension = $request->file('image_kk')->getClientOriginalExtension();
-        $filenameSimpan = $filename . $extension;
-        $request->file('image_kk')->storeAs('public/images-kk', $filenameSimpan);
+        $filenameSimpan = $filename . '.' . $extension;
+        // TODO: fix this error upload image file
+        // $request->file('image_kk')->storeAs('public/images-kk', $filenameSimpan);
         return $filenameSimpan;
     }
 }
