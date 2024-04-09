@@ -1,4 +1,84 @@
-<!DOCTYPE html>
+@extends('layout.layout', ['isForm' => true])
+
+@section('content')
+    <p class="tw-breadcrumb tw-text-n500">Daftar Penduduk /
+        <span class="tw-font-bold tw-text-b500">Tambah Keluarga</span>
+    </p>
+
+    <div class="md:tw-w-80">
+
+        <h1 class="tw-h1 tw-mb-3">Tambah Data</h1>
+
+        <form action="{{ route('keluarga-tambah') }}" method="POST" enctype="multipart/form-data" id="formdata">
+            @csrf
+
+            <div class="tw-flex tw-flex-col tw-gap-2">
+                <h2 class="">Kriteria Keluarga</h2>
+                <div class="tw-flex tw-flex-col tw-gap-3">
+
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
+                        option</label>
+                    <select id="countries"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Choose a country</option>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="FR">France</option>
+                        <option value="DE">Germany</option>
+                    </select>
+
+                    <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
+                        <input type="text" id="kepala_keluarga" name="kepala_keluarga"
+                            value="" readonly class="tw-input-disabled">
+                    </label>
+                    <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
+                        <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
+                            <input type="text" id="tagihan_listrik" name="tagihan_listrik"
+                                value=""
+                                class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
+                                type="text">
+                            </input>
+                            <span
+                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
+                                <img class="tw-w-7 tw-bg-cover" src="{{ asset('assets/icons/actionable/rupiah.svg') }}"
+                                    alt="Rp">
+                            </span>
+                        </div>
+                    </label>
+                    <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan 
+                        <input type="text" id="luas_bangunan" name="luas_bangunan"
+                            value="" class="tw-input-enabled">
+                    </label>
+                </div>
+            </div>
+
+            <div class="tw-divider-hr"></div>
+
+            
+
+
+            <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
+                <button
+                    class="tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                    type="button">
+                    <span
+                        class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
+                        <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
+                    </span>
+                    <span class="tw-hidden md:tw-inline-block">
+                        Kembali
+                    </span>
+                </button>
+                <button
+                    class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
+                    type="submit">Simpan</button>
+            </div>
+        </form>
+
+    </div>
+@endsection
+
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -112,6 +192,6 @@
             });
         }
     </script>
-    {{-- {{dd($daftarWarga)}} --}}
+    // {{dd($daftarWarga)}}
 </body>
-</html>
+</html> --}}
