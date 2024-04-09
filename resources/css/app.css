@@ -21,6 +21,10 @@
         @apply focus-visible:tw-outline-none;
     }
 
+    select:disabled{
+        @apply tw-opacity-100;
+    }
+
     /* Typography */
 
     .tw-h1 {
@@ -46,6 +50,9 @@
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
     input{
+        @apply tw-font-sans tw-font-medium tw-text-base;
+    }
+    .tw-input{
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
     .tw-placeholder{
