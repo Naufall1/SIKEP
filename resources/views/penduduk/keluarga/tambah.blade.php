@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+@extends('layout.layout', ['isForm' => true])
+    
+@section('content')
+
+@endsection
+
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -109,6 +115,6 @@
             });
         }
     </script>
-    {{-- {{dd($daftarWarga)}} --}}
+    // {{dd($daftarWarga)}}
 </body>
-</html>
+</html> --}}
