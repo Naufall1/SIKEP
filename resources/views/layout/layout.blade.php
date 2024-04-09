@@ -12,9 +12,7 @@
 
     @include('layout.nav')
 
-    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        @yield('content')
-    </div>
+    @yield('content')
 
 </body>
 

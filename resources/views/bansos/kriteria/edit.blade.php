@@ -1,7 +1,7 @@
 @extends('layout.layout', ['isForm' => true])
 
 @section('content')
-    
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Kriteria /
             <span class="tw-font-bold tw-text-b500">Ubah Data</span>
         </p>
@@ -106,7 +106,7 @@
             </form>
 
         </div>
-
+    </div>
 @endsection
 {{-- <!DOCTYPE html>
             <html>

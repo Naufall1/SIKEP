@@ -1,7 +1,7 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-    
+    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <div class="tw-flex tw-items-center md:tw-items-start {{Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start'}}">
             <h1 class="tw-h1 tw-w-1/2">
                 Daftar Penduduk
@@ -133,4 +133,5 @@
             </div>
 
         </div>
+    </div>
 @endsection
