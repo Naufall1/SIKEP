@@ -57,10 +57,12 @@ class Warga extends Model
         }
         return session()->get('daftar_warga');
     }
-    public function saveTemp(){
+    public static function saveTemp(Keluarga $keluarga){
+        // dd($keluarga);
         $daftarWarga = session()->get('daftar_warga');
         foreach ($daftarWarga as $warga) {
-            $warga->save();
+            $warga->no_kk = $keluarga->no_kk;
+            WargaModified::updateWarga($warga);
         }
         session()->forget('daftar_warga');
         session()->save();

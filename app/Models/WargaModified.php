@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class WargaModified extends Model
 {
@@ -15,6 +16,7 @@ class WargaModified extends Model
     public $timestamps = false;
     protected $fillable = [
         'NIK',
+        'no_kk',
         'user_id',
         'agama',
         'status_perkawinan',
@@ -26,6 +28,23 @@ class WargaModified extends Model
         'tanggal_request',
         'status_request',
     ];
+
+    public static function updateWarga(Warga $warga){
+        $modif = new WargaModified();
+        $modif->user_id = Auth::user()->user_id;
+        $modif->NIK = $warga->NIK;
+        $modif->no_kk = $warga->no_kk;
+        $modif->agama = $warga->agama;
+        $modif->status_perkawinan = $warga->status_perkawinan;
+        $modif->status_keluarga = $warga->status_keluarga;
+        $modif->status_warga = $warga->status_warga;
+        $modif->jenis_pekerjaan = $warga->jenis_pekerjaan;
+        $modif->penghasilan = $warga->penghasilan;
+        $modif->pendidikan = $warga->pendidikan;
+        $modif->tanggal_request = now();
+        $modif->status_request = 'Menunggu';
+        $modif->save();
+    }
 
     public function warga():BelongsTo
     {
