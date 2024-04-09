@@ -67,6 +67,9 @@
     th{
         @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left;
     }
+    .tw-th{
+        @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left;
+    }
     td{
         @apply tw-font-sans tw-font-semibold tw-text-base tw-text-n1000;
     }

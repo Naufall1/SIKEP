@@ -13,7 +13,7 @@
             <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData">
                 {{ csrf_field() }}
 
-                <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] ">
+                <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
                     <div class="tw-flex tw-flex-col tw-gap-2">
                         <h2 class="">Identitas Warga</h2>
