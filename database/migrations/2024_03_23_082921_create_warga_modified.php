@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('wargaModified', function (Blueprint $table) {
             $table->id('id_modify_warga');
             $table->char('NIK', 16);
+            $table->char('no_kk', 16);
             $table->unsignedBigInteger('user_id');
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']);
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
