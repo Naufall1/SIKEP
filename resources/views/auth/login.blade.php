@@ -110,11 +110,11 @@
                 <label for="password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
                     <span class="tw-label">Kata Sandi</span>
                     <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                        <input class="tw-input-enabled" type="text" id="password" name="password"
+                        <input class="tw-input-enabled" type="password" id="password" name="password"
                             placeholder="Masukkan Kata Sandi" required>
                         <span id="togglePassword"
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
-                            <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye-slash.svg') }}"
+                            <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
                                 alt="eye">
                         </span>
                     </div>

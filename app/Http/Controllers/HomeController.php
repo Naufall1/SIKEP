@@ -47,6 +47,6 @@ class HomeController extends Controller
         return view('dashboard.index', ['title' => 'Admin','text' => 'Admin']);
     }
     private function dashboardGuest() {
-        return view('dashboard.index', ['title' => 'Umum','text' => 'Warga']);
+        return view('landing.index', ['title' => 'Umum','text' => 'Warga']);
     }
 }

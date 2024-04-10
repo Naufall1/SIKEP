@@ -81,68 +81,76 @@
     <img class="tw-h-6 tw-bg-cover" src="{{ asset('assets/icons/actionable/hamburger.svg') }}" alt="hamburger icon">
 </div>
 
-<div class="tw-flex tw-gap-3 tw-items-center">
-    <div class="nav-notify tw-cursor-pointer tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
-        href="">
-        <div class="tw-relative">
-            <img class="tw-h-6 tw-bg-cover" src="{{ asset('assets/icons/actionable/notification.svg') }}"
-                alt="notification icon">
-            <div
-                class="tw-absolute tw-bg-r500 tw-rounded-full tw-h-2 tw-w-2 tw-outline tw-outline-2 tw-outline-n100 tw-top-[2px] -tw-translate-y-1/2 tw-right-[2px]">
+@if (!empty(Auth::user()->hasLevel['level_kode']))
+    <div class="tw-flex tw-gap-3 tw-items-center">
+        <div class="nav-notify tw-cursor-pointer tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
+            href="">
+            <div class="tw-relative">
+                <img class="tw-h-6 tw-bg-cover" src="{{ asset('assets/icons/actionable/notification.svg') }}"
+                    alt="notification icon">
+                <div
+                    class="tw-absolute tw-bg-r500 tw-rounded-full tw-h-2 tw-w-2 tw-outline tw-outline-2 tw-outline-n100 tw-top-[2px] -tw-translate-y-1/2 tw-right-[2px]">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="tw-w-[1.5px] tw-h-8 tw-bg-n300"></div>
+        <div class="tw-w-[1.5px] tw-h-8 tw-bg-n300"></div>
 
-    {{-- <div class="tw-h-11"> --}}
+        {{-- <div class="tw-h-11"> --}}
 
-    <div id="toggleProfil"
-        class="tw-relative nav-profile tw-h-11 tw-min-w-11 tw-justify-center tw-flex md:tw-h-11 md:tw-gap-2 md:tw-px-3 tw-rounded-md tw-items-center tw-cursor-pointer hover:tw-bg-n200">
-        <div class="tw-hidden md:tw-inline-block">
-            {{-- Nama --}}
-            <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}</h3>
+        <div id="toggleProfil"
+            class="tw-relative nav-profile tw-h-11 tw-min-w-11 tw-justify-center tw-flex md:tw-h-11 md:tw-gap-2 md:tw-px-3 tw-rounded-md tw-items-center tw-cursor-pointer hover:tw-bg-n200">
+            <div class="tw-hidden md:tw-inline-block">
+                {{-- Nama --}}
+                <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}
+                </h3>
 
-            {{-- Keterangan --}}
-            {{-- <p class="tw-caption tw-text-n600">
+                {{-- Keterangan --}}
+                {{-- <p class="tw-caption tw-text-n600">
                         {{$text}}
                     </p> --}}
-        </div>
-        <img id="dropdownProfil" class="tw-h-5 tw-hidden md:tw-inline-block"
-            src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="">
-        <img class="tw-h-6 tw-bg-cover md:tw-hidden" src="{{ asset('assets/icons/actionable/profile-circle.svg') }}"
-            alt="profile icon">
-        <div id="profilMenu"
-            class="tw-animate-slide-in tw-absolute tw-hidden tw-top-14 tw-right-0 tw-w-40 tw-border-1 tw-rounded-md tw-border-[1px] tw-bg-n100 tw-divide-y-[1px] tw-divide-n400">
-            <div class="tw-flex tw-gap-1 tw-w-full">
-                <a href="#"
-                    class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
-                    <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/profile-circle.svg"
-                        alt="profile icon">
-                    <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Profil</p>
-                </a>
             </div>
-            <div class="tw-flex tw-gap-1 tw-w-full">
-                <a href="{{ route('logout') }}"
-                    class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-br-md tw-rounded-bl-md active:tw-bg-r500 hover:tw-bg-n200 ">
-                    <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/logout.svg" alt="profile icon">
-                    <p class="tw-menu-text tw-text-r500 group-active:tw-text-n100">Keluar</p>
-                </a>
+            <img id="dropdownProfil" class="tw-h-5 tw-hidden md:tw-inline-block"
+                src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="">
+            <img class="tw-h-6 tw-bg-cover md:tw-hidden" src="{{ asset('assets/icons/actionable/profile-circle.svg') }}"
+                alt="profile icon">
+            <div id="profilMenu"
+                class="tw-animate-slide-in tw-absolute tw-hidden tw-top-14 tw-right-0 tw-w-40 tw-border-1 tw-rounded-md tw-border-[1px] tw-bg-n100 tw-divide-y-[1px] tw-divide-n400">
+                <div class="tw-flex tw-gap-1 tw-w-full">
+                    <a href="#"
+                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                        <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/profile-circle.svg"
+                            alt="profile icon">
+                        <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Profil</p>
+                    </a>
+                </div>
+                <div class="tw-flex tw-gap-1 tw-w-full">
+                    <a href="{{ route('logout') }}"
+                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-br-md tw-rounded-bl-md active:tw-bg-r500 hover:tw-bg-n200 ">
+                        <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/logout.svg" alt="profile icon">
+                        <p class="tw-menu-text tw-text-r500 group-active:tw-text-n100">Keluar</p>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    {{-- </div> --}}
-    {{-- MOBILE --}}
-    {{-- <div class="nav-profile tw-cursor-pointer md:tw-hidden tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
+        {{-- </div> --}}
+        {{-- MOBILE --}}
+        {{-- <div class="nav-profile tw-cursor-pointer md:tw-hidden tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
             href="">
 
 
         </div> --}}
 
-</div>
-
+    </div>
+@else
+    @if (Route::currentRouteName() !== 'login')
+        <a href="{{ route('login') }}"
+            class="tw-flex tw-items-center tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
+            type="submit">Masuk</a>
+    @endif
+@endif
 
 </nav>
 
