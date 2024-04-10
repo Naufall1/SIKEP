@@ -10,67 +10,25 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Kriteria</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('kriteriaUpdate', $dataKeluarga->no_kk) }}"
+            <form class="tw-flex tw-flex-col tw-gap-7 " action="{{ route('kriteriaUpdate', $dataKeluarga->no_kk) }}"
                 method="POST">
                 @csrf
                 @method('PUT')
 
-                <div class="tw-flex tw-flex-col tw-gap-2">
-                    <h2 class="">Kriteria Keluarga</h2>
-                    <div class="tw-flex tw-flex-col tw-gap-3">
+                <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
-                            <input type="text" id="kepala_keluarga" name="kepala_keluarga"
-                                value="{{ $dataKeluarga->kepala_keluarga }}" readonly class="tw-input-disabled">
-                        </label>
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
-                            <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                                <input type="text" id="tagihan_listrik" name="tagihan_listrik"
-                                    value="{{ $dataKeluarga->tagihan_listrik }}"
-                                    class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                                    type="text">
-                                </input>
-                                <span
-                                    class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
-                                    <img class="tw-w-7 tw-bg-cover" src="{{ asset('assets/icons/actionable/rupiah.svg') }}"
-                                        alt="Rp">
-                                </span>
-                            </div>
-                        </label>
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
-                            <input type="text" id="luas_bangunan" name="luas_bangunan"
-                                value="{{ $dataKeluarga->luas_bangunan }}" class="tw-input-enabled">
-                        </label>
-                    </div>
-                </div>
-
-                <div class="tw-divider-hr"></div>
-
-                @foreach ($dataWarga as $anggota)
                     <div class="tw-flex tw-flex-col tw-gap-2">
-                        <h2 class="">Kriteria Anggota</h2>
+                        <h2 class="">Kriteria Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
-                                <input type="text" id="nik" name="nik[]" value="{{ $anggota->nik }}" readonly
-                                    class="tw-input-disabled">
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
+                                <input type="text" id="kepala_keluarga" name="kepala_keluarga"
+                                    value="{{ $dataKeluarga->kepala_keluarga }}" readonly class="tw-input-disabled">
                             </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
-                                <input type="text" id="nama" name="nama[]" value="{{ $anggota->nama }}" readonly
-                                    class="tw-input-disabled">
-                            </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
-                                <input type="text" id="status_keluarga" name="status_keluarga[]"
-                                    value="{{ $anggota->status_keluarga }}" readonly class="tw-input-disabled">
-                            </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
-                                <input type="text" id="jenis_pekerjaan" name="jenis_pekerjaan[]" value="{{ $anggota->jenis_pekerjaan }}" readonly
-                                    class="tw-input-disabled">
-                            </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
                                 <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                                    <input type="text" id="penghasilan" name="penghasilan[]"
-                                        value="{{ $anggota->penghasilan }}"
+                                    <input type="text" id="tagihan_listrik" name="tagihan_listrik"
+                                        value="{{ $dataKeluarga->tagihan_listrik }}"
                                         class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
                                         type="text">
                                     </input>
@@ -81,15 +39,57 @@
                                     </span>
                                 </div>
                             </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
+                                <input type="text" id="luas_bangunan" name="luas_bangunan"
+                                    value="{{ $dataKeluarga->luas_bangunan }}" class="tw-input-enabled">
+                            </label>
                         </div>
                     </div>
-                        <div class="{{($anggota === array_key_last($dataWarga->toArray())) ? 'tw-hidden' : ''}} tw-divider-hr"></div>
-                @endforeach
 
+                    @foreach ($dataWarga as $anggota)
+                        <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                            <h2 class="">Kriteria Anggota</h2>
+                            <div class="tw-flex tw-flex-col tw-gap-3">
+
+                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
+                                    <input type="text" id="nik" name="nik[]" value="{{ $anggota->nik }}" readonly
+                                        class="tw-input-disabled">
+                                </label>
+                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
+                                    <input type="text" id="nama" name="nama[]" value="{{ $anggota->nama }}"
+                                        readonly class="tw-input-disabled">
+                                </label>
+                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
+                                    <input type="text" id="status_keluarga" name="status_keluarga[]"
+                                        value="{{ $anggota->status_keluarga }}" readonly class="tw-input-disabled">
+                                </label>
+                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
+                                    <input type="text" id="jenis_pekerjaan" name="jenis_pekerjaan[]"
+                                        value="{{ $anggota->jenis_pekerjaan }}" readonly class="tw-input-disabled">
+                                </label>
+                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
+                                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
+                                        <input type="text" id="penghasilan" name="penghasilan[]"
+                                            value="{{ $anggota->penghasilan }}"
+                                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
+                                            type="text">
+                                        </input>
+                                        <span
+                                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
+                                            <img class="tw-w-7 tw-bg-cover"
+                                                src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <button
-                        class="tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                    <a href="{{route('kriteria')}}"
+                        class="tw-flex tw-items-center tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span
                             class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
@@ -98,7 +98,7 @@
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
-                    </button>
+                    </a>
                     <button
                         class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="submit">Simpan</button>

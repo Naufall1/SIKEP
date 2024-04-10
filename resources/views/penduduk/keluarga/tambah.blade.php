@@ -18,120 +18,122 @@
                 enctype="multipart/form-data" id="formdata">
                 @csrf
 
-                <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-2">
-                    <h2 class="">Data Keluarga</h2>
-                    <div class="tw-flex tw-flex-col tw-gap-3">
+                <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
+
+                    <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-2">
+                        <h2 class="">Data Keluarga</h2>
+                        <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
-                            <select class="tw-input-enabled" name="jenis-data" id="jenis-data">
-                                <option value="data-baru">KK Baru</option>
-                                <option value="data-lama">KK Lama</option>
-                            </select>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
+                                <select class="tw-input-enabled" name="jenis-data" id="jenis-data">
+                                    <option value="data-baru">KK Baru</option>
+                                    <option value="data-lama">KK Lama</option>
+                                </select>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
-                            <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan no_kk" type="text"
-                                id="no_kk" name="no_kk"
-                                value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
-                            <select class="tw-hidden tw-placeholder" name="no_kk" id="no_kk-list" disabled>
-                                <option value="no" disabled selected>Pilih KK</option>
-                            </select>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
+                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan no_kk" type="text"
+                                    id="no_kk" name="no_kk"
+                                    value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
+                                <select class="tw-hidden tw-placeholder" name="no_kk" id="no_kk-list" disabled>
+                                    <option value="no" disabled selected>Pilih KK</option>
+                                </select>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
-                            <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Kepala Keluarga"
-                                type="text" id="kepala_keluarga" name="kepala_keluarga"
-                                value="{{ empty(session()->get('formState')['kepala_keluarga']) ? '' : session()->get('formState')['kepala_keluarga'] }}">
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
+                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Kepala Keluarga"
+                                    type="text" id="kepala_keluarga" name="kepala_keluarga"
+                                    value="{{ empty(session()->get('formState')['kepala_keluarga']) ? '' : session()->get('formState')['kepala_keluarga'] }}">
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
-                            <textarea class="tw-input-enabled tw-pt-[10px] tw-placeholder" placeholder="Masukkan Alamat" type="text"
-                                id="alamat" name="alamat"
-                                value="{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}"></textarea>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
+                                <textarea class="tw-input-enabled tw-pt-[10px] tw-placeholder" placeholder="Masukkan Alamat" type="text"
+                                    id="alamat" name="alamat"
+                                    value="{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}"></textarea>
+                            </label>
 
-                        {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
                             <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan RT" type="text"
                                 id="RT" name="RT">
                         </label> --}}
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
-                            <select class="tw-input-enabled tw-placeholder" name="RT" id="RT">
-                                <option value="001">001</option>
-                                <option value="002">002</option>
-                                <option value="003">003</option>
-                                <option value="004">004</option>
-                                <option value="005">005</option>
-                                <option value="006">006</option>
-                                <option value="007">007</option>
-                                <option value="008">008</option>
-                                <option value="009">009</option>
-                                <option value="010">010</option>
-                                <option value="011">011</option>
-                            </select>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
+                                <select class="tw-input-enabled tw-placeholder" name="RT" id="RT">
+                                    <option value="001">001</option>
+                                    <option value="002">002</option>
+                                    <option value="003">003</option>
+                                    <option value="004">004</option>
+                                    <option value="005">005</option>
+                                    <option value="006">006</option>
+                                    <option value="007">007</option>
+                                    <option value="008">008</option>
+                                    <option value="009">009</option>
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                </select>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RW">RW
-                            <input class="tw-input-disabled tw-placeholder" placeholder="Masukkan RW" type="text"
-                                id="RW" name="RW" value="{{ $default['rw'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RW">RW
+                                <input class="tw-input-disabled tw-placeholder" placeholder="Masukkan RW" type="text"
+                                    id="RW" name="RW" value="{{ $default['rw'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode POS
-                            <input class="tw-input-disabled tw-placeholder" type="text" id="kode_pos" name="kode_pos"
-                                value="{{$default['kode_pos'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode POS
+                                <input class="tw-input-disabled tw-placeholder" type="text" id="kode_pos"
+                                    name="kode_pos" value="{{ $default['kode_pos'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
-                            <input class="tw-input-disabled tw-placeholder" type="text" id="kelurahan" name="kelurahan"
-                                value="{{ $default['kelurahan'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
+                                <input class="tw-input-disabled tw-placeholder" type="text" id="kelurahan"
+                                    name="kelurahan" value="{{ $default['kelurahan'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
-                            <input class="tw-input-disabled tw-placeholder" type="text" id="kecamatan" name="kecamatan"
-                                value="{{ $default['kecamatan'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
+                                <input class="tw-input-disabled tw-placeholder" type="text" id="kecamatan"
+                                    name="kecamatan" value="{{ $default['kecamatan'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
-                            <input class="tw-input-disabled tw-placeholder" type="text" id="kota" name="kota"
-                                value="{{ $default['kota'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
+                                <input class="tw-input-disabled tw-placeholder" type="text" id="kota"
+                                    name="kota" value="{{ $default['kota'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
-                            <input class="tw-input-disabled tw-placeholder" type="text" id="provinsi"
-                                name="provinsi" value="{{ $default['provinsi'] }}" disabled>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
+                                <input class="tw-input-disabled tw-placeholder" type="text" id="provinsi"
+                                    name="provinsi" value="{{ $default['provinsi'] }}" disabled>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
-                            <div class="tw-relative tw-flex tw-w-full">
-                                <input type="text" id="tagihan_listrik" name="tagihan_listrik" placeholder="1000000"
-                                    class="tw-input-enabled tw-pl-8 tw-pr-3" type="number"
-                                    value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}">
-                                </input>
-                                <span
-                                    class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
-                                    <img class="tw-w-7 tw-bg-cover"
-                                        src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
-                                </span>
-                            </div>
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
+                                <div class="tw-relative tw-flex tw-w-full">
+                                    <input type="text" id="tagihan_listrik" name="tagihan_listrik"
+                                        placeholder="1000000" class="tw-input-enabled tw-pl-8 tw-pr-3" type="number"
+                                        value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}">
+                                    </input>
+                                    <span
+                                        class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
+                                        <img class="tw-w-7 tw-bg-cover"
+                                            src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
+                                    </span>
+                                </div>
+                            </label>
 
-                        <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
-                            <input class="tw-input-enabled tw-placeholder" type="number" id="luas_bangunan"
-                                name="luas_bangunan"
-                                value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}">
-                        </label>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
+                                <input class="tw-input-enabled tw-placeholder" type="number" id="luas_bangunan"
+                                    name="luas_bangunan"
+                                    value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}">
+                            </label>
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="tw-flex tw-flex-col tw-gap-2 tw-overflow-hidden tw-overflow-x-scroll">
-                    <h2 class="">Anggota Keluarga</h2>
-                    <div class="tw-flex tw-flex-col tw-gap-3">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+                        <h2 class="">Anggota Keluarga</h2>
+                        <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                        <table class="tw-w-[702px] md:tw-w-full">
-                            {{-- <thead class="tw-rounded-lg"> --}}
+                            <table class="tw-w-[702px] md:tw-w-full">
+                                {{-- <thead class="tw-rounded-lg"> --}}
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                     <th>No</th>
                                     <th>NIK</th>
@@ -139,48 +141,49 @@
                                     <th>Status Keluarga</th>
                                     <th class="tw-w-[108px]"></th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($daftarWarga as $warga)
-                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $warga->NIK }}</td>
-                                        <td>{{ $warga->nama }}</td>
-                                        <td>{{ $warga->status_keluarga }}</td>
-                                        <td
-                                            class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
+                                </thead>
+                                <tbody>
+                                    @foreach ($daftarWarga as $warga)
+                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $warga->NIK }}</td>
+                                            <td>{{ $warga->nama }}</td>
+                                            <td>{{ $warga->status_keluarga }}</td>
+                                            <td
+                                                class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
+                                                <a href=""
+                                                    class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                    Lihat
+                                                </a>
+                                                <a href=""
+                                                    class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
+                                                    <img class="tw-h-5 tw-bg-cover"
+                                                        src="{{ asset('assets/icons/actionable/trash.svg') }}"
+                                                        alt="del">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
+                                        <td class="tw-h-16 tw-relative" colspan="5">
                                             <a href=""
-                                                class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                Lihat
-                                            </a>
-                                            <a href=""
-                                                class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
-                                                <img class="tw-h-5 tw-bg-cover"
-                                                    src="{{ asset('assets/icons/actionable/trash.svg') }}"
-                                                    alt="del">
+                                                class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"
+                                                onclick="tambahAnggotaKeluarga()">
+                                                Tambah
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach
-                                <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
-                                    <td class="tw-h-16 tw-relative" colspan="5">
-                                        <a href=""
-                                            class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"
-                                            onclick="tambahAnggotaKeluarga()">
-                                            Tambah
-                                        </a>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+
+                                </tbody>
+                            </table>
+
+                        </div>
 
                     </div>
-
                 </div>
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <button
-                        class="tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                    <a href="{{ route('warga') }}"
+                        class="tw-flex tw-items-center tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span
                             class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
@@ -189,7 +192,7 @@
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
-                    </button>
+                    </a>
                     <button
                         class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="submit">Simpan</button>
