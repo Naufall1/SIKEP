@@ -12,7 +12,7 @@
     }
 @endphp
 
-<div class="tw-hidden md:tw-flex md:tw-gap-6 tw-items-center">
+<div class="{{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-flex' : 'tw-hidden md:tw-flex'}} md:tw-gap-6 tw-items-center">
     <svg xmlns="http://www.w3.org/2000/svg" width="118" height="15" viewBox="0 0 118 15" fill="none">
         <path
             d="M106.881 5.14453C106.881 2.55176 108.92 0.811523 112.058 0.811523C115.134 0.811523 117.024 2.36719 117.024 4.66992C117.024 6.41016 115.565 7.72852 114.888 8.32617L111.909 10.9629V11.0332H117.173V13.8457H107.101V11.3672L112.199 6.8584C113.051 6.09375 113.438 5.4873 113.438 4.78418C113.438 4.09863 112.884 3.5625 111.926 3.5625C110.959 3.5625 110.274 4.21289 110.274 5.13574V5.21484H106.881V5.14453Z"
@@ -76,7 +76,7 @@
 </div>
 
 <div id="toggleHamburger"
-    class="tw-cursor-pointer md:tw-hidden tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
+    class="tw-cursor-pointer {{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-hidden' : 'md:tw-hidden'}} tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
     href="">
     <img class="tw-h-6 tw-bg-cover" src="{{ asset('assets/icons/actionable/hamburger.svg') }}" alt="hamburger icon">
 </div>
@@ -159,7 +159,7 @@
 <div id="modalBg"
     class="modal-menu tw-z-20 tw-animate-disolve tw-hidden tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
     <div
-        class="tw-w-11/12 tw-relative tw-top-5 tw-left-1/2 -tw-translate-x-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] tw-stroke-n400">
+        class="tw-w-11/12 tw-relative tw-top-5 tw-left-1/2 -tw-translate-x-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
         <div class="tw-flex tw-justify-between tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="118" height="15" viewBox="0 0 118 15" fill="none">
                 <path
