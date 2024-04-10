@@ -38,7 +38,7 @@ class ProfilController extends Controller
         $user->update([
             'username' => $request->username,
             'nama' => $request->nama,
-            'keterangan' => $request->keterangan,
+            'keterangan' => $user->keterangan,
             'password' => $request->filled('password') ? Hash::make($request->password) : $user->password, // soale lek dikosongi tetep berubah
         ]);
 

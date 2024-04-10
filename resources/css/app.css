@@ -25,6 +25,10 @@
         @apply tw-opacity-100;
     }
 
+    input[type="password"]{
+        
+    }
+
     /* Typography */
 
     .tw-h1 {

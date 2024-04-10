@@ -102,8 +102,7 @@
             class="tw-relative nav-profile tw-h-11 tw-min-w-11 tw-justify-center tw-flex md:tw-h-11 md:tw-gap-2 md:tw-px-3 tw-rounded-md tw-items-center tw-cursor-pointer hover:tw-bg-n200">
             <div class="tw-hidden md:tw-inline-block">
                 {{-- Nama --}}
-                <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}
-                </h3>
+                <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}</h3>
 
                 {{-- Keterangan --}}
                 {{-- <p class="tw-caption tw-text-n600">
@@ -117,18 +116,18 @@
             <div id="profilMenu"
                 class="tw-animate-slide-in tw-absolute tw-hidden tw-top-14 tw-right-0 tw-w-40 tw-border-1 tw-rounded-md tw-border-[1px] tw-bg-n100 tw-divide-y-[1px] tw-divide-n400">
                 <div class="tw-flex tw-gap-1 tw-w-full">
-                    <a href="#"
-                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md active:tw-bg-b500 hover:tw-bg-n200 active:tw-outline active:tw-outline-2 active:tw-outline-b300">
+                    <a href="{{ route('profil') }}"
+                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-t-md active:tw-bg-n300 hover:tw-bg-n200 ">
                         <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/profile-circle.svg"
                             alt="profile icon">
-                        <p class="tw-menu-text tw-text-n1000 group-active:tw-text-n100">Profil</p>
+                        <p class="tw-menu-text tw-text-n1000">Profil</p>
                     </a>
                 </div>
                 <div class="tw-flex tw-gap-1 tw-w-full">
                     <a href="{{ route('logout') }}"
-                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-br-md tw-rounded-bl-md active:tw-bg-r500 hover:tw-bg-n200 ">
+                        class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-br-md tw-rounded-bl-md active:tw-bg-n300 hover:tw-bg-n200 ">
                         <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/logout.svg" alt="profile icon">
-                        <p class="tw-menu-text tw-text-r500 group-active:tw-text-n100">Keluar</p>
+                        <p class="tw-menu-text tw-text-r500">Keluar</p>
                     </a>
                 </div>
             </div>
