@@ -71,6 +71,15 @@ class Warga extends Model
         session()->forget('daftar_warga');
         session()->save();
     }
+    public static function removeTemp(int $idx){
+        if (session()->has('daftar_warga')) {
+            $daftarWarga = session()->get('daftar_warga');
+            array_splice($daftarWarga, $idx, 1);
+            session()->put('daftar_warga', $daftarWarga);
+            session()->save();
+            return ;
+        }
+    }
     public function keluarga():BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');

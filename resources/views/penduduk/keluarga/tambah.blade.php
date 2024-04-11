@@ -25,17 +25,16 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
-                                <select class="tw-input-enabled" name="jenis-data" id="jenis-data">
-                                    <option value="data-baru">KK Baru</option>
-                                    <option value="data-lama">KK Lama</option>
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_data">Jenis Data
+                                <select class="tw-input-enabled" name="jenis_data" id="jenis_data">
+                                    <option value="data_baru" {{empty(session()->get('formState')['jenis_data']) ? "" : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>KK Baru</option>
+                                    <option value="data_lama" {{empty(session()->get('formState')['jenis_data']) ? "" : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>KK Lama</option>
                                 </select>
                             </label>
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
-                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan no_kk" type="text"
-                                    id="no_kk" name="no_kk"
-                                    value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
+                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan No KK" type="text"
+                                    id="no_kk" name="no_kk" value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
                                 <select class="tw-hidden tw-placeholder" name="no_kk" id="no_kk-list" disabled>
                                     <option value="no" disabled selected>Pilih KK</option>
                                 </select>
@@ -49,8 +48,7 @@
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
                                 <textarea class="tw-input-enabled tw-pt-[10px] tw-placeholder" placeholder="Masukkan Alamat" type="text"
-                                    id="alamat" name="alamat"
-                                    value="{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}"></textarea>
+                                id="alamat" name="alamat">{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}</textarea>
                             </label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
@@ -60,17 +58,17 @@
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
                                 <select class="tw-input-enabled tw-placeholder" name="RT" id="RT">
-                                    <option value="001">001</option>
-                                    <option value="002">002</option>
-                                    <option value="003">003</option>
-                                    <option value="004">004</option>
-                                    <option value="005">005</option>
-                                    <option value="006">006</option>
-                                    <option value="007">007</option>
-                                    <option value="008">008</option>
-                                    <option value="009">009</option>
-                                    <option value="010">010</option>
-                                    <option value="011">011</option>
+                                    <option value="1">001</option>
+                                    <option value="2">002</option>
+                                    <option value="3">003</option>
+                                    <option value="4">004</option>
+                                    <option value="5">005</option>
+                                    <option value="6">006</option>
+                                    <option value="7">007</option>
+                                    <option value="8">008</option>
+                                    <option value="9">009</option>
+                                    <option value="10">010</option>
+                                    <option value="11">011</option>
                                 </select>
                             </label>
 
@@ -127,7 +125,7 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+                    <div id="anggota_keluarga" class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -155,7 +153,7 @@
                                                     class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
                                                     Lihat
                                                 </a>
-                                                <a href=""
+                                                <a href="{{route('removeAnggotaKeluarga', $loop->index)}}"
                                                     class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
                                                     <img class="tw-h-5 tw-bg-cover"
                                                         src="{{ asset('assets/icons/actionable/trash.svg') }}"
@@ -166,7 +164,7 @@
                                     @endforeach
                                     <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
-                                            <a href=""
+                                            <a href="#"
                                                 class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"
                                                 onclick="tambahAnggotaKeluarga()">
                                                 Tambah
@@ -201,8 +199,13 @@
 
         </div>
     </div>
-
+    {{-- {{dd(session()->get('formState'))}} --}}
     <script>
+        $(document).ready(function () {
+            changeJenisData('{{empty(session()->get('formState')['jenis_data']) ? "" : session()->get('formState')['jenis_data'] }}');
+            selectKK('{{empty(session()->get('formState')['no_kk']) ? "" : session()->get('formState')['no_kk'] }}', '{{empty(session()->get('formState')['jenis_data']) ? "" : session()->get('formState')['jenis_data'] }}');
+            selectRT('{{empty(session()->get('formState')['RT']) ? "" : session()->get('formState')['RT'] }}')
+        });
         function getFormData($form) {
             var unindexed_array = $form.serializeArray();
             var indexed_array = {};
@@ -230,33 +233,28 @@
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: function(response) {
-                    // console.log(response);
                     window.location.href = url;
                 }
             });
         }
 
-        $('#jenis-data').on('change', function() {
-            if (this.value == 'data-lama') {
+        function changeJenisData(data) {
+            if (data == 'data_lama') {
                 $('#formData').attr('action', '{{ route('pindahKK') }}');
                 $('#no_kk').removeClass('tw-input-enabled');
                 $('#no_kk').attr('type', 'hidden');
                 $('#no_kk').prop('disabled', true);
 
-
-                $('#alamat').val('');
                 $('#alamat').removeClass('tw-input-enabled');
                 $('#alamat').addClass('tw-input-disabled placeholder:tw-text-n600');
                 $('#alamat').attr('placeholder', 'Pilih NIK');
                 $('#alamat').prop('disabled', true);
 
-                $('#kepala_keluarga').val('');
                 $('#kepala_keluarga').removeClass('tw-input-enabled');
                 $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
                 $('#kepala_keluarga').attr('placeholder', 'Pilih NIK');
-                $('#kepala_keluarga').prop('disabled', true);
+                $('#kepala_keluarga').prop('readonly', true);
 
-                $('#RT').val('');
                 $('#RT').removeClass('tw-input-enabled');
                 $('#RT').addClass('tw-input-disabled placeholder:tw-text-n600');
                 $('#RT').attr('placeholder', 'Pilih No KK');
@@ -265,19 +263,24 @@
                 $('#no_kk-list').addClass('tw-input-enabled');
                 $('#no_kk-list').removeClass('tw-hidden');
                 $('#no_kk-list').prop('disabled', false);
+                // $('#no_kk-list').val('no').change();
                 $.ajax({
                     type: "GET",
-                    url: "/api/warga",
+                    url: "/api/keluarga",
                     success: function(response) {
-                        response.forEach(warga => {
+                        // console.log(response);
+                        response.forEach(keluarga => {
                             let optionHTML =
-                                `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
-                            $('#nik-list').append(optionHTML);
+                                `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
+                            $('#no_kk-list').append(optionHTML);
                         });
+                        $('#no_kk-list').val('{{empty(session()->get('formState')['no_kk']) ? "no" : (session()->get('formState')['jenis_data'] == 'data_baru'? 'no' : session()->get('formState')['no_kk']) }}').change();
+                        // $('#no_kk-list').val('no').change();
+                        // console.log('{{empty(session()->get('formState')['no_kk']) ? "no" : session()->get('formState')['no_kk'] }}');
                     }
                 });
             }
-            if (this.value == 'data-baru') {
+            if (data == 'data_baru') {
                 $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
                 $('#no_kk').addClass('tw-input-enabled');
                 $('#no_kk').attr('type', 'text');
@@ -292,7 +295,7 @@
                 $('#kepala_keluarga').addClass('tw-input-enabled');
                 $('#kepala_keluarga').removeClass('tw-input-disabled placeholder:tw-text-n600');
                 $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
-                $('#kepala_keluarga').prop('disabled', false);
+                $('#kepala_keluarga').prop('readonly', false);
 
                 $('#RT').val('001');
                 $('#RT').addClass('tw-input-enabled');
@@ -305,6 +308,52 @@
                 $('#no_kk-list').addClass('tw-hidden');
                 $('#no_kk-list').prop('disabled', true);
             }
+        }
+
+        function resetNonDefaultValues() {
+            $('#no_kk').val('');
+            $('#alamat').val('');
+            $('#kepala_keluarga').val('');
+            $('#RT').val('');
+            $('#tagihan_listrik').val('');
+            $('#luas_bangunan').val('');
+        }
+
+        function selectRT(rt) {
+            console.log(rt);
+            $('select#RT').val(rt).change();
+        }
+
+        function selectKK(no_kk, jenis_data) {
+            console.log(jenis_data);
+            if (jenis_data == 'data_lama') {
+                if (no_kk  != '') {
+                    console.log(no_kk);
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/keluarga/" + no_kk,
+                        success: function(response) {
+                            $.each(response, function(key, val) {
+                                if (val === null) {
+                                    // console.log(val);
+                                    $('#' + key).attr('placeholder', '-');
+                                }
+                                $('#' + key).val(val);
+                            });
+                            selectRT(response.RT);
+                        }
+                    });
+                }
+            }
+        }
+
+        $('#jenis_data').on('change', function() {
+            changeJenisData(this.value);
+            resetNonDefaultValues();
+        });
+
+        $('#no_kk-list').on('change', function() {
+            selectKK(this.value, 'data_lama');
         });
     </script>
 @endsection
