@@ -58,6 +58,10 @@ Route::prefix('penduduk')->group(function () {
      * Route untuk manage Keluarga
      */
     Route::get('/keluarga', [KeluargaController::class, 'index'])->name('keluarga')->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
+
+    // FIX THIS DETAIL KELUARGA ROUTE
+    Route::get('/keluarga/detail', [KeluargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+
     Route::middleware('role:rt')->group(function () {
         Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga
         Route::put('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'update']); // untuk menangani update data Keluarga dan menyimpan pada database

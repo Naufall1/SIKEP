@@ -192,4 +192,8 @@ class KeluargaController extends Controller
         // $request->file('image_kk')->storeAs('public/images-kk', $filenameSimpan);
         return $filenameSimpan;
     }
+
+    public function detail(){
+        return view('penduduk.keluarga.detail');
+    }
 }
