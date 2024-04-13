@@ -26,15 +26,27 @@
 
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_data">Jenis Data
-                                <select class="tw-input-enabled" name="jenis_data" id="jenis_data">
-                                    <option value="data_baru" {{empty(session()->get('formState')['jenis_data']) ? "" : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>KK Baru</option>
-                                    <option value="data_lama" {{empty(session()->get('formState')['jenis_data']) ? "" : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>KK Lama</option>
-                                </select>
+                                <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
+                                    <select class="item tw-input-enabled tw-appearance-none" name="jenis_data" id="jenis_data">
+                                        <option value="data_baru"
+                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>
+                                            KK Baru</option>
+                                        <option value="data_lama"
+                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>
+                                            KK Lama</option>
+                                    </select>
+                                    <span
+                                        class="toggleDrop tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2">
+                                        <img id="arrowDown" src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}"
+                                            alt="\/">
+                                    </span>
+                                </div>
                             </label>
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan No KK" type="text"
-                                    id="no_kk" name="no_kk" value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
+                                    id="no_kk" name="no_kk"
+                                    value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
                                 <select class="tw-hidden tw-placeholder" name="no_kk" id="no_kk-list" disabled>
                                     <option value="no" disabled selected>Pilih KK</option>
                                 </select>
@@ -48,7 +60,7 @@
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
                                 <textarea class="tw-input-enabled tw-pt-[10px] tw-placeholder" placeholder="Masukkan Alamat" type="text"
-                                id="alamat" name="alamat">{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}</textarea>
+                                    id="alamat" name="alamat">{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}</textarea>
                             </label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
@@ -125,7 +137,8 @@
                         </div>
                     </div>
 
-                    <div id="anggota_keluarga" class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+                    <div id="anggota_keluarga"
+                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -153,7 +166,7 @@
                                                     class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
                                                     Lihat
                                                 </a>
-                                                <a href="{{route('removeAnggotaKeluarga', $loop->index)}}"
+                                                <a href="{{ route('removeAnggotaKeluarga', $loop->index) }}"
                                                     class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
                                                     <img class="tw-h-5 tw-bg-cover"
                                                         src="{{ asset('assets/icons/actionable/trash.svg') }}"
@@ -201,11 +214,17 @@
     </div>
     {{-- {{dd(session()->get('formState'))}} --}}
     <script>
-        $(document).ready(function () {
-            changeJenisData('{{empty(session()->get('formState')['jenis_data']) ? "" : session()->get('formState')['jenis_data'] }}');
-            selectKK('{{empty(session()->get('formState')['no_kk']) ? "" : session()->get('formState')['no_kk'] }}', '{{empty(session()->get('formState')['jenis_data']) ? "" : session()->get('formState')['jenis_data'] }}');
-            selectRT('{{empty(session()->get('formState')['RT']) ? "" : session()->get('formState')['RT'] }}')
+        $(document).ready(function() {
+            changeJenisData(
+                '{{ empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data'] }}'
+                );
+            selectKK(
+                '{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}',
+                '{{ empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data'] }}'
+                );
+            selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
         });
+
         function getFormData($form) {
             var unindexed_array = $form.serializeArray();
             var indexed_array = {};
@@ -274,9 +293,11 @@
                                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
                             $('#no_kk-list').append(optionHTML);
                         });
-                        $('#no_kk-list').val('{{empty(session()->get('formState')['no_kk']) ? "no" : (session()->get('formState')['jenis_data'] == 'data_baru'? 'no' : session()->get('formState')['no_kk']) }}').change();
+                        $('#no_kk-list').val(
+                            '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+                            ).change();
                         // $('#no_kk-list').val('no').change();
-                        // console.log('{{empty(session()->get('formState')['no_kk']) ? "no" : session()->get('formState')['no_kk'] }}');
+                        // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
                     }
                 });
             }
@@ -327,7 +348,7 @@
         function selectKK(no_kk, jenis_data) {
             console.log(jenis_data);
             if (jenis_data == 'data_lama') {
-                if (no_kk  != '') {
+                if (no_kk != '') {
                     console.log(no_kk);
                     $.ajax({
                         type: "GET",
