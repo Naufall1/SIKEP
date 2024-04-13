@@ -42,6 +42,10 @@ Route::prefix('penduduk')->group(function () {
      * Route untuk manage Warga
      */
     Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
+
+    // FIX THIS DETAIL WARGA ROUTE
+    Route::get('/warga/detail', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+
     Route::middleware('role:rt')->group(function () {
         Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit']); // untuk menampilkan form edit data Warga
         Route::put('/warga/ubah/{nik}', [WargaController::class, 'update']); // untuk menangani update data Warga dan menyimpan pada database

@@ -32,14 +32,9 @@
                     <h2 class="">Profil</h2>
                     <div class="tw-flex tw-flex-col tw-gap-3">
 
-                        <div class="tw-flex tw-gap-8 md:tw-gap-14">
-                            <h5 class="tw-placeholder tw-text-n700 tw-w-[140px] md:tw-w-[150px]">Nama</h5>
-                            <p class="tw-top-menu-text">{{ $user->nama }}</p>
-                        </div>
-                        <div class="tw-flex tw-gap-8 md:tw-gap-14">
-                            <h5 class="tw-placeholder tw-text-n700 tw-w-[140px] md:tw-w-[150px]">Keterangan</h5>
-                            <p class="tw-top-menu-text">{{ $user->keterangan }}</p>
-                        </div>
+                        @include('components.form.textdetail', ['isImage' => false, 'title' => 'Nama', 'content' =>  $user->nama ])
+
+                        @include('components.form.textdetail', ['isImage' => false, 'title' => 'Keterangan', 'content' => $user->keterangan ])
 
                     </div>
                 </div>
@@ -48,10 +43,7 @@
                     <h2 class="">Akun</h2>
                     <div class="tw-flex tw-flex-col tw-gap-3">
 
-                        <div class="tw-flex tw-gap-8 md:tw-gap-14">
-                            <h5 class="tw-placeholder tw-text-n700 tw-w-[140px] md:tw-w-[150px]">Nama Pengguna</h5>
-                            <p class="tw-top-menu-text">{{ $user->username }}</p>
-                        </div>
+                        @include('components.form.textdetail', ['isImage' => false, 'title' => 'Nama Pengguna', 'content' =>  $user->username ])
 
                     </div>
                 </div>
@@ -59,7 +51,7 @@
                 
             </div>
             <div class="tw-flex">
-                <a href="{{route('home')}}"
+                <a href="{{url()->previous()}}"
                     class="tw-flex tw-items-center tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                     type="button">
                     <span class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">

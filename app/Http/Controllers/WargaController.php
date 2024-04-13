@@ -114,4 +114,8 @@ class WargaController extends Controller
         $warga->storeTemp();
         return redirect()->route('keluarga-tambah');
     }
+
+    public function detail(){
+        return view('penduduk.warga.detail');
+    }
 }
