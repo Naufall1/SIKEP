@@ -87,7 +87,9 @@ Route::prefix('pengajuan')->group(function () {
     Route::get('/perubahan-warga', [function(){
         return view('pengajuan.perubahanwarga.index');
     }])->name('perubahanWarga'); // memberikan data permintaan perubahan data warga
-    Route::get('/perubahan-keluarga', [ 'perubahanKeluarga'])->name('perubahanKeluarga'); // memberikan data permintaan perubahan data keluarga
+    Route::get('/perubahan-keluarga', [ function(){
+        return view('pengajuan.perubahankeluarga.index');
+    }])->name('perubahanKeluarga'); // memberikan data permintaan perubahan data keluarga
 
     /**
      * Route untuk menangani proses konfirmasi dan tolak sebuah data pengajuan
