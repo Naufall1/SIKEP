@@ -101,11 +101,18 @@ class UserSeeder extends Seeder
             ],
             [
                 'level_id' => 3,
-                'username' => 'admin',
+                'username' => 'admin1',
                 'password' => Hash::make('admin'),
                 'nama' => 'Admin',
-                'keterangan' => '-',
-            ]
+                'keterangan' => 'admin 1',
+            ],
+            [
+                'level_id' => 3,
+                'username' => 'admin2',
+                'password' => Hash::make('admin'),
+                'nama' => 'Admin',
+                'keterangan' => 'admin 2',
+            ],
         ]);
     }
 }

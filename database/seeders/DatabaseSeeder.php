@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             KeluargaSeeder::class,
             WargaSeeder::class,
+            DemografiSeeder::class,
+            HaveDemografiSeeder::class,
+            BansosSeeder::class,
+            ArticleAnnouncementSeeder::class,
+            MightGetSeeder::class,
         ]);
     }
 }
