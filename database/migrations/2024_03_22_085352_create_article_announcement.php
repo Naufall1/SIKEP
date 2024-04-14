@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('isi');
             $table->enum('status', ['Ditampilkan', 'Disembunyikan']);
             $table->text('image_url');
+            $table->string('caption', 50);
 
             $table->foreign('user_id')->references('user_id')->on('user');
         });
