@@ -84,8 +84,8 @@
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
                                 <th>Pengaju</th>
-                                <th>No KK</th>
-                                <th>Kepala Keluarga</th>
+                                <th>NIK</th>
+                                <th>Nama</th>
                                 <th class="tw-hidden md:tw-flex tw-h-11 tw-grow tw-items-center">Tanggal</th>
                                 <th>Status Pengajuan</th>
                                 <th class="tw-w-[108px]"></th>
@@ -97,8 +97,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
                                     <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
+                                    <td></td>
                                     <td>
                                         @include('components.form.label', ['content' => 'VALUE HERE'])
                                     </td>

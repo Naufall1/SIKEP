@@ -84,7 +84,9 @@ Route::prefix('pengajuan')->group(function () {
     Route::get('/data-baru', [function(){
         return view('pengajuan.databaru.index');
     }])->name('dataBaru'); // memberikan data permintaan penambahan data baru
-    Route::get('/perubahan-warga', [ 'perubahanWarga'])->name('perubahanWarga'); // memberikan data permintaan perubahan data warga
+    Route::get('/perubahan-warga', [function(){
+        return view('pengajuan.perubahanwarga.index');
+    }])->name('perubahanWarga'); // memberikan data permintaan perubahan data warga
     Route::get('/perubahan-keluarga', [ 'perubahanKeluarga'])->name('perubahanKeluarga'); // memberikan data permintaan perubahan data keluarga
 
     /**
