@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <p class="tw-breadcrumb tw-text-n500">Daftar Penduduk / Tambah Keluarga /
-            <span class="tw-font-bold tw-text-b500">Tambah Anggota</span>
+        <p class="tw-breadcrumb tw-text-n500">Daftar Warga / Detail Warga /
+            <span class="tw-font-bold tw-text-b500">Perbarui Data</span>
         </p>
 
         <div class="md:tw-w-80">
 
-            <h1 class="tw-h1 tw-mb-3">Tambah Data</h1>
+            <h1 class="tw-h1 tw-mb-3">Perbarui Data Warga</h1>
 
             <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData">
                 {{ csrf_field() }}
@@ -169,7 +169,7 @@
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
                                 <div class="tw-relative tw-flex tw-w-full">
-                                    <input type="number" id="penghasilan" name="penghasilan" placeholder="HERE"
+                                    <input type="number" min="0" id="penghasilan" name="penghasilan" placeholder="HERE"
                                         value="HERE" class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
                                     </input>
                                     <span
