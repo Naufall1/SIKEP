@@ -73,12 +73,17 @@ Route::prefix('penduduk')->group(function () {
 })->name('penduduk');
 
 Route::prefix('pengajuan')->group(function () {
-    Route::get('/', [ 'index']); // Menampilkan halaman utama menu Pengajuan
+    Route::get('/', function () {
+        return redirect()->route('dataBaru');
+    }); // Menampilkan halaman utama menu Pengajuan
 
     /**
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
-    Route::get('/data-baru', [ 'dataBaru'])->name('dataBaru'); // memberikan data permintaan penambahan data baru
+    // Route::get('/data-baru', [ 'dataBaru'])->name('dataBaru'); // memberikan data permintaan penambahan data baru
+    Route::get('/data-baru', [function(){
+        return view('pengajuan.databaru.index');
+    }])->name('dataBaru'); // memberikan data permintaan penambahan data baru
     Route::get('/perubahan-warga', [ 'perubahanWarga'])->name('perubahanWarga'); // memberikan data permintaan perubahan data warga
     Route::get('/perubahan-keluarga', [ 'perubahanKeluarga'])->name('perubahanKeluarga'); // memberikan data permintaan perubahan data keluarga
 
@@ -90,7 +95,7 @@ Route::prefix('pengajuan')->group(function () {
     Route::get('/detail/{id}/warga/{nik}', [ 'detail'])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
     Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
     Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
-})->middleware('role:rw');
+})->name('pengajuan')->middleware('role:rw');
 
 Route::prefix('bansos')->group(function () {
     Route::get('/kriteria', [BansosController::class, 'index'])->name('kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)
