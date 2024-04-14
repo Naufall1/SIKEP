@@ -114,11 +114,18 @@
                                     name="provinsi" value="{{ $default['provinsi'] }}" disabled>
                             </label>
 
+                        </div>
+
+                    </div>
+
+                    <div class=" tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                        <h2 class="">Data Tambahan</h2>
+                        <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-3">
+
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
                                 <div class="tw-relative tw-flex tw-w-full">
-                                    <input type="text" id="tagihan_listrik" name="tagihan_listrik"
-                                        placeholder="1000000" class="tw-input-enabled tw-pl-8 tw-pr-3" type="number"
-                                        value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}">
+                                    <input type="number" min="0" id="tagihan_listrik" name="tagihan_listrik" placeholder="1000000"
+                                    value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}" class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
                                     </input>
                                     <span
                                         class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
@@ -128,14 +135,14 @@
                                 </div>
                             </label>
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
-                                <input class="tw-input-enabled tw-placeholder" type="number" id="luas_bangunan"
-                                    name="luas_bangunan"
-                                    value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}">
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
+                                <input class="tw-input-enabled tw-placeholder tw-appearance-none" placeholder="Masukkan Luas Bangunan"
+                                    type="number" min="0" id="luas_bangunan" name="luas_bangunan" value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}">
                             </label>
 
                         </div>
                     </div>
+
 
                     <div id="anggota_keluarga"
                         class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
@@ -279,6 +286,16 @@
                 $('#RT').attr('placeholder', 'Pilih No KK');
                 $('#RT').prop('disabled', true);
 
+                $('#tagihan_listrik').removeClass('tw-input-enabled');
+                $('#tagihan_listrik').addClass('tw-input-disabled placeholder:tw-text-n600');
+                $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
+                $('#tagihan_listrik').prop('disabled', true);
+
+                $('#luas_bangunan').removeClass('tw-input-enabled');
+                $('#luas_bangunan').addClass('tw-input-disabled placeholder:tw-text-n600');
+                $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
+                $('#luas_bangunan').prop('disabled', true);
+
                 $('#no_kk-list').addClass('tw-input-enabled');
                 $('#no_kk-list').removeClass('tw-hidden');
                 $('#no_kk-list').prop('disabled', false);
@@ -324,6 +341,17 @@
                 $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
                 $('#RT').prop('disabled', false);
 
+                $('#tagihan_listrik').val('001');
+                $('#tagihan_listrik').addClass('tw-input-enabled');
+                $('#tagihan_listrik').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                $('#tagihan_listrik').attr('placeholder', 'Masukkan Tempat Lahir');
+                $('#tagihan_listrik').prop('disabled', false);
+
+                $('#luas_bangunan').val('001');
+                $('#luas_bangunan').addClass('tw-input-enabled');
+                $('#luas_bangunan').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                $('#luas_bangunan').attr('placeholder', 'Masukkan Tempat Lahir');
+                $('#luas_bangunan').prop('disabled', false);
 
                 $('#no_kk-list').removeClass('tw-input-enabled');
                 $('#no_kk-list').addClass('tw-hidden');

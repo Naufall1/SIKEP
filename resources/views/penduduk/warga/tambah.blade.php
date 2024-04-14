@@ -133,7 +133,7 @@
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
                                 <div class="tw-relative tw-flex tw-w-full">
-                                    <input type="text" id="penghasilan" name="penghasilan" placeholder="1000000"
+                                    <input type="number" min="0" id="penghasilan" name="penghasilan" placeholder="1000000"
                                         class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
                                     </input>
                                     <span
