@@ -151,7 +151,7 @@ class KeluargaController extends Controller
 
     /**
      * @param Request $request
-     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedapam Keluarga yang sudah ada.
+     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedalam Keluarga yang sudah ada.
      */
     public function tambahWarga(Request $request){
         // TODO: Add validation

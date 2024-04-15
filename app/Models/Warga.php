@@ -58,11 +58,13 @@ class Warga extends Model
         return session()->get('daftar_warga');
     }
     public static function saveTemp(Keluarga $keluarga){
-        // dd($keluarga);
+        /**
+         * @var Warga $warga
+         */
         $daftarWarga = session()->get('daftar_warga');
         foreach ($daftarWarga as $warga) {
             $warga->no_kk = $keluarga->no_kk;
-            if (!empty(Warga::find($warga->nik))) {
+            if (!empty(Warga::find($warga->NIK))) {
                 WargaModified::updateWarga($warga);
             } else {
                 $warga->save();

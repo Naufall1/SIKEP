@@ -32,14 +32,14 @@ class WargaModified extends Model
     public static function updateWarga(Warga $warga){
         $modif = new WargaModified();
         $modif->user_id = Auth::user()->user_id;
-        $modif->NIK = $warga->isDirty('NIK') ? $warga->NIK : "";
+        $modif->NIK = $warga->NIK;
         $modif->no_kk = $warga->isDirty('no_kk') ? $warga->no_kk : "";
-        $modif->agama = $warga->isDirty('agama') ? $warga->agama : "";
-        $modif->status_perkawinan = $warga->isDirty("status_perkawinan") ? $warga->status_perkawinan : "";
+        $modif->agama = $warga->isDirty('agama') ? $warga->agama : "-";
+        $modif->status_perkawinan = $warga->isDirty("status_perkawinan") ? $warga->status_perkawinan : "-";
         $modif->status_keluarga = $warga->isDirty('status_keluarga') ? $warga->status_keluarga : "";
-        $modif->status_warga = $warga->isDirty('status_warga') ? $warga->status_warga : "";
+        $modif->status_warga = $warga->isDirty('status_warga') ? $warga->status_warga : "-";
         $modif->jenis_pekerjaan = $warga->isDirty('jenis_pekerjaan') ? $warga->jenis_pekerjaan : "";
-        $modif->penghasilan = $warga->isDirty('penghasilan') ? $warga->penghasilan : "";
+        $modif->penghasilan = $warga->isDirty('penghasilan') ? $warga->penghasilan : 0;
         $modif->pendidikan = $warga->isDirty('pendidikan') ? $warga->pendidikan : "";
         $modif->tanggal_request = now();
         $modif->status_request = 'Menunggu';

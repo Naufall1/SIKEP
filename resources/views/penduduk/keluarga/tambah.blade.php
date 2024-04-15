@@ -230,6 +230,16 @@
     </div>
     {{-- {{dd(session()->get('formState'))}} --}}
     <script>
+        $('#formdata').submit(function (e) {
+            // e.preventDefault();
+            $('#RW').prop('disabled', false);
+            $('#kode_pos').prop('disabled', false);
+            $('#kelurahan').prop('disabled', false);
+            $('#kecamatan').prop('disabled', false);
+            $('#kota').prop('disabled', false);
+            $('#provinsi').prop('disabled', false);
+            return true;
+        });
         $(document).ready(function() {
             changeJenisData(
                 '{{ empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data'] }}'
