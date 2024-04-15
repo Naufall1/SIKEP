@@ -115,7 +115,8 @@ class WargaController extends Controller
         return redirect()->route('keluarga-tambah');
     }
 
-    public function detail(){
-        return view('penduduk.warga.detail');
+    public function detail($nik){
+        $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
+        return view('penduduk.warga.detail', compact('warga'));
     }
 }

@@ -35,50 +35,49 @@
                     <div class="tw-flex tw-flex-col tw-gap-2">
                         <h2 class="">Detail Warga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-
                             @include('components.form.textdetail', [
                                 'title' => 'NIK',
-                                'content' => 'akfdj',
+                                'content' => $warga->NIK,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama',
-                                'content' => 'akfdj',
+                                'content' => $warga->nama,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Tempat Lahir',
-                                'content' => 'akfdj',
+                                'content' => $warga->tempat_lahir,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Tanggal Lahir',
-                                'content' => 'akfdj',
+                                'content' => $warga->tanggal_lahir,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis Kelamin',
-                                'content' => 'akfdj',
+                                'content' => $warga->jenis_kelamin,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pendidikan',
-                                'content' => 'akfdj',
+                                'content' => $warga->pendidikan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Agama',
-                                'content' => 'akfdj',
+                                'content' => $warga->agama,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Perkawinan',
-                                'content' => 'akfdj',
+                                'content' => $warga->status_perkawinan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pekerjaan',
-                                'content' => 'akfdj',
+                                'content' => $warga->pekerjaan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kewarganegaraan',
-                                'content' => 'akfdj',
+                                'content' => $warga->kewarganegaraan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Warga',
-                                'content' => 'Aktif',
+                                'content' => $warga->status_warga,
                                 'isLabel' => true,
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
@@ -91,27 +90,27 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Status Keluarga',
-                                'content' => 'akfdj',
+                                'content' => $warga->status_keluarga,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama Ayah',
-                                'content' => 'akfdj',
+                                'content' => $warga->nama_ayah,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama Ibu',
-                                'content' => 'akfdj',
+                                'content' => $warga->nama_ibu,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp' . 'adshf',
+                                'content' => 'Rp. ' . $warga->penghasilan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Paspor',
-                                'content' => 'akfdj',
+                                'content' => $warga->no_paspor,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Kitas',
-                                'content' => 'akfdj',
+                                'content' => $warga->no_kitas,
                             ])
 
                         </div>
@@ -122,19 +121,18 @@
                         <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                             <h2 class="">Demografi Masuk</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
-
                                 @include('components.form.textdetail', [
                                     'title' => 'Jenis',
-                                    'content' => 'Migrasi',
+                                    'content' => !isset($warga->haveDemografi[0]->demografi) ? "-" : $warga->haveDemografi[0]->demografi->jenis,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Tanggal',
-                                    'content' => '01/12/2010',
+                                    'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian) ? "-" : $warga->haveDemografi[0]->tanggal_kejadian,
                                 ])
                                 @include('components.form.textdetail', [
                                     'isImage' => true,
                                     'title' => 'Berkas Pendukung',
-                                    'content' => 'akfdj',
+                                    'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
                             </div>
@@ -142,7 +140,7 @@
 
                         {{-- if user status user migrasi/meninggal --}}
                         {{-- @if ()
-                            
+
                         <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                             <h2 class="">Demografi Keluar</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
@@ -159,12 +157,12 @@
                                     'isImage' => true,
                                     'title' => 'Berkas Pendukung',
                                     'content' => 'akfdj',
-                                ]) 
+                                ])
                                 kalau label kasih value var $isLabel with true
 
                             </div>
                         </div>
-                        
+
                         @endif --}}
                     </div>
 
@@ -185,9 +183,9 @@
                                 <tbody>
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$warga->keluarga->no_kk}}</td>
+                                            <td>{{$warga->keluarga->kepala_keluarga}}</td>
+                                            <td>{{$warga->keluarga->RT}}</td>
                                             <td
                                                 class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
                                                 <a href=""
@@ -207,7 +205,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('warga') }}"
                         class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span
@@ -309,6 +307,6 @@
         <a href="{{url()->previous()}}">Kembali</a>
     </form>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+
 </body>
 </html> --}}

@@ -44,7 +44,7 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
 
     // FIX THIS DETAIL WARGA ROUTE
-    Route::get('/warga/detail', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::get('/warga/detail/{nik}', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
     Route::middleware('role:rt')->group(function () {
         Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit']); // untuk menampilkan form edit data Warga
@@ -60,7 +60,7 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/keluarga', [KeluargaController::class, 'index'])->name('keluarga')->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
 
     // FIX THIS DETAIL KELUARGA ROUTE
-    Route::get('/keluarga/detail', [KeluargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::get('/keluarga/detail/', [KeluargaController::class, 'detail'])->name('keluargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
     Route::middleware('role:rt')->group(function () {
         Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga

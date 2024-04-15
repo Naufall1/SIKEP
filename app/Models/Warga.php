@@ -36,6 +36,9 @@ class Warga extends Model
         'nama_ayah',
         'nama_ibu',
     ];
+    protected $casts = [
+        'NIK' => 'string'
+    ];
 
     public function storeTemp() {
         if (session()->has('daftar_warga')) {
