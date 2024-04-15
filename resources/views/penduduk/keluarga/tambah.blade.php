@@ -425,7 +425,7 @@
         //         }
         //     });
         //     $.ajax({
-        //         url: '{{route('uploadKK')}}',
+        //         url: '',
         //         cache: false,
         //         contentType: false,
         //         processData: false,
