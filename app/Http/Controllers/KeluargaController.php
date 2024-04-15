@@ -187,7 +187,7 @@ class KeluargaController extends Controller
         $filename = Str::uuid()->getHex()->toString();
         $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
         $filenameSimpan = $filename . '.' . $extension;
-        $request->file('kartu_keluarga')->storeAs('public/KK', $filenameSimpan);
+        $request->file('kartu_keluarga')->storeAs('public/KK', $filenameSimpan, 'local');
         return $filenameSimpan;
     }
 
