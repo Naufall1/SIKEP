@@ -21,20 +21,34 @@
 
                             <input type="hidden" name="no_kk" id="no_kk" value="{{ $no_kk }}">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
+                            <x-input.label for="jenis-data" label="Jenis Data">
+                                <x-input.select name="jenis-data">
+                                    <option value="data-baru">Warga Baru</option>
+                                    <option value="data-lama">Warga Lama</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
                                 <select class="tw-input-enabled" name="jenis-data" id="jenis-data">
                                     <option value="data-baru">Warga Baru</option>
                                     <option value="data-lama">Warga Lama</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
+                            <x-input.label for="nik" label="NIK">
+                                <x-input.input type="text" name="nik" placeholder="Masukkan NIK"></x-input.input>
+                                <x-input.select class="tw-hidden" name="nik" id="nik-list">
+                                    <option value="no" disabled selected>Pilih KK</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan NIK" type="text"
                                     id="nik" name="nik">
                                 <select class="tw-hidden tw-placeholder" name="nik" id="nik-list" disabled>
                                     <option value="data-baru" disabled selected>Pilih Warga</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nama" type="text"
@@ -294,7 +308,7 @@
 
 
                 $('#nik-list').addClass('tw-input-enabled');
-                $('#nik-list').removeClass('tw-hidden');
+                $('#nik-list').parent().removeClass('tw-hidden');
                 $('#nik-list').prop('disabled', false);
                 $.ajax({
                     type: "GET",
@@ -389,7 +403,7 @@
 
 
                 $('#nik-list').removeClass('tw-input-enabled');
-                $('#nik-list').addClass('tw-hidden');
+                $('#nik-list').parent().addClass('tw-hidden');
                 $('#nik-list').prop('disabled', true);
             }
         });
