@@ -89,12 +89,14 @@
                                 </div>
                             </label> --}}
 
-                            <x-input.label for="pendidikan" label="Pendidikan">
-                                <x-input.select name="pendidikan" id="pendidikan">
-                                    <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
-                                    <option value="SLTA/Sederajat">SLTA/Sederajat</option>
-                                    <option value="DIPLOMA I/II">DIPLOMA I/II</option>
-                                    <option value="Diploma IV/Strata 1">Diploma IV/Strata 1</option>
+                            <x-input.label for="agama" label="Agama">
+                                <x-input.select name="agama" id="agama">
+                                    <option value="Budha">Budha</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Islam">Islam</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Konghuchu">Konghuchu</option>
                                 </x-input.select>
                             </x-input.label>
 

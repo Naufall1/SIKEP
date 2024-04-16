@@ -19,13 +19,23 @@
                         <h2 class="">Data Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3" id="identitasWarga">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
+                            <x-input.label for="no_kk" label="No KK">
+                                <x-input.input value="HERE" type="text" id="no_kk" name="no_kk" disabled></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text" id="no_kk"
                                     name="no_kk" disabled>
+                            </label> --}}
 
-                            </label>
+                            <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
+                                <x-input.select name="kepala_keluarga" id="kepala_keluarga">
+                                    <option value="option_1">Option 1</option>
+                                    <option value="option_2">Option 2</option>
+                                </x-input.select>
+                            </x-input.label>
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
                                 <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
                                     <select class="tw-input-enabled tw-placeholder tw-appearance-none" name="kepala_keluarga" id="kepala_keluarga">
                                         <option value="option_1">Option 1</option>
@@ -37,53 +47,85 @@
                                             alt="\/">
                                     </span>
                                 </div>
-                            </label>
+                            </label> --}}
+                            
+                            <x-input.label for="alamat" label="No Alamat">
+                                <x-input.input value="HERE" type="text" id="alamat" name="alamat" ></x-input.input>
+                            </x-input.label>
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="alamat" name="alamat" disabled>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode Pos
+                            <x-input.label for="kode_pos" label="Kode Pos">
+                                <x-input.input value="HERE" type="text" id="kode_pos" name="kode_pos"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode Pos
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="kode_pos" name="kode_pos" disabled>
-                            </label>
+                            </label> --}}
+                            
+                            <x-input.label for="rt" label="RT">
+                                <x-input.input value="HERE" type="text" id="rt" name="rt"></x-input.input>
+                            </x-input.label>
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rt">RT
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rt">RT
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="rt" name="rt" disabled>
-                            </label>                            
+                            </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rw">RW
+                            <x-input.label for="rw" label="RW">
+                                <x-input.input value="HERE" type="text" id="rw" name="rw"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rw">RW
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="rw" name="rw" disabled>
-                            </label>                            
+                            </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
+                            <x-input.label for="kelurahan" label="Kelurahan">
+                                <x-input.input value="HERE" type="text" id="kelurahan" name="kelurahan" ></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="kelurahan" name="kelurahan" disabled>
-                            </label>                            
+                            </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
+                            <x-input.label for="kecamatan" label="Kecamatan">
+                                <x-input.input  value="HERE" type="text" id="kecamatan" name="kecamatan"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="kecamatan" name="kecamatan" disabled>
-                            </label>                            
+                            </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
+                            <x-input.label for="kota" label="Kota">
+                                <x-input.input value="HERE" type="text" id="kota" name="kota" ></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="kota" name="kota" disabled>
-                            </label>                            
+                            </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
+                            <x-input.label for="provinsi" label="Provinsi">
+                                <x-input.input value="HERE" type="text" id="provinsi" name="provinsi" ></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="provinsi" name="provinsi" disabled>
-                            </label>                            
+                            </label>                             --}}
 
                             <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kartu_keluarga">Kartu Keluarga<div class="tw-relative tw-cursor-pointer tw-input-enabled"> <input
                                         id="kartu_keluarga" type="file"
                                         class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
                                 </div>
-                            </label>
+                            </label> 
 
                         </div>
                     </div>
@@ -92,7 +134,12 @@
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
+                            <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
+                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="HERE" value="HERE" icon="rupiah" alt="Rp">
+                                </x-input.leadingicon>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
                                 <div class="tw-relative tw-flex tw-w-full">
                                     <input type="number" min="0" id="tagihan_listrik" name="tagihan_listrik" placeholder="HERE"
                                         value="HERE" class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
@@ -103,12 +150,17 @@
                                             src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
                                     </span>
                                 </div>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
+                            <x-input.label for="luas_bangunan" label="Luas Bangunan">
+                                <x-input.input placeholder="HERE" value="HERE" type="number" min="0" id="luas_bangunan" name="luas_bangunan">
+                                </x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
                                 <input class="tw-input-enabled tw-placeholder tw-appearance-none" placeholder="HERE" value="HERE"
                                     type="number" min="0" id="luas_bangunan" name="luas_bangunan">
-                            </label>
+                            </label> --}}
 
                         </div>
                     </div>
