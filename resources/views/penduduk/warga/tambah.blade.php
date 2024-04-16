@@ -50,38 +50,77 @@
                                 </select>
                             </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
+                            <x-input.label for="nama" label="Nama">
+                                <x-input.input type="text" name="nama" id="nama" placeholder="Masukkan Nama"></x-input.input>
+                            </x-input.label>
+
+                            {{--<label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nama" type="text"
                                     id="nama" name="nama">
-                            </label>
+                            </label>--}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tempat_lahir">Tempat Lahir
+                            <x-input.label for="tempat_lahir" label="Tempat Lahir">
+                                <x-input.input type="text" placeholder="Masukkan Tempat Lahir" id="tempat_lahir" name="tempat_lahir"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tempat_lahir">Tempat Lahir
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Tempat Lahir"
                                     type="text" id="tempat_lahir" name="tempat_lahir">
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tanggal_lahir">Tanggal Lahir
+                            <x-input.label for="tanggal_lahir" label="Tanggal Lahir">
+                                <x-input.input placeholder="Masukkan Tempat Lahir" type="date" id="tanggal_lahir" name="tanggal_lahir"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tanggal_lahir">Tanggal Lahir
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Tempat Lahir"
                                     type="date" id="tanggal_lahir" name="tanggal_lahir">
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_kelamin">Jenis Kelamin
+                            <x-input.label for="jenis_kelamin" label="Jenis Kelamin">
+                                <x-input.select name="jenis_kelamin" id="jenis_kelamin">
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_kelamin">Jenis Kelamin
                                 <select class="tw-input-enabled tw-placeholder" name="jenis_kelamin" id="jenis_kelamin">
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="pendidikan">Pendidikan
+                            <x-input.label for="pendidikan" label="Pendidikan">
+                                <x-input.select name="pendidikan" id="pendidikan">
+                                    <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
+                                    <option value="SLTA/Sederajat">SLTA/Sederajat</option>
+                                    <option value="DIPLOMA I/II">DIPLOMA I/II</option>
+                                    <option value="Diploma IV/Strata 1">Diploma IV/Strata 1</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="pendidikan">Pendidikan
                                 <select class="tw-input-enabled tw-placeholder" name="pendidikan" id="pendidikan">
                                     <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
                                     <option value="SLTA/Sederajat">SLTA/Sederajat</option>
                                     <option value="DIPLOMA I/II">DIPLOMA I/II</option>
                                     <option value="Diploma IV/Strata 1">Diploma IV/Strata 1</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-opacity-100 tw-flex tw-flex-col tw-gap-2" for="agama">Agama
+                            <x-input.label for="agama" label="Agama">
+                                <x-input.select name="agama" id="agama">
+                                    <option value="Budha">Budha</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Islam">Islam</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Konghuchu">Konghuchu</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-opacity-100 tw-flex tw-flex-col tw-gap-2" for="agama">Agama
                                 <select class="tw-input-enabled tw-placeholder" name="agama" id="agama">
                                     <option value="Budha">Budha</option>
                                     <option value="Hindu">Hindu</option>
@@ -90,18 +129,37 @@
                                     <option value="Kristen">Kristen</option>
                                     <option value="Konghuchu">Konghuchu</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_perkawinan">Status Perkawinan
+                            <x-input.label for="status_perkawinan" label="Status Perkawinan">
+                                <x-input.select name="status_perkawinan" id="status_perkawinan">
+                                    <option value="Belum Kawin">Belum Kawin</option>
+                                    <option value="Kawin">Kawin</option>
+                                    <option value="Cerai Mati">Cerai Mati</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_perkawinan">Status Perkawinan
                                 <select class="tw-input-enabled tw-placeholder" name="status_perkawinan"
                                     id="status_perkawinan">
                                     <option value="Belum Kawin">Belum Kawin</option>
                                     <option value="Kawin">Kawin</option>
                                     <option value="Cerai Mati">Cerai Mati</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
+                            <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
+                                <x-input.select name="jenis_pekerjaan" id="jenis_pekerjaan">
+                                    <option value="Belum/Tidak Bekerja">Belum/Tidak Bekerja</option>
+                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
+                                    <option value="Mengurus Rumah Tangga">Mengurus Rumah Tangga</option>
+                                    <option value="Pegawai Negeri Sipil">Pegawai Negeri Sipil</option>
+                                    <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
                                 <select class="tw-input-enabled tw-placeholder" name="jenis_pekerjaan" id="jenis_pekerjaan">
                                     <option value="Belum/Tidak Bekerja">Belum/Tidak Bekerja</option>
                                     <option value="Karyawan Swasta">Karyawan Swasta</option>
@@ -109,15 +167,22 @@
                                     <option value="Pegawai Negeri Sipil">Pegawai Negeri Sipil</option>
                                     <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kewarganegaraan">Kewarganegaraan
-                                <select class="tw-input-enabled tw-placeholder" name="kewarganegaraan"
+                            <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
+                                <x-input.select name="kewarganegaraan" id="kewarganegaraan">
+                                    <option value="WNI">WNI</option>
+                                    <option value="WNA">WNA</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kewarganegaraan">Kewarganegaraan
+                                <select class="tw-input-enabled tw-placeholder" name=""
                                     id="kewarganegaraan">
                                     <option value="WNI">WNI</option>
                                     <option value="WNA">WNA</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
                         </div>
                     </div>
@@ -126,26 +191,47 @@
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
+                            <x-input.label for="status_keluarga" label="Status Keluarga">
+                                <x-input.select name="status_keluarga" id="status_keluarga">
+                                    <option value="Kepala Keluarga">Kepala Keluarga</option>
+                                    <option value="Istri">Istri</option>
+                                    <option value="Anak">Anak</option>
+                                </x-input.select>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
                                 <select class="tw-input-enabled tw-placeholder" name="status_keluarga"
                                     id="status_keluarga">
                                     <option value="Kepala Keluarga">Kepala Keluarga</option>
                                     <option value="Istri">Istri</option>
                                     <option value="Anak">Anak</option>
                                 </select>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ayah">Nama Ayah
+                            <x-input.label for="nama_ayah" label="Nama Ayah">
+                                <x-input.input placeholder="Masukkan Nama Ayah" type="text" id="nama_ayah" name="nama_ayah"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ayah">Nama Ayah
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nama Ayah"
                                     type="text" id="nama_ayah" name="nama_ayah">
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ibu">Nama Ibu
+                            <x-input.label for="nama_ibu" label="Nama Ibu">
+                                <x-input.input placeholder="Masukkan Nama Ibu" type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ibu">Nama Ibu
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nama Ibu"
                                     type="text" id="nama_ibu" name="nama_ibu">
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
+                            <x-input.label for="penghasilan" label="Penghasilan">
+                                <x-input.leadingicon type="number" min="0" id="penghasilan" name="penghasilan" placeholder="1000000" icon="rupiah" alt="Rp">
+                                </x-input.leadingicon>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">
                                 <div class="tw-relative tw-flex tw-w-full">
                                     <input type="number" min="0" id="penghasilan" name="penghasilan" placeholder="1000000"
                                         class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
@@ -156,17 +242,25 @@
                                             src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
                                     </span>
                                 </div>
-                            </label>
+                            </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_paspor">Nomor Paspor
+                            <x-input.label for="no_paspor" label="Nomor Paspor">
+                                <x-input.input placeholder="Masukkan Nomor Paspor" type="text" id="no_paspor" name="no_paspor"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_paspor">Nomor Paspor
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nomor Paspor"
                                     type="text" id="no_paspor" name="no_paspor">
-                            </label>
+                            </label>--}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kitas">Nomor Kitas
+                            <x-input.label for="no_kitas" label="Nomor Kitas">
+                                <x-input.input placeholder="Masukkan Nomor Paspor" type="text" id="no_kitas" name="no_kitas" value=''></x-input.input>
+                            </x-input.label>
+                            
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kitas">Nomor Kitas
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nomor Paspor"
                                     type="text" id="no_kitas" name="no_kitas" value=''>
-                            </label>
+                            </label>  --}}
                         </div>
                     </div>
 
