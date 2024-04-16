@@ -169,6 +169,15 @@
                                     name="provinsi" value="{{ $default['provinsi'] }}" disabled>
                             </label> --}}
 
+                            <label class="tw-label tw-flex tw-flex-col tw-gap-2"
+                                for="kartu_keluarga">Kartu Keluarga
+                                <div class="tw-relative tw-cursor-pointer tw-input-enabled">
+                                    <input
+                                        id="kartu_keluarga" name="kartu_keluarga" type="file"
+                                        class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
+                                </div>
+                            </label>
+
                         </div>
 
                     </div>
@@ -285,6 +294,16 @@
     </div>
     {{-- {{dd(session()->get('formState'))}} --}}
     <script>
+        $('#formdata').submit(function (e) {
+            // e.preventDefault();
+            $('#RW').prop('disabled', false);
+            $('#kode_pos').prop('disabled', false);
+            $('#kelurahan').prop('disabled', false);
+            $('#kecamatan').prop('disabled', false);
+            $('#kota').prop('disabled', false);
+            $('#provinsi').prop('disabled', false);
+            return true;
+        });
         $(document).ready(function() {
             console.log();
             changeJenisData(
@@ -471,6 +490,29 @@
         $('#no_kk-list').on('change', function() {
             selectKK(this.value, 'data_lama');
         });
+
+        // $('#kartu_keluarga').change(function (e) {
+        //     var kk = $('#kartu_keluarga').prop('files')[0];
+        //     var form_data = new FormData();
+        //     form_data.append('image_kk', kk);
+        //     alert(form_data);
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '',
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         data: form_data,
+        //         type: 'post',
+        //         success: function(php_script_response){
+        //             alert(php_script_response); // <-- display response from the PHP script, if any
+        //         }
+        //     });
+        // });
     </script>
 @endsection
 

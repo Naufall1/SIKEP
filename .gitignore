@@ -2,7 +2,8 @@
 /node_modules
 /public/build
 /public/hot
-/public/storage
+/public/file/KK/*
+/public/file/Dokumen-Pendukung/*
 /storage/*.key
 /vendor
 .env

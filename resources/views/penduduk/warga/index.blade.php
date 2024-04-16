@@ -106,7 +106,7 @@
                                     <td>{{ $w->agama }}</td>
                                     <td>{{ $w->status_warga }}</td>
                                     <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href=""
+                                        <a href="{{route('wargaDetail', [$w->NIK])}}"
                                             class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
                                             Detail
                                         </a>

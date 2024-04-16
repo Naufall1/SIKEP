@@ -151,7 +151,7 @@ class KeluargaController extends Controller
 
     /**
      * @param Request $request
-     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedapam Keluarga yang sudah ada.
+     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedalam Keluarga yang sudah ada.
      */
     public function tambahWarga(Request $request){
         // TODO: Add validation
@@ -184,12 +184,10 @@ class KeluargaController extends Controller
      * Fungsi ini menangani upload gambar KK.
      */
     private function storeImageKK(Request $request){
-        return '1';
-        $filename = Str::uuid()->toString();
-        $extension = $request->file('image_kk')->getClientOriginalExtension();
+        $filename = Str::uuid()->getHex()->toString();
+        $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
         $filenameSimpan = $filename . '.' . $extension;
-        // TODO: fix this error upload image file
-        // $request->file('image_kk')->storeAs('public/images-kk', $filenameSimpan);
+        $request->file('kartu_keluarga')->storeAs('public/KK', $filenameSimpan, 'local');
         return $filenameSimpan;
     }
 
