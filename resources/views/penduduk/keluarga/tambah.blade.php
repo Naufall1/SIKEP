@@ -144,6 +144,10 @@
                                 <x-input.input disabled type="text" name="provinsi" placeholder="Masukkan Provinsi" value="{{ $default['provinsi'] }}"></x-input.input>
                             </x-input.label>
 
+                            <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
+                                <x-input.file  name="kartu_keluarga"></x-input.file>
+                            </x-input.label>
+
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode POS
                                 <input class="tw-input-disabled tw-placeholder" type="text" id="kode_pos"
                                     name="kode_pos" value="{{ $default['kode_pos'] }}" disabled>
@@ -169,14 +173,14 @@
                                     name="provinsi" value="{{ $default['provinsi'] }}" disabled>
                             </label> --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2"
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
                                 for="kartu_keluarga">Kartu Keluarga
                                 <div class="tw-relative tw-cursor-pointer tw-input-enabled">
                                     <input
                                         id="kartu_keluarga" name="kartu_keluarga" type="file"
                                         class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
                                 </div>
-                            </label>
+                            </label> --}}
 
                         </div>
 

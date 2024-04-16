@@ -94,7 +94,9 @@ Route::prefix('pengajuan')->group(function () {
     /**
      * Route untuk menangani proses konfirmasi dan tolak sebuah data pengajuan
      */
-    Route::get('/detail/{id}', [ 'detail'])->name('detail'); // memberikan halaman detail sebuah data pengajuan
+    Route::get('/data-baru/detail/{id}', [function(){
+        return view('pengajuan.databaru.detail');
+    }])->name('detail'); // memberikan halaman detail sebuah data pengajuan
     Route::get('/detail/{id}/keluarga', [ 'detail'])->name('detailKeluarga'); // memberikan halaman detail keluarga dari sebuah data pengajuan
     Route::get('/detail/{id}/warga/{nik}', [ 'detail'])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
     Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan

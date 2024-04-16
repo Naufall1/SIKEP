@@ -5,7 +5,7 @@
 ])
 
 <div {{$attributes->merge(['class' => 'tw-w-full tw-flex tw-flex-col tw-relative tw-group'])}}>
-    <select {{ $disabled ? 'disabled' : ''}} class="{{ $disabled ? 'tw-input-disabled anu tw-placeholder tw-appearance-none' : 'tw-input-enabled tw-placeholder tw-appearance-none' }}" id="{{ isset($id) ? $id : $name }}" name="{{$name}}">
+    <select {{ $disabled ? 'disabled' : ''}} class="{{ $disabled ? 'tw-input-disabled tw-placeholder tw-appearance-none tw-bg-b50' : 'tw-input-enabled tw-placeholder tw-appearance-none tw-bg-b50' }}" id="{{ isset($id) ? $id : $name }}" name="{{$name}}">
         {{$slot}}
     </select>
     <span

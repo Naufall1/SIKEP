@@ -1,4 +1,4 @@
-<div class="tw-flex {{ isset($isImage) ? 'tw-flex tw-flex-col tw-gap-2' : 'tw-flex-row tw-gap-8 md:tw-gap-14' }} ">
+<div class="tw-flex {{ isset($isImage) && $isImage == true ? 'tw-flex tw-flex-col tw-gap-2' : 'tw-flex-row tw-gap-8 md:tw-gap-14' }} ">
     <h5 class="tw-placeholder tw-text-n700 tw-w-[150px]">{{ $title }}</h5>
 
 
