@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class MightGet extends Model
 {
     use HasFactory;
-    protected $table = 'might_get';
+    protected $table = 'might_gets';
     public $timestamps = false;
 
     protected $fillable = [

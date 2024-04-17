@@ -60,7 +60,7 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/keluarga', [KeluargaController::class, 'index'])->name('keluarga')->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
 
     // FIX THIS DETAIL KELUARGA ROUTE
-    Route::get('/keluarga/detail/', [KeluargaController::class, 'detail'])->name('keluargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::get('/keluarga/detail/{no_kk}', [KeluargaController::class, 'detail'])->name('keluargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
     Route::middleware('role:rt')->group(function () {
         Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga
