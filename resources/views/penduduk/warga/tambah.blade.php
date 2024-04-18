@@ -275,6 +275,7 @@
                                     <option value="Meninggal">Meninggal</option>
                                 </x-input.select>
                             </x-input.label>
+                            
                             <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
                                 <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
                             </x-input.label>
