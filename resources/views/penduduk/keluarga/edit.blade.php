@@ -50,7 +50,7 @@
                             </label> --}}
                             
                             <x-input.label for="alamat" label="No Alamat">
-                                <x-input.input value="HERE" type="text" id="alamat" name="alamat" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="alamat" name="alamat" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
@@ -59,7 +59,7 @@
                             </label> --}}
 
                             <x-input.label for="kode_pos" label="Kode Pos">
-                                <x-input.input value="HERE" type="text" id="kode_pos" name="kode_pos"></x-input.input>
+                                <x-input.input value="HERE" type="text" id="kode_pos" name="kode_pos" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode Pos
@@ -68,7 +68,7 @@
                             </label> --}}
                             
                             <x-input.label for="rt" label="RT">
-                                <x-input.input value="HERE" type="text" id="rt" name="rt"></x-input.input>
+                                <x-input.input value="HERE" type="text" id="rt" name="rt" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rt">RT
@@ -77,7 +77,7 @@
                             </label>                             --}}
 
                             <x-input.label for="rw" label="RW">
-                                <x-input.input value="HERE" type="text" id="rw" name="rw"></x-input.input>
+                                <x-input.input value="HERE" type="text" id="rw" name="rw" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rw">RW
@@ -86,7 +86,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kelurahan" label="Kelurahan">
-                                <x-input.input value="HERE" type="text" id="kelurahan" name="kelurahan" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="kelurahan" name="kelurahan" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
@@ -95,7 +95,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kecamatan" label="Kecamatan">
-                                <x-input.input  value="HERE" type="text" id="kecamatan" name="kecamatan"></x-input.input>
+                                <x-input.input  value="HERE" type="text" id="kecamatan" name="kecamatan" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
@@ -104,7 +104,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kota" label="Kota">
-                                <x-input.input value="HERE" type="text" id="kota" name="kota" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="kota" name="kota" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
@@ -113,7 +113,7 @@
                             </label>                             --}}
 
                             <x-input.label for="provinsi" label="Provinsi">
-                                <x-input.input value="HERE" type="text" id="provinsi" name="provinsi" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="provinsi" name="provinsi" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi

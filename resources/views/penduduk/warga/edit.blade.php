@@ -38,7 +38,7 @@
                             </label> --}}
 
                             <x-input.label for="tempat_lahir" label="Tempat Lahir">
-                                <x-input.input value="HERE" type="text" id="tempat_lahir" name="tempat_lahir" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="tempat_lahir" name="tempat_lahir" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tempat_lahir">Tempat Lahir
@@ -47,7 +47,7 @@
                             </label> --}}
 
                             <x-input.label for="tanggal_lahir" label="Tanggal Lahir">
-                                <x-input.input value="HERE" type="date" id="tanggal_lahir" name="tanggal_lahir" ></x-input.input>
+                                <x-input.input value="HERE" type="date" id="tanggal_lahir" name="tanggal_lahir" disabled></x-input.input>
                             </x-input.label>
                             
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tanggal_lahir">Tanggal Lahir
@@ -56,7 +56,7 @@
                             </label> --}}
 
                             <x-input.label for="jenis_kelamin" label="Jenis Kelamin">
-                                <x-input.input value="HERE" type="text" id="jenis_kelamin" name="jenis_kelamin"></x-input.input>
+                                <x-input.input value="HERE" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_kelamin">Jenis Kelamin
@@ -170,7 +170,7 @@
                             </label> --}}
 
                             <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
-                                <x-input.input value="HERE" type="text" id="kewarganegaraan" name="kewarganegaraan" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="kewarganegaraan" name="kewarganegaraan" disabled></x-input.input>
                             </x-input.label>
                             
 
@@ -233,7 +233,7 @@
                             </label> --}}
 
                             <x-input.label for="nama_ayah" label="Nama Ayah">
-                                <x-input.input value="HERE" type="text" id="nama_ayah" name="nama_ayah" ></x-input.input>
+                                <x-input.input value="HERE" type="text" id="nama_ayah" name="nama_ayah" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ayah">Nama Ayah
@@ -242,7 +242,7 @@
                             </label> --}}
 
                             <x-input.label for="nama_ibu" label="Nama Ibu">
-                                <x-input.input value="HERE" type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
+                                <x-input.input value="HERE" type="text" id="nama_ibu" name="nama_ibu" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ibu">Nama Ibu
