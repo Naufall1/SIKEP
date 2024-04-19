@@ -21,11 +21,20 @@
                         <h2 class="">Kriteria Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
+                            <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
+                                <x-input.input value="HERE" type="text" id="kepala_keluarga" name="kepala_keluarga" value="{{ $dataKeluarga->kepala_keluarga }}" disabled></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
                                 <input type="text" id="kepala_keluarga" name="kepala_keluarga"
                                     value="{{ $dataKeluarga->kepala_keluarga }}" readonly class="tw-input-disabled">
-                            </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
+                            </label> --}}
+
+                            <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
+                                <x-input.leadingicon type="text" id="tagihan_listrik" name="tagihan_listrik" value="{{ $dataKeluarga->tagihan_listrik }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
                                 <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                                     <input type="text" id="tagihan_listrik" name="tagihan_listrik"
                                         value="{{ $dataKeluarga->tagihan_listrik }}"
@@ -38,11 +47,17 @@
                                             src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
                                     </span>
                                 </div>
-                            </label>
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
+                            </label> --}}
+
+                            <x-input.label for="luas_bangunan" label="Luas Bangunan (m2)">
+                                <x-input.input type="text" id="luas_bangunan" name="luas_bangunan"
+                                value="{{ $dataKeluarga->luas_bangunan }}"></x-input.input>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
                                 <input type="text" id="luas_bangunan" name="luas_bangunan"
                                     value="{{ $dataKeluarga->luas_bangunan }}" class="tw-input-enabled">
-                            </label>
+                            </label> --}}
                         </div>
                     </div>
 
@@ -51,23 +66,50 @@
                             <h2 class="">Kriteria Anggota</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
-                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
+                                <x-input.label for="nik" label="NIK">
+                                    <x-input.input ype="text" id="nik" name="nik[]" value="{{ $anggota->nik }}" disabled></x-input.input>
+                                </x-input.label>
+
+                                {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
                                     <input type="text" id="nik" name="nik[]" value="{{ $anggota->nik }}" readonly
                                         class="tw-input-disabled">
-                                </label>
-                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
+                                </label> --}}
+
+                                <x-input.label for="nama" label="Nama">
+                                    <x-input.input type="text" id="nama" name="nama[]" value="{{ $anggota->nama }}" disabled></x-input.input>
+                                </x-input.label>
+
+                                {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
                                     <input type="text" id="nama" name="nama[]" value="{{ $anggota->nama }}"
                                         readonly class="tw-input-disabled">
-                                </label>
-                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
+                                </label> --}}
+
+                                <x-input.label for="status_keluarga" label="Status Keluarga">
+                                    <x-input.input ype="text" id="status_keluarga" name="status_keluarga[]"
+                                    value="{{ $anggota->status_keluarga }}" disabled></x-input.input>
+                                </x-input.label>
+
+                                {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
                                     <input type="text" id="status_keluarga" name="status_keluarga[]"
                                         value="{{ $anggota->status_keluarga }}" readonly class="tw-input-disabled">
-                                </label>
-                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
+                                </label> --}}
+
+                                <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
+                                    <x-input.input type="text" id="jenis_pekerjaan" name="jenis_pekerjaan[]"
+                                    value="{{ $anggota->jenis_pekerjaan }}" disabled></x-input.input>
+                                </x-input.label>
+
+                                {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
                                     <input type="text" id="jenis_pekerjaan" name="jenis_pekerjaan[]"
                                         value="{{ $anggota->jenis_pekerjaan }}" readonly class="tw-input-disabled">
-                                </label>
-                                <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
+                                </label> --}}
+
+                                <x-input.label for="penghasilan" label="Penghasilan">
+                                    <x-input.leadingicon type="text" id="penghasilan" name="penghasilan[]"
+                                    value="{{ $anggota->penghasilan }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
+                                </x-input.label>
+
+                                {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">Penghasilan
                                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                                         <input type="text" id="penghasilan" name="penghasilan[]"
                                             value="{{ $anggota->penghasilan }}"
@@ -80,7 +122,7 @@
                                                 src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
                                         </span>
                                     </div>
-                                </label>
+                                </label> --}}
                             </div>
                         </div>
                     @endforeach
