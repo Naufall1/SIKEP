@@ -1,0 +1,12 @@
+@props([
+    'active' => false,
+    'size',
+    'stroke' => 2,
+])
+<span>
+<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.697 2.53001L4.67702 6.46001C2.74702 7.72001 2.74702 10.54 4.67702 11.8L10.697 15.73C11.777 16.44 13.557 16.44 14.637 15.73L20.627 11.8C22.547 10.54 22.547 7.73001 20.627 6.47001L14.637 2.54001C13.557 1.82001 11.777 1.82001 10.697 2.53001Z" stroke="#1B1B1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.27703 13.08L6.26703 17.77C6.26703 19.04 7.24703 20.4 8.44703 20.8L11.637 21.86C12.187 22.04 13.097 22.04 13.657 21.86L16.847 20.8C18.047 20.4 19.027 19.04 19.027 17.77V13.13" stroke="#1B1B1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.047 15V9" stroke="#1B1B1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</span>
