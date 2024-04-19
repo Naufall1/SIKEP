@@ -26,13 +26,13 @@
                                 'content' => 'Ditolak',
                                 'isLabel' => true,
                             ])
-                            @if ($data->status === 'Ditolak')
+                            {{-- @if ($data->status === 'Ditolak') --}}
                                 
                             @include('components.form.textdetail', [
                                 'title' => 'Catatan',
                                 'content' => 'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
                                 ])
-                                @endif
+                                {{-- @endif --}}
 
                         </div>
                     </div>
