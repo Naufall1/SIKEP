@@ -266,19 +266,36 @@
 
                     <div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
                         <h2 class="">Demografi Masuk</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3"> <label class="tw-label tw-flex tw-flex-col tw-gap-2"
+                        <div class="tw-flex tw-flex-col tw-gap-3">
+
+                            <x-input.label for="status_warga" label="Jenis">
+                                <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled>
+                                    <option value="Aktif" selected>Aktif</option>
+                                    <option value="Migrasi">Migrasi</option>
+                                    <option value="Meninggal">Meninggal</option>
+                                </x-input.select>
+                            </x-input.label>
+                            
+                            <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
+                                <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
+                            </x-input.label>
+
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
                                 for="status_warga">Jenis <select class="tw-input-disabled tw-placeholder"
                                     name="status_warga" id="status_warga" disabled>
                                     <option value="Aktif" selected>Aktif</option>
                                     <option value="Migrasi">Migrasi</option>
                                     <option value="Meninggal">Meninggal</option>
-                                </select> </label> <label class="tw-label tw-flex tw-flex-col tw-gap-2"
+                                </select> 
+                            </label>  --}}
+                        
+                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
                                 for="berkas_demografi_masuk">Berkas Pendukung <div
                                     class="tw-relative tw-cursor-pointer tw-input-enabled"> <input
                                         id="berkas_demografi_masuk" type="file"
                                         class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
                                 </div>
-                            </label>
+                            </label> --}}
                         </div>
                     </div>
                 </div>
@@ -424,7 +441,7 @@
                 $('#nik').prop('disabled', false);
 
                 $('#formInput').append(
-                    '<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6"> <h2 class="">Demografi Masuk</h2> <div class="tw-flex tw-flex-col tw-gap-3"> <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_warga">Jenis <select class="tw-input-disabled tw-placeholder" name="status_warga" id="status_warga" disabled> <option value="Aktif" selected>Aktif</option> <option value="Migrasi">Migrasi</option> <option value="Meninggal">Meninggal</option> </select> </label> <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="berkas_demografi_masuk">Berkas Pendukung <div class="tw-relative tw-cursor-pointer tw-input-enabled"> <input id="berkas_demografi_masuk" type="file" class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 "> </div> </label> </div> </div>'
+                    '<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6"> <h2 class="">Demografi Masuk</h2> <div class="tw-flex tw-flex-col tw-gap-3"> <x-input.label for="status_warga" label="Jenis"> <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled> <option value="Aktif" selected>Aktif</option> <option value="Migrasi">Migrasi</option> <option value="Meninggal">Meninggal</option> </x-input.select> </x-input.label> <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung"> <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file> </x-input.label></div> </div>'
                 );
 
                 $('#nama').addClass('tw-input-enabled');

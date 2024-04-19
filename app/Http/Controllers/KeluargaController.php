@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
 use App\Models\Warga;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -191,7 +190,14 @@ class KeluargaController extends Controller
         return $filenameSimpan;
     }
 
-    public function detail(){
-        return view('penduduk.keluarga.detail');
+    /**
+     * Fungsi untuk menampilkan halaman detail dari sebuah Keluarga.
+     *
+     * @param string $no_kk
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function detail($no_kk){
+        $keluarga = Keluarga::with(['warga', 'bansos', 'detailBansos'])->find($no_kk);
+        return view('penduduk.keluarga.detail', compact('keluarga'));
     }
 }

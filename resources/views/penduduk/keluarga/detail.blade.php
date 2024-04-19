@@ -38,48 +38,48 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'No KK',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->no_kk,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kepala Keluarga',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->kepala_keluarga,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Alamat',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->alamat,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kode POS',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->kode_pos,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'RT',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->RT,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'RW',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->RW,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kelurahan',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->kelurahan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kecamatan',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->kecamatan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kota',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->kota,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Provinsi',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->provinsi,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kartu Keluarga',
                                 'isImage' => true,
-                                'content' => 'akfdj',
+                                'content' => asset(Storage::url('KK/'.$keluarga->image_kk)),
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
 
@@ -92,11 +92,11 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->tagihan_listrik,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                'content' => 'akfdj',
+                                'content' => $keluarga->luas_bangunan,
                             ])
 
                         </div>
@@ -118,21 +118,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($collection as $item) --}}
+                                    @foreach ($keluarga->warga as $warga)
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$loop->index + 1}}</td>
+                                            <td>{{$warga->NIK}}</td>
+                                            <td>{{$warga->nama}}</td>
+                                            <td>{{$warga->status_keluarga}}</td>
                                             <td
                                                 class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
-                                                <a href=""
+                                                <a href="{{route('wargaDetail', $warga->NIK)}}"
                                                     class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
                                                     Detail
                                                 </a>
                                             </td>
                                         </tr>
-                                    {{-- @endforeach --}}
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -154,15 +154,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($collection as $item) --}}
-                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    {{-- @endforeach --}}
-
+                                    @for ($i = 0; $i < count($keluarga->bansos); $i++)
+                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                        <td>{{$i + 1}}</td>
+                                        <td>{{$keluarga->bansos[$i]->bansos_nama}}</td>
+                                        <td>{{$keluarga->detailBansos[$i]->tanggal_menerima}}</td>
+                                        {{-- <td>{{$keluarga->bansos[$i]->keterangan}}</td> --}}
+                                        <td>-</td>
+                                    </tr>
+                                    @endfor
                                 </tbody>
                             </table>
 

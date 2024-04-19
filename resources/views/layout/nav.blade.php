@@ -126,7 +126,8 @@
                 <div class="tw-flex tw-gap-1 tw-w-full">
                     <a href="{{ route('logout') }}"
                         class="tw-w-full tw-group tw-flex tw-h-10 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-br-md tw-rounded-bl-md active:tw-bg-n300 hover:tw-bg-n200 ">
-                        <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/logout.svg" alt="profile icon">
+                        {{-- <img class="tw-h-5 tw-bg-cover  " src="/assets/icons/actionable/logout.svg" alt="profile icon"> --}}
+                        <x-icons.actionable.logout stroke="2" size="20" color="r500"></x-icons.actionable.logout>
                         <p class="tw-menu-text tw-text-r500">Keluar</p>
                     </a>
                 </div>

@@ -22,4 +22,8 @@ class Bansos extends Model
     {
         return $this->hasMany(MightGet::class, 'bansos_kode', 'bansos_kode');
     }
+    public function keluarga()
+    {
+        return $this->belongsToMany(Keluarga::class, 'might_gets', 'bansos_kode', 'no_kk');
+    }
 }
