@@ -80,7 +80,7 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-scroll">
+                <div class="tw-w-vw tw-overflow-x-auto scrollbar">
 
                     <table class="tw-w-[780px] md:tw-w-full">
                         <thead>

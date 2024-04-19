@@ -88,3 +88,21 @@
     
 }
 
+@layer utilities {
+    ::-webkit-scrollbar {
+        @apply tw-w-2 tw-h-2;
+    }
+  
+    ::-webkit-scrollbar-track {
+        @apply tw-rounded-full tw-bg-n100;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        @apply tw-bg-n500 tw-rounded-full tw-border tw-border-n1000;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+        @apply tw-bg-n600;
+    }
+  }
+
