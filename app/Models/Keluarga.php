@@ -58,4 +58,19 @@ class Keluarga extends Model
     {
         return $this->hasMany(Warga::class, 'no_kk', 'no_kk');
     }
+
+    public static function dataBansos()
+    {
+        return Keluarga::select('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik',
+        'keluarga.luas_bangunan')
+        ->selectRaw('SUM(warga.penghasilan) as total_penghasilan')
+        ->selectRaw('COUNT(DISTINCT warga.NIK) AS jumlah_warga')
+        ->selectRaw('COUNT(DISTINCT CASE WHEN warga.penghasilan > 0 THEN warga.NIK END) AS jumlah_warga_berpenghasilan')
+        ->selectRaw('SUM(CASE WHEN warga.jenis_pekerjaan = "Pelajar/Mahasiswa" THEN 1 ELSE 0 END) AS jumlah_warga_bersekolah')
+        ->selectRaw('COUNT(CASE WHEN warga.jenis_pekerjaan = "Tidak Bekerja" THEN warga.NIK ELSE NULL END) AS tanggungan')
+        ->join('warga', 'warga.no_kk', '=', 'keluarga.no_kk')
+        ->groupBy('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik', 'keluarga.luas_bangunan')
+        ->orderBy('total_penghasilan')
+        ->get();
+    }
 }
