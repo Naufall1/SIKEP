@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('penulis', 100);
             $table->date('tanggal_publish');
             $table->date('tanggal_dibuat');
-            $table->date('tanggal_edit');
+            $table->date('tanggal_edit')->nullable();
             $table->string('judul', 255);
             $table->text('isi');
             $table->enum('status', ['Ditampilkan', 'Disembunyikan']);
