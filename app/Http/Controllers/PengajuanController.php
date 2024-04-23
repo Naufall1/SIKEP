@@ -7,20 +7,32 @@ use App\Models\KeluargaModified;
 use App\Models\WargaModified;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PengajuanController extends Controller
 {
     public function indexNew() {
-        $dataBaru =  Keluarga::all();
-        return view('pengajuan.index')->with('dataBaru', $dataBaru);
+        $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->get();
+        return view('pengajuan.databaru.index', compact('dataBaru'));
     }
     public function indexModifWarga() {
-        $dataBaru =  WargaModified::all();
-        return view('pengajuan.index')->with('dataBaru', $dataBaru);
+        $wargaModified =  WargaModified::all();
+        return view('pengajuan.perubahanwarga.index', compact('wargaModified'));
     }
     public function indexModifKeluarga() {
-        $dataBaru =  KeluargaModified::all();
-        return view('pengajuan.index')->with('dataBaru', $dataBaru);
+        $keluargaModified =  KeluargaModified::all();
+        return view('pengajuan.perubahankeluarga.index', compact('keluargaModified'));
+    }
+    public function listModifKeluarga() {
+        $keluargaModified =  KeluargaModified::with('user')->select();
+        return DataTables::of($keluargaModified)
+            ->addIndexColumn()
+            ->addColumn('aksi', function (KeluargaModified $keluarga) {
+                $btn = '<a href="'.url('/penduduk/keluarga/' . $keluarga->no_kk).'" class="btn btn-info btn-sm">Detail</a> ';
+                return $btn;
+            })
+            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
+            ->make(true);
     }
     public function detail($id) {
         $data = Keluarga::find($id);

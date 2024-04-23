@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('keluargaModified', function (Blueprint $table) {
             $table->id('id_modify_keluarga');
-            $table->char('no_kk', 6);
+            $table->char('no_kk', 16);
             $table->unsignedBigInteger('user_id');
-            $table->string('kepala_keluarga', 100);
-            $table->string('image_kk', 100);
-            $table->integer('tagihan_listrik');
+            $table->string('kepala_keluarga', 100)->nullable();
+            $table->string('image_kk', 100)->nullable();
+            $table->integer('tagihan_listrik')->nullable();
             $table->date('tanggal_request');
             $table->string('status_request', 20);
             $table->text('catatan')->nullable();

@@ -1,4 +1,8 @@
 @extends('layout.layout', ['isForm' => false])
+@push('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+@endpush
 
 @section('content')
     {{-- canEdit = if RW => False, RT => False --}}
@@ -79,7 +83,7 @@
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-scroll">
 
-                    <table class="tw-w-[780px] md:tw-w-full">
+                    <table class="tw-w-[780px] md:tw-w-full" id="tableKeluargaModified">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
@@ -91,26 +95,24 @@
                                 <th class="tw-w-[108px]"></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
-                            {{-- @foreach  --}}
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
-                                    <td>
-                                        @include('components.form.label', ['content' => 'VALUE HERE'])
-                                    </td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href=""
-                                            class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr>
-                            {{-- @endforeach --}}
-                        </tbody>
+                        {{-- <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tr class="tw-h-16 hover:tw-bg-n300">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
+                                <td>
+                                    @include('components.form.label', ['content' => 'VALUE HERE'])
+                                </td>
+                                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                    <a href=""
+                                        class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody> --}}
                     </table>
 
                     <div>
@@ -144,3 +146,54 @@
             </div>
         </div>
     @endsection
+    @push('js')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var dataUser = $('#tableKeluargaModified').DataTable({
+                    serverSide: true,
+                    ajax: {
+                        "url": "{{ url('pengajuan/perubahan-keluarga') }}",
+                        "dataType": "json",
+                        "type": "POST"
+                    },
+                    columns: [{
+                        data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    }, {
+                        data: "user.nama",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    }, {
+                        data: "no_kk",
+                        className: "",
+                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    }, {
+                        data: "kepala_keluarga",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    }, {
+                        data: "tanggal_request",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                    }, {
+                        data: "status_request",
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
+                    }]
+                });
+            });
+        </script>
+    @endpush

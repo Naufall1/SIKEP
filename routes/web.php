@@ -80,16 +80,11 @@ Route::prefix('pengajuan')->group(function () {
     /**
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
-    // Route::get('/data-baru', [ 'dataBaru'])->name('dataBaru'); // memberikan data permintaan penambahan data baru
-    Route::get('/data-baru', [function(){
-        return view('pengajuan.databaru.index');
-    }])->name('dataBaru'); // memberikan data permintaan penambahan data baru
-    Route::get('/perubahan-warga', [function(){
-        return view('pengajuan.perubahanwarga.index');
-    }])->name('perubahanWarga'); // memberikan data permintaan perubahan data warga
-    Route::get('/perubahan-keluarga', [ function(){
-        return view('pengajuan.perubahankeluarga.index');
-    }])->name('perubahanKeluarga'); // memberikan data permintaan perubahan data keluarga
+    Route::get('/data-baru', [PengajuanController::class, 'indexNew'])->name('dataBaru')->middleware('role:rw'); // memberikan data permintaan penambahan data baru
+    Route::get('/perubahan-warga', [PengajuanController::class, 'indexModifWarga'])->name('perubahanWarga')->middleware('role:rw'); // memberikan data permintaan perubahan data warga
+    Route::post('/perubahan-warga', [PengajuanController::class, 'listModifWarga'])->name('perubahanWarga')->middleware('role:rw'); // memberikan data permintaan perubahan data warga
+    Route::get('/perubahan-keluarga', [PengajuanController::class, 'indexModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw'); // memberikan data permintaan perubahan data keluarga
+    Route::post('/perubahan-keluarga', [PengajuanController::class, 'listModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw');; // memberikan data permintaan perubahan data keluarga
 
     /**
      * Route untuk menangani proses konfirmasi dan tolak sebuah data pengajuan
