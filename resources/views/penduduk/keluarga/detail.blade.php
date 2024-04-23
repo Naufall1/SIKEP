@@ -13,7 +13,7 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Keluarga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    <a href=""
+                    <a href="{{ route('keluarga-edit', ['no_kk'=>$keluarga->no_kk]) }}"
                         class="tw-flex tw-items-center tw-relative tw-h-10 tw-pl-10 tw-pr-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-sm tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="button">
                         <span
@@ -173,7 +173,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{ url()->previous() }}"
+                    <a href="javascript:history.back()"
                         class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span

@@ -113,8 +113,12 @@ class KeluargaController extends Controller
      * @param string $no_kk
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($no_kk){
-        $keluarga = Keluarga::find($no_kk);
+    public function edit($no_kk)
+    {
+        $keluarga = Keluarga::with('warga')->find($no_kk);
+        if (!$keluarga) {
+            return redirect()->back();
+        }
         return view('penduduk.keluarga.edit', compact('keluarga'));
     }
 
@@ -124,28 +128,29 @@ class KeluargaController extends Controller
      *
      * @param Request $request
      * @param string $no_kk
-     * @return void
+     * @return RedirectResponse
      */
     public function update(Request $request, $no_kk)
     {
-        if (!Keluarga::where('no_kk', $no_kk)->exists()) {
-           return redirect()->route('keluarga.index');
-        }
-        if ($request->hasFile('image_kk')) {
-            $image_kk = $this->storeImageKK($request);
-        } else {
-            $image_kk = Keluarga::where('no_kk', $no_kk)->first()->image_kk;
+        $keluarga = Keluarga::find($no_kk);
+
+        if (!$keluarga) {
+           return redirect()->back();
         }
 
-        KeluargaModified::create([
-            'no_kk' => $request->no_kk,
-            'user_id' => Auth::user()->user_id,
-            'kepala_keluarga' => $request->kepala_keluarga,
-            'image_kk' => $image_kk,
-            'tagihan_listrik' => $request->tagihan_listrik,
-            'tanggal_request' => now(),
-            'status_request' => 'Menunggu',
-        ]);
+        $keluarga->fill($request->only(['no_kk', 'tagihan_listrik', 'luas_bangunan']));
+
+        $keluarga->kepala_keluarga = Warga::find($request->kepala_keluarga)->nama;
+
+        if ($request->hasFile('image_kk')) {
+            $image_kk = $this->storeImageKK($request);
+            $keluarga->image_kk = $image_kk;
+        }
+
+        // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
+        KeluargaModified::updateKeluarga($keluarga);
+
+        return redirect()->route('keluargaDetail', ['no_kk'=> $request->no_kk]);
     }
 
     /**

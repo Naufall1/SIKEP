@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class KeluargaModified extends Model
 {
@@ -19,6 +20,7 @@ class KeluargaModified extends Model
         'kepala_keluarga',
         'image_kk',
         'tagihan_listrik',
+        'luas_bangunan',
         'tanggal_request',
         'status_request',
     ];
@@ -31,5 +33,23 @@ class KeluargaModified extends Model
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * @param Keluarga $keluarga
+     * @return bool
+     */
+    public static function updateKeluarga(Keluarga $keluarga)
+    {
+        $modif = new KeluargaModified();
+        $modif->no_kk = $keluarga->no_kk;
+        $modif->user_id = Auth::user()->user_id;
+        $modif->kepala_keluarga = $keluarga->isDirty('kepala_keluarga') ? $keluarga->kepala_keluarga : '';
+        $modif->image_kk = $keluarga->isDirty('image_kk') ? $keluarga->image_kk : '';
+        $modif->tagihan_listrik = $keluarga->isDirty('tagihan_listrik') ? $keluarga->tagihan_listrik : 0;
+        $modif->luas_bangunan = $keluarga->isDirty('luas_bangunan') ? $keluarga->luas_bangunan : 0;
+        $modif->tanggal_request = now();
+        $modif->status_request = 'Menunggu';
+        return $modif->save();
     }
 }
