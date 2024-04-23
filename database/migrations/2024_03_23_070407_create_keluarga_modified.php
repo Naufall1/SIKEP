@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('kepala_keluarga', 100)->nullable();
             $table->string('image_kk', 100)->nullable();
             $table->integer('tagihan_listrik')->nullable();
+            $table->integer('luas_bangunan')->nullable();
             $table->date('tanggal_request');
             $table->string('status_request', 20);
             $table->text('catatan')->nullable();

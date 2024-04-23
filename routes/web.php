@@ -60,11 +60,11 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/keluarga', [KeluargaController::class, 'index'])->name('keluarga')->middleware('role:rw,rt'); // untuk menampilkan tabel keluarga
 
     // FIX THIS DETAIL KELUARGA ROUTE
-    Route::get('/keluarga/detail/{no_kk}', [KeluargaController::class, 'detail'])->name('keluargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::get('/keluarga/{no_kk}', [KeluargaController::class, 'detail'])->name('keluargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
     Route::middleware('role:rt')->group(function () {
-        Route::get('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'edit']); // untuk menampilkan form edit data keluarga
-        Route::put('/keluarga/ubah/{no_kk}', [KeluargaController::class, 'update']); // untuk menangani update data Keluarga dan menyimpan pada database
+        Route::get('/keluarga/{no_kk}/ubah', [KeluargaController::class, 'edit'])->name('keluarga-edit'); // untuk menampilkan form edit data keluarga
+        Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('keluarga-editP'); // untuk menangani update data Keluarga dan menyimpan pada database
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
         Route::post('/keluarga/tambah/save-state', [KeluargaController::class, 'saveFormState']); // untuk menyimpan data form sementara pada session

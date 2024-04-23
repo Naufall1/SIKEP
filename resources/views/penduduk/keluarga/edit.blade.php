@@ -10,8 +10,9 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Keluarga</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="" method="POST" id="formData">
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{route('keluarga-editP', ['no_kk' => $keluarga->no_kk])}}" method="POST" id="formData">
                 {{ csrf_field() }}
+                {!! method_field('PUT') !!}
 
                 <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
@@ -20,7 +21,7 @@
                         <div class="tw-flex tw-flex-col tw-gap-3" id="identitasWarga">
 
                             <x-input.label for="no_kk" label="No KK">
-                                <x-input.input value="HERE" type="text" id="no_kk" name="no_kk" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->no_kk }}" type="text" id="no_kk" name="no_kk" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
@@ -30,8 +31,11 @@
 
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
                                 <x-input.select name="kepala_keluarga" id="kepala_keluarga">
-                                    <option value="option_1">Option 1</option>
-                                    <option value="option_2">Option 2</option>
+                                    @foreach ($keluarga->warga as $warga)
+                                        <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga->kepala_keluarga) == $warga->nama)>{{ $warga->nama }}</option>
+                                    @endforeach
+                                    {{-- <option value="option_1">Option 1</option>
+                                    <option value="option_2">Option 2</option> --}}
                                 </x-input.select>
                             </x-input.label>
 
@@ -48,9 +52,9 @@
                                     </span>
                                 </div>
                             </label> --}}
-                            
+
                             <x-input.label for="alamat" label="No Alamat">
-                                <x-input.input value="HERE" type="text" id="alamat" name="alamat" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->alamat }}" type="text" id="alamat" name="alamat" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
@@ -59,16 +63,16 @@
                             </label> --}}
 
                             <x-input.label for="kode_pos" label="Kode Pos">
-                                <x-input.input value="HERE" type="text" id="kode_pos" name="kode_pos" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->kode_pos }}" type="text" id="kode_pos" name="kode_pos" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode Pos
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="kode_pos" name="kode_pos" disabled>
                             </label> --}}
-                            
+
                             <x-input.label for="rt" label="RT">
-                                <x-input.input value="HERE" type="text" id="rt" name="rt" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->RT }}" type="text" id="rt" name="rt" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rt">RT
@@ -77,7 +81,7 @@
                             </label>                             --}}
 
                             <x-input.label for="rw" label="RW">
-                                <x-input.input value="HERE" type="text" id="rw" name="rw" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->RW }}" type="text" id="rw" name="rw" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="rw">RW
@@ -86,7 +90,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kelurahan" label="Kelurahan">
-                                <x-input.input value="HERE" type="text" id="kelurahan" name="kelurahan" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->kelurahan }}" type="text" id="kelurahan" name="kelurahan" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
@@ -95,7 +99,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kecamatan" label="Kecamatan">
-                                <x-input.input  value="HERE" type="text" id="kecamatan" name="kecamatan" disabled></x-input.input>
+                                <x-input.input  value="{{ $keluarga->kecamatan }}" type="text" id="kecamatan" name="kecamatan" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
@@ -104,7 +108,7 @@
                             </label>                             --}}
 
                             <x-input.label for="kota" label="Kota">
-                                <x-input.input value="HERE" type="text" id="kota" name="kota" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->kota }}" type="text" id="kota" name="kota" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
@@ -113,7 +117,7 @@
                             </label>                             --}}
 
                             <x-input.label for="provinsi" label="Provinsi">
-                                <x-input.input value="HERE" type="text" id="provinsi" name="provinsi" disabled></x-input.input>
+                                <x-input.input value="{{ $keluarga->provinsi }}" type="text" id="provinsi" name="provinsi" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
@@ -125,7 +129,7 @@
                                         id="kartu_keluarga" type="file"
                                         class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
                                 </div>
-                            </label> 
+                            </label>
 
                         </div>
                     </div>
@@ -135,7 +139,7 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="HERE" value="HERE" icon="rupiah" alt="Rp">
+                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder=".0" value="{{ old('tagihan_listrik', $keluarga->tagihan_listrik) }}" icon="rupiah" alt="Rp">
                                 </x-input.leadingicon>
                             </x-input.label>
 
@@ -153,7 +157,7 @@
                             </label> --}}
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan">
-                                <x-input.input placeholder="HERE" value="HERE" type="number" min="0" id="luas_bangunan" name="luas_bangunan">
+                                <x-input.input placeholder="HERE" value="{{ old('luas_bangunan', $keluarga->luas_bangunan) }}" type="number" min="0" id="luas_bangunan" name="luas_bangunan">
                                 </x-input.input>
                             </x-input.label>
 
@@ -169,7 +173,7 @@
 
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('keluarga-tambah') }}"
+                    <a href="javascript:history.back()"
                         class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span

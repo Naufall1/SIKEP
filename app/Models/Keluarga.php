@@ -51,7 +51,7 @@ class Keluarga extends Model
 
     public function bansos()
     {
-        return $this->belongsToMany(Bansos::class, 'might_gets', 'no_kk', 'bansos_kode');
+        return $this->belongsToMany(Bansos::class, 'might_get', 'no_kk', 'bansos_kode');
     }
 
     public function warga(): HasMany
