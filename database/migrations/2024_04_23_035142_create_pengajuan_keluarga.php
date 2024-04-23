@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('keluargaModified', function (Blueprint $table) {
-            $table->id('id_modify_keluarga');
-            $table->char('no_kk', 6);
-            $table->unsignedBigInteger('user_id');
-            $table->string('kepala_keluarga', 100);
-            $table->string('image_kk', 100);
-            $table->integer('tagihan_listrik');
+        Schema::create('pengajuan_keluarga', function (Blueprint $table) {
+            $table->id();
+            $table->char('no_kk', 16);
             $table->date('tanggal_request');
-            $table->string('status_request', 20);
+            $table->enum('status_request', ['Dikonfirmasi', 'Ditolak', 'Menunggu']);
             $table->text('catatan')->nullable();
 
             $table->foreign('no_kk')->references('no_kk')->on('keluarga');
-            $table->foreign('user_id')->references('user_id')->on('user');
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('keluargaModified');
+        Schema::dropIfExists('pengajuan_keluarga');
     }
 };
