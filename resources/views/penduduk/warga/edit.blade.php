@@ -10,8 +10,9 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Warga</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData">
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('warga-edit', ['nik'=>$warga->NIK]) }}" method="POST" id="formData">
                 {{ csrf_field() }}
+                {!! method_field('PUT') !!}
 
                 <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
@@ -20,7 +21,7 @@
                         <div class="tw-flex tw-flex-col tw-gap-3" id="identitasWarga">
 
                             <x-input.label for="nik" label="NIK">
-                                <x-input.input value="HERE" type="text" id="nik" name="nik" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->NIK }}" type="text" id="nik" name="nik" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
@@ -29,7 +30,7 @@
                             </label> --}}
 
                             <x-input.label for="nama" label="Nama">
-                                <x-input.input value="HERE" type="text" id="nama" name="nama" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->nama }}" type="text" id="nama" name="nama" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
@@ -38,7 +39,7 @@
                             </label> --}}
 
                             <x-input.label for="tempat_lahir" label="Tempat Lahir">
-                                <x-input.input value="HERE" type="text" id="tempat_lahir" name="tempat_lahir" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->tempat_lahir }}" type="text" id="tempat_lahir" name="tempat_lahir" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tempat_lahir">Tempat Lahir
@@ -47,16 +48,16 @@
                             </label> --}}
 
                             <x-input.label for="tanggal_lahir" label="Tanggal Lahir">
-                                <x-input.input value="HERE" type="date" id="tanggal_lahir" name="tanggal_lahir" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->tanggal_lahir }}" type="date" id="tanggal_lahir" name="tanggal_lahir" disabled></x-input.input>
                             </x-input.label>
-                            
+
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tanggal_lahir">Tanggal Lahir
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="date"
                                     id="tanggal_lahir" name="tanggal_lahir" disabled>
                             </label> --}}
 
                             <x-input.label for="jenis_kelamin" label="Jenis Kelamin">
-                                <x-input.input value="HERE" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->jenis_kelamin }}" type="text" id="jenis_kelamin" name="jenis_kelamin" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_kelamin">Jenis Kelamin
@@ -66,10 +67,10 @@
 
                             <x-input.label for="pendidikan" label="Pendidikan">
                                 <x-input.select name="pendidikan" id="pendidikan">
-                                    <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
-                                    <option value="SLTA/Sederajat">SLTA/Sederajat</option>
-                                    <option value="DIPLOMA I/II">DIPLOMA I/II</option>
-                                    <option value="Diploma IV/Strata 1">Diploma IV/Strata 1</option>
+                                    <option value="Tamat SD/Sederajat" @selected($warga->pendidikan == 'Tamat SD/Sederajat')>Tamat SD/Sederajat</option>
+                                    <option value="SLTA/Sederajat" @selected($warga->pendidikan == 'SLTA/Sederajat')>SLTA/Sederajat</option>
+                                    <option value="DIPLOMA I/II" @selected($warga->pendidikan == 'DIPLOMA I/II')>DIPLOMA I/II</option>
+                                    <option value="Diploma IV/Strata 1" @selected($warga->pendidikan == 'Diploma IV/Strata 1')>Diploma IV/Strata 1</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -91,12 +92,12 @@
 
                             <x-input.label for="agama" label="Agama">
                                 <x-input.select name="agama" id="agama">
-                                    <option value="Budha">Budha</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Islam">Islam</option>
-                                    <option value="Katolik">Katolik</option>
-                                    <option value="Kristen">Kristen</option>
-                                    <option value="Konghuchu">Konghuchu</option>
+                                    <option value="Budha" @selected($warga->agama == 'Budha')>Budha</option>
+                                    <option value="Hindu" @selected($warga->agama == 'Hindu')>Hindu</option>
+                                    <option value="Islam" @selected($warga->agama == 'Islam')>Islam</option>
+                                    <option value="Katolik" @selected($warga->agama == 'Katolik')>Katolik</option>
+                                    <option value="Kristen" @selected($warga->agama == 'Kristen')>Kristen</option>
+                                    <option value="Konghuchu" @selected($warga->agama == 'Konghuchu')>Konghuchu</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -120,9 +121,9 @@
 
                             <x-input.label for="status_perkawinan" label="Status Perkawinan">
                                 <x-input.select name="status_perkawinan" id="status_perkawinan">
-                                    <option value="Belum Kawin">Belum Kawin</option>
-                                    <option value="Kawin">Kawin</option>
-                                    <option value="Cerai Mati">Cerai Mati</option>
+                                    <option value="Belum Kawin" @selected($warga->status_perkawinan == 'Belum Kawin')>Belum Kawin</option>
+                                    <option value="Kawin" @selected($warga->status_perkawinan == 'Kawin')>Kawin</option>
+                                    <option value="Cerai Mati" @selected($warga->status_perkawinan == 'Cerai Mati')>Cerai Mati</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -144,11 +145,11 @@
 
                             <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
                                 <x-input.select name="jenis_pekerjaan" id="jenis_pekerjaan">
-                                    <option value="Belum/Tidak Bekerja">Belum/Tidak Bekerja</option>
-                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                    <option value="Mengurus Rumah Tangga">Mengurus Rumah Tangga</option>
-                                    <option value="Pegawai Negeri Sipil">Pegawai Negeri Sipil</option>
-                                    <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
+                                    <option value="Belum/Tidak Bekerja" @selected($warga->jenis_pekerjaan == 'Belum/Tidak Bekerja')>Belum/Tidak Bekerja</option>
+                                    <option value="Karyawan Swasta" @selected($warga->jenis_pekerjaan == 'Karyawan Swasta')>Karyawan Swasta</option>
+                                    <option value="Mengurus Rumah Tangga" @selected($warga->jenis_pekerjaan == 'Mengurus Rumah Tangga')>Mengurus Rumah Tangga</option>
+                                    <option value="Pegawai Negeri Sipil" @selected($warga->jenis_pekerjaan == 'Pegawai Negeri Sipil')>Pegawai Negeri Sipil</option>
+                                    <option value="Pelajar/Mahasiswa" @selected($warga->jenis_pekerjaan == 'Pelajar/Mahasiswa')>Pelajar/Mahasiswa</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -170,9 +171,9 @@
                             </label> --}}
 
                             <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
-                                <x-input.input value="HERE" type="text" id="kewarganegaraan" name="kewarganegaraan" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->kewarganegaraan}}" type="text" id="kewarganegaraan" name="kewarganegaraan" disabled></x-input.input>
                             </x-input.label>
-                            
+
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kewarganegaraan">Kewarganegaraan
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
@@ -210,9 +211,9 @@
 
                             <x-input.label for="status_keluarga" label="Status Keluarga">
                                 <x-input.select name="status_keluarga" id="status_keluarga">
-                                    <option value="Kepala Keluarga">Kepala Keluarga</option>
-                                    <option value="Istri">Istri</option>
-                                    <option value="Anak">Anak</option>
+                                    <option value="Kepala Keluarga" @selected($warga->status_keluarga == 'Kepala Keluarga')>Kepala Keluarga</option>
+                                    <option value="Istri" @selected($warga->status_keluarga == 'Istri')>Istri</option>
+                                    <option value="Anak" @selected($warga->status_keluarga == 'Anak')>Anak</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -233,7 +234,7 @@
                             </label> --}}
 
                             <x-input.label for="nama_ayah" label="Nama Ayah">
-                                <x-input.input value="HERE" type="text" id="nama_ayah" name="nama_ayah" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->nama_ayah }}" type="text" id="nama_ayah" name="nama_ayah" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ayah">Nama Ayah
@@ -242,7 +243,7 @@
                             </label> --}}
 
                             <x-input.label for="nama_ibu" label="Nama Ibu">
-                                <x-input.input value="HERE" type="text" id="nama_ibu" name="nama_ibu" disabled></x-input.input>
+                                <x-input.input value="{{ $warga->nama_ibu }}" type="text" id="nama_ibu" name="nama_ibu" disabled></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ibu">Nama Ibu
@@ -251,7 +252,7 @@
                             </label> --}}
 
                             <x-input.label for="penghasilan" label="Penghasilan">
-                                <x-input.leadingicon type="number" min="0" id="penghasilan" name="penghasilan" placeholder="HERE" icon="rupiah" alt="Rp">
+                                <x-input.leadingicon type="number" value="{{ $warga->penghasilan }}" min="0" id="penghasilan" name="penghasilan" placeholder="HERE" icon="rupiah" alt="Rp">
                                 </x-input.leadingicon>
                             </x-input.label>
 
@@ -269,7 +270,7 @@
                             </label> --}}
 
                             <x-input.label for="no_paspor" label="Nomor Paspor">
-                                <x-input.input value="HERE" type="text" id="no_paspor" name="no_paspor"></x-input.input>
+                                <x-input.input value="{{ $warga->no_paspor }}" type="text" id="no_paspor" name="no_paspor"></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_paspor">Nomor Paspor
@@ -278,7 +279,7 @@
                             </label> --}}
 
                             <x-input.label for="no_kitas" label="Nomor Kitas">
-                                <x-input.input value="HERE" type="text" id="no_kitas" name="no_kitas"></x-input.input>
+                                <x-input.input value="{{ $warga->no_kitas }}" type="text" id="no_kitas" name="no_kitas"></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kitas">Nomor Kitas
@@ -298,7 +299,7 @@
                                     <option value="Meninggal">Meninggal</option>
                                 </x-input.select>
                             </x-input.label>
-                            
+
                             <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
                                 <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
                             </x-input.label>
@@ -308,7 +309,7 @@
                 </div>
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('keluarga-tambah') }}"
+                    <a href="{{ url()->previous() }}"
                         class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
                         type="button">
                         <span
@@ -319,7 +320,7 @@
                             Kembali
                         </span>
                     </a>
-                    <button href="{{ route('keluarga-tambah') }}" type="submit"
+                    <button type="submit"
                         class="tw-h-11 tw-flex tw-px-6 tw-bg-b500 tw-text-n100 tw-items-center tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="submit">Simpan</button>
                 </div>
@@ -426,6 +427,6 @@
         <a href="{{url()->previous()}}">Kembali</a>
     </form>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+
 </body>
 </html> --}}

@@ -13,7 +13,7 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    <a href=""
+                    <a href="{{ route('warga-edit', ['nik'=>$warga->NIK]) }}"
                         class="tw-flex tw-items-center tw-relative tw-h-10 tw-pl-10 tw-pr-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-sm tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="button">
                         <span

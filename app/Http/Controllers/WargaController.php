@@ -89,20 +89,24 @@ class WargaController extends Controller
         return view('penduduk.warga.edit', compact('warga'));
     }
     public function update(Request $request, $nik){
-        WargaModified::create([
-            'NIK' => $request->nik,
-            'user_id' => Auth::user()->user_id,
-            'agama' => $request->agama,
-            'status_perkawinan'=> $request->status_perkaeinan,
-            'status_keluarga'=> $request->status_keluarga,
-            'status_warga'=> $request->status_warga,
-            'jenis_pekerjaan'=> $request->jenis_pekerjaan,
-            'penghasilan'=> $request->penghasilan,
-            'pendidikan'=> $request->pendidikan,
-            'tanggal_request' => now(),
-            'status_request' => 'Menunggu',
-        ]);
-        return redirect()->route('warga');
+        // TODO: add validation
+        
+        if (!Warga::find($nik)->exists) {
+            return redirect()->route('warga')->with('danger', 'Data tidak ditemukan');
+        }
+        $warga = Warga::find($nik);
+        $warga->agama = $request->agama;
+        $warga->status_perkawinan = $request->status_perkawinan;
+        $warga->status_keluarga = $request->status_keluarga;
+        $warga->status_warga = $request->status_warga;
+        $warga->jenis_pekerjaan = $request->jenis_pekerjaan;
+        $warga->penghasilan = $request->penghasilan;
+        $warga->pendidikan = $request->pendidikan;
+
+        // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
+        WargaModified::updateWarga($warga);
+
+        return redirect()->route('wargaDetail', ['nik'=> $request->nik]);
     }
     /**
      * fungsi untuk merubah no_kk dari sebuah warga,

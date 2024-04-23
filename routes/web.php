@@ -47,8 +47,8 @@ Route::prefix('penduduk')->group(function () {
     Route::get('/warga/detail/{nik}', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
     Route::middleware('role:rt')->group(function () {
-        Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit']); // untuk menampilkan form edit data Warga
-        Route::put('/warga/ubah/{nik}', [WargaController::class, 'update']); // untuk menangani update data Warga dan menyimpan pada database
+        Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit'])->name('warga-edit'); // untuk menampilkan form edit data Warga
+        Route::put('/warga/ubah/{nik}', [WargaController::class, 'update'])->name('warga-edit'); // untuk menangani update data Warga dan menyimpan pada database
         Route::get('/warga/tambah/{no_kk}', [WargaController::class, 'create'])->name('tambah-warga'); // untuk menampilkan form penambahan data warga
         Route::post('/warga/tambah/', [WargaController::class, 'store'])->name('tambah-warga-post');  // untuk menangani penambahan data Warga
         Route::post('/warga/pindahKK/', [WargaController::class, 'pindahKK'])->name('pindahKK'); // tambah warga dengan data lama akan ditangani oleh route ini
