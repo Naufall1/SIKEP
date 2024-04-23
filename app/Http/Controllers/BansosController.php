@@ -7,13 +7,20 @@ use App\Models\Bansos;
 use App\Models\Keluarga;
 use App\Models\MightGet;
 use App\Models\Warga;
+use Illuminate\Support\Facades\Auth;
 
 class BansosController extends Controller
 {
     public function index()
     {
-        $dataKeluarga = Keluarga::dataBansos();
+        $user = Auth::user();
+        $dataKeluarga = null;
 
+        if ($user->keterangan === 'ketua') {
+            $dataKeluarga = Keluarga::dataBansos($user->keterangan);
+        } else {
+            $dataKeluarga = Keluarga::dataBansos($user->keterangan);
+        }
         return view('bansos.kriteria.index', compact('dataKeluarga'));
     }
 
