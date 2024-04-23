@@ -86,12 +86,15 @@ class WargaController extends Controller
     }
     public function edit($nik){
         $warga = Warga::find($nik);
+        if (!$warga) {
+            return redirect()->back();
+        }
         return view('penduduk.warga.edit', compact('warga'));
     }
     public function update(Request $request, $nik){
         // TODO: add validation
-        
-        if (!Warga::find($nik)->exists) {
+
+        if (!Warga::find($nik)) {
             return redirect()->route('warga')->with('danger', 'Data tidak ditemukan');
         }
         $warga = Warga::find($nik);
@@ -121,6 +124,9 @@ class WargaController extends Controller
 
     public function detail($nik){
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
+        if (!$warga) {
+            return redirect()->back();
+        }
         return view('penduduk.warga.detail', compact('warga'));
     }
 }
