@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -85,7 +86,40 @@ class Warga extends Model
             return ;
         }
     }
-    public function keluarga():BelongsTo
+    // buat chart
+    public static function getDataPekerjaan(): Collection
+    {
+        return Warga::select('jenis_pekerjaan')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('jenis_pekerjaan')
+            ->orderByDesc('total')
+            ->get();
+    }
+
+    public static function getDataJenisKelamin(): array
+    {
+        $data = [];
+
+        $dataJenisKelamin = Warga::distinct()->pluck('jenis_kelamin');
+
+        foreach ($dataJenisKelamin as $jenis) {
+            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                ->where('warga.jenis_kelamin', $jenis)
+                ->count();
+
+            $data[] = [
+                'jenis_kelamin' => $jenis,
+                'jumlah' => $count
+            ];
+        }
+
+        return $data;
+    }
+
+        // end of buat chart
+
+   public function keluarga():BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
     }

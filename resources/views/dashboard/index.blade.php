@@ -1,7 +1,15 @@
+
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-    <div class="tw-pt-20">
-        <h1>Selamat datang {{ $text }}</h1>
-    </div>
+
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/plugins/plugin.zoom.min.js"></script>
+@endpush
+
+@stack('js')
+@include('dashboard.chart.pekerjaan')
+{{-- @include('dashboard.chart.jenisKelamin') --}}
+
 @endsection

@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/testchart', [HomeController::class, 'chart']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', [AuthController::class, 'test'])->name('test')->middleware('role');
