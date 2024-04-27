@@ -2,12 +2,12 @@
     switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
         case 'Umum':
             echo '<nav
-    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
             break;
 
         default:
             echo '<nav
-    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
             break;
     }
 @endphp
@@ -126,8 +126,6 @@
                 <x-icons.actionable.logo-sikep></x-icons.actionable.logo-sikep>
             </a>
             <x-icons.actionable.close id="closeModal" class="tw-cursor-pointer" stroke="2" size="24" color="n1000"></x-icons.actionable.close>
-            {{-- <img id="closeModal" class="tw-opacity-45 tw-cursor-pointer tw-h-6 tw-bg-cover hover:tw-opacity-100"
-                src="{{ asset('assets/icons/actionable/close.svg') }}" alt="close icon"> --}}
         </div>
         <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
 

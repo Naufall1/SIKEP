@@ -13,7 +13,7 @@ class PengajuanController extends Controller
 {
     public function indexNew() {
         $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->get();
-        return view('pengajuan.databaru.index', compact('dataBaru'));
+        return view('pengajuan.index', compact('dataBaru'));
     }
     public function indexModifWarga() {
         $wargaModified =  WargaModified::all();
