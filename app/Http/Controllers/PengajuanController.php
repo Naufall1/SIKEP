@@ -24,14 +24,17 @@ class PengajuanController extends Controller
         return view('pengajuan.perubahankeluarga.index', compact('keluargaModified'));
     }
     public function listModifKeluarga() {
-        $keluargaModified =  KeluargaModified::with('user')->select();
+        $keluargaModified =  KeluargaModified::with(['user', 'keluarga'])->select();
         return DataTables::of($keluargaModified)
             ->addIndexColumn()
+            ->addColumn('status', function (KeluargaModified $keluarga){
+                return view('components.form.label', ['content' => $keluarga->status_request])->render();
+            })
             ->addColumn('aksi', function (KeluargaModified $keluarga) {
-                $btn = '<a href="'.url('/penduduk/keluarga/' . $keluarga->no_kk).'" class="btn btn-info btn-sm">Detail</a> ';
+                $btn = '<a href="'. route('pengajuan.perubahan.keluarga', ['no_kk'=>$keluarga->no_kk]) .'" class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"> Detail </a>';
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
+            ->rawColumns(['status', 'aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
     public function detail($id) {
