@@ -18,15 +18,7 @@
             <div class="tw-flex">
                 <a href="{{ route('dataBaru') }}"
                     class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'dataBaru' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
-                    Data Baru
-                </a>
-                <a href="{{ route('perubahanWarga') }}"
-                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'perubahanWarga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
-                    <span class="tw-hidden md:tw-inline">Perubahan&nbsp;</span>Warga
-                </a>
-                <a href="{{ route('perubahanKeluarga') }}"
-                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'perubahanKeluarga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
-                    <span class="tw-hidden md:tw-inline">Perubahan&nbsp;</span>Keluarga
+                    Pengajuan
                 </a>
                 <div
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-flex-grow tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
@@ -84,8 +76,9 @@
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
                                 <th>Pengaju</th>
-                                <th>NIK</th>
-                                <th>Nama</th>
+                                <th>No KK</th>
+                                <th>Kepala Keluarga</th>
+                                <th>Jenis</th>
                                 <th class="tw-hidden md:tw-flex tw-h-11 tw-grow tw-items-center">Tanggal</th>
                                 <th>Status Pengajuan</th>
                                 <th class="tw-w-[108px]"></th>
@@ -97,8 +90,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
                                     <td></td>
+                                    <td></td>
+                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
                                     <td>
                                         @include('components.form.label', ['content' => 'VALUE HERE'])
                                     </td>

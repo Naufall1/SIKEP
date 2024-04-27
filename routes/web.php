@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/testchart', [HomeController::class, 'chart']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', [AuthController::class, 'test'])->name('test')->middleware('role');
@@ -89,18 +91,21 @@ Route::prefix('pengajuan')->group(function () {
     /**
      * Route untuk menangani proses konfirmasi dan tolak sebuah data pengajuan
      */
-    Route::get('/data-baru/detail/{id}', [function(){
-        return view('pengajuan.databaru.detail');
-    }])->name('detail'); // memberikan halaman detail sebuah pengajuan data baru
-    Route::get('/data-baru/detail/{id}/warga/{nik}', [function(){
-        return view('pengajuan.databaru.detailwarga');
-    }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
-    Route::get('/data-baru/detail/{id}/keluarga/{no_kk}', [function(){
-        return view('pengajuan.databaru.detailkeluarga');
-    }])->name('detailKeluargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
-
-    Route::get('/detail/{id}/keluarga', [ 'detail'])->name('detailKeluarga'); // memberikan halaman detail keluarga dari sebuah data pengajuan
-    Route::get('/detail/{id}/warga/{nik}', [ 'detail'])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
+    Route::get('/pembaharuan/{id}', [function(){
+        return view('pengajuan.pembaharuan.detail');
+    }])->name('detail'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    Route::get('/pembaharuan/{id}/warga/{nik}', [function(){
+        return view('pengajuan.pembaharuan.detailwarga');
+    }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
+    // Route::get('/data-baru/detail/{id}/keluarga/{no_kk}', [function(){
+    //     return view('pengajuan.databaru.detailkeluarga');
+    // }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
+    Route::get('/perubahan-keluarga/{no_kk}', [function(){
+        return view('pengajuan.perubahankeluarga.detail');
+    }])->name('detailKeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
+    Route::get('/perubahan-warga/{nik}', [function(){
+        return view('pengajuan.perubahanwarga.detail');
+    }])->name('detailWarga'); // memberikan halaman detail warga dari sebuah data pengajuan
     Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
     Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
 })->name('pengajuan')->middleware('role:rw');
