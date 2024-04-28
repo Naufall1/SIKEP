@@ -11,6 +11,5 @@
 @stack('js')
 @include('dashboard.chart.pekerjaan')
 @include('dashboard.chart.jenisKelamin')
-{{-- kalo filter nya diganti ga sesuai sama field chart nya --}}
 
 @endsection
