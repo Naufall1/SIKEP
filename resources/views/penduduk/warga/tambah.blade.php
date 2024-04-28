@@ -36,10 +36,13 @@
                             </label> --}}
 
                             <x-input.label for="nik" label="NIK">
-                                <x-input.input type="text" name="nik" placeholder="Masukkan NIK"></x-input.input>
+                                <x-input.input value="{{old('NIK')}}" type="text" name="NIK" placeholder="Masukkan NIK"></x-input.input>
                                 <x-input.select class="tw-hidden" name="nik" id="nik-list">
-                                    <option value="no" disabled selected>Pilih KK</option>
+                                    <option value="no" disabled selected>Pilih NIK</option>
                                 </x-input.select>
+                                @error('NIK')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nik">NIK
@@ -51,7 +54,10 @@
                             </label> --}}
 
                             <x-input.label for="nama" label="Nama">
-                                <x-input.input type="text" name="nama" id="nama" placeholder="Masukkan Nama"></x-input.input>
+                                <x-input.input value="{{old('nama')}}" type="text" name="nama" id="nama" placeholder="Masukkan Nama"></x-input.input>
+                                @error('nama')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{--<label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
@@ -60,7 +66,10 @@
                             </label>--}}
 
                             <x-input.label for="tempat_lahir" label="Tempat Lahir">
-                                <x-input.input type="text" placeholder="Masukkan Tempat Lahir" id="tempat_lahir" name="tempat_lahir"></x-input.input>
+                                <x-input.input value="{{old('tempat_lahir')}}" type="text" placeholder="Masukkan Tempat Lahir" id="tempat_lahir" name="tempat_lahir"></x-input.input>
+                                @error('tempat_lahir')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tempat_lahir">Tempat Lahir
@@ -69,7 +78,10 @@
                             </label> --}}
 
                             <x-input.label for="tanggal_lahir" label="Tanggal Lahir">
-                                <x-input.input placeholder="Masukkan Tempat Lahir" type="date" id="tanggal_lahir" name="tanggal_lahir"></x-input.input>
+                                <x-input.input value="{{old('tanggal_lahir')}}" placeholder="Masukkan Tempat Lahir" type="date" id="tanggal_lahir" name="tanggal_lahir"></x-input.input>
+                                @error('tanggal_lahir')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tanggal_lahir">Tanggal Lahir
@@ -79,9 +91,13 @@
 
                             <x-input.label for="jenis_kelamin" label="Jenis Kelamin">
                                 <x-input.select name="jenis_kelamin" id="jenis_kelamin">
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
+                                    <option disabled @selected(!old('jenis_kelamin'))>Pilih Jenis Kelamin</option>
+                                    <option value="L" @selected(old('jenis_kelamin') == 'L')>Laki-laki</option>
+                                    <option value="P" @selected(old('jenis_kelamin') == 'P')>Perempuan</option>
                                 </x-input.select>
+                                @error('jenis_kelamin')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_kelamin">Jenis Kelamin
@@ -93,11 +109,15 @@
 
                             <x-input.label for="pendidikan" label="Pendidikan">
                                 <x-input.select name="pendidikan" id="pendidikan">
-                                    <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
-                                    <option value="SLTA/Sederajat">SLTA/Sederajat</option>
-                                    <option value="DIPLOMA I/II">DIPLOMA I/II</option>
-                                    <option value="Diploma IV/Strata 1">Diploma IV/Strata 1</option>
+                                    <option disabled @selected(!old('pendidikan'))>Pilih Pendidikan</option>
+                                    <option value="Tamat SD/Sederajat" @selected(old('pendidikan') == "Tamat SD/Sederajat")>Tamat SD/Sederajat</option>
+                                    <option value="SLTA/Sederajat" @selected(old('pendidikan') == "SLTA/Sederajat")>SLTA/Sederajat</option>
+                                    <option value="DIPLOMA I/II" @selected(old('pendidikan') == "DIPLOMA I/II")>DIPLOMA I/II</option>
+                                    <option value="Diploma IV/Strata 1" @selected(old('pendidikan') == "Diploma IV/Strata 1")>Diploma IV/Strata 1</option>
                                 </x-input.select>
+                                @error('pendidikan')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="pendidikan">Pendidikan
@@ -111,13 +131,17 @@
 
                             <x-input.label for="agama" label="Agama">
                                 <x-input.select name="agama" id="agama">
-                                    <option value="Budha">Budha</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Islam">Islam</option>
-                                    <option value="Katolik">Katolik</option>
-                                    <option value="Kristen">Kristen</option>
-                                    <option value="Konghuchu">Konghuchu</option>
+                                    <option disabled @selected(!old('agama'))>Pilih Agama</option>
+                                    <option value="Budha" @selected(old('agama') == 'Budha')>Budha</option>
+                                    <option value="Hindu" @selected(old('agama') == 'Hindu')>Hindu</option>
+                                    <option value="Islam" @selected(old('agama') == 'Islam')>Islam</option>
+                                    <option value="Katolik" @selected(old('agama') == 'Katolik')>Katolik</option>
+                                    <option value="Kristen" @selected(old('agama') == 'Kristen')>Kristen</option>
+                                    <option value="Konghuchu" @selected(old('agama') == 'Konghuchu')>Konghuchu</option>
                                 </x-input.select>
+                                @error('agama')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-opacity-100 tw-flex tw-flex-col tw-gap-2" for="agama">Agama
@@ -133,13 +157,17 @@
 
                             <x-input.label for="status_perkawinan" label="Status Perkawinan">
                                 <x-input.select name="status_perkawinan" id="status_perkawinan">
-                                    <option value="Belum Kawin">Belum Kawin</option>
-                                    <option value="Kawin">Kawin</option>
-                                    <option value="Cerai Mati">Cerai Mati</option>
+                                    <option disabled @selected(!old('status_perkawinan'))>Pilih Status</option>
+                                    <option value="Belum Kawin" @selected(old('status_perkawinan') == 'Belum Kawin')>Belum Kawin</option>
+                                    <option value="Kawin" @selected(old('status_perkawinan') == 'Kawin')>Kawin</option>
+                                    <option value="Cerai Mati" @selected(old('status_perkawinan') == 'Cerai Mati')>Cerai Mati</option>
                                 </x-input.select>
+                                @error('status_perkawinan')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
-                            
+
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_perkawinan">Status Perkawinan
                                 <select class="tw-input-enabled tw-placeholder" name="status_perkawinan"
                                     id="status_perkawinan">
@@ -151,12 +179,16 @@
 
                             <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
                                 <x-input.select name="jenis_pekerjaan" id="jenis_pekerjaan">
-                                    <option value="Belum/Tidak Bekerja">Belum/Tidak Bekerja</option>
-                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                    <option value="Mengurus Rumah Tangga">Mengurus Rumah Tangga</option>
-                                    <option value="Pegawai Negeri Sipil">Pegawai Negeri Sipil</option>
-                                    <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
+                                    <option disabled @selected(!old('jenis_pekerjaan'))>Pilih Jenis Pekerjaan</option>
+                                    <option value="Belum/Tidak Bekerja" @selected(old('jenis_pekerjaan') == 'Belum/Tidak Bekerja')>Belum/Tidak Bekerja</option>
+                                    <option value="Karyawan Swasta" @selected(old('jenis_pekerjaan') == 'Karyawan Swasta')>Karyawan Swasta</option>
+                                    <option value="Mengurus Rumah Tangga" @selected(old('jenis_pekerjaan') == 'Mengurus Rumah Tangga')>Mengurus Rumah Tangga</option>
+                                    <option value="Pegawai Negeri Sipil" @selected(old('jenis_pekerjaan') == 'Pegawai Negeri Sipil')>Pegawai Negeri Sipil</option>
+                                    <option value="Pelajar/Mahasiswa" @selected(old('jenis_pekerjaan') == 'Pelajar/Mahasiswa')>Pelajar/Mahasiswa</option>
                                 </x-input.select>
+                                @error('jenis_pekerjaan')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
@@ -171,9 +203,13 @@
 
                             <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
                                 <x-input.select name="kewarganegaraan" id="kewarganegaraan">
-                                    <option value="WNI">WNI</option>
-                                    <option value="WNA">WNA</option>
+                                    <option disabled @selected(!old('kewarganegaraan'))>Pilih Kewarganegaraan</option>
+                                    <option value="WNI" @selected(old('kewarganegaraan') == 'WNI')>WNI</option>
+                                    <option value="WNA" @selected(old('kewarganegaraan') == 'WNA')>WNA</option>
                                 </x-input.select>
+                                @error('kewarganegaraan')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kewarganegaraan">Kewarganegaraan
@@ -193,10 +229,14 @@
 
                             <x-input.label for="status_keluarga" label="Status Keluarga">
                                 <x-input.select name="status_keluarga" id="status_keluarga">
-                                    <option value="Kepala Keluarga">Kepala Keluarga</option>
-                                    <option value="Istri">Istri</option>
-                                    <option value="Anak">Anak</option>
+                                    <option disabled @selected(!old('status_keluarga'))>Pilih Status</option>
+                                    <option value="Kepala Keluarga" @selected(old('status_keluarga') == 'Kepala Keluarga')>Kepala Keluarga</option>
+                                    <option value="Istri" @selected(old('status_keluarga') == 'Istri')>Istri</option>
+                                    <option value="Anak" @selected(old('status_keluarga') == 'Anak')>Anak</option>
                                 </x-input.select>
+                                @error('status_keluarga')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_keluarga">Status Keluarga
@@ -209,7 +249,10 @@
                             </label> --}}
 
                             <x-input.label for="nama_ayah" label="Nama Ayah">
-                                <x-input.input placeholder="Masukkan Nama Ayah" type="text" id="nama_ayah" name="nama_ayah"></x-input.input>
+                                <x-input.input value="{{old('nama_ayah')}}" placeholder="Masukkan Nama Ayah" type="text" id="nama_ayah" name="nama_ayah"></x-input.input>
+                                @error('nama_ayah')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ayah">Nama Ayah
@@ -218,7 +261,10 @@
                             </label> --}}
 
                             <x-input.label for="nama_ibu" label="Nama Ibu">
-                                <x-input.input placeholder="Masukkan Nama Ibu" type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
+                                <x-input.input value="{{old('nama_ibu')}}" placeholder="Masukkan Nama Ibu" type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
+                                @error('nama_ibu')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama_ibu">Nama Ibu
@@ -227,8 +273,11 @@
                             </label> --}}
 
                             <x-input.label for="penghasilan" label="Penghasilan">
-                                <x-input.leadingicon type="number" min="0" id="penghasilan" name="penghasilan" placeholder="1000000" icon="rupiah" alt="Rp">
+                                <x-input.leadingicon value="{{old('penghasilan')}}" type="number" min="0" id="penghasilan" name="penghasilan" placeholder="1000000" icon="rupiah" alt="Rp">
                                 </x-input.leadingicon>
+                                @error('penghasilan')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="penghasilan">
@@ -245,7 +294,10 @@
                             </label> --}}
 
                             <x-input.label for="no_paspor" label="Nomor Paspor">
-                                <x-input.input placeholder="Masukkan Nomor Paspor" type="text" id="no_paspor" name="no_paspor"></x-input.input>
+                                <x-input.input value="{{old('no_paspor')}}" placeholder="Masukkan Nomor Paspor" type="text" id="no_paspor" name="no_paspor"></x-input.input>
+                                @error('no_paspor')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_paspor">Nomor Paspor
@@ -254,9 +306,12 @@
                             </label>--}}
 
                             <x-input.label for="no_kitas" label="Nomor Kitas">
-                                <x-input.input placeholder="Masukkan Nomor Paspor" type="text" id="no_kitas" name="no_kitas" value=''></x-input.input>
+                                <x-input.input value="{{old('no_kitas')}}" placeholder="Masukkan Nomor Paspor" type="text" id="no_kitas" name="no_kitas" value=''></x-input.input>
+                                @error('no_kitas')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
-                            
+
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kitas">Nomor Kitas
                                 <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Nomor Paspor"
                                     type="text" id="no_kitas" name="no_kitas" value=''>
@@ -268,14 +323,18 @@
                         <h2 class="">Demografi Masuk</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label for="status_warga" label="Jenis">
-                                <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled>
-                                    <option value="Aktif" selected>Aktif</option>
-                                    <option value="Migrasi">Migrasi</option>
-                                    <option value="Meninggal">Meninggal</option>
+                            <x-input.label for="jenis_demografi" label="Jenis">
+                                <x-input.select placeholder="Pilih Jenis Demografi" type="text" id="jenis_demografi" name="jenis_demografi">
+                                    <option disabled @selected(!old('jenis_demografi'))>Pilih Jenis Demografi</option>
+                                    <option value="Aktif" @selected(old('jenis_demografi') == 'Lahir')>Lahir</option>
+                                    <option value="Migrasi" @selected(old('jenis_demografi') == 'Migrasi')>Migrasi</option>
+                                    <option value="Meninggal" @selected(old('jenis_demografi') == 'Meninggal')>Meninggal</option>
                                 </x-input.select>
+                                @error('jenis_demografi')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
-                            
+
                             <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
                                 <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
                             </x-input.label>
@@ -286,9 +345,9 @@
                                     <option value="Aktif" selected>Aktif</option>
                                     <option value="Migrasi">Migrasi</option>
                                     <option value="Meninggal">Meninggal</option>
-                                </select> 
+                                </select>
                             </label>  --}}
-                        
+
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
                                 for="berkas_demografi_masuk">Berkas Pendukung <div
                                     class="tw-relative tw-cursor-pointer tw-input-enabled"> <input
@@ -327,7 +386,6 @@
                 $('#nik').attr('type', 'hidden');
                 $('#nik').prop('disabled', true);
 
-                console.log();
 
                 $('#demografiMasuk').remove();
 
@@ -619,6 +677,6 @@
         <a href="{{url()->previous()}}">Kembali</a>
     </form>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+
 </body>
 </html> --}}
