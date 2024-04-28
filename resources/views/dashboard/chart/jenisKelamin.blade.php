@@ -12,7 +12,7 @@
         <!-- Pilihan Chart -->
         <div>
             <label for="chartType">Pilih chart:</label>
-            <select id="chartType" onchange="dropdownChart()">
+            <select id="chartType" onchange="dropdownChartJK()">
                 <option value="pie">Pie Chart</option>
                 <option value="bar">Bar Chart</option>
             </select>
@@ -44,7 +44,7 @@
             document.getElementById('barChartContainerKelamin').style.display = 'block';
         }
 
-        function dropdownChart() {
+        function dropdownChartJK() {
             var selectedChart = document.getElementById('chartType').value;
 
             if (selectedChart === 'pie') {

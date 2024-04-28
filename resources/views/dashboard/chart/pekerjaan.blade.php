@@ -2,7 +2,7 @@
 <div style="max-width: 800px;">
     <div>
         <label for="chartType">pilih chart:</label>
-        <select id="chartType" onchange="dropdownChart()">
+        <select id="chartType" onchange="dropdownChartPekerjaan()">
             <option value="pie">Pie Chart</option>
             <option value="bar">Bar Chart</option>
         </select>
@@ -33,7 +33,7 @@
         document.getElementById('barChartContainer').style.display = 'block';
     }
 
-    function dropdownChart() {
+    function dropdownChartPekerjaan() {
         var selectedChart = document.getElementById('chartType').value;
 
         if (selectedChart === 'pie') {
