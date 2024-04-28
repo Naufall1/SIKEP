@@ -47,12 +47,12 @@
 
     /* Button/Style - Text */
     .tw-btn-text{
-        @apply tw-text-n1000 tw-bg-n300 hover:tw-bg-n400 active:tw-bg-300;
+        @apply tw-text-n1000 tw-bg-n300 hover:tw-bg-n400 active:tw-bg-n300;
     }
     
     /* Button/Style - Outline */
     .tw-btn-outline{
-        @apply tw-text-n1000 tw-border-[1.5px] tw-bg-y500 tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
+        @apply tw-text-n1000 tw-border-[1.5px] tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
     }
 
     /* Button/Size */
