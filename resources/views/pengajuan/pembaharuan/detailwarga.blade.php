@@ -129,12 +129,9 @@
 
                 <div class="tw-flex">
                     <a href="#"
-                        class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                        class="tw-btn-lg-outline-round-lead"
                         type="button">
-                        <span
-                            class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
-                            <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
-                        </span>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>

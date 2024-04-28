@@ -28,11 +28,11 @@
                             <x-input.label for="jenis_data" label="Jenis Data">
                                 <x-input.select name="jenis_data">
                                     <option value="data_baru"
-                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>
-                                            KK Baru</option>
-                                        <option value="data_lama"
-                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>
-                                            KK Lama</option>
+                                        {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>
+                                        KK Baru</option>
+                                    <option value="data_lama"
+                                        {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>
+                                        KK Lama</option>
                                 </x-input.select>
                             </x-input.label>
 
@@ -55,7 +55,8 @@
                             </label> --}}
 
                             <x-input.label for="no_kk" label="No KK">
-                                <x-input.input type="text" name="no_kk" placeholder="Masukkan No KK" value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}"></x-input.input>
+                                <x-input.input type="text" name="no_kk" placeholder="Masukkan No KK"
+                                    value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}"></x-input.input>
                                 <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
                                     <option value="no" disabled selected>Pilih KK</option>
                                 </x-input.select>
@@ -71,7 +72,8 @@
                             </label> --}}
 
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.input type="text" name="kepala_keluarga" placeholder="Masukkan Kepala Keluarga" value="{{ empty(session()->get('formState')['kepala_keluarga']) ? '' : session()->get('formState')['kepala_keluarga'] }}"></x-input.input>
+                                <x-input.input type="text" name="kepala_keluarga" placeholder="Masukkan Kepala Keluarga"
+                                    value="{{ empty(session()->get('formState')['kepala_keluarga']) ? '' : session()->get('formState')['kepala_keluarga'] }}"></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
@@ -95,9 +97,10 @@
                                 id="RT" name="RT">
                         </label> --}}
 
-                        <x-input.label for="RT" label="RT">
-                            <x-input.input disabled type="text" name="RT" placeholder="RT" value=""></x-input.input>
-                        </x-input.label>
+                            <x-input.label for="RT" label="RT">
+                                <x-input.input disabled type="text" name="RT" placeholder="RT"
+                                    value=""></x-input.input>
+                            </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
                                 <select class="tw-input-enabled tw-placeholder" name="RT" id="RT">
@@ -121,31 +124,37 @@
                             </label> --}}
 
                             <x-input.label for="RW" label="RW">
-                                <x-input.input disabled type="text" name="RW" placeholder="Masukkan RW" value="{{ $default['rw'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="RW" placeholder="Masukkan RW"
+                                    value="{{ $default['rw'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="kode_pos" label="Kode Pos">
-                                <x-input.input disabled type="text" name="kode_pos" placeholder="Masukkan kode_pos" value="{{ $default['kode_pos'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kode_pos" placeholder="Masukkan kode_pos"
+                                    value="{{ $default['kode_pos'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="kelurahan" label="Kelurahan">
-                                <x-input.input disabled type="text" name="kelurahan" placeholder="Masukkan Kelurahan" value="{{ $default['kelurahan'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kelurahan" placeholder="Masukkan Kelurahan"
+                                    value="{{ $default['kelurahan'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="kecamatan" label="Kecamatan">
-                                <x-input.input disabled type="text" name="kecamatan" placeholder="Masukkan Kecamatan" value="{{ $default['kecamatan'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kecamatan" placeholder="Masukkan Kecamatan"
+                                    value="{{ $default['kecamatan'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="kota" label="Kota">
-                                <x-input.input disabled type="text" name="kota" placeholder="Masukkan Kota" value="{{ $default['kota'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kota" placeholder="Masukkan Kota"
+                                    value="{{ $default['kota'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="provinsi" label="Provinsi">
-                                <x-input.input disabled type="text" name="provinsi" placeholder="Masukkan Provinsi" value="{{ $default['provinsi'] }}"></x-input.input>
+                                <x-input.input disabled type="text" name="provinsi" placeholder="Masukkan Provinsi"
+                                    value="{{ $default['provinsi'] }}"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
-                                <x-input.file  name="kartu_keluarga"></x-input.file>
+                                <x-input.file name="kartu_keluarga"></x-input.file>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode POS
@@ -191,7 +200,9 @@
                         <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000" value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}" icon="rupiah" alt="Rp">
+                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
+                                    value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}"
+                                    icon="rupiah" alt="Rp">
                                 </x-input.leadingicon>
                             </x-input.label>
 
@@ -209,7 +220,8 @@
                             </label> --}}
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan (m2)">
-                                <x-input.input type="number" name="luas_bangunan" placeholder="Masukkan Luas Bangunan" value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}"></x-input.input>
+                                <x-input.input type="number" name="luas_bangunan" placeholder="Masukkan Luas Bangunan"
+                                    value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}"></x-input.input>
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
@@ -262,7 +274,7 @@
                                     <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
                                             <a href="#"
-                                                class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"
+                                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2 tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
                                                 onclick="tambahAnggotaKeluarga()">
                                                 Tambah
                                             </a>
@@ -277,20 +289,15 @@
                     </div>
                 </div>
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('warga') }}"
-                        class="tw-flex tw-items-center tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                    <a href="{{ route('warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
-                        <span
-                            class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
-                            <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
-                        </span>
+                        <x-icons.actionable.arrow-left class="" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
-                    <button
-                        class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
-                        type="submit">Simpan</button>
+                    <button class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Simpan</button>
                 </div>
             </form>
 
@@ -298,7 +305,7 @@
     </div>
     {{-- {{dd(session()->get('formState'))}} --}}
     <script>
-        $('#formdata').submit(function (e) {
+        $('#formdata').submit(function(e) {
             // e.preventDefault();
             $('#RW').prop('disabled', false);
             $('#kode_pos').prop('disabled', false);
@@ -312,11 +319,11 @@
             console.log();
             changeJenisData(
                 '{{ empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data'] }}'
-                );
+            );
             selectKK(
                 '{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}',
                 '{{ empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data'] }}'
-                );
+            );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
         });
 
@@ -401,7 +408,7 @@
                         });
                         $('#no_kk-list').val(
                             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                            ).change();
+                        ).change();
                         // $('#no_kk-list').val('no').change();
                         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
                     }

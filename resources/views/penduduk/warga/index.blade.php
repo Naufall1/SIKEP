@@ -16,7 +16,7 @@
 
             @if (Auth::user()->hasLevel['level_kode'] == 'RT')
                 <a
-                    href="{{ route('keluarga-tambah') }}"class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                    href="{{ route('keluarga-tambah') }}"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
                     Tambah Data</a>
             @endif
 
@@ -107,7 +107,7 @@
                                     <td>{{ $w->status_warga }}</td>
                                     <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
                                         <a href="{{route('wargaDetail', [$w->NIK])}}"
-                                            class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                                             Detail
                                         </a>
                                     </td>

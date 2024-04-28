@@ -12,7 +12,7 @@
     }
 @endphp
 
-<div class="{{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-flex' : 'tw-hidden md:tw-flex'}} md:tw-gap-6 tw-items-center">
+<div class="{{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-flex' : 'tw-hidden lg:tw-flex'}} md:tw-gap-6 tw-items-center">
     <a href="{{route('home')}}">
         <x-icons.actionable.logo-sikep></x-icons.actionable.logo-sikep>
     </a>
@@ -51,7 +51,7 @@
 </div>
 
 <div id="toggleHamburger"
-    class="tw-cursor-pointer {{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-hidden' : 'md:tw-hidden'}} tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
+    class="tw-cursor-pointer {{empty(Auth::user()->hasLevel['level_kode']) ? 'tw-hidden' : 'lg:tw-hidden'}} tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
     href="">
     <x-icons.actionable.hamburger class="tw-bg-cover" stroke="1.5" color="n1000"></x-icons.actionable.hamburger>
 </div>
@@ -110,7 +110,7 @@
 @else
     @if (Route::currentRouteName() !== 'login')
         <a href="{{ route('login') }}"
-            class="tw-flex tw-items-center tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
+            class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round"
             type="submit">Masuk</a>
     @endif
 @endif
