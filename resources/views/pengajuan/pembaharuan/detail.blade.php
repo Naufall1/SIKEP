@@ -20,10 +20,10 @@
 
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-btn-lg-text-round"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="closeModal">Batal</button>
                         <a href=""
-                            class="tw-btn-lg-danger-round"
+                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
                             type="submit">Tolak</a>
                     </div>
 
@@ -177,7 +177,7 @@
                                         <td></td>
                                         <td class="tw-w-[100px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
                                             <a href=""
-                                                class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                                                 Detail
                                             </a>
                                         </td>
@@ -194,7 +194,7 @@
 
                 <div class="tw-flex tw-justify-between">
                     <a href="{{ route('warga') }}"
-                        class="tw-btn-lg-outline-round-lead"
+                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
@@ -203,10 +203,10 @@
                     </a>
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-btn-lg-text-round"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="buttonReject">Tolak</button>
                         <a href=""
-                            class="tw-btn-lg-primary-round"
+                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                             type="submit">Konfirmasi</a>
                     </div>
                 </div>

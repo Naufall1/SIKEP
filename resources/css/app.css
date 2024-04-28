@@ -37,17 +37,22 @@
     /* Button/Style */
     /* Button/Style - Primary */
     .tw-btn-primary{
-        @apply tw-text-n100 tw-bg-b500 hover:tw-bg-b600 active:tw-bg-b700;
+        @apply tw-text-n100 tw-bg-y500 hover:tw-bg-b600 active:tw-bg-b700;
     }
 
     /* Button/Style - Danger */
     .tw-btn-danger{
-        @apply tw-text-n100 tw-bg-r500 hover:tw-bg-r600 active:tw-bg-r700;
+        @apply tw-text-n100 tw-bg-y500 hover:tw-bg-r600 active:tw-bg-r700;
+    }
+
+    /* Button/Style - Text */
+    .tw-btn-text{
+        @apply tw-text-n1000 tw-bg-y500 hover:tw-bg-n400 active:tw-bg-n300;
     }
     
     /* Button/Style - Outline */
     .tw-btn-outline{
-        @apply tw-text-n1000 tw-border-[1.5px] tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
+        @apply tw-text-n1000 tw-border-[1.5px] tw-bg-y500 tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
     }
 
     /* Button/Size */
