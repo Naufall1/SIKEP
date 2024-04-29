@@ -14,7 +14,7 @@ class PengajuanController extends Controller
 {
     public function index() {
         // $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->with('pengajuan')->get();
-        $dataBaru =  PengajuanData::where('status_request', '=', 'Menunggu')->with('keluarga')->get();
+        $dataBaru =  PengajuanData::where('status_request', '=', 'Menunggu')->with(['keluarga', 'user'])->get();
         // dd($dataBaru);
         return view('pengajuan.index', compact('dataBaru'));
     }

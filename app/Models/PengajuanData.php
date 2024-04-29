@@ -24,4 +24,8 @@ class PengajuanData extends Model
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
     }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }
