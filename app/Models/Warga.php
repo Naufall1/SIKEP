@@ -88,26 +88,37 @@ class Warga extends Model
     // }
     
     // buat chart
-    public static function getDataPekerjaan(): Collection
+    public static function getDataPekerjaan($keterangan): Collection
     {
-        return Warga::select('jenis_pekerjaan')
-            ->selectRaw('COUNT(*) as total')
-            ->groupBy('jenis_pekerjaan')
-            ->orderByDesc('total')
-            ->get();
-    }
+        $query = Warga::select('jenis_pekerjaan')
+                    ->selectRaw('COUNT(*) as total')
+                    ->groupBy('jenis_pekerjaan')
+                    ->orderByDesc('total');
 
-    public static function getDataJenisKelamin(): array
+        if ($keterangan != 'ketua') {
+            $query->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                ->where('keluarga.RT', $keterangan);
+        }
+
+        return $query->get();
+    }
+    public static function getDataJenisKelamin($keterangan): array
     {
         $data = [];
 
         $dataJenisKelamin = Warga::distinct()->pluck('jenis_kelamin');
 
         foreach ($dataJenisKelamin as $jenis) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('warga.jenis_kelamin', $jenis)
-                ->count();
+            $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                        ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                        ->where('warga.jenis_kelamin', $jenis);
+
+            if ($keterangan == 'ketua') {
+                $count = $query->count();
+            } else {
+                $count = $query->where('keluarga.RT', $keterangan)->count();
+            }
 
             $data[] = [
                 'jenis_kelamin' => $jenis,
@@ -118,9 +129,10 @@ class Warga extends Model
         return $data;
     }
 
+
         // end of buat chart
 
-   public function keluarga():BelongsTo
+    public function keluarga():BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
     }

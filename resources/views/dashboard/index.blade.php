@@ -10,6 +10,6 @@
 
 @stack('js')
 @include('dashboard.chart.pekerjaan')
-{{-- @include('dashboard.chart.jenisKelamin') --}}
+@include('dashboard.chart.jenisKelamin')
 
 @endsection

@@ -20,10 +20,10 @@
 
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-h-11 tw-px-6 tw-bg-n300 tw-text-n1000 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-n400 active:tw-bg-n300 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="closeModal">Batal</button>
                         <a href=""
-                            class="tw-h-11 tw-px-6 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-r600 active:tw-bg-r700 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
                             type="submit">Tolak</a>
                     </div>
 
@@ -177,7 +177,7 @@
                                         <td></td>
                                         <td class="tw-w-[100px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
                                             <a href=""
-                                                class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                                                 Detail
                                             </a>
                                         </td>
@@ -194,22 +194,19 @@
 
                 <div class="tw-flex tw-justify-between">
                     <a href="{{ route('warga') }}"
-                        class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <span
-                            class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
-                            <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
-                        </span>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-h-11 tw-px-6 tw-bg-n300 tw-text-n1000 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-n400 active:tw-bg-n300 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="buttonReject">Tolak</button>
                         <a href=""
-                            class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                             type="submit">Konfirmasi</a>
                     </div>
                 </div>

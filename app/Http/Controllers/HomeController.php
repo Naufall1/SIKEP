@@ -39,8 +39,8 @@ class HomeController extends Controller
     private function dashboardRW() {
 
         // chart test
-        $dataPekerjaan = Warga::getDataPekerjaan();
-        $dataJenisKelamin = Warga::getDataJenisKelamin();
+        $dataPekerjaan = Warga::getDataPekerjaan(Auth::user()->keterangan);
+        $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
 
         return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin')); // jenis kelamin blom
 
@@ -98,27 +98,20 @@ class HomeController extends Controller
             $countTingkatPendidikan[$tingkat] = $count;
         }
 
-        // pekerjaan
-        $countPekerjaan = [];
 
-        $pekerjaan = Warga::distinct()->pluck('jenis_pekerjaan');
-
-        foreach ($pekerjaan as $kerja) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('warga.jenis_pekerjaan', $kerja)
-                ->count();
-
-            $countPekerjaan[$kerja] = $count;
-        }
-
-
-        return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
-        'countKelahiran', 'countPertumbuhan', 'countUsiaProduktif', 'countJK', 'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
-        ['title' => 'RW', 'text' => 'Ketua RW']);
+        // return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
+        // 'countKelahiran', 'countPertumbuhan', 'countUsiaProduktif', 'countJK', 'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
+        // ['title' => 'RW', 'text' => 'Ketua RW']);
     }
 
     private function dashboardRT(int $rt) {
+        // chart test
+        $keterangan = Auth::user()->keterangan;
+        $dataPekerjaan = Warga::getDataPekerjaan(Auth::user()->keterangan);
+        $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
+
+        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin')); // jenis kelamin blom
+
         $countPenduduk = Warga::join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')->where('keluarga.RT', $rt)->count();
         $countKeluarga = Keluarga::where('RT', $rt)->count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
@@ -143,20 +136,6 @@ class HomeController extends Controller
         ->whereRaw('TIMESTAMPDIFF(YEAR, warga.tanggal_lahir, CURDATE()) < 50')
         ->where('keluarga.RT', $rt)->count();
 
-        //jenis kelamin
-        $countJK = [];
-
-        $jk = Warga::distinct()->pluck('jenis_kelamin');
-
-        foreach ($jk as $jeniskelamin) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('keluarga.RT', $rt)
-                ->where('warga.jenis_kelamin', $jeniskelamin)
-                ->count();
-
-            $countJK[$jeniskelamin] = $count;
-        }
         // agama
         $daftarAgama = Warga::distinct()->pluck('agama');
 
@@ -187,25 +166,9 @@ class HomeController extends Controller
             $countTingkatPendidikan[$tingkat] = $count;
         }
 
-        // pekerjaan
-        $countPekerjaan = [];
-
-        $pekerjaan = Warga::distinct()->pluck('jenis_pekerjaan');
-
-        foreach ($pekerjaan as $kerja) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('keluarga.RT', $rt)
-                ->where('warga.jenis_pekerjaan', $kerja)
-                ->count();
-
-            $countPekerjaan[$kerja] = $count;
-        }
-
-
-        return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
-        'countKelahiran' , 'countPertumbuhan' ,'countUsiaProduktif', 'countJK' ,'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
-        ['title' => 'RT', 'text' => 'Ketua RT']);
+        // return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
+        // 'countKelahiran' , 'countPertumbuhan' ,'countUsiaProduktif', 'countJK' ,'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
+        // ['title' => 'RT', 'text' => 'Ketua RT']);
     }
     private function dashboardADM() {
         return view('dashboard.index', ['title' => 'Admin', 'text' => 'Admin']);

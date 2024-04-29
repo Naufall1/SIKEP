@@ -20,10 +20,10 @@
 
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-h-11 tw-px-6 tw-bg-n300 tw-text-n1000 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-n400 active:tw-bg-n300 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="closeModal">Batal</button>
                         <a href=""
-                            class="tw-h-11 tw-px-6 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-r600 active:tw-bg-r700 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
                             type="submit">Tolak</a>
                     </div>
 
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Daftar Data Baru /
             <span class="tw-font-bold tw-text-b500">Detail Pengajuan</span>
         </p>
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Warga Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -111,7 +111,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Warga Lama</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -152,7 +152,7 @@
                     </div>
 
                     <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Tambahan Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -176,7 +176,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Tambahan Lama</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -203,7 +203,7 @@
                     </div>
 
                     <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Demografi Masuk Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -218,7 +218,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Demografi Masuk Lama</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -235,7 +235,7 @@
                     </div>
 
                     <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Demografi Keluar Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -251,7 +251,7 @@
                         </div>
 
 
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2">
+                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Demografi Keluar Lama</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -274,22 +274,19 @@
 
                 <div class="tw-flex tw-justify-between">
                     <a href="{{ route('warga') }}"
-                        class="tw-relative tw-min-w-16 tw-flex tw-items-center tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <span
-                            class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
-                            <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
-                        </span>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
                     <div class="tw-flex tw-gap-2">
                         <button href=""
-                            class="tw-h-11 tw-px-6 tw-bg-n300 tw-text-n1000 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-n400 active:tw-bg-n300 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
                             type="button" id="buttonReject">Tolak</button>
                         <a href=""
-                            class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-items-center tw-justify-center tw-flex"
+                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                             type="submit">Konfirmasi</a>
                     </div>
                 </div>
