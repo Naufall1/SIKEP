@@ -131,18 +131,15 @@
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
                     <a href="{{route('kriteria')}}"
-                        class="tw-flex tw-items-center tw-relative tw-min-w-16 tw-px-5 tw-h-11 md:tw-pl-12 md:tw-pr-6 tw-bg-n100 tw-border-2 tw-border-n500 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n300 active:tw-border-n1000"
+                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <span
-                            class="md:tw-absolute md:tw-top-1/2 md:-tw-translate-y-1/2 md:tw-left-2 tw-flex tw-items-center md:tw-pl-2 tw-cursor-pointer">
-                            <img src="{{ asset('assets/icons/actionable/arrow-left.svg') }}" alt="back">
-                        </span>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
                     <button
-                        class="tw-h-11 tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
+                        class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                         type="submit">Simpan</button>
                 </div>
             </form>

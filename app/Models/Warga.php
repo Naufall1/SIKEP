@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,51 +41,97 @@ class Warga extends Model
         'NIK' => 'string'
     ];
 
-    public function storeTemp() {
-        if (session()->has('daftar_warga')) {
-            $daftarWarga = session()->get('daftar_warga');
-        } else {
-            $daftarWarga = [];
+    // public function storeTemp() {
+    //     if (session()->has('daftar_warga')) {
+    //         $daftarWarga = session()->get('daftar_warga');
+    //     } else {
+    //         $daftarWarga = [];
+    //     }
+
+    //     $daftarWarga[] = $this;
+    //     // dd($daftarWarga);
+
+    //     session()->put('daftar_warga', $daftarWarga);
+    //     session()->save();
+    //     return ;
+    // }
+    // public static function getTempWarga(): array | Warga | null {
+    //     if (empty(session()->get('daftar_warga'))) {
+    //         return [];
+    //     }
+    //     return session()->get('daftar_warga');
+    // }
+    // public static function saveTemp(Keluarga $keluarga){
+    //     /**
+    //      * @var Warga $warga
+    //      */
+    //     $daftarWarga = session()->get('daftar_warga');
+    //     foreach ($daftarWarga as $warga) {
+    //         $warga->no_kk = $keluarga->no_kk;
+    //         if (!empty(Warga::find($warga->NIK))) {
+    //             WargaModified::updateWarga($warga);
+    //         } else {
+    //             $warga->save();
+    //         }
+    //     }
+    //     session()->forget('daftar_warga');
+    //     session()->save();
+    // }
+    // public static function removeTemp(int $idx){
+    //     if (session()->has('daftar_warga')) {
+    //         $daftarWarga = session()->get('daftar_warga');
+    //         array_splice($daftarWarga, $idx, 1);
+    //         session()->put('daftar_warga', $daftarWarga);
+    //         session()->save();
+    //         return ;
+    //     }
+    // }
+    
+    // buat chart
+    public static function getDataPekerjaan($keterangan): Collection
+    {
+        $query = Warga::select('jenis_pekerjaan')
+                    ->selectRaw('COUNT(*) as total')
+                    ->groupBy('jenis_pekerjaan')
+                    ->orderByDesc('total');
+
+        if ($keterangan != 'ketua') {
+            $query->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                ->where('keluarga.RT', $keterangan);
         }
 
-        $daftarWarga[] = $this;
-        // dd($daftarWarga);
+        return $query->get();
+    }
+    public static function getDataJenisKelamin($keterangan): array
+    {
+        $data = [];
 
-        session()->put('daftar_warga', $daftarWarga);
-        session()->save();
-        return ;
-    }
-    public static function getTempWarga(): array | Warga | null {
-        if (empty(session()->get('daftar_warga'))) {
-            return [];
-        }
-        return session()->get('daftar_warga');
-    }
-    public static function saveTemp(Keluarga $keluarga){
-        /**
-         * @var Warga $warga
-         */
-        $daftarWarga = session()->get('daftar_warga');
-        foreach ($daftarWarga as $warga) {
-            $warga->no_kk = $keluarga->no_kk;
-            if (!empty(Warga::find($warga->NIK))) {
-                WargaModified::updateWarga($warga);
+        $dataJenisKelamin = Warga::distinct()->pluck('jenis_kelamin');
+
+        foreach ($dataJenisKelamin as $jenis) {
+            $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                        ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                        ->where('warga.jenis_kelamin', $jenis);
+
+            if ($keterangan == 'ketua') {
+                $count = $query->count();
             } else {
-                $warga->save();
+                $count = $query->where('keluarga.RT', $keterangan)->count();
             }
+
+            $data[] = [
+                'jenis_kelamin' => $jenis,
+                'jumlah' => $count
+            ];
         }
-        session()->forget('daftar_warga');
-        session()->save();
+
+        return $data;
     }
-    public static function removeTemp(int $idx){
-        if (session()->has('daftar_warga')) {
-            $daftarWarga = session()->get('daftar_warga');
-            array_splice($daftarWarga, $idx, 1);
-            session()->put('daftar_warga', $daftarWarga);
-            session()->save();
-            return ;
-        }
-    }
+
+
+        // end of buat chart
+
     public function keluarga():BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
