@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('demografi', function (Blueprint $table) {
             $table->id('demografi_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('jenis', 100);
+            $table->enum('jenis', ['Lahir', 'Meninggal', 'Migrasi Masuk', 'Migrasi Keluar']);
 
             $table->foreign('user_id')->references('user_id')->on('user');
 

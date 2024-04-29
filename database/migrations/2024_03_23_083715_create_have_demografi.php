@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('have_demografi', function (Blueprint $table) {
             $table->char('NIK', 16);
             $table->unsignedBigInteger('demografi_id');
-            $table->date('tanggal_kejadian');
+            $table->date('tanggal_kejadian')->nullable(); // nullable just for dev
             $table->date('tanggal_request');
             $table->text('catatan')->nullable();
             $table->text('dokumen_pendukung');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
+use App\Models\PengajuanData;
 use App\Models\WargaModified;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -11,18 +12,20 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PengajuanController extends Controller
 {
-    public function indexNew() {
-        $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->get();
+    public function index() {
+        // $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->with('pengajuan')->get();
+        $dataBaru =  PengajuanData::where('status_request', '=', 'Menunggu')->with(['keluarga', 'user'])->get();
+        // dd($dataBaru);
         return view('pengajuan.index', compact('dataBaru'));
     }
-    public function indexModifWarga() {
-        $wargaModified =  WargaModified::all();
-        return view('pengajuan.perubahanwarga.index', compact('wargaModified'));
-    }
-    public function indexModifKeluarga() {
-        $keluargaModified =  KeluargaModified::all();
-        return view('pengajuan.perubahankeluarga.index', compact('keluargaModified'));
-    }
+    // public function indexModifWarga() {
+    //     $wargaModified =  WargaModified::all();
+    //     return view('pengajuan.perubahanwarga.index', compact('wargaModified'));
+    // }
+    // public function indexModifKeluarga() {
+    //     $keluargaModified =  KeluargaModified::all();
+    //     return view('pengajuan.perubahankeluarga.index', compact('keluargaModified'));
+    // }
     public function listModifKeluarga() {
         $keluargaModified =  KeluargaModified::with(['user', 'keluarga'])->select();
         return DataTables::of($keluargaModified)

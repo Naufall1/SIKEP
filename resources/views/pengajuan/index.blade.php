@@ -85,24 +85,25 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            {{-- @foreach  --}}
-                            <tr class="tw-h-16 hover:tw-bg-n300">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
-                                <td>
-                                    @include('components.form.label', ['content' => 'VALUE HERE'])
-                                </td>
-                                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                    <a href="" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                        Detail
-                                    </a>
-                                </td>
-                            </tr>
-                            {{-- @endforeach --}}
+                            @foreach ($dataBaru as $data)
+                                <tr class="tw-h-16 hover:tw-bg-n300">
+                                    <td>{{$loop->index + 1}}</td>
+                                    <td>{{$data->user->nama}}</td>
+                                    <td>{{$data->keluarga->no_kk}}</td>
+                                    <td>{{$data->keluarga->kepala_keluarga}}</td>
+                                    <td>{{$data->tipe}}</td>
+                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center">{{$data->tanggal_request}}</td>
+                                    <td>
+                                        @include('components.form.label', ['content' => $data->status_request])
+                                    </td>
+                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                        <a href=""
+                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
