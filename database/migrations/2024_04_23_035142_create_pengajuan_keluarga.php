@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengajuan_keluarga', function (Blueprint $table) {
+        Schema::create('pengajuan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->char('no_kk', 16);
             $table->date('tanggal_request');
             $table->enum('status_request', ['Dikonfirmasi', 'Ditolak', 'Menunggu']);
             $table->text('catatan')->nullable();
+            $table->enum('tipe', ['Pembaruan', 'Perubahan Keluarga', 'Perubahan Warga']);
 
             $table->foreign('no_kk')->references('no_kk')->on('keluarga');
+            $table->foreign('user_id')->references('user_id')->on('user');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengajuan_keluarga');
+        Schema::dropIfExists('pengajuan');
     }
 };
