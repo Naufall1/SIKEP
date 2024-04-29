@@ -354,6 +354,14 @@
                                 @enderror
                             </x-input.label>
 
+                            <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
+                                <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder=""
+                                    type="date" id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
+                                @error('tanggal_kejadian_demografi_masuk')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
                             <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
                                 <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
                             </x-input.label>
