@@ -59,6 +59,11 @@ class Keluarga extends Model
         return $this->hasMany(Warga::class, 'no_kk', 'no_kk');
     }
 
+    public function pengajuan(): HasMany
+    {
+        return $this->hasMany(PengajuanData::class, 'no_kk', 'no_kk');
+    }
+
     public static function dataBansos($keterangan = null)
     {
         $query =  Keluarga::select('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik',
@@ -81,4 +86,3 @@ class Keluarga extends Model
         return $query->get();
     }
 }
-

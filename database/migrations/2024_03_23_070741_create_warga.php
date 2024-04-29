@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('status_keluarga', 15);
             $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi', 'Menunggu']);
             $table->string('jenis_pekerjaan', 50);
-            $table->integer('penghasilan');
+            $table->unsignedBigInteger('penghasilan');
             $table->enum('kewarganegaraan', ['WNI', 'WNA']);
             $table->string('pendidikan', 50);
             $table->char('no_paspor', 10)->nullable();

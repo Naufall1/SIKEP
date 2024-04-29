@@ -27,12 +27,12 @@ class DemografiSeeder extends Seeder
             [
                 'demografi_id' => 3,
                 'user_id' => '2',
-                'jenis' => 'Kelahiran'
+                'jenis' => 'Lahir'
             ],
             [
                 'demografi_id' => 4,
                 'user_id' => '2',
-                'jenis' => 'Kematian'
+                'jenis' => 'Meninggal'
             ],
         ]);
     }

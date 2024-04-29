@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FormStateKeluarga;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
+use App\Models\Pengajuan;
 use App\Models\Warga;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +22,7 @@ class KeluargaController extends Controller
      *      'kepala_keluarga' => 'Kepala keluarga'], ...)
      */
     public function getAll(){
-        return Keluarga::select(['no_kk', 'kepala_keluarga'])->get();
+        return Keluarga::select(['no_kk', 'kepala_keluarga'])->where('status', '=', 'Aktif')->get();
     }
 
     /**
@@ -42,11 +44,12 @@ class KeluargaController extends Controller
         $user = Auth::user();
 
         if ($user->keterangan == 'ketua') {
-            $keluarga = Keluarga::all();
+            $keluarga = Keluarga::where('status', '!=', 'Menunggu')->get();
         } else {
             $keluarga = Keluarga::select('keluarga.*', 'user.keterangan')
                 ->join('user', 'keluarga.rt', '=', 'user.keterangan')
                 ->where('user.keterangan', $user->keterangan)
+                // ->where('status', '!=', 'Menunggu')
                 ->get();
         }
         return view('penduduk.keluarga.index', compact('keluarga'));
@@ -58,6 +61,8 @@ class KeluargaController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(){
+        $pengajuan = new Pengajuan();
+        $formState = FormStateKeluarga::get();
         $default = [
             'kode_pos' => 65115,
             'rt' => Auth::user()->keterangan,
@@ -67,7 +72,7 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah')->with('default', $default)->with('daftarWarga', Warga::getTempWarga());
+        return view('penduduk.keluarga.tambah', compact('formState'))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
     }
 
     /**
@@ -79,8 +84,16 @@ class KeluargaController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $request->validate([
+            'no_kk' => 'required',
             // 'image_kk' => 'required:image',
         ]);
+
+        if ($request->action == 'tambah') {
+            FormStateKeluarga::update($request);
+            // dd($request->all());
+            // dd(FormStateKeluarga::get());
+            return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
+        }
 
         $keluarga = new Keluarga;
         $keluarga->no_kk = $request->no_kk;
@@ -93,16 +106,21 @@ class KeluargaController extends Controller
         $keluarga->kecamatan = $request->kecamatan;
         $keluarga->kota = $request->kota;
         $keluarga->provinsi = $request->provinsi;
-        $keluarga->image_kk = $this->storeImageKK($request);
+        // $keluarga->image_kk = $this->storeImageKK($request);
+        $keluarga->image_kk = '1';
         $keluarga->tagihan_listrik = $request->tagihan_listrik;
         $keluarga->luas_bangunan = $request->luas_bangunan;
         $keluarga->status = 'Menunggu';
-        $keluarga->save();
+        // $keluarga->save();
 
-        Warga::saveTemp(Keluarga::find($request->no_kk));
+        $pengajuan = new Pengajuan();
+        $pengajuan->keluarga = $keluarga;
+        $pengajuan->store();
 
-        session()->forget('formState');
-        session()->save();
+        // Warga::saveTemp(Keluarga::find($request->no_kk));
+
+        // session()->forget('formState');
+        // session()->save();
 
         return redirect()->route('keluarga');
     }
@@ -157,20 +175,20 @@ class KeluargaController extends Controller
      * @param Request $request
      * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedalam Keluarga yang sudah ada.
      */
-    public function tambahWarga(Request $request){
-        // TODO: Add validation
-        Warga::saveTemp(Keluarga::find($request->no_kk));
-        return redirect()->route('keluarga');
-    }
+    // public function tambahWarga(Request $request){
+    //     // TODO: Add validation
+    //     Warga::saveTemp(Keluarga::find($request->no_kk));
+    //     return redirect()->route('keluarga');
+    // }
 
     /**
      * @param Request $request
      * Fungsi ini untuk menyimpan kondisi terakhir form penambahan data.
      */
-    public function saveFormState(Request $request){
-        session()->put('formState', $request->json()->all());
-        return true;
-    }
+    // public function saveFormState(Request $request){
+    //     FormStateKeluarga::update($request);
+    //     return true;
+    // }
 
     /**
      * Fungsi untuk menghapus anggota keluarga yang disimpan sementara.
@@ -179,7 +197,9 @@ class KeluargaController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function removeAnggotaKeluarga($idx) {
-        Warga::removeTemp($idx);
+        // Warga::removeTemp($idx);
+        $pengajuan = new Pengajuan();
+        $pengajuan->removeWarga($idx);
         return redirect(route('keluarga-tambah') . '#anggota_keluarga');
     }
 

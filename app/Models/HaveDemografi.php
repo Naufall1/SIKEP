@@ -11,6 +11,7 @@ class HaveDemografi extends Model
     use HasFactory;
 
     protected $table = 'have_demografi';
+    public $timestamps = false;
 
     protected $fillable = [
         'NIK',
