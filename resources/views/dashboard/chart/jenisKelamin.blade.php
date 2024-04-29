@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grafik Jenis Kelamin</title>
-    <!-- Sertakan library Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
 <body>
     <div style="max-width: 800px;">
         <!-- Pilihan Chart -->
@@ -154,5 +145,3 @@
             });
         });
     </script>
-</body>
-</html>

@@ -1,26 +1,31 @@
-
-<div style="max-width: 800px;">
-    <div>
-        <label for="chartType">pilih chart:</label>
+    <div class="tw-flex {{(Auth::user()->hasLevel['level_kode'] == 'RW') ? 'tw-justify-between' : ''}}">
+        <x-input.select class="tw-w-56" id="chartType" onchange="dropdownChartData()">
+            <option value="pekerjaan">Pekerjaan</option>
+            <option value="jenis_kelamin">Jenis Kelamin</option>
+        </x-input.select>
+        @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+            <x-input.select class="tw-w-28" id="rt">
+                <option value="all">Semua</option>
+            </x-input.select>
+        @endif
+        {{-- <label for="chartType">pilih chart:</label>
         <select id="chartType" onchange="dropdownChartPekerjaan()">
             <option value="pie">Pie Chart</option>
             <option value="bar">Bar Chart</option>
-        </select>
+        </select> --}}
     </div>
 
-    <div id="pieChartContainer" style="width: 500px; float: left;">
-        <canvas id="chartPekerjaanPie" width="400" height="400"></canvas>
+    <div id="pieChartContainer" class="tw-flex tw-grow">
+        <canvas id="chartPekerjaanPie" class="tw-w-full tw-flex tw-h-full"></canvas>
     </div>
 
-    <div id="barChartContainer" style="width: 500px; float: left; display: none;">
+    {{-- <div id="barChartContainer" style="width: 500px; float: left; display: none;">
         <canvas id="chartPekerjaanBar" width="400" height="400"></canvas>
-    </div>
-</div>
+    </div> --}}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         pieChart();
-
     });
 
     function pieChart() {
@@ -33,8 +38,8 @@
         document.getElementById('barChartContainer').style.display = 'block';
     }
 
-    function dropdownChartPekerjaan() {
-        var selectedChart = document.getElementById('chartType').value;
+    function dropdownChartData() {
+        var selectedChart = document.getElementById('chartData').value;
 
         if (selectedChart === 'pie') {
             pieChart();
@@ -45,7 +50,7 @@
 </script>
 
 
-<div style="max-width: 80px;">
+{{-- <div style="max-width: 80px;">
     <div style="width: 400px; float: left;">
         <canvas id="chartPekerjaanPie" width="400" height="400"></canvas>
     </div>
@@ -54,12 +59,12 @@
         <!-- Bar Chart -->
         <canvas id="chartPekerjaanBar" width="800" height="400"></canvas>
     </div>
-</div>
+</div> --}}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var ctxPie = document.getElementById('chartPekerjaanPie').getContext('2d');
-        var ctxBar = document.getElementById('chartPekerjaanBar').getContext('2d');
+        // var ctxBar = document.getElementById('chartPekerjaanBar').getContext('2d');
 
         var dataPekerjaan = @json($dataPekerjaan);
 
@@ -72,13 +77,13 @@
         });
 
         // gpt warna random
-        var backgroundColors = dataPekerjaan.map(function() {
-            return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)';
-        });
+        var backgroundColors = ['#E5F1FF', '#CCE4FF', '#A8D1FF', '#56A6FF', '#2C90FF', '#0284FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'];
 
-        var borderColors = dataPekerjaan.map(function() {
-            return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 1)';
-        });
+        var borderColors = ['#E5F1FF', '#CCE4FF', '#A8D1FF', '#56A6FF', '#2C90FF', '#0284FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833']
+        // var borderColors = dataPekerjaan.map(function() {
+        //     return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) +
+        //         ',' + Math.floor(Math.random() * 256) + ', 1)';
+        // });
 
         // ajax pie chart
         var pieChart = new Chart(ctxPie, {
@@ -90,18 +95,17 @@
                     data: jmlWarga,
                     backgroundColor: backgroundColors,
                     borderColor: borderColors,
-                    borderWidth: 1
+                    borderWidth: 1.5
                 }]
             },
             options: {
-                responsive: true,
+                responsive: false,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'right',
                     },
                     title: {
-                        display: true,
-                        text: 'Warga yang bekerja Piechart'
+                        display: false,
                     }
                 }
             }

@@ -86,23 +86,22 @@
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
                             {{-- @foreach  --}}
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
-                                    <td>
-                                        @include('components.form.label', ['content' => 'VALUE HERE'])
-                                    </td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href=""
-                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr class="tw-h-16 hover:tw-bg-n300">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center"></td>
+                                <td>
+                                    @include('components.form.label', ['content' => 'VALUE HERE'])
+                                </td>
+                                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                    <a href="" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
                             {{-- @endforeach --}}
                         </tbody>
                     </table>
@@ -137,4 +136,5 @@
 
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
