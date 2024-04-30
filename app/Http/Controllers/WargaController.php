@@ -10,25 +10,28 @@ use App\Models\Warga;
 use App\Models\WargaModified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class WargaController extends Controller
 {
-    public function getAll(){
+    public function getAll()
+    {
         return Warga::select(['nik', 'nama'])->get();
     }
-    public function getWarga($nik){
+    public function getWarga($nik)
+    {
         return Warga::find($nik);
     }
-    public function index()
+    public function list()
     {
         $user = Auth::user();
 
         if ($user->keterangan == 'ketua') {
-            $warga = Warga::select('warga.*')
+            $daftar_warga = Warga::select('warga.*')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->get();
         } else {
-            $warga = Warga::select('warga.*', 'keluarga.rt')
+            $daftar_warga = Warga::select('warga.*', 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
@@ -36,12 +39,47 @@ class WargaController extends Controller
                 })
                 ->get();
         }
-        return view('penduduk.warga.index', compact('warga'));
+
+        return DataTables::of($daftar_warga)
+            ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+            ->addColumn('action', function ($warga) {
+                return '
+                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                    <a href="'. route('wargaDetail', [$warga->NIK]) .'"
+                        class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                        Detail
+                    </a>
+                </td>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
-    public function create($no_kk){
+    public function index()
+    {
+        // $user = Auth::user();
+
+        // if ($user->keterangan == 'ketua') {
+        //     $warga = Warga::select('warga.*')
+        //         ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+        //         ->get();
+        // } else {
+        //     $warga = Warga::select('warga.*', 'keluarga.rt')
+        //         ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+        //         ->join('user', function ($join) use ($user) {
+        //             $join->on('keluarga.rt', '=', 'user.keterangan')
+        //                 ->where('keluarga.rt', '=', $user->keterangan);
+        //         })
+        //         ->get();
+        // }
+        // return view('penduduk.warga.index', compact('warga'));
+        return view('penduduk.warga.index');
+    }
+    public function create($no_kk)
+    {
         return view('penduduk.warga.tambah')->with('no_kk', $no_kk);
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // dd($request->all());
         // Validasi data yang masuk
         $res = $request->validate([
@@ -106,14 +144,16 @@ class WargaController extends Controller
         // $warga->storeTemp();
         return redirect()->route('keluarga-tambah');
     }
-    public function edit($nik){
+    public function edit($nik)
+    {
         $warga = Warga::find($nik);
         if (!$warga) {
             return redirect()->back();
         }
         return view('penduduk.warga.edit', compact('warga'));
     }
-    public function update(Request $request, $nik){
+    public function update(Request $request, $nik)
+    {
         // TODO: add validation
 
         if (!Warga::find($nik)) {
@@ -131,13 +171,14 @@ class WargaController extends Controller
         // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
         WargaModified::updateWarga($warga);
 
-        return redirect()->route('wargaDetail', ['nik'=> $request->nik]);
+        return redirect()->route('wargaDetail', ['nik' => $request->nik]);
     }
     /**
      * fungsi untuk merubah no_kk dari sebuah warga,
      * kemudian disimpan sementara pada session daftarWarga sampai dilakukan simpan permanen.
      */
-    public function pindahKK(Request $request){
+    public function pindahKK(Request $request)
+    {
         // TODO: add validation
         $warga = Warga::find($request->nik);
         // $warga->no_kk = $request->no_kk;
@@ -147,7 +188,8 @@ class WargaController extends Controller
         return redirect()->route('keluarga-tambah');
     }
 
-    public function detail($nik){
+    public function detail($nik)
+    {
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
         if (!$warga) {
             return redirect()->back();
