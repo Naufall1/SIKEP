@@ -66,10 +66,6 @@
 </div> --}}
 
     <script>
-        $(selector).change(function (e) { 
-            e.preventDefault();
-            
-        });
         document.addEventListener('DOMContentLoaded', function() {
             var ctxPie = document.getElementById('chartPekerjaanPie').getContext('2d');
             // var ctxBar = document.getElementById('chartPekerjaanBar').getContext('2d');
