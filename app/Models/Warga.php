@@ -86,8 +86,65 @@ class Warga extends Model
     //         return ;
     //     }
     // }
-    
+
     // buat chart
+    public static function getDataTingkatPendidikan($keterangan): array
+    {
+        $data = [];
+
+        $tingkatPendidikan = Warga::distinct()->pluck('pendidikan');
+
+        foreach ($tingkatPendidikan as $tingkat) {
+            $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                ->where('warga.pendidikan', $tingkat);
+
+            if ($keterangan == 'ketua') {
+                $count = $query->count();
+            } else {
+                $count = $query->where('keluarga.RT', $keterangan)->count();
+            }
+
+            $data[] = [
+                'pendidikan' => $tingkat,
+                'jumlah' => $count
+            ];
+        }
+
+        return $data;
+    }
+
+    public static function getDataAgama($keterangan): array
+    {
+        $data = [];
+        $daftarAgama = Warga::distinct()->pluck('agama');
+
+        $countPerAgama = [];
+
+        foreach ($daftarAgama as $agama) {
+            $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                ->where('warga.agama', $agama);
+
+            $countPerAgama[$agama] = $query;
+
+            if ($keterangan != 'ketua') {
+                $count = $query->where('keluarga.RT', $keterangan)->count();
+
+            }
+            $count = $query->count();
+
+            foreach ($countPerAgama as $agama => $query) {
+                $data[] = [
+                    'agama' => $agama,
+                    'jumlah' => $count
+                ];
+            }
+
+            return $data;
+        }
+    }
+
     public static function getDataPekerjaan($keterangan): Collection
     {
         $query = Warga::select('jenis_pekerjaan')
@@ -107,28 +164,34 @@ class Warga extends Model
     {
         $data = [];
 
-        $dataJenisKelamin = Warga::distinct()->pluck('jenis_kelamin');
+        // Hitung jumlah total warga
+        $countWarga = Warga::count();
 
-        foreach ($dataJenisKelamin as $jenis) {
-            $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                        ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                        ->where('warga.jenis_kelamin', $jenis);
+        // Hitung jumlah dan persentase jenis kelamin
+        $query = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                        ->join('user', 'keluarga.RT', '=', 'user.keterangan');
 
-            if ($keterangan == 'ketua') {
-                $count = $query->count();
-            } else {
-                $count = $query->where('keluarga.RT', $keterangan)->count();
-            }
+        if ($keterangan != 'ketua') {
+            $query->where('keluarga.RT', $keterangan);
+        }
+
+        $dataJenisKelamin = $query->select('jenis_kelamin')
+                                  ->selectRaw('COUNT(*) as jumlah')
+                                  ->groupBy('jenis_kelamin')
+                                  ->get();
+
+        foreach ($dataJenisKelamin as $jenisKelamin) {
+            $persentase = ($jenisKelamin->jumlah / $countWarga) * 100;
 
             $data[] = [
-                'jenis_kelamin' => $jenis,
-                'jumlah' => $count
+                'jenis_kelamin' => $jenisKelamin->jenis_kelamin,
+                'jumlah' => $jenisKelamin->jumlah,
+                'persentase' => $persentase,
             ];
         }
 
         return $data;
     }
-
 
         // end of buat chart
 

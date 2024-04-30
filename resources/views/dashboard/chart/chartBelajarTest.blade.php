@@ -23,6 +23,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             jenisKelaminPieChart();
+            jenisKelaminBarChart();
         });
 
         function jenisKelaminPieChart() {
@@ -51,7 +52,7 @@
             var ctxPie = document.getElementById('chartJenisKelaminPie').getContext('2d');
             var ctxBar = document.getElementById('chartJenisKelaminBar').getContext('2d');
 
-
+            // Dapatkan dataJenisKelamin dari variabel PHP yang disediakan
             var dataJenisKelamin = @json($dataJenisKelamin);
 
             var jenisKelamin = dataJenisKelamin.map(function(item) {
@@ -62,6 +63,7 @@
                 return item.jumlah;
             });
 
+            // Generate warna acak untuk chart
             var backgroundColors = jenisKelamin.map(function() {
                 return 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ', 0.2)';
             });
@@ -145,3 +147,4 @@
             });
         });
     </script>
+</body>
