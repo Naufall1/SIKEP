@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class KeluargaController extends Controller
 {
@@ -33,6 +34,35 @@ class KeluargaController extends Controller
      */
     public function getKeluarga($no_kk){
         return Keluarga::find($no_kk);
+    }
+
+    public function list(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->keterangan == 'ketua') {
+            $daftar_keluarga = Keluarga::where('status', '!=', 'Menunggu')->get();
+        } else {
+            $daftar_keluarga = Keluarga::select('keluarga.*', 'user.keterangan')
+                ->join('user', 'keluarga.rt', '=', 'user.keterangan')
+                ->where('user.keterangan', $user->keterangan)
+                // ->where('status', '!=', 'Menunggu')
+                ->get();
+        }
+
+        return DataTables::of($daftar_keluarga)
+            ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+            ->addColumn('action', function ($keluarga) {
+                return '
+                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                    <a href="'. route('penduduk.keluarga.detail', [$keluarga->no_kk]) .'"
+                        class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                        Detail
+                    </a>
+                </td>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
