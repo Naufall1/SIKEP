@@ -1,5 +1,10 @@
 @extends('layout.layout', ['isForm' => false])
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css')}}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"> --}}
+@endpush
+
 @section('content')
     {{-- canEdit = if RW => False, RT => False --}}
     {{-- @include('layout.tableset',['pageTitle' => 'Daftar Penduduk',  'canEdit' => true, 'topMenu' => [
@@ -15,8 +20,7 @@
             </h1>
 
             @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                <a
-                    href="{{ route('keluarga-tambah') }}"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
+                <a href="{{ route('keluarga-tambah') }}"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
                     Tambah Data</a>
             @endif
 
@@ -68,7 +72,7 @@
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button">
+                            type="button" id="searchBox">
                         </input>
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
@@ -82,7 +86,7 @@
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-auto scrollbar">
 
-                    <table class="tw-w-[780px] md:tw-w-full">
+                    <table class="tw-w-[780px] md:tw-w-full" id="dataWarga" style="width: 100%">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
@@ -96,8 +100,8 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            @foreach ($warga as $w)
-                                <tr class="tw-h-16 hover:tw-bg-n300">
+                            {{-- @foreach ($warga as $w) --}}
+                            {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td></td>
                                     <td>{{ $w->NIK }}</td>
                                     <td>{{ $w->nama }}</td>
@@ -106,13 +110,13 @@
                                     <td>{{ $w->agama }}</td>
                                     <td>{{ $w->status_warga }}</td>
                                     <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href="{{route('wargaDetail', [$w->NIK])}}"
+                                        <a href="{{ route('wargaDetail', [$w->NIK]) }}"
                                             class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                                             Detail
                                         </a>
                                     </td>
-                                </tr>
-                            @endforeach
+                                </tr> --}}
+                            {{-- @endforeach --}}
                         </tbody>
                     </table>
 
@@ -124,7 +128,7 @@
                 {{-- End: Table HERE --}}
             </div>
 
-            <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
+            {{-- <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
                 <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
                     <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
                         alt="<">
@@ -143,8 +147,95 @@
                     <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
                         alt="<">
                 </a>
-            </div>
+            </div> --}}
 
         </div>
     </div>
-@endsection
+    @endsection
+
+@push('js')
+<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            dataUser = $('#dataWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('warga.list') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                paging: true,
+                language: {
+                    paginate: {
+                        previous: '<',
+                        next: '>',
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300");
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass(
+                        'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
+                        );
+                    $('.paginate_button').addClass(
+                        'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
+                    $('.paginate_button.active').addClass(
+                        'tw-bg-n400');
+                    $('.dataTables_filter').css('display', 'none');
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                order: [[1, 'asc']],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "",
+                    orderable: false,
+                    // searchable: false
+                }, {
+                    data: "NIK",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "nama",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "jenis_kelamin",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "tanggal_lahir",
+                    className: "",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "agama",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "status_warga",
+                    className: "",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            // $('#level_id').on('change', function () {
+            //     dataUser.ajax.reload();
+            // });
+        });
+        $('#searchBox').keyup(function () {
+            dataUser.search($(this).val()).draw();
+        });
+        </script>
+@endpush

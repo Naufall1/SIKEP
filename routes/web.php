@@ -44,6 +44,7 @@ Route::prefix('penduduk')->group(function () {
      * Route untuk manage Warga
      */
     Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
+    Route::post('/warga/list', [WargaController::class, 'list'])->name('warga.list')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
 
     // FIX THIS DETAIL WARGA ROUTE
     Route::get('/warga/detail/{nik}', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
