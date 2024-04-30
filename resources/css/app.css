@@ -123,7 +123,7 @@
         @apply tw-font-sans tw-font-semibold tw-text-[14px];
     }
     th{
-        @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left;
+        @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left tw-uppercase;
     }
     .tw-th{
         @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left;
