@@ -125,23 +125,27 @@ class KeluargaController extends Controller
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
 
-        $keluarga = new Keluarga;
-        $keluarga->no_kk = $request->no_kk;
-        $keluarga->kepala_keluarga = $request->kepala_keluarga;
-        $keluarga->alamat = $request->alamat;
-        $keluarga->RT = $request->RT;
-        $keluarga->RW = $request->RW;
-        $keluarga->kode_pos = $request->kode_pos;
-        $keluarga->kelurahan = $request->kelurahan;
-        $keluarga->kecamatan = $request->kecamatan;
-        $keluarga->kota = $request->kota;
-        $keluarga->provinsi = $request->provinsi;
-        // $keluarga->image_kk = $this->storeImageKK($request);
-        $keluarga->image_kk = '1';
-        $keluarga->tagihan_listrik = $request->tagihan_listrik;
-        $keluarga->luas_bangunan = $request->luas_bangunan;
-        $keluarga->status = 'Menunggu';
-        // $keluarga->save();
+        if (Keluarga::find($request->no_kk)) {
+            $keluarga = Keluarga::find($request->no_kk);
+        } else {
+            $keluarga = new Keluarga;
+            $keluarga->no_kk = $request->no_kk;
+            $keluarga->kepala_keluarga = $request->kepala_keluarga;
+            $keluarga->alamat = $request->alamat;
+            $keluarga->RT = $request->RT;
+            $keluarga->RW = $request->RW;
+            $keluarga->kode_pos = $request->kode_pos;
+            $keluarga->kelurahan = $request->kelurahan;
+            $keluarga->kecamatan = $request->kecamatan;
+            $keluarga->kota = $request->kota;
+            $keluarga->provinsi = $request->provinsi;
+            // $keluarga->image_kk = $this->storeImageKK($request);
+            $keluarga->image_kk = '1';
+            $keluarga->tagihan_listrik = $request->tagihan_listrik;
+            $keluarga->luas_bangunan = $request->luas_bangunan;
+            $keluarga->status = 'Menunggu';
+            // $keluarga->save();
+        }
 
         $pengajuan = new Pengajuan();
         $pengajuan->keluarga = $keluarga;
