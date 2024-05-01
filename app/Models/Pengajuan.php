@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @var Keluarga $keluaga
@@ -38,7 +40,9 @@ class Pengajuan
         try {
             DB::beginTransaction();
             $no_kk = $this->keluarga->no_kk;
-            $this->keluarga->save();
+            if (!$this->keluarga->exists()) {
+                $this->keluarga->save();
+            }
             foreach ($this->daftarWarga as $warga) {
                 $warga['warga']->no_kk = $no_kk;
                 if (!empty(Warga::find($warga['warga']->NIK))) {
@@ -48,12 +52,24 @@ class Pengajuan
                     $warga['demografi']->save();
                     $warga['haveDemografi']->demografi_id = $warga['demografi']->demografi_id;
                     $warga['haveDemografi']->save();
+
+                    // Pindahkan file yang berada pada penyimpanan sementara
+                    $res = Storage::disk('local')->put(
+                        'public/Dokumen-Pendukung/' . $warga['haveDemografi']->dokumen_pendukung,
+                        Storage::disk('temp')->get($warga['haveDemografi']->dokumen_pendukung),
+                    );
+                    if (!$res) {
+                        throw new \Exception('Failed to move file from temporary');
+                    }
+                    Storage::disk('temp')->delete($warga['haveDemografi']->dokumen_pendukung);
+                    session()->forget('berkas_demografi');
                 }
             }
             PengajuanData::create(
                 [
                     'no_kk' => $no_kk,
                     'user_id' => Auth::user()->user_id,
+                    'tipe' => 'Pembaruan',
                     'tanggal_request' => now(),
                     'status_request' => 'Menunggu'
                 ]

@@ -10,7 +10,7 @@
 
             <h1 class="tw-h1 tw-mb-3">Tambah Data</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData">
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
@@ -139,7 +139,7 @@
                             <x-input.label for="agama" label="Agama">
                                 <x-input.select name="agama" id="agama">
                                     <option disabled @selected(!old('agama'))>Pilih Agama</option>
-                                    <option value="Budha" @selected(old('agama') == 'Budha')>Budha</option>
+                                    <option value="Buddha" @selected(old('agama') == 'Buddha')>Budha</option>
                                     <option value="Hindu" @selected(old('agama') == 'Hindu')>Hindu</option>
                                     <option value="Islam" @selected(old('agama') == 'Islam')>Islam</option>
                                     <option value="Katolik" @selected(old('agama') == 'Katolik')>Katolik</option>
@@ -355,15 +355,18 @@
                             </x-input.label>
 
                             <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
-                                <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder=""
-                                    type="date" id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
-                                @error('tanggal_kejadian_demografi_masuk')
+                                <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder="" type="date"
+                                    id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
+                                @error('tanggal_kejadian')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung">
-                                <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file>
+                            <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                                <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
+                                @error('berkas_demografi')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"

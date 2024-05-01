@@ -10,7 +10,10 @@ use App\Models\Warga;
 use App\Models\WargaModified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
+
 
 class WargaController extends Controller
 {
@@ -56,22 +59,6 @@ class WargaController extends Controller
     }
     public function index()
     {
-        // $user = Auth::user();
-
-        // if ($user->keterangan == 'ketua') {
-        //     $warga = Warga::select('warga.*')
-        //         ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
-        //         ->get();
-        // } else {
-        //     $warga = Warga::select('warga.*', 'keluarga.rt')
-        //         ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
-        //         ->join('user', function ($join) use ($user) {
-        //             $join->on('keluarga.rt', '=', 'user.keterangan')
-        //                 ->where('keluarga.rt', '=', $user->keterangan);
-        //         })
-        //         ->get();
-        // }
-        // return view('penduduk.warga.index', compact('warga'));
         return view('penduduk.warga.index');
     }
     public function create($no_kk)
@@ -80,17 +67,29 @@ class WargaController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
         // Validasi data yang masuk
-        $res = $request->validate([
-            'NIK' => 'required|size:16',
+        if (!session()->exists('berkas_demografi') || $request->has('berkas_demografi')) {
+            $validator_file = Validator::make($request->only('berkas_demografi'),[
+                'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+            ]);
+        }
+
+        if (isset($validator_file) && !$validator_file->fails()) {
+            $filename = Str::uuid()->getHex()->toString();
+            $extension = $request->file('berkas_demografi')->getClientOriginalExtension();
+            $filenameSimpan = $filename . '.' . $extension;
+            $request->file('berkas_demografi')->storeAs('', $filenameSimpan, 'temp');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'NIK' => 'required|size:16|unique:warga,NIK',
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'pendidikan' => 'required|string|max:50',
-            'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
+            'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Konghucu',
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'jenis_pekerjaan' => 'required|string|max:50',
             'kewarganegaraan' => 'required|in:WNI,WNA',
@@ -101,10 +100,21 @@ class WargaController extends Controller
             'penghasilan' => 'required|integer',
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
-            'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk, Migrasi Keluar',
-            // 'tanggal_kejadian' => 'required|date'
+            'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar',
+            // 'tanggal_kejadian' => 'required|date',
+            // 'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
         ]);
-        // dd($res);
+
+        if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
+            session()->put('berkas_demografi', $filenameSimpan);
+        }
+
+        // Manual Redirect
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
+                ->withInput();
+        }
         // Mapping data dari request menuju objek
         $warga = new Warga();
         $warga->NIK = $request->NIK;
@@ -131,11 +141,10 @@ class WargaController extends Controller
         $demografi->jenis = $request->jenis_demografi;
 
         $haveDemografi = new HaveDemografi();
-        // $haveDemografi->demografi = $demografi;
         $haveDemografi->NIK = $warga->NIK;
-        // $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
+        $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
         $haveDemografi->tanggal_request = now();
-        $haveDemografi->dokumen_pendukung = '';
+        $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi');
         $haveDemografi->status_request = 'Menunggu';
 
         $pengajuan = new Pengajuan();
