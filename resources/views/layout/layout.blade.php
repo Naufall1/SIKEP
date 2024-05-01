@@ -8,6 +8,7 @@
     @stack('css')
     @yield('head')
     <title>{{ config('app.name') }}</title>
+    <link rel="icon" type="image/icon" href="{{asset('assets/logo/sikep.png')}}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     @vite('resources/css/app.css', 'resources/js/app.js')
@@ -23,6 +24,9 @@
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     </script>
     @stack('js')
+
+    @yield('footer')
+
 </body>
 
 </html>
