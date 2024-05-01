@@ -5,50 +5,32 @@ Ini merupakan sebuah sistem informasi yang dibuat dengan tujuan melakukan digita
 
 Requirements
 ------------
- - PHP >= 8.2.10
- - Laravel >= 10.10
+ - PHP >= 8.2
+ - Composer >=  2.7
+ - Node.js >= 18.19
+ - NPM >= 9.2
 
 Installation
 ------------
-Pertama lakukan clone repository ini dengan perintah berikut.
-```
-git clone https://github.com/Naufall1/SIKEP.git
-```
-Masuk kedalam root direktori projek dengan perintah berikut.
-```
-cd SIKEP
-```
-Jalankan perintah berikut untuk menginstall semua dependensi yang dibutuhkan.
-```
-composer install
-```
-Buat file .env dengan mengcopy file .env.example
-```
-cp .env.example .env
-```
-Buat environment key dengan perintah berikut.
-```
-php artisan key:generate
-```
-Buat database dan kemudian modifikasi file .env sesuai dengan database yang telah dibuat. Berikut adalah field yang harus diubah:
-```
+1. Pertama lakukan clone repository ini dengan perintah berikut. `git clone https://github.com/Naufall1/SIKEP.git`
+2. Masuk kedalam root direktori projek dengan perintah 
+`cd SIKEP`
+3. Jalankan perintah `composer install` untuk menginstall semua dependensi yang dibutuhkan.
+4. Jalankan perintaj `npm install` untuk menginstall semua dependensi yang dibutuhkan pada npm.
+5. Buat file .env dengan mengcopy file .env.example `cp .env.example .env`
+6. Buat environment key dengan perintah `php artisan key:generate`
+7. Buat `database` kosong dengan nama yang disesuaikan. 
+8. Modifikasi file .env sesuai dengan database yang telah dibuat. Berikut adalah field yang harus diubah: 
+``` 
 DB_DATABASE=<NAMA DATABASE>
 DB_USERNAME=<USERNAME DATABASE>
 DB_PASSWORD=<PASSWORD DATABASE>
 ```
-Eksekusi perintah berikut untuk melakukan migrasi dan seeder.
-```
-php artisan migrate:fresh --seed
-```
-Setelah semua langkah berhasil, Jika tidak ingin membuat virtual host untuk proyek ini, eksekusi perintah berikut.
-```
-php artisan serve
-```
-Kemudian akses pada browser dengan alamat berikut.
-```
-http://127.0.0.1:8000
-```
-Selesai.
+9. Eksekusi perintah `php artisan migrate:fresh --seed` untuk melakukan migrasi dan seeder.
+10. Eksekusi perintah `npm run build`. Untuk development menggunakan perintah `npm run dev`
+11. Setelah semua langkah berhasil, Jika tidak ingin membuat virtual host untuk proyek ini, eksekusi perintah `php artisan serve`
+12. Kemudian akses pada browser dengan alamat `http://127.0.0.1:8000`
+13. Selesai.
 
 ## Authors
 
