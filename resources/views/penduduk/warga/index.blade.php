@@ -83,19 +83,19 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto scrollbar">
+                <div class="tw-w-vw tw-overflow-x-auto">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataWarga" style="width: 100%">
+                    <table class="tw-w-[780px] md:tw-min-w-[1400px]" id="dataWarga">
                         <thead>
-                            <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                <th>No</th>
-                                <th>NIK</th>
-                                <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Agama</th>
-                                <th>Status Warga</th>
-                                <th class="tw-w-[108px]"></th>
+                            <tr class="">
+                                <th class="tw-w-[48px]">No</th>
+                                <th class="tw-w-[250px]">NIK</th>
+                                <th class="tw-w-[240px]">Nama</th>
+                                <th class="tw-w-[150px]">Jenis Kelamin</th>
+                                <th class="tw-w-[172px]">Tanggal Lahir</th>
+                                <th class="tw-w-[92px]">Agama</th>
+                                <th class="tw-w-[150px]">Status Warga</th>
+                                <th class="tw-h-11"></th>
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
@@ -173,7 +173,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300");
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -186,45 +186,45 @@
                     $('.dataTables_filter').css('display', 'none');
                     $('.table.dataTable').css('border-collapse', 'collapse');
                 },
-                order: [[1, 'asc']],
+                order: [[2, 'asc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "",
+                    className: "tw-w-[44px]",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "NIK",
-                    className: "",
-                    orderable: true,
+                    className: "tw-grow",
+                    orderable: false,
                     searchable: true
                 }, {
                     data: "nama",
-                    className: "",
+                    className: "tw-w-[240px]",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "jenis_kelamin",
-                    className: "",
-                    orderable: false,
+                    className: "tw-w-[150px]",
+                    orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_lahir",
-                    className: "",
+                    className: "tw-w-[172px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "agama",
-                    className: "",
+                    className: "tw-w-[92px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "status_warga",
-                    className: "",
+                    className: "tw-w-[150px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "",
+                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
                 }]

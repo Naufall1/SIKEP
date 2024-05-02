@@ -44,14 +44,28 @@ class WargaController extends Controller
             ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
             ->addColumn('action', function ($warga) {
                 return '
-                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                    <a href="'. route('wargaDetail', [$warga->NIK]) .'"
+                    <a href="' . route('wargaDetail', [$warga->NIK]) . '"
                         class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                         Detail
-                    </a>
-                </td>';
+                    </a>';
             })
-            ->rawColumns(['action'])
+            ->addColumn('status_warga', function ($warga) {
+                // return '@include(\'components.label\', [\'content\' => ' . $warga->status_warga .' ])';
+                if (strtolower($warga->status_warga) == 'aktif') {
+                    return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-g50 tw-w-fit tw-h-fit">
+                                <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-g500">' . $warga->status_warga . '</p>
+                            </div>';
+                } elseif (strtolower($warga->status_warga) == 'migrasi') {
+                    return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-r50 tw-w-fit tw-h-fit">
+                                <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-r500">' . $warga->status_warga . '</p>
+                            </div>';
+                } else {
+                    return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-n300 tw-w-fit tw-h-fit">
+                                <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-n700">' . $warga->status_warga . '</p>
+                            </div>';
+                }
+            })
+            ->rawColumns(['action', 'status_warga'])
             ->make(true);
     }
     public function index()

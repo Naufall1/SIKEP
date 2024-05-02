@@ -77,16 +77,16 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-scroll">
+                <div class="tw-w-vw tw-overflow-x-auto">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataKeluarga">
+                    <table class="tw-w-[780px] md:tw-w-full" id="dataKeluarga" style="">
                         <thead>
-                            <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                <th>No</th>
-                                <th>No KK</th>
-                                <th>Kepala Keluarga</th>
-                                <th>Alamat</th>
-                                <th>RT</th>
+                            <tr class="">
+                                <th class="tw-w-[48px]">No</th>
+                                <th class="tw-w-[250px]">No KK</th>
+                                <th class="tw-w-[280px]">Kepala Keluarga</th>
+                                <th class="tw-w-[300px] md:tw-grow">Alamat</th>
+                                <th class="tw-w-[60px]">RT</th>
                                 <th class="tw-w-[108px]"></th>
                             </tr>
                         </thead>
@@ -164,7 +164,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300");
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -182,32 +182,32 @@
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "",
+                    className: "tw-w-[48px]",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "no_kk",
-                    className: "",
+                    className: "tw-w-[250px]",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "kepala_keluarga",
-                    className: "",
+                    className: "tw-w-[280px]",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "alamat",
-                    className: "",
+                    className: "tw-w-[300px] md:tw-grow",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "RT",
-                    className: "",
+                    className: "tw-w-[60px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "",
+                    className: "tw-w-[108px]",
                     orderable: false,
                     searchable: false
                 }]

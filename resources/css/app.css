@@ -1,85 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    src:
+        url('../fonts/PlusJakartaSans-VariableFont_wght.ttf') format('trueType'),
+}
 
 @layer components {
 
     /* Input */
-    .tw-input-enabled{
+    .tw-input-enabled {
         @apply tw-box-border tw-border-[1.5px] tw-border-n400 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n100 placeholder:tw-placeholder hover:tw-border-n600 focus-visible:tw-outline-none focus-visible:tw-border-2 focus-visible:tw-border-b500;
     }
-    .tw-input-disabled{
+
+    .tw-input-disabled {
         @apply tw-box-border tw-border-[1.5px] tw-border-n500 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n400 placeholder:tw-placeholder placeholder:tw-text-n1000;
     }
 
-    
-    input{
+
+    input {
         @apply focus-visible:tw-outline-none;
     }
 
-    select:disabled{
+    select:disabled {
         @apply tw-opacity-100;
     }
 
-    input[type="password"]{
-        
-    }
+    input[type="password"] {}
 
 
     /* Button */
-    .tw-btn{
+    .tw-btn {
         @apply tw-items-center tw-justify-center tw-flex tw-font-sans tw-font-bold;
     }
-    
+
     /* Button/Style */
     /* Button/Style - Primary */
-    .tw-btn-primary{
+    .tw-btn-primary {
         @apply tw-text-n100 tw-bg-b500 hover:tw-bg-b600 active:tw-bg-b700;
     }
 
     /* Button/Style - Danger */
-    .tw-btn-danger{
+    .tw-btn-danger {
         @apply tw-text-n100 tw-bg-r500 hover:tw-bg-r600 active:tw-bg-r700;
     }
 
     /* Button/Style - Text */
-    .tw-btn-text{
+    .tw-btn-text {
         @apply tw-text-n1000 tw-bg-n300 hover:tw-bg-n400 active:tw-bg-n300;
     }
-    
+
     /* Button/Style - Outline */
-    .tw-btn-outline{
+    .tw-btn-outline {
         @apply tw-text-n1000 tw-border-[1.5px] tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
     }
 
     /* Button/Size */
     /* Button/Size - Large */
-    .tw-btn-lg{
+    .tw-btn-lg {
         @apply tw-h-11 tw-px-6 tw-gap-2 tw-text-base;
     }
-    
-    .tw-btn-lg-ilead{
+
+    .tw-btn-lg-ilead {
         @apply tw-btn-lg md:tw-pl-5 md:tw-pr-6;
     }
-    
+
     /* Button/Size - Medium */
-    .tw-btn-md{
+    .tw-btn-md {
         @apply tw-gap-1 tw-h-10 tw-px-4 tw-text-sm;
     }
 
-    .tw-btn-md-ilead{
+    .tw-btn-md-ilead {
         @apply tw-btn-md tw-pl-4 tw-pr-4 tw-text-sm;
     }
 
     /* Button/Roundness */
-    .tw-btn-round{
+    .tw-btn-round {
         @apply tw-rounded-full;
     }
-    
-    .tw-btn-round-md{
+
+    .tw-btn-round-md {
         @apply tw-rounded-md;
     }
 
@@ -88,75 +90,155 @@
     .tw-h1 {
         @apply tw-font-sans tw-font-bold tw-text-2xl;
     }
+
     h2 {
         @apply tw-font-sans tw-font-bold tw-text-xl;
     }
+
     h3 {
         @apply tw-font-sans tw-font-bold tw-text-base;
     }
-    
-    .tw-label{
+
+    .tw-label {
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .tw-menu-text{
+
+    .tw-menu-text {
         @apply tw-font-sans tw-font-semibold tw-text-sm;
     }
-    .tw-top-menu-text{
+
+    .tw-top-menu-text {
         @apply tw-font-sans tw-font-semibold tw-text-base;
     }
-    .tw-body{
+
+    .tw-body {
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    input{
+
+    input {
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .tw-input{
+
+    .tw-input {
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .tw-placeholder{
+
+    .tw-placeholder {
         @apply tw-font-sans tw-font-medium tw-text-base;
     }
-    .tw-caption{
+
+    .tw-caption {
         @apply tw-font-sans tw-font-medium tw-text-sm;
     }
-    .tw-breadcrumb{
+
+    .tw-breadcrumb {
         @apply tw-font-sans tw-font-semibold tw-text-[14px];
     }
-    th{
-        @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left tw-uppercase;
+
+    /* Table */
+    thead {
+        @apply tw-rounded-lg tw-overflow-hidden;
     }
-    .tw-th{
+
+    thead>tr {
+        @apply tw-flex;
+    }
+
+    thead>tr {
+        @apply tw-h-11;
+    }
+
+    tbody>tr {
+        @apply tw-h-11;
+    }
+
+    thead>tr> :first-child {
+        @apply tw-rounded-l-md;
+    }
+
+    thead>tr> :last-child {
+        @apply tw-rounded-r-md;
+    }
+
+    th {
+        @apply tw-px-4 tw-h-11 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-bg-n300 tw-text-left tw-uppercase;
+    }
+
+    .tw-th {
         @apply tw-font-sans tw-font-bold tw-text-base tw-text-n700 tw-text-left;
     }
-    td{
-        @apply tw-font-sans tw-font-semibold tw-text-base tw-text-n1000;
+
+    td {
+        @apply tw-px-4 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-semibold tw-text-base tw-text-n1000 tw-line-clamp-1;
+    }
+    
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_desc:after {
+        @apply tw-mt-2 tw-opacity-100 tw-static;
+    }
+    
+    table.dataTable thead>tr>th.sorting_asc,
+    table.dataTable thead>tr>th.sorting_desc,
+    table.dataTable thead>tr>th.sorting,
+    table.dataTable thead>tr>td.sorting_asc,
+    table.dataTable thead>tr>td.sorting_desc,
+    table.dataTable thead>tr>td.sorting {
+        @apply tw-px-4;
+    }
+    
+    table.dataTable thead .sorting:after {
+        @apply tw-flex tw-items-center tw-justify-end;
+        content: url('../views/components/icons/actionable/sort.svg') !important;
+    }
+    
+    table.dataTable thead .sorting_asc:after {
+        content: url('../views/components/icons/actionable/sort_asc.svg') !important;
+    }
+    
+    table.dataTable thead .sorting_desc:after {
+        content: url('../views/components/icons/actionable/sort_desc.svg') !important;
+    }
+    
+    table.dataTable thead .sorting span {
+        background: url('../views/components/icons/actionable/sort.svg') no-repeat center right;
+    }
+    
+    table.dataTable thead .sorting_asc span {
+        background: url('http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/images/sort_asc.png') no-repeat center right;
+    }
+    
+    table.dataTable thead .sorting_desc span {
+        background: url('http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/images/sort_desc.png') no-repeat center right;
     }
 
     /* Divider */
-    .tw-divider-hr{
+    .tw-divider-hr {
         @apply tw-h-[1.5px] tw-w-full tw-bg-n300;
     }
-    .tw-divider-vr{
+
+    .tw-divider-vr {
         @apply tw-w-[1.5px] tw-h-full tw-bg-n300;
     }
-    
+
 }
+
+
 
 @layer utilities {
     ::-webkit-scrollbar {
         @apply tw-w-2 tw-h-2;
     }
-  
+
     ::-webkit-scrollbar-track {
         @apply tw-rounded-full tw-bg-n100;
     }
-    
+
     ::-webkit-scrollbar-thumb {
         @apply tw-bg-n500 tw-rounded-full tw-border tw-border-n1000;
     }
-  
+
     ::-webkit-scrollbar-thumb:hover {
         @apply tw-bg-n600;
     }
-  }
-
+}
