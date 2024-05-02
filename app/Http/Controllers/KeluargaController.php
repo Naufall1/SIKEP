@@ -54,12 +54,10 @@ class KeluargaController extends Controller
             ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
             ->addColumn('action', function ($keluarga) {
                 return '
-                <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                    <a href="'. route('penduduk.keluarga.detail', [$keluarga->no_kk]) .'"
+                    <a href="' . route('wargaDetail', [$keluarga->no_kk]) . '"
                         class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                         Detail
-                    </a>
-                </td>';
+                    </a>';
             })
             ->rawColumns(['action'])
             ->make(true);
