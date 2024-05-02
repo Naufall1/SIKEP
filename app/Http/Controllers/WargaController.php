@@ -10,6 +10,7 @@ use App\Models\Warga;
 use App\Models\WargaModified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
@@ -63,7 +64,18 @@ class WargaController extends Controller
     }
     public function create($no_kk)
     {
-        return view('penduduk.warga.tambah')->with('no_kk', $no_kk);
+        $user = Auth::user();
+
+        $daftarWarga = Warga::select('warga.*', 'keluarga.rt')
+        ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+        ->join('user', function ($join) use ($user) {
+            $join->on('keluarga.rt', '=', 'user.keterangan')
+                ->where('keluarga.rt', '=', $user->keterangan);
+        })
+        ->where('status_warga', '!=', 'Menunggu')
+        ->where('warga.no_kk', '!=', $no_kk)
+        ->get();
+        return view('penduduk.warga.tambah', compact('daftarWarga'))->with('no_kk', $no_kk);
     }
     public function store(Request $request)
     {
@@ -101,16 +113,23 @@ class WargaController extends Controller
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
             'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar',
-            // 'tanggal_kejadian' => 'required|date',
-            // 'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+            'tanggal_kejadian' => 'required|date',
         ]);
 
+        if (session()->exists('berkas_demografi') && !$validator_file->fails()) {
+            Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
+        }
         if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
-            session()->put('berkas_demografi', $filenameSimpan);
+            session()->put('berkas_demografi', (object) [
+                'path' => $filenameSimpan,
+                'ext' => explode('.', $filenameSimpan)[1],
+                'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
+            ]);
         }
 
         // Manual Redirect
         if ($validator->fails()) {
+
             return redirect()->back()
                 ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
                 ->withInput();
@@ -144,7 +163,7 @@ class WargaController extends Controller
         $haveDemografi->NIK = $warga->NIK;
         $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
         $haveDemografi->tanggal_request = now();
-        $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi');
+        $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
         $haveDemografi->status_request = 'Menunggu';
 
         $pengajuan = new Pengajuan();
@@ -188,12 +207,23 @@ class WargaController extends Controller
      */
     public function pindahKK(Request $request)
     {
-        // TODO: add validation
-        $warga = Warga::find($request->nik);
+        $validator = Validator::make($request->all(), [
+            'NIK' => 'required|size:16|exists:warga,NIK',
+            'no_kk' => 'required',
+            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->with('data_lama', true)
+            ->withErrors($validator->errors())
+            ->withInput();
+        }
+        // dd($request->all());
+        // $warga = Warga::find($request->NIK);
         // $warga->no_kk = $request->no_kk;
         // $warga->storeTemp();
         $pengajuan = new Pengajuan();
-        $pengajuan->pindahKK($warga);
+        $pengajuan->pindahKK(Warga::find($request->NIK));
         return redirect()->route('keluarga-tambah');
     }
 

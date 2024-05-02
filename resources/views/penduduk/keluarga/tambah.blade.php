@@ -58,6 +58,9 @@
                                 <x-input.input type="text" name="no_kk" placeholder="Masukkan No KK" value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>
                                 <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
                                     <option value="no" disabled selected>Pilih KK</option>
+                                    @foreach ($daftarKeluarga as $keluarga)
+                                        <option value="{{$keluarga->no_kk}}">{{$keluarga->no_kk . ' - ' . $keluarga->kepala_keluarga}}</option>
+                                    @endforeach
                                 </x-input.select>
                                 @error('no_kk')
                                     <small class="form-text text-danger">{{ $message }}</small>
@@ -369,7 +372,6 @@
 
         function changeJenisData(data) {
             if (data == 'data_lama') {
-                console.log('lama');
                 $('#formData').attr('action', '{{ route('pindahKK') }}');
                 $('#no_kk').removeClass('tw-input-enabled');
                 $('#no_kk').attr('type', 'hidden');
@@ -404,23 +406,26 @@
                 $('#no_kk-list').parent().removeClass('tw-hidden');
                 $('#no_kk-list').prop('disabled', false);
                 // $('#no_kk-list').val('no').change();
-                $.ajax({
-                    type: "GET",
-                    url: "/api/keluarga",
-                    success: function(response) {
-                        // console.log(response);
-                        response.forEach(keluarga => {
-                            let optionHTML =
-                                `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
-                            $('#no_kk-list').append(optionHTML);
-                        });
-                        $('#no_kk-list').val(
-                            '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                        ).change();
-                        // $('#no_kk-list').val('no').change();
-                        // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
-                    }
-                });
+                // $.ajax({
+                //     type: "GET",
+                //     url: "/api/keluarga",
+                //     success: function(response) {
+                //         // console.log(response);
+                //         response.forEach(keluarga => {
+                //             let optionHTML =
+                //                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
+                //             $('#no_kk-list').append(optionHTML);
+                //         });
+                //         $('#no_kk-list').val(
+                //             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+                //         ).change();
+                //         // $('#no_kk-list').val('no').change();
+                //         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
+                //     }
+                // });
+                $('#no_kk-list').val(
+                    '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+                ).change();
             }
             if (data == 'data_baru') {
                 $('#formData').attr('action', '{{ route('tambah-warga-post') }}');

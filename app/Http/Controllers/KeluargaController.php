@@ -93,6 +93,11 @@ class KeluargaController extends Controller
     public function create(){
         $pengajuan = new Pengajuan();
         $formState = FormStateKeluarga::get();
+        $daftarKeluarga = Keluarga::select('keluarga.*', 'user.keterangan')
+                ->join('user', 'keluarga.rt', '=', 'user.keterangan')
+                ->where('user.keterangan', Auth::user()->keterangan)
+                ->where('status', '!=', 'Menunggu')
+                ->get();
         $default = [
             'kode_pos' => 65115,
             'rt' => Auth::user()->keterangan,
@@ -102,7 +107,7 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah', compact('formState'))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
     }
 
     /**

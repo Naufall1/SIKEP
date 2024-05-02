@@ -10,7 +10,8 @@
 
             <h1 class="tw-h1 tw-mb-3">Tambah Data</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData" enctype="multipart/form-data">
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('tambah-warga-post') }}" method="POST" id="formData"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
@@ -38,8 +39,12 @@
                             <x-input.label for="nik" label="NIK">
                                 <x-input.input value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
-                                <x-input.select class="tw-hidden" name="nik" id="nik-list">
-                                    <option value="no" disabled selected>Pilih NIK</option>
+                                <x-input.select class="tw-hidden" name="NIK" id="nik-list">
+                                    <option value="no" disabled selected>{{ $daftarWarga->count() == 0 ? "Tidak ada data":"Pilih NIK"}}</option>
+                                    @foreach ($daftarWarga as $warga)
+                                        <option value="{{ $warga->NIK }}">{{ $warga->NIK . ' - ' . $warga->nama }}
+                                        </option>
+                                    @endforeach
                                 </x-input.select>
                                 @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
@@ -368,6 +373,17 @@
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
+                            @php
+                                $img = session()->get('berkas_demografi');
+                                // dd($img);
+                            @endphp
+                            @if (session()->exists('berkas_demografi'))
+                                @include('components.form.textdetail', [
+                                    'title' => '',
+                                    'isImage' => true,
+                                    'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
+                                ])
+                            @endif
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
                                 for="status_warga">Jenis <select class="tw-input-disabled tw-placeholder"
@@ -409,198 +425,211 @@
     </div>
 
     <script>
+        function data_lama() {
+            $('#formData').attr('action', '{{ route('pindahKK') }}');
+            $('#NIK').removeClass('tw-input-enabled');
+            $('#NIK').attr('type', 'hidden');
+            $('#NIK').prop('disabled', true);
+
+
+            $('#demografiMasuk').remove();
+
+            $('#nama').val('');
+            $('#nama').removeClass('tw-input-enabled');
+            $('#nama').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama').attr('placeholder', 'Pilih NIK');
+            $('#nama').prop('disabled', true);
+
+            $('#tempat_lahir').val('');
+            $('#tempat_lahir').removeClass('tw-input-enabled');
+            $('#tempat_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#tempat_lahir').attr('placeholder', 'Pilih NIK');
+            $('#tempat_lahir').prop('disabled', true);
+
+            $('#tanggal_lahir').val('');
+            $('#tanggal_lahir').removeClass('tw-input-enabled');
+            $('#tanggal_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#tanggal_lahir').attr('placeholder', 'Pilih NIK');
+            $('#tanggal_lahir').prop('disabled', true);
+
+            $('#jenis_kelamin').val('');
+            $('#jenis_kelamin').removeClass('tw-input-enabled');
+            $('#jenis_kelamin').addClass('tw-input-disabled');
+            $('#jenis_kelamin').prop('disabled', true);
+
+            $('#pendidikan').val('');
+            $('#pendidikan').removeClass('tw-input-enabled');
+            $('#pendidikan').addClass('tw-input-disabled');
+            $('#pendidikan').prop('disabled', true);
+
+            $('#agama').val('');
+            $('#agama').removeClass('tw-input-enabled');
+            $('#agama').addClass('tw-input-disabled');
+            $('#agama').prop('disabled', true);
+
+            $('#status_perkawinan').val('');
+            $('#status_perkawinan').removeClass('tw-input-enabled');
+            $('#status_perkawinan').addClass('tw-input-disabled');
+            $('#status_perkawinan').prop('disabled', true);
+
+            $('#jenis_pekerjaan').val('');
+            $('#jenis_pekerjaan').removeClass('tw-input-enabled');
+            $('#jenis_pekerjaan').addClass('tw-input-disabled');
+            $('#jenis_pekerjaan').prop('disabled', true);
+
+            $('#kewarganegaraan').val('');
+            $('#kewarganegaraan').removeClass('tw-input-enabled');
+            $('#kewarganegaraan').addClass('tw-input-disabled');
+            $('#kewarganegaraan').prop('disabled', true);
+
+            $('#status_ekluarga').val('');
+            $('#status_ekluarga').removeClass('tw-input-enabled');
+            $('#status_ekluarga').addClass('tw-input-disabled halo');
+
+            $('#nama_ayah').val('');
+            $('#nama_ayah').removeClass('tw-input-enabled');
+            $('#nama_ayah').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama_ayah').attr('placeholder', 'Pilih NIK');
+            $('#nama_ayah').prop('disabled', true);
+
+            $('#nama_ibu').val('');
+            $('#nama_ibu').removeClass('tw-input-enabled');
+            $('#nama_ibu').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama_ibu').attr('placeholder', 'Pilih NIK');
+            $('#nama_ibu').prop('disabled', true);
+
+            $('#penghasilan').val('');
+            $('#penghasilan').removeClass('tw-input-enabled');
+            $('#penghasilan').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#penghasilan').attr('placeholder', 'Pilih NIK');
+            $('#penghasilan').prop('disabled', true);
+
+            $('#no_paspor').val('');
+            $('#no_paspor').removeClass('tw-input-enabled');
+            $('#no_paspor').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#no_paspor').attr('placeholder', 'Pilih NIK');
+            $('#no_paspor').prop('disabled', true);
+
+            $('#no_kitas').val('');
+            $('#no_kitas').removeClass('tw-input-enabled');
+            $('#no_kitas').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#no_kitas').attr('placeholder', 'Pilih NIK');
+            $('#no_kitas').prop('disabled', true);
+
+
+
+            $('#nik-list').addClass('tw-input-enabled');
+            $('#nik-list').parent().removeClass('tw-hidden');
+            $('#nik-list').prop('disabled', false);
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/api/warga",
+            //     success: function(response) {
+            //         response.forEach(warga => {
+            //             let optionHTML =
+            //                 `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
+            //             $('#nik-list').append(optionHTML);
+            //         });
+            //     }
+            // });
+        }
+
+        function data_baru() {
+            $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
+            $('#formData')[0].reset();
+            $('#NIK').addClass('tw-input-enabled');
+            $('#NIK').attr('type', 'text');
+            $('#NIK').prop('disabled', false);
+
+            $('#formInput').append(
+                '<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6"> <h2 class="">Demografi Masuk</h2> <div class="tw-flex tw-flex-col tw-gap-3"> <x-input.label for="status_warga" label="Jenis"> <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled> <option value="Aktif" selected>Aktif</option> <option value="Migrasi">Migrasi</option> <option value="Meninggal">Meninggal</option> </x-input.select> </x-input.label> <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung"> <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file> </x-input.label></div> </div>'
+            );
+
+            $('#nama').addClass('tw-input-enabled');
+            $('#nama').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama').attr('placeholder', 'Masukkan Nama');
+            $('#nama').prop('disabled', false);
+
+            $('#tempat_lahir').addClass('tw-input-enabled');
+            $('#tempat_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#tempat_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
+            $('#tempat_lahir').prop('disabled', false);
+
+            $('#tanggal_lahir').addClass('tw-input-enabled');
+            $('#tanggal_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#tanggal_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
+            $('#tanggal_lahir').prop('disabled', false);
+
+            $('#jenis_kelamin').addClass('tw-input-enabled');
+            $('#jenis_kelamin').removeClass('tw-input-disabled');
+            $('#jenis_kelamin').prop('disabled', false);
+
+            $('#pendidikan').addClass('tw-input-enabled');
+            $('#pendidikan').removeClass('tw-input-disabled');
+            $('#pendidikan').prop('disabled', false);
+
+            $('#agama').addClass('tw-input-enabled');
+            $('#agama').removeClass('tw-input-disabled');
+            $('#agama').prop('disabled', false);
+
+            $('#status_perkawinan').addClass('tw-input-enabled');
+            $('#status_perkawinan').removeClass('tw-input-disabled');
+            $('#status_perkawinan').prop('disabled', false);
+
+            $('#jenis_pekerjaan').addClass('tw-input-enabled');
+            $('#jenis_pekerjaan').removeClass('tw-input-disabled');
+            $('#jenis_pekerjaan').prop('disabled', false);
+
+            $('#kewarganegaraan').addClass('tw-input-enabled');
+            $('#kewarganegaraan').removeClass('tw-input-disabled');
+            $('#kewarganegaraan').prop('disabled', false);
+
+            $('#status_keluarga').addClass('tw-input-enabled');
+            $('#status_keluarga').removeClass('tw-input-disabled');
+
+            $('#nama_ayah').addClass('tw-input-enabled');
+            $('#nama_ayah').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama_ayah').attr('placeholder', 'Masukkan Nama Ayah');
+            $('#nama_ayah').prop('disabled', false);
+
+            $('#nama_ibu').addClass('tw-input-enabled');
+            $('#nama_ibu').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#nama_ibu').attr('placeholder', 'Masukkan Nama Ibu');
+            $('#nama_ibu').prop('disabled', false);
+
+            $('#penghasilan').addClass('tw-input-enabled');
+            $('#penghasilan').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#penghasilan').attr('placeholder', '1000000');
+            $('#penghasilan').prop('disabled', false);
+
+            $('#no_paspor').addClass('tw-input-enabled');
+            $('#no_paspor').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#no_paspor').attr('placeholder', 'Masukkan Nomor Paspor');
+            $('#no_paspor').prop('disabled', false);
+
+            $('#no_kitas').addClass('tw-input-enabled');
+            $('#no_kitas').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#no_kitas').attr('placeholder', 'Masukkan Nomor Kitas');
+            $('#no_kitas').prop('disabled', false);
+
+
+
+            $('#nik-list').removeClass('tw-input-enabled');
+            $('#nik-list').parent().addClass('tw-hidden');
+            $('#nik-list').prop('disabled', true);
+        }
+        $(document).ready(function() {
+            if (`{{ session()->exists('data_lama')? session()->get('data_lama') : false  }}`) {
+                data_lama();
+                $('#jenis-data').val('data-lama');
+            }
+        });
         $('#jenis-data').on('change', function() {
             if (this.value == 'data-lama') {
-                $('#formData').attr('action', '{{ route('pindahKK') }}');
-                $('#NIK').removeClass('tw-input-enabled');
-                $('#NIK').attr('type', 'hidden');
-                $('#NIK').prop('disabled', true);
-
-
-                $('#demografiMasuk').remove();
-
-                $('#nama').val('');
-                $('#nama').removeClass('tw-input-enabled');
-                $('#nama').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama').attr('placeholder', 'Pilih NIK');
-                $('#nama').prop('disabled', true);
-
-                $('#tempat_lahir').val('');
-                $('#tempat_lahir').removeClass('tw-input-enabled');
-                $('#tempat_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tempat_lahir').attr('placeholder', 'Pilih NIK');
-                $('#tempat_lahir').prop('disabled', true);
-
-                $('#tanggal_lahir').val('');
-                $('#tanggal_lahir').removeClass('tw-input-enabled');
-                $('#tanggal_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tanggal_lahir').attr('placeholder', 'Pilih NIK');
-                $('#tanggal_lahir').prop('disabled', true);
-
-                $('#jenis_kelamin').val('');
-                $('#jenis_kelamin').removeClass('tw-input-enabled');
-                $('#jenis_kelamin').addClass('tw-input-disabled');
-                $('#jenis_kelamin').prop('disabled', true);
-
-                $('#pendidikan').val('');
-                $('#pendidikan').removeClass('tw-input-enabled');
-                $('#pendidikan').addClass('tw-input-disabled');
-                $('#pendidikan').prop('disabled', true);
-
-                $('#agama').val('');
-                $('#agama').removeClass('tw-input-enabled');
-                $('#agama').addClass('tw-input-disabled');
-                $('#agama').prop('disabled', true);
-
-                $('#status_perkawinan').val('');
-                $('#status_perkawinan').removeClass('tw-input-enabled');
-                $('#status_perkawinan').addClass('tw-input-disabled');
-                $('#status_perkawinan').prop('disabled', true);
-
-                $('#jenis_pekerjaan').val('');
-                $('#jenis_pekerjaan').removeClass('tw-input-enabled');
-                $('#jenis_pekerjaan').addClass('tw-input-disabled');
-                $('#jenis_pekerjaan').prop('disabled', true);
-
-                $('#kewarganegaraan').val('');
-                $('#kewarganegaraan').removeClass('tw-input-enabled');
-                $('#kewarganegaraan').addClass('tw-input-disabled');
-                $('#kewarganegaraan').prop('disabled', true);
-
-                $('#status_ekluarga').val('');
-                $('#status_ekluarga').removeClass('tw-input-enabled');
-                $('#status_ekluarga').addClass('tw-input-disabled halo');
-
-                $('#nama_ayah').val('');
-                $('#nama_ayah').removeClass('tw-input-enabled');
-                $('#nama_ayah').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ayah').attr('placeholder', 'Pilih NIK');
-                $('#nama_ayah').prop('disabled', true);
-
-                $('#nama_ibu').val('');
-                $('#nama_ibu').removeClass('tw-input-enabled');
-                $('#nama_ibu').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ibu').attr('placeholder', 'Pilih NIK');
-                $('#nama_ibu').prop('disabled', true);
-
-                $('#penghasilan').val('');
-                $('#penghasilan').removeClass('tw-input-enabled');
-                $('#penghasilan').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#penghasilan').attr('placeholder', 'Pilih NIK');
-                $('#penghasilan').prop('disabled', true);
-
-                $('#no_paspor').val('');
-                $('#no_paspor').removeClass('tw-input-enabled');
-                $('#no_paspor').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_paspor').attr('placeholder', 'Pilih NIK');
-                $('#no_paspor').prop('disabled', true);
-
-                $('#no_kitas').val('');
-                $('#no_kitas').removeClass('tw-input-enabled');
-                $('#no_kitas').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_kitas').attr('placeholder', 'Pilih NIK');
-                $('#no_kitas').prop('disabled', true);
-
-
-
-                $('#nik-list').addClass('tw-input-enabled');
-                $('#nik-list').parent().removeClass('tw-hidden');
-                $('#nik-list').prop('disabled', false);
-                $.ajax({
-                    type: "GET",
-                    url: "/api/warga",
-                    success: function(response) {
-                        response.forEach(warga => {
-                            let optionHTML =
-                                `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
-                            $('#nik-list').append(optionHTML);
-                        });
-                    }
-                });
+                data_lama();
             }
             if (this.value == 'data-baru') {
-                $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
-                $('#formData')[0].reset();
-                $('#NIK').addClass('tw-input-enabled');
-                $('#NIK').attr('type', 'text');
-                $('#NIK').prop('disabled', false);
-
-                $('#formInput').append(
-                    '<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6"> <h2 class="">Demografi Masuk</h2> <div class="tw-flex tw-flex-col tw-gap-3"> <x-input.label for="status_warga" label="Jenis"> <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled> <option value="Aktif" selected>Aktif</option> <option value="Migrasi">Migrasi</option> <option value="Meninggal">Meninggal</option> </x-input.select> </x-input.label> <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung"> <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file> </x-input.label></div> </div>'
-                );
-
-                $('#nama').addClass('tw-input-enabled');
-                $('#nama').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama').attr('placeholder', 'Masukkan Nama');
-                $('#nama').prop('disabled', false);
-
-                $('#tempat_lahir').addClass('tw-input-enabled');
-                $('#tempat_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tempat_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#tempat_lahir').prop('disabled', false);
-
-                $('#tanggal_lahir').addClass('tw-input-enabled');
-                $('#tanggal_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tanggal_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#tanggal_lahir').prop('disabled', false);
-
-                $('#jenis_kelamin').addClass('tw-input-enabled');
-                $('#jenis_kelamin').removeClass('tw-input-disabled');
-                $('#jenis_kelamin').prop('disabled', false);
-
-                $('#pendidikan').addClass('tw-input-enabled');
-                $('#pendidikan').removeClass('tw-input-disabled');
-                $('#pendidikan').prop('disabled', false);
-
-                $('#agama').addClass('tw-input-enabled');
-                $('#agama').removeClass('tw-input-disabled');
-                $('#agama').prop('disabled', false);
-
-                $('#status_perkawinan').addClass('tw-input-enabled');
-                $('#status_perkawinan').removeClass('tw-input-disabled');
-                $('#status_perkawinan').prop('disabled', false);
-
-                $('#jenis_pekerjaan').addClass('tw-input-enabled');
-                $('#jenis_pekerjaan').removeClass('tw-input-disabled');
-                $('#jenis_pekerjaan').prop('disabled', false);
-
-                $('#kewarganegaraan').addClass('tw-input-enabled');
-                $('#kewarganegaraan').removeClass('tw-input-disabled');
-                $('#kewarganegaraan').prop('disabled', false);
-
-                $('#status_keluarga').addClass('tw-input-enabled');
-                $('#status_keluarga').removeClass('tw-input-disabled');
-
-                $('#nama_ayah').addClass('tw-input-enabled');
-                $('#nama_ayah').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ayah').attr('placeholder', 'Masukkan Nama Ayah');
-                $('#nama_ayah').prop('disabled', false);
-
-                $('#nama_ibu').addClass('tw-input-enabled');
-                $('#nama_ibu').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ibu').attr('placeholder', 'Masukkan Nama Ibu');
-                $('#nama_ibu').prop('disabled', false);
-
-                $('#penghasilan').addClass('tw-input-enabled');
-                $('#penghasilan').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#penghasilan').attr('placeholder', '1000000');
-                $('#penghasilan').prop('disabled', false);
-
-                $('#no_paspor').addClass('tw-input-enabled');
-                $('#no_paspor').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_paspor').attr('placeholder', 'Masukkan Nomor Paspor');
-                $('#no_paspor').prop('disabled', false);
-
-                $('#no_kitas').addClass('tw-input-enabled');
-                $('#no_kitas').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_kitas').attr('placeholder', 'Masukkan Nomor Kitas');
-                $('#no_kitas').prop('disabled', false);
-
-
-
-                $('#nik-list').removeClass('tw-input-enabled');
-                $('#nik-list').parent().addClass('tw-hidden');
-                $('#nik-list').prop('disabled', true);
+                data_baru();
             }
         });
         $('#nik-list').on('change', function() {
