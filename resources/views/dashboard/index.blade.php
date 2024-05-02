@@ -12,12 +12,9 @@
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-grid md:tw-grid-flow-col tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-4">
                 {{-- <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4"> --}}
-                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('warga') }}" title="Jumlah Penduduk"
-                    value="1600"></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" title="Jumlah Keluarga"
-                    value="800"></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('dataBaru') }}" title="Pengajuan"
-                    value="20"></x-cards.overview>
+                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('warga') }}" title="Jumlah Penduduk" value='{{$countPenduduk}}'></x-cards.overview>
+                <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" title="Jumlah Keluarga" value='{{$countKeluarga}}'></x-cards.overview>
+                <x-cards.overview class="tw-col-span-1" url="{{ route('dataBaru') }}" title="Pengajuan" value='{{$countPengajuan}}'></x-cards.overview>
             </div>
 
             <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-h-full">
@@ -28,10 +25,10 @@
                     {{-- @include('dashboard.chart.pekerjaan') --}}
                 </div>
                 <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    @include('dashboard.chart.pekerjaan')
+                    @include('dashboard.chart.pieChart')
                 </div>
                 <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
+                    @include('dashboard.chart.barChart')
                 </div>
                 {{-- @include('dashboard.chart.jenisKelamin') --}}
             </div>
