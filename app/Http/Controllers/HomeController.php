@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\JenisKelaminChart;
-use App\Charts\PekerjaanChart;
-use App\Http\Livewire\GrafikWarga;
 use App\Models\HaveDemografi;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
 use App\Models\Warga;
 use App\Models\WargaModified;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -33,21 +28,34 @@ class HomeController extends Controller
         }
     }
 
-
-
-
     private function dashboardRW() {
 
         // chart test
         $dataPekerjaan = Warga::getDataPekerjaan(Auth::user()->keterangan);
         $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
+        $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
+        $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
+        //end chart
 
-        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin')); // jenis kelamin blom
-
+        $semuaRT = Warga::rightJoin('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+        ->rightJoin('user', 'keluarga.RT', '=', 'user.keterangan')
+        ->select('user.keterangan')
+        ->distinct()
+        ->whereNotIn('keterangan', function($query) {
+            $query->select('keterangan')
+                ->from('user')
+                ->where('keterangan', 'like', 'admin%')
+                ->orWhere('keterangan', 'ketua');
+        })
+        ->get();
 
         $countPenduduk = Warga::count();
         $countKeluarga = Keluarga::count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
+
+        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'semuaRT',
+         'countPengajuan', 'countKeluarga', 'countPenduduk'), ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
+
 
         // $countKematian = HaveDemografi::join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
         // ->where('demografi.jenis', 'Kematian')
@@ -67,104 +75,51 @@ class HomeController extends Controller
         // ->count();
 
 
-        // jenis kelamin
-
-
-        // agama
-        $daftarAgama = Warga::distinct()->pluck('agama');
-
-        $countPerAgama = [];
-
-        foreach ($daftarAgama as $agama) {
-            $jumlah = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('warga.agama', $agama)
-                ->count();
-
-            $countPerAgama[$agama] = $jumlah;
-        }
-
-        // pendidikan
-        $countTingkatPendidikan = [];
-
-        $tingkatPendidikan = Warga::distinct()->pluck('pendidikan');
-
-        foreach ($tingkatPendidikan as $tingkat) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('warga.pendidikan', $tingkat)
-                ->count();
-
-            $countTingkatPendidikan[$tingkat] = $count;
-        }
-
-
-        // return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
-        // 'countKelahiran', 'countPertumbuhan', 'countUsiaProduktif', 'countJK', 'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
-        // ['title' => 'RW', 'text' => 'Ketua RW']);
     }
 
     private function dashboardRT(int $rt) {
-        // chart test
-        $keterangan = Auth::user()->keterangan;
-        $dataPekerjaan = Warga::getDataPekerjaan(Auth::user()->keterangan);
-        $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
+         // chart test
+         $dataPekerjaan = Warga::getDataPekerjaan(Auth::user()->keterangan);
+         $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
+         $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
+         $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
+         //end chart
 
-        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin')); // jenis kelamin blom
 
-        $countPenduduk = Warga::join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')->where('keluarga.RT', $rt)->count();
-        $countKeluarga = Keluarga::where('RT', $rt)->count();
-        $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
+        $countPenduduk = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+                        ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                        ->where('keluarga.RT', $rt)
+                        ->count();
 
-        $countKematian = HaveDemografi::join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
-        ->where('demografi.jenis', 'Kematian')
-        ->where('have_demografi.status_request', 'Dikonfirmasi')
-        ->count();
+        $countKeluarga = Keluarga::where('keluarga.RT', $rt)->count();;
 
-        $countKelahiran = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
-        ->join('have_demografi', 'warga.NIK', '=', 'have_demografi.NIK')
-        ->join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
-        ->where('demografi.jenis', 'Kelahiran')
-        ->where('have_demografi.status_request', 'Dikonfirmasi')
-        ->where('keluarga.RT', $rt)
-        ->count();
+        $countPengajuan =KeluargaModified::where('user_id', '=', Auth::user()->user_id)->count() +
+        WargaModified::where('user_id', '=', Auth::user()->user_id)->count();
+        // Pengajuan::where('user_id', '=', Auth::user()->user_id)->count();
 
-        $countPertumbuhan = $countKelahiran - $countKematian;
+         return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan',
+          'countPengajuan', 'countKeluarga', 'countPenduduk'), ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
 
-        $countUsiaProduktif = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-        ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-        ->whereRaw('TIMESTAMPDIFF(YEAR, warga.tanggal_lahir, CURDATE()) < 50')
-        ->where('keluarga.RT', $rt)->count();
+        // $countKematian = HaveDemografi::join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
+        // ->where('demografi.jenis', 'Kematian')
+        // ->where('have_demografi.status_request', 'Dikonfirmasi')
+        // ->count();
 
-        // agama
-        $daftarAgama = Warga::distinct()->pluck('agama');
+        // $countKelahiran = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
+        // ->join('have_demografi', 'warga.NIK', '=', 'have_demografi.NIK')
+        // ->join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
+        // ->where('demografi.jenis', 'Kelahiran')
+        // ->where('have_demografi.status_request', 'Dikonfirmasi')
+        // ->where('keluarga.RT', $rt)
+        // ->count();
 
-        $countPerAgama = [];
+        // $countPertumbuhan = $countKelahiran - $countKematian;
 
-        foreach ($daftarAgama as $agama) {
-            $jumlah = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('keluarga.RT', $rt)
-                ->where('warga.agama', $agama)
-                ->count();
+        // $countUsiaProduktif = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+        // ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+        // ->whereRaw('TIMESTAMPDIFF(YEAR, warga.tanggal_lahir, CURDATE()) < 50')
+        // ->where('keluarga.RT', $rt)->count();
 
-            $countPerAgama[$agama] = $jumlah;
-        }
-
-        // pendidikan
-        $countTingkatPendidikan = [];
-
-        $tingkatPendidikan = Warga::distinct()->pluck('pendidikan');
-
-        foreach ($tingkatPendidikan as $tingkat) {
-            $count = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
-                ->where('keluarga.RT', $rt)
-                ->where('warga.pendidikan', $tingkat)
-                ->count();
-
-            $countTingkatPendidikan[$tingkat] = $count;
-        }
 
         // return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
         // 'countKelahiran' , 'countPertumbuhan' ,'countUsiaProduktif', 'countJK' ,'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
