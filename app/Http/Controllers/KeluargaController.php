@@ -10,6 +10,8 @@ use App\Models\Warga;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -22,7 +24,8 @@ class KeluargaController extends Controller
      *      'no_kk' => 'no_kk',
      *      'kepala_keluarga' => 'Kepala keluarga'], ...)
      */
-    public function getAll(){
+    public function getAll()
+    {
         return Keluarga::select(['no_kk', 'kepala_keluarga'])->where('status', '=', 'Aktif')->get();
     }
 
@@ -32,7 +35,8 @@ class KeluargaController extends Controller
      * @param string $no_kk
      * @return \App\Models\Keluarga
      */
-    public function getKeluarga($no_kk){
+    public function getKeluarga($no_kk)
+    {
         return Keluarga::find($no_kk);
     }
 
@@ -68,7 +72,8 @@ class KeluargaController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
 
         if ($user->keterangan == 'ketua') {
@@ -88,19 +93,25 @@ class KeluargaController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(){
+    public function create()
+    {
         $pengajuan = new Pengajuan();
         $formState = FormStateKeluarga::get();
+        $daftarKeluarga = Keluarga::select('keluarga.*', 'user.keterangan')
+            ->join('user', 'keluarga.rt', '=', 'user.keterangan')
+            ->where('user.keterangan', Auth::user()->keterangan)
+            ->where('status', '!=', 'Menunggu')
+            ->get();
         $default = [
             'kode_pos' => 65115,
             'rt' => Auth::user()->keterangan,
-            'rw' => '002',
+            'rw' => 2,
             'kelurahan' => 'Gadingkasri',
             'kecamatan' => 'Klojen',
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah', compact('formState'))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
     }
 
     /**
@@ -109,46 +120,160 @@ class KeluargaController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'no_kk' => 'required',
-            // 'image_kk' => 'required:image',
+        /**
+         * Validasi upload file ketika
+         * - pada session belum tersedia
+         * - update kk (jika pada request terdapat 'image_kk')
+         * - penambahan data keluarga Baru
+         **/
+        $request->merge([
+            'tagihan_listrik' => (int)$request->get('tagihan_listrik'),
+            'luas_bangunan' => (int)$request->get('luas_bangunan'),
         ]);
 
+        if ($request->jenis_data == 'data_lama') {
+            if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
+                $validator_file = Validator::make($request->only('kartu_keluarga'), [
+                    'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ]);
+            }
+
+            if (isset($validator_file) && !$validator_file->fails()) {
+                $filename = Str::uuid()->getHex()->toString();
+                $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
+                $filenameSimpan = $filename . '.' . $extension;
+                $request->file('kartu_keluarga')->storeAs('', $filenameSimpan, 'temp');
+            }
+
+            $validator = Validator::make($request->only(['no_kk','jenis_data']), [
+                'no_kk' => 'required|size:16|exists:keluarga,no_kk'
+            ]);
+
+            // Hapus file temporary ketika dilakukan upload file baru
+            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) &&!$validator_file->fails())) {
+                Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
+            }
+
+            // Masukkan detail file temporary pada session
+            if (isset($validator_file) && !$validator_file->fails()) {
+                FormStateKeluarga::setKK((object) [
+                    'path' => $filenameSimpan,
+                    'ext' => explode('.', $filenameSimpan)[1],
+                    'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
+                ]);
+            }
+
+            // Manual Redirect
+            if ($validator->fails() || (isset($validator_file) && $validator_file->fails())) {
+                if (FormStateKeluarga::getKartuKeluarga()) {
+                    $kk = FormStateKeluarga::getKartuKeluarga();
+                    FormStateKeluarga::update(new Request($validator->valid()));
+                    FormStateKeluarga::setKK($kk);
+                } else {
+                    FormStateKeluarga::update(new Request($validator->valid()));
+                }
+
+                return redirect()->back()
+                    ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
+                    ->withInput();
+            }
+            $kk = FormStateKeluarga::getKartuKeluarga();
+            FormStateKeluarga::update(new Request($validator->valid()));
+            FormStateKeluarga::setKK($kk);
+
+            // $keluarga = Keluarga::find($request->no_kk);
+        } else if ($request->jenis_data == 'data_baru') {
+            if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
+                $validator_file = Validator::make($request->only('kartu_keluarga'), [
+                    'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ]);
+            }
+
+            if (isset($validator_file) && !$validator_file->fails()) {
+                $filename = Str::uuid()->getHex()->toString();
+                $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
+                $filenameSimpan = $filename . '.' . $extension;
+                $request->file('kartu_keluarga')->storeAs('', $filenameSimpan, 'temp');
+            }
+
+            $validator = Validator::make($request->except('kartu_keluarga'), [
+                'no_kk' => 'required|size:16|unique:keluarga,no_kk',
+                'kepala_keluarga' => 'required|max:100',
+                'alamat' => 'required',
+                'RT' => 'required|integer',
+                'RW' => 'required|integer',
+                'kode_pos' => 'required|size:5',
+                'kelurahan' => 'required|max:20',
+                'kecamatan' => 'required|max:20',
+                'kota' => 'required|max:20',
+                'provinsi' => 'required|max:20',
+                'tagihan_listrik' => 'required|integer',
+                'luas_bangunan' => 'required|integer',
+            ]);
+
+            // Hapus file temporary ketika dilakukan upload file baru
+            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) &&!$validator_file->fails())) {
+                Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
+            }
+
+            // Masukkan detail file temporary pada session
+            if (isset($validator_file) && !$validator_file->fails()) {
+                FormStateKeluarga::setKK((object) [
+                    'path' => $filenameSimpan,
+                    'ext' => explode('.', $filenameSimpan)[1],
+                    'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
+                ]);
+            }
+
+            // Manual Redirect
+            if ($validator->fails() || (isset($validator_file) && $validator_file->fails())) {
+                if (FormStateKeluarga::getKartuKeluarga()) {
+                    $kk = FormStateKeluarga::getKartuKeluarga();
+                    FormStateKeluarga::update(new Request($validator->valid()));
+                    FormStateKeluarga::setKK($kk);
+                } else {
+                    FormStateKeluarga::update(new Request($validator->valid()));
+                }
+
+                return redirect()->back()
+                    ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
+                    ->withInput();
+            }
+            $kk = FormStateKeluarga::getKartuKeluarga();
+            FormStateKeluarga::update(new Request($validator->valid()));
+            FormStateKeluarga::setKK($kk);
+        }
+
         if ($request->action == 'tambah') {
-            FormStateKeluarga::update($request);
-            // dd($request->all());
-            // dd(FormStateKeluarga::get());
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
 
-        $keluarga = new Keluarga;
-        $keluarga->no_kk = $request->no_kk;
-        $keluarga->kepala_keluarga = $request->kepala_keluarga;
-        $keluarga->alamat = $request->alamat;
-        $keluarga->RT = $request->RT;
-        $keluarga->RW = $request->RW;
-        $keluarga->kode_pos = $request->kode_pos;
-        $keluarga->kelurahan = $request->kelurahan;
-        $keluarga->kecamatan = $request->kecamatan;
-        $keluarga->kota = $request->kota;
-        $keluarga->provinsi = $request->provinsi;
-        // $keluarga->image_kk = $this->storeImageKK($request);
-        $keluarga->image_kk = '1';
-        $keluarga->tagihan_listrik = $request->tagihan_listrik;
-        $keluarga->luas_bangunan = $request->luas_bangunan;
-        $keluarga->status = 'Menunggu';
-        // $keluarga->save();
+        if (Keluarga::find($request->no_kk)) {
+            $keluarga = Keluarga::find($request->no_kk);
+            $keluarga->image_kk = isset($filenameSimpan) ? $filenameSimpan : (FormStateKeluarga::getKartuKeluarga()->path);
+        } else {
+            $keluarga = new Keluarga;
+            $keluarga->no_kk = $request->no_kk;
+            $keluarga->kepala_keluarga = $request->kepala_keluarga;
+            $keluarga->alamat = $request->alamat;
+            $keluarga->RT = $request->RT;
+            $keluarga->RW = $request->RW;
+            $keluarga->kode_pos = $request->kode_pos;
+            $keluarga->kelurahan = $request->kelurahan;
+            $keluarga->kecamatan = $request->kecamatan;
+            $keluarga->kota = $request->kota;
+            $keluarga->provinsi = $request->provinsi;
+            $keluarga->image_kk = isset($filenameSimpan) ? $filenameSimpan : (FormStateKeluarga::getKartuKeluarga()->path);
+            $keluarga->tagihan_listrik = $request->tagihan_listrik;
+            $keluarga->luas_bangunan = $request->luas_bangunan;
+            $keluarga->status = 'Menunggu';
+        }
 
         $pengajuan = new Pengajuan();
         $pengajuan->keluarga = $keluarga;
         $pengajuan->store();
-
-        // Warga::saveTemp(Keluarga::find($request->no_kk));
-
-        // session()->forget('formState');
-        // session()->save();
 
         return redirect()->route('keluarga');
     }
@@ -181,7 +306,7 @@ class KeluargaController extends Controller
         $keluarga = Keluarga::find($no_kk);
 
         if (!$keluarga) {
-           return redirect()->back();
+            return redirect()->back();
         }
 
         $keluarga->fill($request->only(['no_kk', 'tagihan_listrik', 'luas_bangunan']));
@@ -196,7 +321,7 @@ class KeluargaController extends Controller
         // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
         KeluargaModified::updateKeluarga($keluarga);
 
-        return redirect()->route('keluargaDetail', ['no_kk'=> $request->no_kk]);
+        return redirect()->route('keluargaDetail', ['no_kk' => $request->no_kk]);
     }
 
     /**
@@ -224,7 +349,8 @@ class KeluargaController extends Controller
      * @param integer $idx
      * @return \Illuminate\Http\RedirectResponse
      */
-    function removeAnggotaKeluarga($idx) {
+    function removeAnggotaKeluarga($idx)
+    {
         // Warga::removeTemp($idx);
         $pengajuan = new Pengajuan();
         $pengajuan->removeWarga($idx);
@@ -235,7 +361,8 @@ class KeluargaController extends Controller
      * @param Request $request
      * Fungsi ini menangani upload gambar KK.
      */
-    private function storeImageKK(Request $request){
+    private function storeImageKK(Request $request)
+    {
         $filename = Str::uuid()->getHex()->toString();
         $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
         $filenameSimpan = $filename . '.' . $extension;
@@ -249,7 +376,8 @@ class KeluargaController extends Controller
      * @param string $no_kk
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail($no_kk){
+    public function detail($no_kk)
+    {
         $keluarga = Keluarga::with(['warga', 'bansos', 'detailBansos'])->find($no_kk);
         return view('penduduk.keluarga.detail', compact('keluarga'));
     }

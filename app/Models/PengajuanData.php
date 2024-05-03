@@ -16,6 +16,7 @@ class PengajuanData extends Model
         'no_kk',
         'user_id',
         'tanggal_request',
+        'tipe',
         'status_request',
         'catatan'
     ];
