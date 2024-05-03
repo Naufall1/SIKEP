@@ -152,8 +152,8 @@ class KeluargaController extends Controller
             ]);
 
             // Hapus file temporary ketika dilakukan upload file baru
-            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) &&!$validator_file->fails())) {
-                Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
+            if ((FormStateKeluarga::getKartuKeluarga() != null) && (isset($validator_file) &&!$validator_file->fails())) {
+                Storage::disk('temp')->delete(FormStateKeluarga::getKartuKeluarga()->path);
             }
 
             // Masukkan detail file temporary pada session
