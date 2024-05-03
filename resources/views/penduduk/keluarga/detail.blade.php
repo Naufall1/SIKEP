@@ -75,7 +75,7 @@
                             @include('components.form.textdetail', [
                                 'title' => 'Kartu Keluarga',
                                 'isImage' => true,
-                                'content' => asset(Storage::url('KK/'.$keluarga->image_kk)),
+                                'content' => !isset($keluarga->image_kk) ? "" : asset(Storage::disk('public')->url('KK/'.$keluarga->image_kk)),
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
 
