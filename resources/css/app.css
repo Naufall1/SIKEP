@@ -12,7 +12,7 @@
 
     /* Input */
     .tw-input-enabled {
-        @apply tw-box-border tw-border-[1.5px] tw-border-n400 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n100 placeholder:tw-placeholder hover:tw-border-n600 focus-visible:tw-outline-none focus-visible:tw-border-2 focus-visible:tw-border-b500;
+        @apply tw-box-border tw-border-[1.5px] tw-border-n400 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n100 placeholder:tw-placeholder hover:tw-border-n600 focus-visible:tw-outline-none focus-visible:tw-border-[1.5px] focus-visible:tw-border-b500;
     }
 
     .tw-input-disabled {

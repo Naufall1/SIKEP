@@ -82,6 +82,7 @@
                 <div class="tw-hidden md:tw-inline-block">
                     {{-- Nama --}}
                     <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}
+                        
                     </h3>
 
                     {{-- Keterangan --}}
