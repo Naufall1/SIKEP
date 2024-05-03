@@ -44,55 +44,35 @@
                                     type="text" id="username" name="username" value="{{ $user->username }}">
                             </label>
 
-                            <label for="old_password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-                                <div class="tw-align-text-bottom">
-                                    <span class="tw-label"> Kata Sandi Lama</span>
-                                    @if (session('error'))
-                                        <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
-                                            {{ session('error') }}
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                                    <input class="tw-input-enabled" type="password" id="old_password" name="old_password"
-                                        placeholder="Masukkan Kata Sandi">
-                                    <span id=""
-                                        class="togglePassword tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
-                                        <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
-                                            alt="eye">
+                            <x-input.label class="tw-w-full" for="old_password" label="Kata Sandi Lama">
+                                <x-input.password placeholder="Masukkan Kata Sansi" id="old_password"
+                                    name="old_password"></x-input.password>
+                                @if (session('error'))
+                                    <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
+                                        {{ session('error') }}
                                     </span>
-                                </div>
-                            </label>
+                                @endif
+                            </x-input.label>
 
-                            <label for="password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-                                <span class="tw-label">Kata Sandi Baru</span>
-                                <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                                    <input class="tw-input-enabled" type="password" id="password" name="password"
-                                        placeholder="Masukkan Kata Sandi">
-                                    <span id=""
-                                        class="togglePassword tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
-                                        <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
-                                            alt="eye">
+                            <x-input.label class="tw-w-full" for="password" label="Kata Sandi Baru">
+                                <x-input.password placeholder="Masukkan Kata Sansi" id="password"
+                                    name="password"></x-input.password>
+                                @if (session('error'))
+                                    <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
+                                        {{ session('error') }}
                                     </span>
-                                </div>
-                            </label>
+                                @endif
+                            </x-input.label>
 
-                            <label for="password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-                                <div class="tw-flex">
-                                    <span class="tw-label">Ulangi Kata Sandi Baru</span>
-                                    @if (session('error'))
-                                    @endif
-                                </div>
-                                <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                                    <input class="tw-input-enabled" type="password" id="password" name="password"
-                                        placeholder="Masukkan Kata Sandi">
-                                    <span id=""
-                                        class="togglePassword tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
-                                        <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
-                                            alt="eye">
+                            <x-input.label class="tw-w-full" for="password" label="Ulangi Kata Sandi Baru">
+                                <x-input.password placeholder="Masukkan Kata Sansi" id="password"
+                                    name="password"></x-input.password>
+                                @if (session('error'))
+                                    <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
+                                        {{ session('error') }}
                                     </span>
-                                </div>
-                            </label>
+                                @endif
+                            </x-input.label>
 
                         </div>
                     </div>
@@ -109,29 +89,12 @@
                         </span>
                     </a>
                     <button href="{{ route('keluarga-tambah') }}" type="submit"
-                        class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
-                        type="submit">Simpan</button>
+                        class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Simpan</button>
                 </div>
             </form>
 
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('.togglePassword').click(function() {
-                const type = $(this).siblings().attr('type') === 'password' ? 'text' : 'password';
-                $(this).siblings().attr('type', type);
-
-                if (type === 'password') {
-                    $(this).children().attr('src', "{{ asset('assets/icons/actionable/eye.svg') }}");
-                } else {
-                    $(this).children().attr('src', "{{ asset('assets/icons/actionable/eye-slash.svg') }}");
-                }
-
-            });
-        });
-    </script>
 @endsection
 
 {{-- <!DOCTYPE html>

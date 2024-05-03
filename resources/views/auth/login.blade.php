@@ -102,23 +102,16 @@
             </div>
             <form class="tw-flex tw-flex-col tw-items-end tw-gap-8" action="{{ route('login') }}" method="post">
                 {{ csrf_field() }}
-                <label for="username" class="tw-w-full tw-flex tw-flex-col">
-                    <span class="tw-label tw-mb-2 ">Nama Pengguna</span>
-                    <input class="tw-input-enabled" type="text" id="username" name="username"
-                        placeholder="Masukkan Nama Pengguna" required>
-                </label>
-                <label for="password" class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-                    <span class="tw-label">Kata Sandi</span>
-                    <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                        <input class="tw-input-enabled" type="password" id="password" name="password"
-                            placeholder="Masukkan Kata Sandi" required>
-                        <span id="togglePassword"
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2 tw-cursor-pointer">
-                            <img id="eyeIcon" src="{{ asset('assets/icons/actionable/eye.svg') }}"
-                                alt="eye">
-                        </span>
-                    </div>
-                </label>
+
+                <x-input.label class="tw-w-full" for="username" label="Nama Pengguna">
+                    <x-input.input placeholder="Masukkan Nama Pengguna"
+                        type="text" id="username" name="username"></x-input.input>
+                </x-input.label>
+
+                <x-input.label class="tw-w-full" for="password" label="Kata Sandi">
+                    <x-input.password placeholder="Masukkan Kata Sansi"
+                        id="password" name="password"></x-input.password>
+                </x-input.label>
 
                 <div class="tw-flex tw-w-full tw-justify-between md:tw-gap-3 md:tw-items-end">
                     <button
