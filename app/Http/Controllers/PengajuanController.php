@@ -8,27 +8,19 @@ use App\Models\PengajuanData;
 use App\Models\WargaModified;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class PengajuanController extends Controller
 {
     public function index() {
-        // $dataBaru =  Keluarga::where('status', '=', 'Menunggu')->with('pengajuan')->get();
-        $dataBaru =  PengajuanData::where('status_request', '=', 'Menunggu')->with(['keluarga', 'user'])->get();
-        // dd($dataBaru);
-        return view('pengajuan.index', compact('dataBaru'));
+        Storage::disk('public');
+        return view('pengajuan.index');
     }
-    // public function indexModifWarga() {
-    //     $wargaModified =  WargaModified::all();
-    //     return view('pengajuan.perubahanwarga.index', compact('wargaModified'));
-    // }
-    // public function indexModifKeluarga() {
-    //     $keluargaModified =  KeluargaModified::all();
-    //     return view('pengajuan.perubahankeluarga.index', compact('keluargaModified'));
-    // }
-    public function listModifKeluarga() {
-        $keluargaModified =  KeluargaModified::with(['user', 'keluarga'])->select();
-        return DataTables::of($keluargaModified)
+
+    public function list() {
+        $pengajuan =  PengajuanData::all();
+        return DataTables::of($pengajuan)
             ->addIndexColumn()
             ->addColumn('status', function (KeluargaModified $keluarga){
                 return view('components.form.label', ['content' => $keluarga->status_request])->render();

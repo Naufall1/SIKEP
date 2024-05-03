@@ -85,7 +85,11 @@ Route::prefix('pengajuan')->group(function () {
      */
     Route::get('/', [PengajuanController::class, 'index'])
         ->name('dataBaru')
-        ->middleware('role:rw'); // memberikan menampilkan tabel pengajuan
+        ->middleware('role:rw,rt'); // menampilkan tabel pengajuan
+    Route::post('/list', [PengajuanController::class, 'list'])
+        ->name('pengajuan.list')
+        ->middleware('role:rw,rt'); // memberikan daftar data pengajuan untuk DataTables
+
     // Route::get('/perubahan-warga', [PengajuanController::class, 'indexModifWarga'])->name('perubahanWarga')->middleware('role:rw'); // memberikan data permintaan perubahan data warga
     // Route::post('/perubahan-warga', [PengajuanController::class, 'listModifWarga'])
     //     ->name('perubahanWarga')
