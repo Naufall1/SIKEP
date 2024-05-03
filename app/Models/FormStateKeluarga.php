@@ -20,6 +20,18 @@ class FormStateKeluarga
     {
         session()->put('formState', $request->all());
     }
+
+    /**
+     * update session of formState from request object or array
+     * @param Request|array $request
+     * @return void
+     */
+    public static function setKK(object $kartu_keluarga)
+    {
+        $form = session()->get('formState');
+        $form['kartu_keluarga'] = $kartu_keluarga;
+        session()->put('formState', $form);
+    }
     /**
      * Get the formState data from session.
      * This will return empty array when session is not found
@@ -28,6 +40,18 @@ class FormStateKeluarga
     public static function get(): array
     {
         return session()->has('formState') ? session()->get('formState') : [];
+    }
+    /**
+     * Get kartu keluarga object.
+     * @return (object) => [
+                    'path' => $filenameSimpan,
+                    'ext' => explode('.', $filenameSimpan)[1],
+                    'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
+                    ] | null
+     */
+    public static function getKartuKeluarga()
+    {
+        return isset(session()->get('formState')['kartu_keluarga']) ? session()->get('formState')['kartu_keluarga'] : null;
     }
     /**
      * clear the formState data from session

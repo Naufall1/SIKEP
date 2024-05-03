@@ -220,7 +220,7 @@
                             <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
                                 <x-input.select name="kewarganegaraan" id="kewarganegaraan">
                                     <option disabled @selected(!old('kewarganegaraan'))>Pilih Kewarganegaraan</option>
-                                    <option value="WNI" @selected(old('kewarganegaraan') == 'WNI')>WNI</option>
+                                    <option value="WNI" @selected(old('kewarganegaraan', 'WNI') == 'WNI')>WNI</option>
                                     <option value="WNA" @selected(old('kewarganegaraan') == 'WNA')>WNA</option>
                                 </x-input.select>
                                 @error('kewarganegaraan')
@@ -373,34 +373,18 @@
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
+
+                            @if (session()->has('berkas_demografi'))
                             @php
                                 $img = session()->get('berkas_demografi');
-                                // dd($img);
                             @endphp
-                            @if (session()->exists('berkas_demografi'))
-                                @include('components.form.textdetail', [
-                                    'title' => '',
-                                    'isImage' => true,
-                                    'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
-                                ])
+                            @include('components.form.textdetail', [
+                                'title' => '',
+                                'isImage' => true,
+                                'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
+                            ])
                             @endif
 
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
-                                for="status_warga">Jenis <select class="tw-input-disabled tw-placeholder"
-                                    name="status_warga" id="status_warga" disabled>
-                                    <option value="Aktif" selected>Aktif</option>
-                                    <option value="Migrasi">Migrasi</option>
-                                    <option value="Meninggal">Meninggal</option>
-                                </select>
-                            </label>  --}}
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
-                                for="berkas_demografi_masuk">Berkas Pendukung <div
-                                    class="tw-relative tw-cursor-pointer tw-input-enabled"> <input
-                                        id="berkas_demografi_masuk" type="file"
-                                        class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
-                                </div>
-                            </label> --}}
                         </div>
                     </div>
                 </div>

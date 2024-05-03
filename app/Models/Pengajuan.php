@@ -40,9 +40,15 @@ class Pengajuan
         try {
             DB::beginTransaction();
             $no_kk = $this->keluarga->no_kk;
-            if (!$this->keluarga->exists()) {
-                $this->keluarga->save();
+            $this->keluarga->save();
+            $res = Storage::disk('local')->put(
+                'public/KK/' . $this->keluarga->image_kk,
+                Storage::disk('temp')->get($this->keluarga->image_kk),
+            );
+            if (!$res) {
+                throw new \Exception('Failed to move file from temporary');
             }
+            Storage::disk('temp')->delete($this->keluarga->image_kk);
             foreach ($this->daftarWarga as $warga) {
                 $warga['warga']->no_kk = $no_kk;
                 if (!empty(Warga::find($warga['warga']->NIK))) {

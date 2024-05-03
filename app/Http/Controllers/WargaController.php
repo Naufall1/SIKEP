@@ -116,7 +116,7 @@ class WargaController extends Controller
             'tanggal_kejadian' => 'required|date',
         ]);
 
-        if (session()->exists('berkas_demografi') && !$validator_file->fails()) {
+        if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails() )) {
             Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
         }
         if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
@@ -168,6 +168,7 @@ class WargaController extends Controller
 
         $pengajuan = new Pengajuan();
         $pengajuan->tambahWarga($warga, $demografi, $haveDemografi);
+        session()->forget('berkas_demografi');
 
         // $warga->storeTemp();
         return redirect()->route('keluarga-tambah');
