@@ -22,15 +22,16 @@
                         <h2 class="">Profil</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="nama">Nama
-                                <input class="tw-input-enabled tw-placeholder" placeholder="{{ $user->username }}"
-                                    value="{{ $user->username }}" type="text" id="nama" name="nama">
-                            </label>
+                            <x-input.label for="nama" label="Nama">
+                                <x-input.input value="{{ $user->nama }}" placeholder="{{ $user->nama }}"
+                                    type="text" id="nama" name="nama"></x-input.input>
+                            </x-input.label>
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="keterangan">Keterangan
-                                <textarea class="tw-input-disabled tw-pt-[9px] tw-placeholder" placeholder="{{ $user->keterangan }}" type="text"
-                                    id="keterangan" name="keterangan" value="" disabled>{{ $user->keterangan }}</textarea>
-                            </label>
+                            <x-input.label for="keterangan" label="Keterangan">
+                                <x-input.textarea name="keterangan" placeholder=""
+                                    value="{{ $user->keterangan }}" disabled>
+                                </x-input.textarea>
+                            </x-input.label>
 
                         </div>
                     </div>
@@ -39,10 +40,10 @@
                         <h2 class="">Akun</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="username">Nama Pengguna
-                                <input class="tw-input-enabled tw-placeholder" placeholder="{{ $user->username }}"
-                                    type="text" id="username" name="username" value="{{ $user->username }}">
-                            </label>
+                            <x-input.label for="username" label="Nama Pengguna">
+                                <x-input.input value="{{ $user->username }}" placeholder="{{ $user->username }}"
+                                    type="text" id="username" name="username"></x-input.input>
+                            </x-input.label>
 
                             <x-input.label class="tw-w-full" for="old_password" label="Kata Sandi Lama">
                                 <x-input.password placeholder="Masukkan Kata Sansi" id="old_password"
