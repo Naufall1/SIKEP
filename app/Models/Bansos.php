@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Bansos extends Model
 {
@@ -18,7 +19,12 @@ class Bansos extends Model
         'bansos_nama',
         'keterangan',
     ];
-    public function mightGets():HasMany
+    public static function getFromKK(string $no_kk)
+    {
+        $bansos = DB::table('bansos')->join('might_get as mg', 'mg.bansos_kode', '=', 'bansos.bansos_kode')->where('mg.no_kk', '=', $no_kk);
+        return $bansos->get();
+    }
+    public function detail():HasMany
     {
         return $this->hasMany(MightGet::class, 'bansos_kode', 'bansos_kode');
     }
