@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             BansosSeeder::class,
             ArticleAnnouncementSeeder::class,
             MightGetSeeder::class,
+            PengajuanSeeder::class,
         ]);
     }
 }

@@ -533,6 +533,46 @@ class WargaSeeder extends Seeder
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Muhammad Farhan ",
                 "nama_ibu"=> "Bela Aulia"
+            ],
+            [
+                "NIK"=> "7825039271023119",
+                "no_kk"=> "6539139200016131",
+                "nama"=> "Aditya Pratama",
+                "tempat_lahir"=> "Malang",
+                "tanggal_lahir"=> "1990-11-24",
+                "jenis_kelamin"=> "L",
+                "agama"=> "Islam",
+                "status_perkawinan"=> "Kawin",
+                "status_keluarga"=> "Kepala Keluarga",
+                "status_warga"=> "Migrasi",
+                "jenis_pekerjaan"=> "Wiraswasta",
+                "penghasilan"=> "3500000",
+                "kewarganegaraan"=> "WNI",
+                "pendidikan"=> "Diploma IV/Strata 1",
+                "no_paspor"=> "NULL",
+                "no_kitas"=> "NULL",
+                "nama_ayah"=> "Fadhil Rizqi",
+                "nama_ibu"=> "Nurlaila Rizky"
+            ],
+            [
+                "NIK"=> "9630138340116001",
+                "no_kk"=> "6539139200016131",
+                "nama"=> "Maya Listiani",
+                "tempat_lahir"=> "Malang",
+                "tanggal_lahir"=> "1992-08-30",
+                "jenis_kelamin"=> "P",
+                "agama"=> "Islam",
+                "status_perkawinan"=> "Kawin",
+                "status_keluarga"=> "Istri",
+                "status_warga"=> "Migrasi",
+                "jenis_pekerjaan"=> "Mengurus Rumah Tangga",
+                "penghasilan"=> "0",
+                "kewarganegaraan"=> "WNI",
+                "pendidikan"=> "Diploma IV/Strata 1",
+                "no_paspor"=> "NULL",
+                "no_kitas"=> "NULL",
+                "nama_ayah"=> "Muhammad Rafi ",
+                "nama_ibu"=> "Kirana Dewi"
             ]
         ]);
     }
