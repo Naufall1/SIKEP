@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/test', [AuthController::class, 'test'])->name('test')->middleware('role');
+Route::get('/test/{id}', [AuthController::class, 'test'])->name('test');
 
 Route::prefix('auth')->group(function (){
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -76,10 +76,6 @@ Route::prefix('penduduk')->group(function () {
 })->name('penduduk');
 
 Route::prefix('pengajuan')->group(function () {
-    // Route::get('/', function () {
-    //     return redirect()->route('dataBaru');
-    // }); // Menampilkan halaman utama menu Pengajuan
-
     /**
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
@@ -90,22 +86,11 @@ Route::prefix('pengajuan')->group(function () {
         ->name('pengajuan.list')
         ->middleware('role:rw,rt'); // memberikan daftar data pengajuan untuk DataTables
 
-    // Route::get('/perubahan-warga', [PengajuanController::class, 'indexModifWarga'])->name('perubahanWarga')->middleware('role:rw'); // memberikan data permintaan perubahan data warga
-    // Route::post('/perubahan-warga', [PengajuanController::class, 'listModifWarga'])
-    //     ->name('perubahanWarga')
-    //     ->middleware('role:rw'); // menampilkan tabel perubahan data warga
-    // // Route::get('/perubahan-keluarga', [PengajuanController::class, 'indexModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw'); // memberikan data permintaan perubahan data keluarga
-    // Route::get('/perubahan-keluarga/', [PengajuanController::class, 'indexModifKeluarga'])
-    //     ->name('pengajuan.perubahan.keluarga')
-    //     ->middleware('role:rw'); // menampilkan tabel perubahan data keluarga
-    // Route::post('/perubahan-keluarga', [PengajuanController::class, 'listModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw');; // memberikan data permintaan perubahan data keluarga
-
     /**
      * Route untuk menampilkan detail sebuah data pengajuan
      */
-    Route::get('/pembaharuan/{id}', [function(){
-        return view('pengajuan.pembaharuan.detail');
-    }])->name('pengajuan.pembaharuan'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    Route::get('/pembaharuan/{id}', [PengajuanController::class, 'showPembaharuan'])->name('pengajuan.pembaharuan'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    Route::post('/pembaharuan/{id}/listWarga', [PengajuanController::class, 'listWarga'])->name('pengajuan.pembaharuan.listWarga'); //
 
     Route::get('/pembaharuan/{id}/warga/{nik}', [function(){
         return view('pengajuan.pembaharuan.detailwarga');
@@ -124,9 +109,12 @@ Route::prefix('pengajuan')->group(function () {
     /**
      * Route untuk menangani konfirmasi sebuah pengajuan
      */
-    Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
-    Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
-})->name('pengajuan')->middleware('role:rw');
+    Route::middleware('role:rw')->group(function() {
+        Route::put('/confirm/pembaharuan', [PengajuanController::class, 'confirmPembaharuan'])->name('pengajuan.confirm.pembaharuan');
+        Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
+        Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
+    });
+})->name('pengajuan');
 
 Route::prefix('bansos')->group(function () {
     Route::get('/kriteria', [BansosController::class, 'index'])->name('kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)

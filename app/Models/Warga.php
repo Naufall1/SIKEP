@@ -41,51 +41,13 @@ class Warga extends Model
         'NIK' => 'string'
     ];
 
-    // public function storeTemp() {
-    //     if (session()->has('daftar_warga')) {
-    //         $daftarWarga = session()->get('daftar_warga');
-    //     } else {
-    //         $daftarWarga = [];
-    //     }
-
-    //     $daftarWarga[] = $this;
-    //     // dd($daftarWarga);
-
-    //     session()->put('daftar_warga', $daftarWarga);
-    //     session()->save();
-    //     return ;
-    // }
-    // public static function getTempWarga(): array | Warga | null {
-    //     if (empty(session()->get('daftar_warga'))) {
-    //         return [];
-    //     }
-    //     return session()->get('daftar_warga');
-    // }
-    // public static function saveTemp(Keluarga $keluarga){
-    //     /**
-    //      * @var Warga $warga
-    //      */
-    //     $daftarWarga = session()->get('daftar_warga');
-    //     foreach ($daftarWarga as $warga) {
-    //         $warga->no_kk = $keluarga->no_kk;
-    //         if (!empty(Warga::find($warga->NIK))) {
-    //             WargaModified::updateWarga($warga);
-    //         } else {
-    //             $warga->save();
-    //         }
-    //     }
-    //     session()->forget('daftar_warga');
-    //     session()->save();
-    // }
-    // public static function removeTemp(int $idx){
-    //     if (session()->has('daftar_warga')) {
-    //         $daftarWarga = session()->get('daftar_warga');
-    //         array_splice($daftarWarga, $idx, 1);
-    //         session()->put('daftar_warga', $daftarWarga);
-    //         session()->save();
-    //         return ;
-    //     }
-    // }
+    public static function applyModifications(WargaModified $wargaModified)
+    {
+        $warga = Warga::find($wargaModified->NIK);
+        $warga->fill($wargaModified->toArray());
+        $warga->save();
+        $wargaModified->status_request = 'Dikonfirmasi';
+    }
 
     // buat chart
     public static function getDataAgama($keterangan): array

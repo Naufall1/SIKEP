@@ -1,5 +1,9 @@
 @extends('layout.layout', ['isForm' => false])
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css') }}">
+@endpush
+
 @section('content')
     <div id="modalReject"
         class="tw-hidden modal-menu tw-z-20 tw-animate-disolve tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
@@ -19,12 +23,9 @@
                     </div>
 
                     <div class="tw-flex tw-gap-2">
-                        <button href=""
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="closeModal">Batal</button>
-                        <a href=""
-                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
-                            type="submit">Tolak</a>
+                        <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModal">Batal</button>
+                        <a href="" class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
                 </form>
@@ -51,13 +52,16 @@
                     <div class="tw-flex tw-flex-col tw-gap-2">
                         <h2 class="">Informasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
+                            {{-- @php
+                                dd($pengajuan);
+                            @endphp --}}
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
-                                'content' => 'Data Baru',
+                                'content' => $pengajuan->tipe,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Pengajuan',
-                                'content' => 'Ditolak',
+                                'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
                             {{-- @if ($data->status === 'Ditolak') --}}
@@ -78,59 +82,50 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'No KK',
-                                // 'content' => $keluarga->no_kk,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->no_kk,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kepala Keluarga',
-                                // 'content' => $keluarga->kepala_keluarga,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->kepala_keluarga,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Alamat',
-                                // 'content' => $keluarga->alamat,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->alamat,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kode POS',
-                                // 'content' => $keluarga->kode_pos,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->kode_pos,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'RT',
-                                // 'content' => $keluarga->RT,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->RT,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'RW',
-                                // 'content' => $keluarga->RW,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->RW,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kelurahan',
-                                // 'content' => $keluarga->kelurahan,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->kelurahan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kecamatan',
-                                // 'content' => $keluarga->kecamatan,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->kecamatan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kota',
-                                // 'content' => $keluarga->kota,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->kota,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Provinsi',
-                                // 'content' => $keluarga->provinsi,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->provinsi,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kartu Keluarga',
                                 'isImage' => true,
-                                // 'content' => asset(Storage::url('KK/'.$keluarga->image_kk)),
-                                'content' => '',
+                                'content' => !isset($pengajuan->keluarga->image_kk)
+                                    ? ''
+                                    : asset(Storage::disk('public')->url('KK/' . $pengajuan->keluarga->image_kk)),
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
 
@@ -143,34 +138,32 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                // 'content' => $keluarga->tagihan_listrik,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->tagihan_listrik,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                // 'content' => $keluarga->luas_bangunan,
-                                'content' => '',
+                                'content' => $pengajuan->keluarga->luas_bangunan,
                             ])
 
                         </div>
                     </div>
 
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
-                        <h2 class="">Keluarga</h2>
+                        <h2 class="">Warga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <table class="tw-w-[702px] md:tw-w-full">
-                                {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>NIK</th>
-                                    <th>NAMA</th>
-                                    <th>STATUS KELUARGA</th>
-                                    <th class="tw-w-[108px]"></th>
-                                </tr>
+                            <table class="tw-w-[702px] md:tw-w-full" id="tableWarga">
+                                <thead class="tw-rounded-lg">
+                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>NAMA</th>
+                                        <th>STATUS KELUARGA</th>
+                                        <th class="tw-w-[108px]"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                    {{-- <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -181,7 +174,7 @@
                                                 Detail
                                             </a>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
 
                                 </tbody>
                             </table>
@@ -193,28 +186,41 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="{{ route('warga') }}"
-                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
                     <div class="tw-flex tw-gap-2">
-                        <button href=""
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="buttonReject">Tolak</button>
-                        <a href=""
-                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
-                            type="submit">Konfirmasi</a>
+                        <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="buttonReject">Tolak</button>
+                        {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
+                        <form class="d-inline-block" method="POST" action="{{route('pengajuan.confirm.pembaharuan')}}">
+                            {{csrf_field()}}
+                            {{method_field('PUT')}}
+                            <input type="hidden" name="id" value="{{$pengajuan->id}}">
+                            <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
+                        </form>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    @php
+        if (session()->has('error')) {
+            echo '<h1>'.session()->get('error').'</h1>';
+        }
+    @endphp
+@endsection
 
+@push('js')
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $("#buttonReject").click(function() {
@@ -223,12 +229,75 @@
                     overflow: 'hidden',
                 });
             });
+
             $("#modalReject, #closeModal").click(function() {
                 $("#modalReject").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',
                 });
             });
+
+            daftarWarga = $('#tableWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('pengajuan.pembaharuan.listWarga', ['id' => $pengajuan->id]) }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                paging: false,
+                info: false,
+                searching: false,
+                language: {
+                    paginate: {
+                        previous: '<',
+                        next: '>',
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass(
+                        'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
+                    );
+                    $('.paginate_button').addClass(
+                        'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
+                    $('.paginate_button.active').addClass(
+                        'tw-bg-n400');
+                    $('.dataTables_filter').css('display', 'none');
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                order: [
+                    [2, 'asc']
+                ],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    orderable: false,
+                    searchable: false
+                }, {
+                    // NIK
+                    data: "NIK",
+                    orderable: false,
+                }, {
+                    // Nama
+                    data: "nama",
+                    orderable: true,
+                }, {
+                    // Status Keluarga
+                    data: "status_keluarga",
+                    orderable: true,
+                }, {
+                    // Aksi Detail
+                    data: "aksi",
+                    orderable: false,
+                }]
+            });
+            // $('#level_id').on('change', function () {
+            //     dataUser.ajax.reload();
+            // });
+        });
+        $('#searchBox').keyup(function() {
+            dataUser.search($(this).val()).draw();
         });
     </script>
-@endsection
+@endpush
