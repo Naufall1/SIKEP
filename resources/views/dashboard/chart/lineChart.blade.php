@@ -5,6 +5,8 @@
             <option value="jenis_kelamin">Jenis Kelamin</option>
             <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
             <option value="agama">Agama</option>
+            <option value="bansos">Bansos</option>
+            <option value="usia">Usia</option>
         </x-input.select>
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
@@ -34,16 +36,27 @@
 <div id="chartLineTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none" >
     <canvas height="224" id="chartTingkatPendidikanLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
+
+<div id="chartLineBansosContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartBansosLine" style="width: 590px;" class="tw-flex"></canvas>
+</div>
+
+<div id="chartLineUsiaContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartUsiaLine" style="width: 590px;" class="tw-flex"></canvas>
+</div>
+
 <script>
    function dropdownChartLine() {
     const selectedChart = document.getElementById('lineChart').value;
-    console.log(selectedChart); // Untuk memeriksa nilai selectedChart
+    console.log(selectedChart);
 
     const containers = {
         pekerjaan: 'chartLinePekerjaanContainer',
         jenis_kelamin: 'chartLineJenisKelaminContainer',
         agama: 'chartLineAgamaContainer',
-        tingkat_pendidikan: 'chartLineTingkatPendidikanContainer'
+        tingkat_pendidikan: 'chartLineTingkatPendidikanContainer',
+        bansos: 'chartLineBansosContainer',
+        usia: 'chartLineUsiaContainer'
     };
 
     if (selectedChart in containers) {
@@ -66,7 +79,9 @@
         linePekerjaan();
         lineJenisKelamin();
         lineAgama();
-        lineTingkatPendidikan(); // Memanggil fungsi untuk menginisialisasi grafik tingkat pendidikan
+        lineTingkatPendidikan();
+        lineUsia();
+        lineBansos();
     });
 
     function createChartLine(ctx, labels, data, label) {
@@ -210,5 +225,22 @@
         const jmlWarga = dataJenisKelamin.map(item => item.jumlah);
         createChartLine(ctx, jenisKelamin, jmlWarga, 'Jumlah Warga)');
     }
+
+    function lineBansos() {
+        const ctx = document.getElementById('chartBansosLine').getContext('2d');
+        const dataBansos = @json($dataBansos);
+        const bulanTahun = dataBansos.map(item => `${item.bulan} (${item.tahun})`);
+        const jmlWarga = dataBansos.map(item => item.jumlah);
+        createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
+    }
+
+    function lineUsia() {
+        const ctx = document.getElementById('chartUsiaLine').getContext('2d');
+        const dataUsia = @json($dataUsia);
+        const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
+        const jumlahPenduduk = dataUsia.map(item => item.jumlah_penduduk);
+        createChartLine(ctx, rentangUsia, jumlahPenduduk, 'Jumlah Penduduk');
+    }
+
 </script>
 
