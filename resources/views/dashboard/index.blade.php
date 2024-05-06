@@ -19,6 +19,7 @@
 
             <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-min-w-[692px] md:tw-h-full">
                 <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
+                    @include('dashboard.chart.lineChart')
                 </div>
                 <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                     @include('dashboard.chart.barChart')
@@ -26,6 +27,7 @@
                 <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                     @include('dashboard.chart.pieChart')
                 </div>
+
                 <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                 </div>
                 {{-- @include('dashboard.chart.jenisKelamin') --}}
