@@ -23,7 +23,9 @@ class Bansos extends Model
     public static function getDataBansos($keterangan) {
         $data = [];
 
-        $dataBansos = MightGet::selectRaw('YEAR(tanggal_menerima) AS tahun, MONTH(tanggal_menerima) AS bulan, COUNT(*) AS jumlah_penerima')
+        $dataBansos = MightGet::selectRaw('YEAR(tanggal_menerima) AS tahun,
+                                           MONTH(tanggal_menerima) AS bulan,
+                                           COUNT(*) AS jumlah_penerima')
                         ->join('keluarga', 'might_get.no_kk', '=', 'keluarga.no_kk')
                         ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                         ->groupByRaw('YEAR(tanggal_menerima), MONTH(tanggal_menerima)');
