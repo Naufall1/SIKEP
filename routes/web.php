@@ -105,19 +105,21 @@ Route::prefix('pengajuan')->group(function () {
      */
     Route::get('/pembaharuan/{id}', [function(){
         return view('pengajuan.pembaharuan.detail');
-    }])->name('pengajuan.pembaharuan.detail'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    }])->name('pengajuan.pembaharuan'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+
     Route::get('/pembaharuan/{id}/warga/{nik}', [function(){
         return view('pengajuan.pembaharuan.detailwarga');
     }])->name('pengajuan.pembaharuan.detailwarga'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
+
     // Route::get('/data-baru/detail/{id}/keluarga/{no_kk}', [function(){
     //     return view('pengajuan.databaru.detailkeluarga');
     // }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
     Route::get('/perubahan-keluarga/{no_kk}', [function(){
         return view('pengajuan.perubahankeluarga.detail');
-    }])->name('pengajuan.perubahankeluarga.detail'); // memberikan halaman detail warga pengajuan perubahan warga
+    }])->name('pengajuan.perubahankeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
     Route::get('/perubahan-warga/{nik}', [function(){
         return view('pengajuan.perubahanwarga.detail');
-    }])->name('pengajuan.perubahanwarga.detail'); // memberikan halaman detail warga dari sebuah data pengajuan
+    }])->name('pengajuan.perubahanwarga'); // memberikan halaman detail warga dari sebuah data pengajuan
 
     /**
      * Route untuk menangani konfirmasi sebuah pengajuan

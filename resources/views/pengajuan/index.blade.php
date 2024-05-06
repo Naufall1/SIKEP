@@ -61,7 +61,7 @@
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button">
+                            type="button" id="searchBox">
                         </input>
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
@@ -90,7 +90,7 @@
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
                             {{-- @foreach ($dataBaru as $data) --}}
-                                <tr class="tw-h-16 hover:tw-bg-n300">
+                                {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td>1</td>
                                     <td>nama</td>
                                     <td>123123</td>
@@ -106,7 +106,7 @@
                                             Detail
                                         </a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             {{-- @endforeach --}}
                         </tbody>
                     </table>
@@ -117,7 +117,7 @@
 
                 </div>
                 {{-- End: Table HERE --}}
-                <div
+                {{-- <div
                     class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
                     <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
                         <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
@@ -137,7 +137,7 @@
                         <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
                             alt="<">
                     </a>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -180,42 +180,42 @@
                 order: [[2, 'asc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    // className: "tw-w-[44px]",
                     orderable: false,
                     // searchable: false
                 }, {
-                    data: "NIK",
-                    className: "tw-grow",
-                    orderable: false,
-                    searchable: true
-                }, {
-                    data: "nama",
-                    className: "tw-w-[240px]",
+                    data: "user.nama",
+                    // className: "tw-w-[60px]",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "jenis_kelamin",
-                    className: "tw-w-[150px]",
-                    orderable: true,
-                    searchable: false
+                    data: "no_kk",
+                    // className: "tw-w-[120px]",
+                    orderable: false,
+                    searchable: true
                 }, {
-                    data: "tanggal_lahir",
-                    className: "tw-w-[172px]",
-                    orderable: true,
-                    searchable: false
-                }, {
-                    data: "agama",
-                    className: "tw-w-[92px]",
+                    data: "keluarga.kepala_keluarga",
+                    // className: "tw-w-[150px]",
                     orderable: false,
                     searchable: false
                 }, {
-                    data: "status_warga",
-                    className: "tw-w-[150px]",
+                    data: "tipe",
+                    // className: "tw-w-[172px]",
                     orderable: true,
                     searchable: false
                 }, {
-                    data: "action",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    data: "tanggal_request",
+                    // className: "tw-w-[92px]",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "status",
+                    // className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "aksi",
+                    // className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
                 }]
