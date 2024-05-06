@@ -177,7 +177,7 @@
                     $('.dataTables_filter').css('display', 'none');
                     $('.table.dataTable').css('border-collapse', 'collapse');
                 },
-                order: [[2, 'asc']],
+                order: [[5, 'desc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     // className: "tw-w-[44px]",
