@@ -8,58 +8,58 @@
         </x-input.select>
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
-    <div class="tw-w-28">
-        <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartBar()">
-            <option value="all">Semua</option>
+        <div class="tw-w-28">
+            <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartBar()">
+                <option value="all">Semua</option>
                 @foreach ($semuaRT as $rt)
-            <option value="{{ $rt->rt }}">RT. {{ $rt->keterangan }}</option>
-        @endforeach
-        </x-input.select>
-    </div>
+                    <option value="{{ $rt->rt }}">RT. {{ $rt->keterangan }}</option>
+                @endforeach
+            </x-input.select>
+        </div>
     @endif
 </div>
 
 <div id="chartBarPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="224" id="barPekerjaanBar" style="width: 100%;" class="tw-flex"></canvas>
+    <canvas height="242" id="barPekerjaanBar" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartJenisKelaminBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartBarJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartJenisKelaminBar" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarAgamaContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartAgamaBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartBarAgamaContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartAgamaBar" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartTingkatPendidikanBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartBarTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartTingkatPendidikanBar" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 <script>
-   function dropdownChartBar() {
-    const selectedChart = document.getElementById('barChart').value;
-    console.log(selectedChart); // Untuk memeriksa nilai selectedChart
+    function dropdownChartBar() {
+        const selectedChart = document.getElementById('barChart').value;
+        console.log(selectedChart); // Untuk memeriksa nilai selectedChart
 
-    const containers = {
-        pekerjaan: 'chartBarPekerjaanContainer',
-        jenis_kelamin: 'chartBarJenisKelaminContainer',
-        agama: 'chartBarAgamaContainer',
-        tingkat_pendidikan: 'chartBarTingkatPendidikanContainer'
-    };
+        const containers = {
+            pekerjaan: 'chartBarPekerjaanContainer',
+            jenis_kelamin: 'chartBarJenisKelaminContainer',
+            agama: 'chartBarAgamaContainer',
+            tingkat_pendidikan: 'chartBarTingkatPendidikanContainer'
+        };
 
-    if (selectedChart in containers) {
-        for (const container in containers) {
-            const element = document.getElementById(containers[container]);
-            if (element) {
-                element.style.display = (container === selectedChart) ? 'block' : 'none';
-            } else {
-                console.error('Elemen dengan id ' + containers[container] + ' tidak ditemukan');
+        if (selectedChart in containers) {
+            for (const container in containers) {
+                const element = document.getElementById(containers[container]);
+                if (element) {
+                    element.style.display = (container === selectedChart) ? 'block' : 'none';
+                } else {
+                    console.error('Elemen dengan id ' + containers[container] + ' tidak ditemukan');
+                }
             }
+            window[selectedChart]();
+        } else {
+            console.error('error pada fungsi dropdownChartData()'); // tampil dek console inspect
         }
-        window[selectedChart]();
-    } else {
-        console.error('error pada fungsi dropdownChartData()'); // tampil dek console inspect
     }
-}
 
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -77,12 +77,24 @@
                 datasets: [{
                     label: label,
                     data: data,
-                    backgroundColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
-                    borderColor: ['#2C90FF', '#0284FF', '#025CC0', '#01448E', '#013065', '#01244C'],
-                    borderWidth: 1.5
+                    // backgroundColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
+                    // borderColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
+                    backgroundColor: '#C6C6C6',
+                    hoverBackgroundColor: '#0284FF',
+                    borderWidth: 0,
+                    borderRadius: 8,
+                    maxWidth: 1
                 }]
             },
             options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                },
                 responsive: false,
                 plugins: {
                     tooltip: {
@@ -157,20 +169,10 @@
                             tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel
                                 .padding + 'px';
                             tooltipEl.style.pointerEvents = 'none';
-                        }
-                    },
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            boxWidth: 14,
-                            boxHeight: 14,
-                            useBorderRadius: true,
-                            font: {
-                                family: "Plus Jakarta Sans",
-                                size: "14"
-                            }
                         },
+                        xAlign: 'center'
                     },
+                    legend: false,
                     title: {
                         display: false,
                     }
@@ -184,7 +186,7 @@
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.jumlah);
-        createChartBar(ctx, agama, jmlWarga, 'Jumlah Warga');
+        createChartBar(ctx, agama, jmlWarga, 'Jumlah');
     }
 
     function barTingkatPendidikan() {
@@ -192,7 +194,7 @@
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.jumlah);
-        createChartBar(ctx, pendidikan, jmlWarga, 'Jumlah Warga');
+        createChartBar(ctx, pendidikan, jmlWarga, 'Jumlah');
     }
 
     function barPekerjaan() {
@@ -200,7 +202,7 @@
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
         const jmlWarga = dataPekerjaan.map(item => item.total);
-        createChartBar(ctx, jenisPekerjaan, jmlWarga, 'Jumlah Warga');
+        createChartBar(ctx, jenisPekerjaan, jmlWarga, 'Jumlah');
     }
 
     function barJenisKelamin() {
@@ -208,7 +210,6 @@
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
         const jmlWarga = dataJenisKelamin.map(item => item.jumlah);
-        createChartBar(ctx, jenisKelamin, jmlWarga, 'Jumlah Warga)');
+        createChartBar(ctx, jenisKelamin, jmlWarga, 'Jumlah');
     }
 </script>
-

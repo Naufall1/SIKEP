@@ -17,18 +17,16 @@
                 <x-cards.overview class="tw-col-span-1" url="{{ route('dataBaru') }}" title="Pengajuan" value='{{$countPengajuan}}'></x-cards.overview>
             </div>
 
-            <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-h-full">
-                <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
+            <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-min-w-[692px] md:tw-h-full">
+                <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                 </div>
-                <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
+                <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
+                    @include('dashboard.chart.barChart')
                 </div>
-                <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
+                <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                     @include('dashboard.chart.pieChart')
                 </div>
-                <div class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    @include('dashboard.chart.barChart')
+                <div class="tw-p-4 tw-h-fit tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
                 </div>
                 {{-- @include('dashboard.chart.jenisKelamin') --}}
             </div>
