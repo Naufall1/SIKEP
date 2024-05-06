@@ -197,7 +197,7 @@
                     data: "keluarga.kepala_keluarga",
                     // className: "tw-w-[150px]",
                     orderable: false,
-                    searchable: false
+                    searchable: true
                 }, {
                     data: "tipe",
                     // className: "tw-w-[172px]",
