@@ -184,35 +184,39 @@
 
                 </div>
 
-
-                <div class="tw-flex tw-justify-between">
-                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
-                        type="button">
-                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
-                            color="n1000"></x-icons.actionable.arrow-left>
-                        <span class="tw-hidden md:tw-inline-block">
-                            Kembali
-                        </span>
-                    </a>
-                    <div class="tw-flex tw-gap-2">
-                        <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
-                            id="buttonReject">Tolak</button>
-                        {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
-                        <form class="d-inline-block" method="POST" action="{{route('pengajuan.confirm.pembaharuan')}}">
-                            {{csrf_field()}}
-                            {{method_field('PUT')}}
-                            <input type="hidden" name="id" value="{{$pengajuan->id}}">
-                            <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
-                        </form>
+                @if ($user == 1 && $pengajuan->status_request == 'Menunggu')
+                    {{-- level_id 1 == RW --}}
+                    <div class="tw-flex tw-justify-between">
+                        <a href="#" onclick="history.back()"
+                            class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round" type="button">
+                            <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
+                                color="n1000"></x-icons.actionable.arrow-left>
+                            <span class="tw-hidden md:tw-inline-block">
+                                Kembali
+                            </span>
+                        </a>
+                        <div class="tw-flex tw-gap-2">
+                            <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                                id="buttonReject">Tolak</button>
+                            {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
+                            <form class="d-inline-block" method="POST"
+                                action="{{ route('pengajuan.confirm.pembaharuan') }}">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+                                <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+                                <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
+                                    onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
         </div>
     </div>
     @php
         if (session()->has('error')) {
-            echo '<h1>'.session()->get('error').'</h1>';
+            echo '<h1>' . session()->get('error') . '</h1>';
         }
     @endphp
 @endsection
@@ -292,12 +296,6 @@
                     orderable: false,
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataUser.ajax.reload();
-            // });
-        });
-        $('#searchBox').keyup(function() {
-            dataUser.search($(this).val()).draw();
         });
     </script>
 @endpush

@@ -12,6 +12,7 @@ use App\Models\WargaModified;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,7 +27,7 @@ class PengajuanController extends Controller
 
     public function list()
     {
-        $pengajuan =  PengajuanData::with(['user', 'keluarga'])->get();
+        $pengajuan =  PengajuanData::with(['user', 'keluarga'])->orderBy('tanggal_request', 'desc')->get();
         return DataTables::of($pengajuan)
             ->addIndexColumn()
             ->addColumn('status', function ($pengajuan) {
@@ -55,9 +56,10 @@ class PengajuanController extends Controller
      */
     public function showPembaharuan($id)
     {
+        $user = Auth::user()->level_id;
         $pengajuan = PengajuanData::with('keluarga')->find($id);
 
-        return view('pengajuan.pembaharuan.detail', compact('pengajuan'));
+        return view('pengajuan.pembaharuan.detail', compact(['user', 'pengajuan']));
     }
     public function listWarga(Request $request)
     {
