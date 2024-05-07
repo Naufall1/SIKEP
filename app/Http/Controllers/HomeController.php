@@ -38,6 +38,7 @@ class HomeController extends Controller
         $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
         $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
         $dataBansos = Bansos::getDataBansos(Auth::user()->keterangan);
+        $dataBansosByMonth = Bansos::getDataBansosByMonth(Auth::user()->keterangan);
         $dataUsia = Demografi::getDataUsia(Auth::user()->keterangan);
 
         //end chart
@@ -58,7 +59,7 @@ class HomeController extends Controller
         $countKeluarga = Keluarga::count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
 
-        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataUsia', 'semuaRT',
+        return view('dashboard.index', compact('dataPekerjaan', 'dataBansosByMonth', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataUsia', 'semuaRT',
          'countPengajuan', 'countKeluarga', 'countPenduduk'), ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
 
 
@@ -89,6 +90,7 @@ class HomeController extends Controller
          $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
          $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
          $dataBansos = Bansos::getDataBansos(Auth::user()->keterangan);
+         $dataBansosByMonth = Bansos::getDataBansosByMonth(Auth::user()->keterangan);
          $dataUsia = Demografi::getDataUsia(Auth::user()->keterangan);
          //end chart
 
@@ -110,6 +112,7 @@ class HomeController extends Controller
             'dataAgama',
             'dataTingkatPendidikan',
             'dataBansos',
+            'dataBansosByMonth',
             'dataUsia',
             'countPengajuan',
             'countKeluarga',

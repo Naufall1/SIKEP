@@ -225,7 +225,7 @@
     function chartBansos() {
         const ctx = document.getElementById('chartBansosPie').getContext('2d');
         const dataBansos = @json($dataBansos);
-        const bulanTahun = dataBansos.map(item => `${item.bulan} (${item.tahun})`);
+        const bulanTahun = dataBansos.map(item => item.bansos);
         const jmlWarga = dataBansos.map(item => item.persentase);
         createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
     }
