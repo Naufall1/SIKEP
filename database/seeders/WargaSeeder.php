@@ -33,6 +33,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Sutrisno',
                 'nama_ibu' => 'Sulastri',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '0246801357924680',
@@ -53,6 +54,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Suhendro',
                 'nama_ibu' => 'Rini',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '3579246801357924',
@@ -73,6 +75,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Budi Santoso',
                 'nama_ibu' => 'Indah Rahayu',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '4680135792468013',
@@ -93,6 +96,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Budi Santoso',
                 'nama_ibu' => 'Indah Rahayu',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '1357924680135792',
@@ -113,6 +117,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Bambang',
                 'nama_ibu' => 'Rini',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '6801357924680135',
@@ -133,6 +138,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Surya',
                 'nama_ibu' => 'Sukarti',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '5792468013579246',
@@ -153,6 +159,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Slamet',
                 'nama_ibu' => 'Siti',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '8024680135792468',
@@ -173,6 +180,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Sutomo',
                 'nama_ibu' => 'Suparti',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '9135792468024680',
@@ -193,6 +201,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Suparjo',
                 'nama_ibu' => 'Sri',
+                'created_at' => now(),
             ],
             [
                 'NIK' => '7913579246801357',
@@ -213,6 +222,7 @@ class WargaSeeder extends Seeder
                 'no_kitas' => NULL,
                 'nama_ayah' => 'Joko',
                 'nama_ibu' => 'Tini',
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313671102950001",
@@ -232,7 +242,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Giono",
-                "nama_ibu"=> "Siti Aisyah"
+                "nama_ibu"=> "Siti Aisyah",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313671109960001",
@@ -252,7 +263,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Wartono",
-                "nama_ibu"=> "Nur Laila"
+                "nama_ibu"=> "Nur Laila",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313673003240001",
@@ -272,7 +284,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Budi Santoso",
-                "nama_ibu"=> "Fauziah Nuraini"
+                "nama_ibu"=> "Fauziah Nuraini",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313673003241001",
@@ -292,7 +305,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Budi Santoso",
-                "nama_ibu"=> "Fauziah Nuraini"
+                "nama_ibu"=> "Fauziah Nuraini",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313570505060561",
@@ -312,7 +326,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Sapriadi",
-                "nama_ibu"=> "Ummi Haida"
+                "nama_ibu"=> "Ummi Haida",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313570206672561",
@@ -332,7 +347,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Suprapto",
-                "nama_ibu"=> "Jubaidah"
+                "nama_ibu"=> "Jubaidah",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2313570960022561",
@@ -352,7 +368,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Bambang Raharjo",
-                "nama_ibu"=> "Dessy Maryanti"
+                "nama_ibu"=> "Dessy Maryanti",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314532300019812",
@@ -372,7 +389,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Hermansyah",
-                "nama_ibu"=> "Siti Marya "
+                "nama_ibu"=> "Siti Marya ",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314531200129812",
@@ -392,7 +410,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Sujito",
-                "nama_ibu"=> "Hodijah"
+                "nama_ibu"=> "Hodijah",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314531902439812",
@@ -412,7 +431,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Dodi",
-                "nama_ibu"=> "Lailatul Komariah"
+                "nama_ibu"=> "Lailatul Komariah",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2318121013422314",
@@ -432,7 +452,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Imam Kurniawan",
-                "nama_ibu"=> "Siti Badriah"
+                "nama_ibu"=> "Siti Badriah",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2318122451022314",
@@ -452,7 +473,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Nanang Haryanto",
-                "nama_ibu"=> "Kotrunada"
+                "nama_ibu"=> "Kotrunada",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2318121091022314",
@@ -472,7 +494,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Joni",
-                "nama_ibu"=> "Siti Riyanti Putri"
+                "nama_ibu"=> "Siti Riyanti Putri",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314292347216131",
@@ -492,7 +515,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Arif Haydar",
-                "nama_ibu"=> "Muti"
+                "nama_ibu"=> "Muti",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314239271023131",
@@ -512,7 +536,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Basir",
-                "nama_ibu"=> "Susi Susanti"
+                "nama_ibu"=> "Susi Susanti",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "2314238340116131",
@@ -532,7 +557,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Muhammad Farhan ",
-                "nama_ibu"=> "Bela Aulia"
+                "nama_ibu"=> "Bela Aulia",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "7825039271023119",
@@ -552,7 +578,8 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Fadhil Rizqi",
-                "nama_ibu"=> "Nurlaila Rizky"
+                "nama_ibu"=> "Nurlaila Rizky",
+                'created_at' => now(),
             ],
             [
                 "NIK"=> "9630138340116001",
@@ -573,6 +600,7 @@ class WargaSeeder extends Seeder
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Muhammad Rafi ",
                 "nama_ibu"=> "Kirana Dewi"
+                'created_at' => now(),
             ]
         ]);
     }

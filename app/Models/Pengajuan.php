@@ -86,7 +86,7 @@ class Pengajuan
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            dd($e);         // DELETE THIS ON PROD //
             return false;
         }
     }

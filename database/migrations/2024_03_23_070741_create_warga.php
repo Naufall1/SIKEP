@@ -30,7 +30,8 @@ return new class extends Migration
             $table->char('no_kitas', 10)->nullable();
             $table->string('nama_ayah', 100);
             $table->string('nama_ibu', 100);
-
+            $table->timestamps();
+            
             $table->foreign('no_kk')->references('no_kk')->on('keluarga');
         });
     }
