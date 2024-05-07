@@ -128,7 +128,7 @@
                                 @include('components.form.textdetail', [
                                     'isImage' => true,
                                     'title' => 'Berkas Pendukung',
-                                    'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
+                                    'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
                             </div>

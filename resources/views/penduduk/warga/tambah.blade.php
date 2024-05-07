@@ -526,7 +526,52 @@
             $('#NIK').prop('disabled', false);
 
             $('#formInput').append(
-                '<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6"> <h2 class="">Demografi Masuk</h2> <div class="tw-flex tw-flex-col tw-gap-3"> <x-input.label for="status_warga" label="Jenis"> <x-input.select placeholder="Masukkan Nomor Paspor" type="text" id="status_warga" name="status_warga" disabled> <option value="Aktif" selected>Aktif</option> <option value="Migrasi">Migrasi</option> <option value="Meninggal">Meninggal</option> </x-input.select> </x-input.label> <x-input.label for="berkas_demografi_masuk" label="Berkas Pendukung"> <x-input.file id="berkas_demografi_masuk" name="berkas_demografi_masuk"></x-input.file> </x-input.label></div> </div>'
+                `<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                        <h2 class="">Demografi Masuk</h2>
+                        <div class="tw-flex tw-flex-col tw-gap-3">
+
+                            <x-input.label for="jenis_demografi" label="Jenis">
+                                <x-input.select placeholder="Pilih Jenis Demografi" type="text" id="jenis_demografi"
+                                    name="jenis_demografi">
+                                    <option disabled @selected(!old('jenis_demografi'))>Pilih Jenis Demografi</option>
+                                    <option value="Lahir" @selected(old('jenis_demografi') == 'Lahir')>Lahir</option>
+                                    <option value="Migrasi Masuk" @selected(old('jenis_demografi') == 'Migrasi Masuk')>Migrasi Masuk</option>
+                                    <option value="Migrasi Keluar" @selected(old('jenis_demografi') == 'Migrasi Keluar')>Migrasi Keluar</option>
+                                    <option value="Meninggal" @selected(old('jenis_demografi') == 'Meninggal')>Meninggal</option>
+                                </x-input.select>
+                                @error('jenis_demografi')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
+                            <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
+                                <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder="" type="date"
+                                    id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
+                                @error('tanggal_kejadian')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
+                            <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                                <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
+                                @error('berkas_demografi')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
+                            @if (session()->has('berkas_demografi'))
+                            @php
+                                $img = session()->get('berkas_demografi');
+                            @endphp
+                            @include('components.form.textdetail', [
+                                'title' => '',
+                                'isImage' => true,
+                                'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
+                            ])
+                            @endif
+
+                        </div>
+                    </div>`
             );
 
             $('#nama').addClass('tw-input-enabled');
