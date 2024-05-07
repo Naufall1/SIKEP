@@ -96,21 +96,17 @@ Route::prefix('pengajuan')->group(function () {
         return view('pengajuan.pembaharuan.detailwarga');
     }])->name('pengajuan.pembaharuan.detailwarga'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
 
-    // Route::get('/data-baru/detail/{id}/keluarga/{no_kk}', [function(){
-    //     return view('pengajuan.databaru.detailkeluarga');
-    // }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
-    Route::get('/perubahan-keluarga/{no_kk}', [function(){
-        return view('pengajuan.perubahankeluarga.detail');
-    }])->name('pengajuan.perubahankeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
-    Route::get('/perubahan-warga/{nik}', [function(){
-        return view('pengajuan.perubahanwarga.detail');
-    }])->name('pengajuan.perubahanwarga'); // memberikan halaman detail warga dari sebuah data pengajuan
+    Route::get('/perubahan-keluarga/{id}', [PengajuanController::class, 'showPerubahanKeluarga'])->name('pengajuan.perubahankeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
+    Route::get('/perubahan-warga/{id}', [PengajuanController::class, 'showPerubahanWarga'])->name('pengajuan.perubahanwarga'); // memberikan halaman detail warga dari sebuah data pengajuan
 
     /**
      * Route untuk menangani konfirmasi sebuah pengajuan
      */
     Route::middleware('role:rw')->group(function() {
         Route::put('/confirm/pembaharuan', [PengajuanController::class, 'confirmPembaharuan'])->name('pengajuan.confirm.pembaharuan');
+        Route::put('/confirm/perubahanKeluarga', [PengajuanController::class, 'confirmPerubahanKeluarga'])->name('pengajuan.confirm.perubahan.keluarga');
+        Route::put('/confirm/perubahanWarga', [PengajuanController::class, 'confirmPerubahanWarga'])->name('pengajuan.confirm.perubahan.warga');
+        
         Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
         Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
     });

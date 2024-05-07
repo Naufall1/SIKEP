@@ -19,12 +19,9 @@
                     </div>
 
                     <div class="tw-flex tw-gap-2">
-                        <button href=""
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="closeModal">Batal</button>
-                        <a href=""
-                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
-                            type="submit">Tolak</a>
+                        <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModal">Batal</button>
+                        <a href="" class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
                 </form>
@@ -53,21 +50,19 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
-                                'content' => 'Perubahan Warga',
+                                'content' => $pengajuan->tipe,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Pengajuan',
-                                'content' => 'Ditolak',
+                                'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
-                            {{-- @if ($data->status === 'Ditolak') --}}
-
-                            @include('components.form.textdetail', [
-                                'title' => 'Catatan',
-                                'content' =>
-                                    'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
-                            ])
-                            {{-- @endif --}}
+                            @if ($pengajuan->status_request === 'Ditolak')
+                                @include('components.form.textdetail', [
+                                    'title' => 'Catatan',
+                                    'content' => $pengajuan->catatan,
+                                ])
+                            @endif
 
                         </div>
                     </div>
@@ -79,31 +74,31 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'NIK',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->NIK,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nama',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->nama,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Pendidikan',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->pendidikan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Agama',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->agama,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Perkawinan',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->status_perkawinan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Pekerjaan',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->jenis_pekerjaan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Warga',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->status_warga,
                                     'isLabel' => true,
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
@@ -117,31 +112,31 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'NIK',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->NIK,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nama',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->nama,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Pendidikan',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->pendidikan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Agama',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->agama,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Perkawinan',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->status_perkawinan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Pekerjaan',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->jenis_pekerjaan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Warga',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->status_warga,
                                     'isLabel' => true,
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
@@ -158,19 +153,19 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Keluarga',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->status_keluarga,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Penghasilan',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->penghasilan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nomor Paspor',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->no_paspor,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nomor Kitas',
-                                    'content' => 'Dummy',
+                                    'content' => $modifiedWarga->no_kitas,
                                 ])
 
                             </div>
@@ -182,19 +177,19 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'Status Keluarga',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->status_keluarga,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Penghasilan',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->penghasilan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nomor Paspor',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->no_paspor,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Nomor Kitas',
-                                    'content' => 'Dummy',
+                                    'content' => $currentWarga->no_kitas,
                                 ])
 
                             </div>
@@ -273,22 +268,29 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="{{ route('warga') }}"
-                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
-                    <div class="tw-flex tw-gap-2">
-                        <button href=""
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="buttonReject">Tolak</button>
-                        <a href=""
-                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
-                            type="submit">Konfirmasi</a>
-                    </div>
+                    @if ($user == 1 && $pengajuan->status_request == 'Menunggu')
+                        <div class="tw-flex tw-gap-2">
+                            <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                                id="buttonReject">Tolak</button>
+                            {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
+                            <form class="d-inline-block" method="POST"
+                                action="{{ route('pengajuan.confirm.perubahan.warga') }}">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+                                <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+                                <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
+                                    onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
 

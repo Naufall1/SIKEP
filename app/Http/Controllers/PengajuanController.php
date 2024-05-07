@@ -9,6 +9,7 @@ use App\Models\PengajuanData;
 use App\Models\Warga;
 use App\Models\WargaHistory;
 use App\Models\WargaModified;
+use App\Rules\PengajuanNotConfirmed;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -39,10 +40,10 @@ class PengajuanController extends Controller
                         $btn = '<a href="' . route('pengajuan.pembaharuan', ['id' => $pengajuan->id]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
                         break;
                     case 'Perubahan Keluarga':
-                        $btn = '<a href="' . route('pengajuan.perubahankeluarga', ['no_kk' => '123123']) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
+                        $btn = '<a href="' . route('pengajuan.perubahankeluarga', ['id' => $pengajuan->id]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
                         break;
                     case 'Perubahan Warga':
-                        $btn = '<a href="' . route('pengajuan.perubahanwarga', ['nik' => '123123']) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
+                        $btn = '<a href="' . route('pengajuan.perubahanwarga', ['id' => $pengajuan->id]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
                         break;
                 }
                 return $btn;
@@ -72,7 +73,7 @@ class PengajuanController extends Controller
         return DataTables::of($daftarWarga)
             ->addIndexColumn()
             ->addColumn('aksi', function () {
-                $btn = '<a href="#" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
+                $btn = '<a href="' . route('pengajuan.pembaharuan.detailwarga', ['id' => 1, 'nik' => 1]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -81,7 +82,7 @@ class PengajuanController extends Controller
     public function confirmPembaharuan(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:pengajuan,id'
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
         ]);
 
         try {
@@ -132,6 +133,76 @@ class PengajuanController extends Controller
         } catch (Exception $e) {
             dd($e);
             DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
+        }
+    }
+
+    /**
+     * Fungsi-fungsi untuk jenis pengajuan Perubahan Keluarga
+     */
+    public function showPerubahanKeluarga(Request $request)
+    {
+        $request->merge(['id' => $request->route('id')]);
+        $request->validate([
+            'id' => 'required|exists:pengajuan,id'
+        ]);
+
+        $user = Auth::user()->level_id;
+        $pengajuan = PengajuanData::with('keluarga')->find($request->id);
+        $currentKeluarga = Keluarga::find($pengajuan->no_kk);
+        $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)->where('status_request', '=', 'Menunggu');
+
+        return view('pengajuan.perubahankeluarga.detail', compact(['user', 'pengajuan', 'currentKeluarga', 'modifiedKeluarga']));
+    }
+    public function confirmPerubahanKeluarga(Request $request)
+    {
+        $request->merge(['id' => $request->route('id')]);
+        $request->validate([
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
+        }
+    }
+
+    /**
+     * Fungsi-fungsi untuk jenis pengajuan Perubahan Keluarga
+     */
+    public function showPerubahanWarga(Request $request)
+    {
+        $request->merge(['id' => $request->route('id')]);
+        $request->validate([
+            'id' => 'required|exists:pengajuan,id'
+        ]);
+
+        $user = Auth::user()->level_id;
+        $pengajuan = PengajuanData::with('keluarga')->find($request->id);
+        $currentWarga = Warga::where('no_kk', '=', $pengajuan->no_kk)->first();
+        $modifiedWarga = WargaModified::where('status_request', '=', 'Menunggu')->where('NIK', '=', $currentWarga->NIK)->first();
+
+        return view('pengajuan.perubahanwarga.detail', compact(['user', 'pengajuan', 'currentWarga', 'modifiedWarga']));
+    }
+    public function confirmPerubahanWarga(Request $request)
+    {
+        $request->merge(['id' => $request->route('id')]);
+        $request->validate([
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e);
             return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
         }
     }
