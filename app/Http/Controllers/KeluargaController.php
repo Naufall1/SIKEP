@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bansos;
 use App\Models\FormStateKeluarga;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
@@ -40,6 +41,13 @@ class KeluargaController extends Controller
         return Keluarga::find($no_kk);
     }
 
+    /**
+     * [START] Fungsi Untuk menangani DataTables
+     */
+
+    /**
+     * Fungsi untuk menampilkan daftar semua Keluarga
+     */
     public function list(Request $request)
     {
         $user = Auth::user();
@@ -66,6 +74,39 @@ class KeluargaController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+
+    /**
+     * Mengembalikan daftar warga yang terdaftar pada Keluarga
+     */
+    public function listWarga(Request $request, $no_kk)
+    {
+        $keluarga = Keluarga::with('warga')->find($no_kk);
+        return DataTables::of($keluarga->warga)
+            ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+            ->addColumn('action', function (Warga $warga) {
+                return '
+                <a href="' . route('wargaDetail', [$warga->NIK]) . '"
+                    class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                    Detail
+                </a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    /**
+     * Mengembalikan daftar bansos yang ada pada Keluarga
+     */
+    public function listBansos(Request $request, $no_kk)
+    {
+        $bansos = Bansos::getFromKK($no_kk);
+        return DataTables::of($bansos)
+            ->addIndexColumn()
+            ->make(true);
+    }
+    /**
+     * [END] Fungsi Untuk menangani DataTables
+     */
 
     /**
      * Fungsi untuk menampilkan tampilan data keluarga dalam bentuk tabel, dengan data sesuai Level Usernya.
@@ -147,13 +188,13 @@ class KeluargaController extends Controller
                 $request->file('kartu_keluarga')->storeAs('', $filenameSimpan, 'temp');
             }
 
-            $validator = Validator::make($request->only(['no_kk','jenis_data']), [
+            $validator = Validator::make($request->only(['no_kk', 'jenis_data']), [
                 'no_kk' => 'required|size:16|exists:keluarga,no_kk'
             ]);
 
             // Hapus file temporary ketika dilakukan upload file baru
-            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) &&!$validator_file->fails())) {
-                Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
+            if ((FormStateKeluarga::getKartuKeluarga() != null) && (isset($validator_file) &&!$validator_file->fails())) {
+                Storage::disk('temp')->delete(FormStateKeluarga::getKartuKeluarga()->path);
             }
 
             // Masukkan detail file temporary pada session
@@ -214,7 +255,7 @@ class KeluargaController extends Controller
             ]);
 
             // Hapus file temporary ketika dilakukan upload file baru
-            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) &&!$validator_file->fails())) {
+            if (FormStateKeluarga::getKartuKeluarga() && (isset($validator_file) && !$validator_file->fails())) {
                 Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
             }
 

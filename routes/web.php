@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/test', [AuthController::class, 'test'])->name('test')->middleware('role');
+Route::get('/test/{id}', [AuthController::class, 'test'])->name('test');
 
 Route::prefix('auth')->group(function (){
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -73,54 +73,46 @@ Route::prefix('penduduk')->group(function () {
         Route::get('/keluarga/tambah/removeWarga/{idx}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
     });
     Route::get('/keluarga/{no_kk}', [KeluargaController::class, 'detail'])->name('penduduk.keluarga.detail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::post('/keluarga/{no_kk}/listWarga', [KeluargaController::class, 'listWarga'])->name('penduduk.keluarga.detail.listWarga')->middleware('role:rw,rt'); // untuk menampilkan detail warga
+    Route::post('/keluarga/{no_kk}/listBansos', [KeluargaController::class, 'listBansos'])->name('penduduk.keluarga.detail.listBansos')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 })->name('penduduk');
 
 Route::prefix('pengajuan')->group(function () {
-    // Route::get('/', function () {
-    //     return redirect()->route('dataBaru');
-    // }); // Menampilkan halaman utama menu Pengajuan
-
     /**
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
     Route::get('/', [PengajuanController::class, 'index'])
         ->name('dataBaru')
-        ->middleware('role:rw'); // memberikan menampilkan tabel pengajuan
-    // Route::get('/perubahan-warga', [PengajuanController::class, 'indexModifWarga'])->name('perubahanWarga')->middleware('role:rw'); // memberikan data permintaan perubahan data warga
-    // Route::post('/perubahan-warga', [PengajuanController::class, 'listModifWarga'])
-    //     ->name('perubahanWarga')
-    //     ->middleware('role:rw'); // menampilkan tabel perubahan data warga
-    // // Route::get('/perubahan-keluarga', [PengajuanController::class, 'indexModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw'); // memberikan data permintaan perubahan data keluarga
-    // Route::get('/perubahan-keluarga/', [PengajuanController::class, 'indexModifKeluarga'])
-    //     ->name('pengajuan.perubahan.keluarga')
-    //     ->middleware('role:rw'); // menampilkan tabel perubahan data keluarga
-    // Route::post('/perubahan-keluarga', [PengajuanController::class, 'listModifKeluarga'])->name('perubahanKeluarga')->middleware('role:rw');; // memberikan data permintaan perubahan data keluarga
+        ->middleware('role:rw,rt'); // menampilkan tabel pengajuan
+    Route::post('/list', [PengajuanController::class, 'list'])
+        ->name('pengajuan.list')
+        ->middleware('role:rw,rt'); // memberikan daftar data pengajuan untuk DataTables
 
     /**
      * Route untuk menampilkan detail sebuah data pengajuan
      */
-    Route::get('/pembaharuan/{id}', [function(){
-        return view('pengajuan.pembaharuan.detail');
-    }])->name('pengajuan.pembaharuan.detail'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    Route::get('/pembaharuan/{id}', [PengajuanController::class, 'showPembaharuan'])->name('pengajuan.pembaharuan'); // memberikan halaman detail sebuah pengajuan data pembaharuan
+    Route::post('/pembaharuan/{id}/listWarga', [PengajuanController::class, 'listWarga'])->name('pengajuan.pembaharuan.listWarga'); //
+
     Route::get('/pembaharuan/{id}/warga/{nik}', [function(){
         return view('pengajuan.pembaharuan.detailwarga');
     }])->name('pengajuan.pembaharuan.detailwarga'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
-    // Route::get('/data-baru/detail/{id}/keluarga/{no_kk}', [function(){
-    //     return view('pengajuan.databaru.detailkeluarga');
-    // }])->name('detailWargaBaru'); // memberikan halaman detail warga sebuah pengajuan data baru
-    Route::get('/perubahan-keluarga/{no_kk}', [function(){
-        return view('pengajuan.perubahankeluarga.detail');
-    }])->name('pengajuan.perubahankeluarga.detail'); // memberikan halaman detail warga pengajuan perubahan warga
-    Route::get('/perubahan-warga/{nik}', [function(){
-        return view('pengajuan.perubahanwarga.detail');
-    }])->name('pengajuan.perubahanwarga.detail'); // memberikan halaman detail warga dari sebuah data pengajuan
+
+    Route::get('/perubahan-keluarga/{id}', [PengajuanController::class, 'showPerubahanKeluarga'])->name('pengajuan.perubahankeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
+    Route::get('/perubahan-warga/{id}', [PengajuanController::class, 'showPerubahanWarga'])->name('pengajuan.perubahanwarga'); // memberikan halaman detail warga dari sebuah data pengajuan
 
     /**
      * Route untuk menangani konfirmasi sebuah pengajuan
      */
-    Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
-    Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
-})->name('pengajuan')->middleware('role:rw');
+    Route::middleware('role:rw')->group(function() {
+        Route::put('/confirm/pembaharuan', [PengajuanController::class, 'confirmPembaharuan'])->name('pengajuan.confirm.pembaharuan');
+        Route::put('/confirm/perubahanKeluarga', [PengajuanController::class, 'confirmPerubahanKeluarga'])->name('pengajuan.confirm.perubahan.keluarga');
+        Route::put('/confirm/perubahanWarga', [PengajuanController::class, 'confirmPerubahanWarga'])->name('pengajuan.confirm.perubahan.warga');
+        
+        Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
+        Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
+    });
+})->name('pengajuan');
 
 Route::prefix('bansos')->group(function () {
     Route::get('/kriteria', [BansosController::class, 'index'])->name('kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)

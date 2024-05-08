@@ -19,12 +19,9 @@
                     </div>
 
                     <div class="tw-flex tw-gap-2">
-                        <button
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="closeModal">Batal</button>
-                        <a href=""
-                            class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round"
-                            type="submit">Tolak</a>
+                        <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModal">Batal</button>
+                        <a href="" class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
                 </form>
@@ -79,29 +76,27 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'No KK',
-                                    // 'content' => $keluarga->no_kk,
-                                    'content' => '',
+                                    'content' => $modifiedKeluarga->no_kk,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Kepala Keluarga',
-                                    // 'content' => $keluarga->kepala_keluarga,
-                                    'content' => '',
+                                    'content' => $modifiedKeluarga->kepala_keluarga,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Tagihan Listrik',
-                                    // 'content' => $keluarga->tagihan_listrik,
-                                    'content' => '',
+                                    'content' => $modifiedKeluarga->tagihan_listrik,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Luas Bangunan',
-                                    // 'content' => $keluarga->luas_bangunan,
-                                    'content' => '',
+                                    'content' => $modifiedKeluarga->luas_bangunan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Kartu Keluarga',
                                     'isImage' => true,
-                                    // 'content' => asset(Storage::url('KK/'.$keluarga->image_kk)),
-                                    'content' => '',
+                                    'content' => !isset($modifiedKeluarga->keluarga->image_kk)
+                                        ? ''
+                                        : asset(Storage::disk('public')->url(
+                                                'KK/' . $modifiedKeluarga->keluarga->image_kk)),
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
 
@@ -114,31 +109,28 @@
 
                                 @include('components.form.textdetail', [
                                     'title' => 'No KK',
-                                    // 'content' => $keluarga->no_kk,
-                                    'content' => '',
+                                    'content' => $currentKeluarga->no_kk,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Kepala Keluarga',
-                                    // 'content' => $keluarga->kepala_keluarga,
-                                    'content' => '',
+                                    'content' => $currentKeluarga->kepala_keluarga,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Tagihan Listrik',
-                                    // 'content' => $keluarga->tagihan_listrik,
-                                    'content' => '',
+                                    'content' => $currentKeluarga->tagihan_listrik,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Luas Bangunan',
-                                    // 'content' => $keluarga->luas_bangunan,
-                                    'content' => '',
+                                    'content' => $currentKeluarga->luas_bangunan,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Kartu Keluarga',
                                     'isImage' => true,
-                                    // 'content' => asset(Storage::url('KK/'.$keluarga->image_kk)),
-                                    'content' => '',
+                                    'content' => !isset($modifiedKeluarga->keluarga->image_kk)
+                                        ? ''
+                                        : asset(Storage::disk('public')->url(
+                                                'KK/' . $modifiedKeluarga->keluarga->image_kk)),
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
-
 
                             </div>
                         </div>
@@ -149,22 +141,29 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="{{ route('warga') }}"
-                        class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="#"  onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
-                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
+                        <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
-                    <div class="tw-flex tw-gap-2">
-                        <button href=""
-                            class="tw-btn tw-btn-text tw-btn-lg tw-btn-round"
-                            type="button" id="buttonReject">Tolak</button>
-                        <a href=""
-                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
-                            type="submit">Konfirmasi</a>
-                    </div>
+                    @if ($user == 1 && $pengajuan->status_request == 'Menunggu')
+                        <div class="tw-flex tw-gap-2">
+                            <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                                id="buttonReject">Tolak</button>
+                            {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
+                            <form class="d-inline-block" method="POST"
+                                action="{{ route('pengajuan.confirm.perubahan.keluarga') }}">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+                                <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+                                <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
+                                    onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
 

@@ -1,5 +1,9 @@
 @extends('layout.layout', ['isForm' => false])
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css')}}">
+@endpush
+
 @section('content')
     {{-- canEdit = if RW => False, RT => False --}}
     {{-- @include('layout.tableset',['pageTitle' => 'Daftar Penduduk',  'canEdit' => true, 'topMenu' => [
@@ -57,7 +61,7 @@
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button">
+                            type="button" id="searchBox">
                         </input>
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
@@ -71,7 +75,7 @@
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-scroll">
 
-                    <table class="tw-w-[780px] md:tw-w-full">
+                    <table class="tw-w-[780px] md:tw-w-full" id="tablePengajuan">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
@@ -85,16 +89,16 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            @foreach ($dataBaru as $data)
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td>{{$loop->index + 1}}</td>
-                                    <td>{{$data->user->nama}}</td>
-                                    <td>{{$data->keluarga->no_kk}}</td>
-                                    <td>{{$data->keluarga->kepala_keluarga}}</td>
-                                    <td>{{$data->tipe}}</td>
-                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center">{{$data->tanggal_request}}</td>
+                            {{-- @foreach ($dataBaru as $data) --}}
+                                {{-- <tr class="tw-h-16 hover:tw-bg-n300">
+                                    <td>1</td>
+                                    <td>nama</td>
+                                    <td>123123</td>
+                                    <td>kepala</td>
+                                    <td>tipe</td>
+                                    <td class="tw-hidden md:tw-flex tw-min-h-full tw-grow tw-items-center">123123123</td>
                                     <td>
-                                        @include('components.form.label', ['content' => $data->status_request])
+                                        @include('components.form.label', ['content' => 'Menunggu'])
                                     </td>
                                     <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
                                         <a href=""
@@ -102,8 +106,8 @@
                                             Detail
                                         </a>
                                     </td>
-                                </tr>
-                            @endforeach
+                                </tr> --}}
+                            {{-- @endforeach --}}
                         </tbody>
                     </table>
 
@@ -113,7 +117,7 @@
 
                 </div>
                 {{-- End: Table HERE --}}
-                <div
+                {{-- <div
                     class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
                     <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
                         <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
@@ -133,9 +137,95 @@
                         <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
                             alt="<">
                     </a>
-                </div>
+                </div> --}}
 
             </div>
         </div>
     </div>
 @endsection
+@push('js')
+<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            dataUser = $('#tablePengajuan').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('pengajuan.list') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                paging: true,
+                language: {
+                    paginate: {
+                        previous: '<',
+                        next: '>',
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass(
+                        'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
+                        );
+                    $('.paginate_button').addClass(
+                        'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
+                    $('.paginate_button.active').addClass(
+                        'tw-bg-n400');
+                    $('.dataTables_filter').css('display', 'none');
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                order: [[5, 'desc']],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    // className: "tw-w-[44px]",
+                    orderable: false,
+                    // searchable: false
+                }, {
+                    data: "user.nama",
+                    // className: "tw-w-[60px]",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "no_kk",
+                    // className: "tw-w-[120px]",
+                    orderable: false,
+                    searchable: true
+                }, {
+                    data: "keluarga.kepala_keluarga",
+                    // className: "tw-w-[150px]",
+                    orderable: false,
+                    searchable: true
+                }, {
+                    data: "tipe",
+                    // className: "tw-w-[172px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "tanggal_request",
+                    // className: "tw-w-[92px]",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "status",
+                    // className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "aksi",
+                    // className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            // $('#level_id').on('change', function () {
+            //     dataUser.ajax.reload();
+            // });
+        });
+        $('#searchBox').keyup(function () {
+            dataUser.search($(this).val()).draw();
+        });
+        </script>
+@endpush
