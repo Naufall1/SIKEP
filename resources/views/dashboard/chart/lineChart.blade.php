@@ -238,7 +238,7 @@
 
     function lineBansos() {
         const ctx = document.getElementById('chartBansosLine').getContext('2d');
-        const dataBansos = @json($dataBansosByMonth);
+        const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bulan} (${item.tahun})`);
         const jmlWarga = dataBansos.map(item => item.jumlah);
         createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
