@@ -224,8 +224,8 @@
 
     function chartBansos() {
         const ctx = document.getElementById('chartBansosPie').getContext('2d');
-        const dataBansos = @json($dataBansos);
-        const bulanTahun = dataBansos.map(item => item.bansos);
+        const dataBansos = @json($dataBansosByMonth);
+        const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
         const jmlWarga = dataBansos.map(item => item.persentase);
         createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
     }
@@ -234,7 +234,7 @@
         const ctx = document.getElementById('chartUsiaPie').getContext('2d');
         const dataUsia = @json($dataUsia);
         const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
-        const jumlahPenduduk = dataUsia.map(item => item.jumlah_penduduk);
+        const jumlahPenduduk = dataUsia.map(item => item.persentase);
         createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
     }
 

@@ -54,6 +54,46 @@ class Bansos extends Model
         return $data;
     }
 
+    public static function getDataBansosByMonth($keterangan) {
+        $data = [];
+
+        $dataBansos = MightGet::selectRaw('YEAR(MAX(tanggal_menerima)) AS tahun,
+                                        MONTH(MAX(tanggal_menerima)) AS bulan,
+                                        bansos_nama AS bansos,
+                                        might_get.bansos_kode AS kode,
+                                        COUNT(*) AS jumlah_penerima')
+                                ->join('keluarga', 'might_get.no_kk', '=', 'keluarga.no_kk')
+                                ->join('user', 'keluarga.RT', '=', 'user.keterangan')
+                                ->join('bansos','might_get.bansos_kode', '=', 'bansos.bansos_kode')
+                                ->orderByDesc('tahun')
+                                ->orderBy('bulan')
+                                ->groupByRaw('bansos, kode');
+
+
+        if ($keterangan !== 'ketua') {
+            $result = $dataBansos->where('keluarga.RT', '=', $keterangan)->limit(6)->get();
+        } else {
+            $result = $dataBansos->limit(6)->get();
+        }
+
+        $count = $result->sum('jumlah_penerima');
+
+        foreach ($result as $row) {
+            $bulan = strftime('%B', mktime(0, 0, 0, $row->bulan, 1));
+            $persentase = ($count != 0) ? ($row->jumlah_penerima / $count) * 100 : 0;
+            $data[] = [
+                'tahun' => $row->tahun,
+                'bulan' => $bulan,
+                'bansos' => $row->bansos,
+                'kode' => $row->kode,
+                'jumlah' => $row->jumlah_penerima,
+                'persentase' => round($persentase, 1)
+            ];
+        }
+
+        return $data;
+    }
+
     public function mightGets():HasMany
     {
         return $this->hasMany(MightGet::class, 'bansos_kode', 'bansos_kode');

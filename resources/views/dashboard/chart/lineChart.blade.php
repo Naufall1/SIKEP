@@ -115,6 +115,11 @@
                             maxRotation: 0,
                             minRotation: 0,
                         }
+                    },
+                    y: {
+                        ticks: {
+                            stepSize: 1 // setelan angka di bagian kiri ...
+                        }
                     }
                 },
                 responsive: false,
