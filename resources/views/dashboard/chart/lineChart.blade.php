@@ -1,6 +1,6 @@
 <div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
     <div class="tw-w-56">
-        <x-input.select id="barChart" onchange="dropdownChartBar()">
+        <x-input.select id="lineChart" onchange="dropdownChartLine()">
             <option value="pekerjaan" selected>Pekerjaan</option>
             <option value="jenis_kelamin">Jenis Kelamin</option>
             <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
@@ -11,7 +11,7 @@
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
         <div class="tw-w-28">
-            <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartBar()">
+            <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartLine()">
                 <option value="all">Semua</option>
                 @foreach ($semuaRT as $rt)
                     <option value="{{ $rt->rt }}">RT. {{ $rt->keterangan }}</option>
@@ -21,90 +21,91 @@
     @endif
 </div>
 
-<div id="chartBarPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartBarPekerjaanBar" style="width: 100%;" class="tw-flex"></canvas>
+<div id="chartLinePekerjaanContainer" class="tw-flex tw-w-full">
+    <canvas height="242" id="linePekerjaanLine" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartJenisKelaminBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartLineJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartJenisKelaminLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarAgamaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartAgamaBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartLineAgamaContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartAgamaLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartTingkatPendidikanBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartLineTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartTingkatPendidikanLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarBansosContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartBansosBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartLineBansosContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartBansosLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartBarUsiaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartUsiaBar" style="width: 590px;" class="tw-flex"></canvas>
+<div id="chartLineUsiaContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartUsiaLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <script>
-    function dropdownChartBar() {
-        const selectedChart = document.getElementById('barChart').value;
+    function dropdownChartLine() {
+        const selectedChart = document.getElementById('lineChart').value;
         console.log(selectedChart);
 
         const containers = {
-            pekerjaan: 'chartBarPekerjaanContainer',
-            jenis_kelamin: 'chartBarJenisKelaminContainer',
-            agama: 'chartBarAgamaContainer',
-            tingkat_pendidikan: 'chartBarTingkatPendidikanContainer',
-            bansos: 'chartBarBansosContainer',
-            usia: 'chartBarUsiaContainer'
-
+            pekerjaan: 'chartLinePekerjaanContainer',
+            jenis_kelamin: 'chartLineJenisKelaminContainer',
+            agama: 'chartLineAgamaContainer',
+            tingkat_pendidikan: 'chartLineTingkatPendidikanContainer',
+            bansos: 'chartLineBansosContainer',
+            usia: 'chartLineUsiaContainer'
         };
 
-    if (selectedChart in containers) {
-        for (const container in containers) {
-            const element = document.getElementById(containers[container]);
-            if (element) {
-                element.style.display = (container === selectedChart) ? 'block' : 'none';
-            } else {
-                console.error('Elemen dengan id ' + containers[container] + ' tidak ditemukan');
+        if (selectedChart in containers) {
+            for (const container in containers) {
+                const element = document.getElementById(containers[container]);
+                if (element) {
+                    element.style.display = (container === selectedChart) ? 'block' : 'none';
+                } else {
+                    console.error('Elemen dengan id ' + containers[container] + ' tidak ditemukan');
+                }
             }
+            window[selectedChart]();
+        } else {
+            console.error('error pada fungsi dropdownChartData()'); // tampil dek console inspect
         }
-        window[selectedChart]();
-    } else {
-        console.error('error pada fungsi dropdownChartData()'); // tampil dek console inspect
     }
-}
 
 
     document.addEventListener('DOMContentLoaded', function() {
-        barPekerjaan();
-        barJenisKelamin();
-        barAgama();
-        barTingkatPendidikan();
-        barUsia();
-        barBansos();
-
+        linePekerjaan();
+        lineJenisKelamin();
+        lineAgama();
+        lineTingkatPendidikan();
+        lineUsia();
+        lineBansos();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        dropdownChartBar();
-    });
+    function createChartLine(ctx, labels, data, label) {
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        gradient.addColorStop(0, 'rgba(2,92,192,0.1)');
 
-    function createChartBar(ctx, labels, data, label) {
         return new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: label,
                     data: data,
-                    // backgroundColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
-                    // borderColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
-                    backgroundColor: '#C6C6C6',
-                    hoverBackgroundColor: '#0284FF',
-                    borderWidth: 0,
-                    borderRadius: 8,
-                    maxWidth: 1
+                    fill: true,
+                    // fillColor = gradient,
+                    // backgroundColor: '#2C90FF',
+                    backgroundColor: gradient,
+                    borderJoinStyle: 'miter',
+                    borderColor: '#2C90FF',
+                    borderWidth: 4,
+                    hoverBorderColor: '#025CC0',
+                    pointBorderWidth: 5,
+                    pointHoverBorderWidth: 5
                 }]
             },
             options: {
@@ -190,10 +191,11 @@
                             tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel
                                 .padding + 'px';
                             tooltipEl.style.pointerEvents = 'none';
-                        },
-                        xAlign: 'center'
+                        }
                     },
-                    legend: false,
+                    legend: {
+                        position: 'none'
+                    },
                     title: {
                         display: false,
                     }
@@ -202,53 +204,51 @@
         });
     }
 
-    // Fungsi-fungsi untuk menggambar chart masing-masing
-    function barAgama() {
-        const ctx = document.getElementById('chartAgamaBar').getContext('2d');
+    function lineAgama() {
+        const ctx = document.getElementById('chartAgamaLine').getContext('2d');
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.jumlah);
-        createChartBar(ctx, agama, jmlWarga, 'Jumlah');
+        createChartLine(ctx, agama, jmlWarga, 'Jumlah');
     }
 
-    function barTingkatPendidikan() {
-        const ctx = document.getElementById('chartTingkatPendidikanBar').getContext('2d');
+    function lineTingkatPendidikan() {
+        const ctx = document.getElementById('chartTingkatPendidikanLine').getContext('2d');
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.jumlah);
-        createChartBar(ctx, pendidikan, jmlWarga, 'Jumlah');
+        createChartLine(ctx, pendidikan, jmlWarga, 'Jumlah');
     }
 
-    function barPekerjaan() {
-        const ctx = document.getElementById('chartBarPekerjaanBar').getContext('2d');
+    function linePekerjaan() {
+        const ctx = document.getElementById('linePekerjaanLine').getContext('2d');
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
         const jmlWarga = dataPekerjaan.map(item => item.total);
-        createChartBar(ctx, jenisPekerjaan, jmlWarga, 'Jumlah');
+        createChartLine(ctx, jenisPekerjaan, jmlWarga, 'Jumlah');
     }
 
-    function barJenisKelamin() {
-        const ctx = document.getElementById('chartJenisKelaminBar').getContext('2d');
+    function lineJenisKelamin() {
+        const ctx = document.getElementById('chartJenisKelaminLine').getContext('2d');
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
         const jmlWarga = dataJenisKelamin.map(item => item.jumlah);
-        createChartBar(ctx, jenisKelamin, jmlWarga, 'Jumlah');
+        createChartLine(ctx, jenisKelamin, jmlWarga, 'Jumlah');
     }
 
-    function barBansos() {
-        const ctx = document.getElementById('chartBansosBar').getContext('2d');
+    function lineBansos() {
+        const ctx = document.getElementById('chartBansosLine').getContext('2d');
         const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bulan} (${item.tahun})`);
         const jmlWarga = dataBansos.map(item => item.jumlah);
-        createChartBar(ctx, bulanTahun, jmlWarga, 'Jumlah');
+        createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
     }
 
-    function barUsia() {
-        const ctx = document.getElementById('chartUsiaBar').getContext('2d');
+    function lineUsia() {
+        const ctx = document.getElementById('chartUsiaLine').getContext('2d');
         const dataUsia = @json($dataUsia);
         const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
         const jumlahPenduduk = dataUsia.map(item => item.jumlah_penduduk);
-        createChartBar(ctx, rentangUsia, jumlahPenduduk, 'Jumlah Penduduk');
+        createChartLine(ctx, rentangUsia, jumlahPenduduk, 'Jumlah Penduduk');
     }
-
 </script>

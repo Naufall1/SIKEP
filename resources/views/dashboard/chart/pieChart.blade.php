@@ -6,6 +6,8 @@
             <option value="jenis_kelamin">Jenis Kelamin</option>
             <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
             <option value="agama">Agama</option>
+            <option value="bansos">Bansos</option>
+            <option value="usia">Usia</option>
         </x-input.select>
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
@@ -21,19 +23,27 @@
 </div>
 
 <div id="chartPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="224" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartJenisKelaminPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartJenisKelaminPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartAgamaContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartAgamaPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartAgamaPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none" >
-    <canvas height="224" id="chartTingkatPendidikanPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartTingkatPendidikanPie" style="width: 590px;" class="tw-flex"></canvas>
+</div>
+
+<div id="chartPieBansosContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartBansosPie" style="width: 590px;" class="tw-flex"></canvas>
+</div>
+
+<div id="chartPieUsiaContainer" class="tw-flex tw-w-full" style="display: none">
+    <canvas height="242" id="chartUsiaPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <script>
@@ -43,7 +53,9 @@
             pekerjaan: 'chartPekerjaanContainer',
             jenis_kelamin: 'chartJenisKelaminContainer',
             agama: 'chartAgamaContainer',
-            tingkat_pendidikan: 'chartTingkatPendidikanContainer'
+            tingkat_pendidikan: 'chartTingkatPendidikanContainer',
+            bansos: 'chartPieBansosContainer',
+            usia: 'chartPieUsiaContainer'
         };
 
         if (selectedChart in containers) {
@@ -62,6 +74,8 @@
         chartJenisKelamin();
         chartAgama();
         chartTingkatPendidikan();
+        chartUsia();
+        chartBansos();
     });
 
     function createChart(ctx, labels, data, label) {
@@ -73,7 +87,7 @@
                     label: label,
                     data: data,
                     backgroundColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
-                    borderColor: ['#2C90FF', '#0284FF', '#025CC0', '#01448E', '#013065', '#01244C'],
+                    borderColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
                     borderWidth: 1.5
                 }]
             },
@@ -161,6 +175,7 @@
                             boxWidth: 14,
                             boxHeight: 14,
                             useBorderRadius: true,
+                            borderRadius: 100,
                             font: {
                                 family: "Plus Jakarta Sans",
                                 size: "14"
@@ -180,7 +195,7 @@
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.persentase);
-        createChart(ctx, agama, jmlWarga, 'Jumlah Warga');
+        createChart(ctx, agama, jmlWarga, 'Persentase');
     }
 
     function chartTingkatPendidikan() {
@@ -188,7 +203,7 @@
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.persentase);
-        createChart(ctx, pendidikan, jmlWarga, 'Jumlah Warga');
+        createChart(ctx, pendidikan, jmlWarga, 'Persentase');
     }
 
     function chartPekerjaan() {
@@ -196,7 +211,7 @@
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
         const jmlWarga = dataPekerjaan.map(item => item.persentase);
-        createChart(ctx, jenisPekerjaan, jmlWarga, 'Jumlah Warga');
+        createChart(ctx, jenisPekerjaan, jmlWarga, 'Persentase');
     }
 
     function chartJenisKelamin() {
@@ -204,6 +219,23 @@
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
         const jmlWarga = dataJenisKelamin.map(item => item.persentase); // sementara sek gaiso persentase karena blom nemu cara nambahi atribut % di akhir elemen
-        createChart(ctx, jenisKelamin, jmlWarga, 'Jumlah Warga (Jenis Kelamin)');
+        createChart(ctx, jenisKelamin, jmlWarga, 'Persentase');
     }
+
+    function chartBansos() {
+        const ctx = document.getElementById('chartBansosPie').getContext('2d');
+        const dataBansos = @json($dataBansos);
+        const bulanTahun = dataBansos.map(item => item.bansos);
+        const jmlWarga = dataBansos.map(item => item.persentase);
+        createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
+    }
+
+    function chartUsia() {
+        const ctx = document.getElementById('chartUsiaPie').getContext('2d');
+        const dataUsia = @json($dataUsia);
+        const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
+        const jumlahPenduduk = dataUsia.map(item => item.jumlah_penduduk);
+        createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
+    }
+
 </script>

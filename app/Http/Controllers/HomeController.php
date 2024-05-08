@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bansos;
+use App\Models\Demografi;
 use App\Models\HaveDemografi;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
@@ -35,6 +37,10 @@ class HomeController extends Controller
         $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
         $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
         $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
+        $dataBansos = Bansos::getDataBansos(Auth::user()->keterangan);
+        // $dataBansosByMonth = Bansos::getDataBansos(Auth::user()->keterangan);
+        $dataUsia = Demografi::getDataUsia(Auth::user()->keterangan);
+
         //end chart
 
         $semuaRT = Warga::rightJoin('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
@@ -53,7 +59,7 @@ class HomeController extends Controller
         $countKeluarga = Keluarga::count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
 
-        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'semuaRT',
+        return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataUsia', 'semuaRT',
          'countPengajuan', 'countKeluarga', 'countPenduduk'), ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
 
 
@@ -69,7 +75,7 @@ class HomeController extends Controller
         // ->where('have_demografi.status_request', 'Dikonfirmasi')
         // ->count();
 
-        // $countPertumbuhan = $countKelahiran - $countKematian;
+        // $countUsia = $countKelahiran - $countKematian;
 
         // $countUsiaProduktif = $jumlah = Warga::whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) < 50')
         // ->count();
@@ -83,6 +89,8 @@ class HomeController extends Controller
          $dataJenisKelamin = Warga::getDataJenisKelamin(Auth::user()->keterangan);
          $dataAgama = Warga::getDataAgama(Auth::user()->keterangan);
          $dataTingkatPendidikan = Warga::getDataTingkatPendidikan(Auth::user()->keterangan);
+         $dataBansos = Bansos::getDataBansos(Auth::user()->keterangan);
+         $dataUsia = Demografi::getDataUsia(Auth::user()->keterangan);
          //end chart
 
 
@@ -97,8 +105,17 @@ class HomeController extends Controller
         WargaModified::where('user_id', '=', Auth::user()->user_id)->count();
         // Pengajuan::where('user_id', '=', Auth::user()->user_id)->count();
 
-         return view('dashboard.index', compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan',
-          'countPengajuan', 'countKeluarga', 'countPenduduk'), ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
+         return view('dashboard.index',
+         compact('dataPekerjaan',
+            'dataJenisKelamin',
+            'dataAgama',
+            'dataTingkatPendidikan',
+            'dataBansos',
+            'dataUsia',
+            'countPengajuan',
+            'countKeluarga',
+            'countPenduduk'),
+            ['title' => 'RT', 'text' => 'Ketua RT']); // jenis kelamin blom
 
         // $countKematian = HaveDemografi::join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
         // ->where('demografi.jenis', 'Kematian')
@@ -113,7 +130,7 @@ class HomeController extends Controller
         // ->where('keluarga.RT', $rt)
         // ->count();
 
-        // $countPertumbuhan = $countKelahiran - $countKematian;
+        // $countUsia = $countKelahiran - $countKematian;
 
         // $countUsiaProduktif = Warga::join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
         // ->join('user', 'keluarga.RT', '=', 'user.keterangan')
@@ -122,7 +139,7 @@ class HomeController extends Controller
 
 
         // return view('dashboard.index', compact('countPenduduk', 'countKeluarga', 'countPengajuan', 'countKematian',
-        // 'countKelahiran' , 'countPertumbuhan' ,'countUsiaProduktif', 'countJK' ,'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
+        // 'countKelahiran' , 'countUsia' ,'countUsiaProduktif', 'countJK' ,'countPerAgama', 'countTingkatPendidikan' , 'countPekerjaan'),
         // ['title' => 'RT', 'text' => 'Ketua RT']);
     }
     private function dashboardADM() {
