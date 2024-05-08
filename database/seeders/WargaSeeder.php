@@ -599,7 +599,7 @@ class WargaSeeder extends Seeder
                 "no_paspor"=> "NULL",
                 "no_kitas"=> "NULL",
                 "nama_ayah"=> "Muhammad Rafi ",
-                "nama_ibu"=> "Kirana Dewi"
+                "nama_ibu"=> "Kirana Dewi",
                 'created_at' => now(),
             ]
         ]);
