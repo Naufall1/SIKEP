@@ -27,7 +27,7 @@ DB_USERNAME=<USERNAME DATABASE>
 DB_PASSWORD=<PASSWORD DATABASE>
 ```
 9. Eksekusi perintah `php artisan migrate:fresh --seed` untuk melakukan migrasi dan seeder.
-10. Eksekusi perintah `php artisan storeage:link` untuk membuat symlink public storage.
+10. Eksekusi perintah `php artisan storage:link` untuk membuat symlink public storage.
 11. Eksekusi perintah `npm run build`. Untuk development menggunakan perintah `npm run dev`
 12. Setelah semua langkah berhasil, Jika tidak ingin membuat virtual host untuk proyek ini, eksekusi perintah `php artisan serve`
 13. Kemudian akses pada browser dengan alamat `http://127.0.0.1:8000`
