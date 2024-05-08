@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ArticleAnnouncementSeeder::class,
             MightGetSeeder::class,
             WargaModifiedSeeder::class,
+            KeluargaModifiedSeeder::class,
             PengajuanSeeder::class,
         ]);
     }
