@@ -354,7 +354,7 @@ class WargaController extends Controller
                     'user_id' => Auth::user()->user_id,
                     'jenis' => $request->jenis_demografi_keluar
                 ]);
-                $p = HaveDemografi::create([
+                HaveDemografi::create([
                     'NIK' => $warga->NIK,
                     'demografi_id' => $dm->demografi_id,
                     'tanggal_kejadian' => $request->tanggal_kejadian_demografi_keluar,
@@ -362,7 +362,7 @@ class WargaController extends Controller
                     'dokumen_pendukung' => $filenameSimpan,
                     'status_request' => 'Menunggu',
                 ]);
-                // dd($p);
+
                 PengajuanData::create([
                     'user_id' => Auth::user()->user_id,
                     'no_kk' => $warga->no_kk,
@@ -432,10 +432,7 @@ class WargaController extends Controller
             ->withErrors($validator->errors())
             ->withInput();
         }
-        // dd($request->all());
-        // $warga = Warga::find($request->NIK);
-        // $warga->no_kk = $request->no_kk;
-        // $warga->storeTemp();
+
         $pengajuan = new Pengajuan();
         $pengajuan->pindahKK(Warga::find($request->NIK));
         return redirect()->route('keluarga-tambah');
@@ -444,7 +441,7 @@ class WargaController extends Controller
     public function detail($nik)
     {
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
-        $pengajuanInProgres = HaveDemografi::where('NIK','=', $warga->NIK)
+        $pengajuanInProgres = PengajuanData::where('no_kk','=', $warga->no_kk)
             ->where('status_request','=', 'Menunggu')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
