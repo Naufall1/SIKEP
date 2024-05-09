@@ -40,4 +40,9 @@ $(document).ready(function () {
         }
 
     });
+
+    $('table').on('draw', function(){
+        console.log('anu');
+        $('td .dataTables_empty').html(``);
+    })
 });
