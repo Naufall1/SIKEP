@@ -12,13 +12,21 @@
                 class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : '' }}  tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
-                @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                @if (Auth::user()->hasLevel['level_kode'] == 'RT' && !$pengajuanInProgres)
                     <a href="{{ route('warga-edit', ['nik'=>$warga->NIK]) }}"
                         class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full"
                         type="button">
                         <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
                         <span class="">
                             Perbarui
+                        </span>
+                    </a>
+                @endif
+                @if ($pengajuanInProgres)
+                    <a href="#"
+                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                        <span class="">
+                            Data Sedang Dalam Pengajuan
                         </span>
                     </a>
                 @endif

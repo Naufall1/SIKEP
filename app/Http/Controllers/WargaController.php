@@ -444,9 +444,14 @@ class WargaController extends Controller
     public function detail($nik)
     {
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
-        if (!$warga) {
+        $pengajuanInProgres = HaveDemografi::where('NIK','=', $warga->NIK)
+            ->where('status_request','=', 'Menunggu')
+            ->orderBy('tanggal_request', 'DESC')
+            ->first();
+
+            if (!$warga) {
             return redirect()->back();
         }
-        return view('penduduk.warga.detail', compact('warga'));
+        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres']));
     }
 }
