@@ -65,7 +65,7 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pekerjaan',
-                                'content' => $warga->pekerjaan,
+                                'content' => $warga->jenis_pekerjaan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kewarganegaraan',
@@ -135,7 +135,6 @@
                         </div>
 
                         {{-- if user status user migrasi/meninggal --}}
-                        {{-- @if ()
 
                         <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                             <h2 class="">Demografi Keluar</h2>
@@ -154,12 +153,11 @@
                                     'title' => 'Berkas Pendukung',
                                     'content' => 'akfdj',
                                 ])
-                                kalau label kasih value var $isLabel with true
+                                {{-- kalau label kasih value var $isLabel with true --}}
 
                             </div>
                         </div>
 
-                        @endif --}}
                     </div>
 
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
@@ -214,6 +212,9 @@
 
         </div>
     </div>
+    @if (Session::has('message'))
+        <script>alert('{{Session::get('message')}}')</script>
+    @endif
 
 @endsection
 
