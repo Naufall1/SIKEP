@@ -10,8 +10,8 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Keluarga</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('keluarga-editP', ['no_kk' => $keluarga->no_kk]) }}"
-                method="POST" id="formData">
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('penduduk.keluarga.update', ['no_kk' => $keluarga->no_kk]) }}"
+                method="POST" id="formData" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {!! method_field('PUT') !!}
 
@@ -136,12 +136,12 @@
                                     id="provinsi" name="provinsi" disabled>
                             </label>                             --}}
 
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kartu_keluarga">Kartu Keluarga<div
-                                    class="tw-relative tw-cursor-pointer tw-input-enabled"> <input id="kartu_keluarga"
-                                        type="file"
-                                        class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
-                                </div>
-                            </label>
+                            <x-input.label for="kartu_keluarga" label="Berkas Pendukung">
+                                <x-input.file id="kartu_keluarga" name="kartu_keluarga"></x-input.file>
+                                @error('kartu_keluarga')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
 
                         </div>
                     </div>
@@ -155,6 +155,9 @@
                                     value="{{ old('tagihan_listrik', $keluarga->tagihan_listrik) }}" icon="rupiah"
                                     alt="Rp">
                                 </x-input.leadingicon>
+                                @error('tagihan_listrik')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
@@ -175,6 +178,9 @@
                                     value="{{ old('luas_bangunan', $keluarga->luas_bangunan) }}" type="number"
                                     min="0" id="luas_bangunan" name="luas_bangunan">
                                 </x-input.input>
+                                @error('luas_bangunan')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
@@ -189,7 +195,7 @@
 
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="javascript:history.back()" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('penduduk.keluarga.detail', ['no_kk' => $keluarga->no_kk]) }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -197,7 +203,7 @@
                             Kembali
                         </span>
                     </a>
-                    <button href="{{ route('keluarga-tambah') }}" type="submit"
+                    <button type="submit"
                         class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                         type="submit">Simpan</button>
                 </div>

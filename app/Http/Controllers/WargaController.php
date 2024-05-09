@@ -449,7 +449,7 @@ class WargaController extends Controller
             ->orderBy('tanggal_request', 'DESC')
             ->first();
 
-            if (!$warga) {
+        if (!$warga) {
             return redirect()->back();
         }
         return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres']));

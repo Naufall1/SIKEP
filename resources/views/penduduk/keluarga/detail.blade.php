@@ -16,13 +16,21 @@
                 class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : '' }}  tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Keluarga</h1>
-                @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                @if (Auth::user()->hasLevel['level_kode'] == 'RT' && !$pengajuanInProgres)
                     <a href="{{ route('keluarga-edit', ['no_kk' => $keluarga->no_kk]) }}"
                         class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
                         <x-icons.actionable.edit class="" stroke="2" size="20"
                             color="n100"></x-icons.actionable.edit>
                         <span class="">
                             Perbarui
+                        </span>
+                    </a>
+                @endif
+                @if (Auth::user()->hasLevel['level_kode'] == 'RT' && $pengajuanInProgres)
+                    <a href="#"
+                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                        <span class="">
+                            Data Sedang Dalam Pengajuan
                         </span>
                     </a>
                 @endif
@@ -173,7 +181,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="javascript:history.back()" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('keluarga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -186,6 +194,9 @@
 
         </div>
     </div>
+    @if (Session::has('message'))
+        <script>alert('{{Session::get('message')[1]}}')</script>
+    @endif
 @endsection
 
 
