@@ -41,8 +41,10 @@ $(document).ready(function () {
 
     });
 
-    $('table').on('draw', function(){
-        console.log('anu');
-        $('td .dataTables_empty').html(``);
-    })
+    console.log('halo');
+
+    $('#closeFlash').click(function (e) { 
+        console.log(this);
+        $(this).parent().remove();
+    });
 });

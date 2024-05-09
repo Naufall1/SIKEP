@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+
+        <x-flash-message.information message='halo'></x-flash-message.information>
+
         <p class="tw-breadcrumb tw-text-n500">Daftar Warga /
             <span class="tw-font-bold tw-text-b500">Detail Warga</span>
         </p>
