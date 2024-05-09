@@ -37,9 +37,49 @@ class WargaHistory extends Model
         'valid_to',
     ];
 
-
-    public function warga():BelongsTo
+    public function warga(): BelongsTo
     {
         return $this->belongsTo(Warga::class, 'NIK', 'NIK');
+    }
+
+    public static function track(Warga $warga): void
+    {
+        // cari tanggal terakhir data warga tertentu dirubah
+        $valid_from = WargaHistory::where('NIK', '=', $warga->NIK)
+            ->orderBy('id_history_warga', 'desc')
+            ->first();
+
+        if ($valid_from) {
+            $valid_from = $valid_from->value('valid_to');
+        }
+
+        // jika tidak ada data, maka valid_from adalah tanggal dibuat
+        if (is_null($valid_from)) {
+            // $valid_from = $warga->created_at;
+            $valid_from = null;
+        }
+
+        WargaHistory::create([
+            'NIK' => $warga->NIK,
+            'no_kk' => $warga->no_kk,
+            'nama' => $warga->nama,
+            'tempat_lahir' => $warga->tempat_lahir,
+            'tanggal_lahir' => $warga->tanggal_lahir,
+            'jenis_kelamin' => $warga->jenis_kelamin,
+            'agama' => $warga->agama,
+            'status_perkawinan' => $warga->status_perkawinan,
+            'status_keluarga' => $warga->status_keluarga,
+            'status_warga' => $warga->status_warga,
+            'jenis_pekerjaan' => $warga->jenis_pekerjaan,
+            'penghasilan' => $warga->penghasilan,
+            'kewarganegaraan' => $warga->kewarganegaraan,
+            'pendidikan' => $warga->pendidikan,
+            'no_paspor' => $warga->no_paspor,
+            'no_kitas' => $warga->no_kitas,
+            'nama_ayah' => $warga->nama_ayah,
+            'nama_ibu' => $warga->nama_ibu,
+            'valid_from' => now(),
+            'valid_to' => now()
+        ]);
     }
 }

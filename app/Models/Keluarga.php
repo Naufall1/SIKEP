@@ -34,6 +34,10 @@ class Keluarga extends Model
         'luas_bangunan'
     ];
 
+    protected $casts = [
+        'no_kk' => 'string'
+    ];
+
     public function keluargaHistory(): HasMany
     {
         return $this->hasMany(KeluargaHistory::class, 'no_kk', 'no_kk');

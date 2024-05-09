@@ -30,7 +30,7 @@ class HaveDemografiSeeder extends Seeder
                 'tanggal_request'=>'2024-03-20',
                 'catatan'=>NULL,
                 'dokumen_pendukung'=>'dokumen2.jpg',
-                'status_request'=>'Menunggu'
+                'status_request'=>'Dikonfirmasi'
             ],
             [
                 'NIK'=>5792468013579246,

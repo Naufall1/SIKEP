@@ -1,5 +1,9 @@
 @extends('layout.layout', ['isForm' => false])
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css') }}">
+@endpush
+
 @section('content')
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Daftar Keluarga /
@@ -13,10 +17,10 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Keluarga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    <a href="{{ route('keluarga-edit', ['no_kk'=>$keluarga->no_kk]) }}"
-                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full"
-                        type="button">
-                        <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
+                    <a href="{{ route('keluarga-edit', ['no_kk' => $keluarga->no_kk]) }}"
+                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
+                        <x-icons.actionable.edit class="" stroke="2" size="20"
+                            color="n100"></x-icons.actionable.edit>
                         <span class="">
                             Perbarui
                         </span>
@@ -75,7 +79,9 @@
                             @include('components.form.textdetail', [
                                 'title' => 'Kartu Keluarga',
                                 'isImage' => true,
-                                'content' => !isset($keluarga->image_kk) ? "" : asset(Storage::disk('public')->url('KK/'.$keluarga->image_kk)),
+                                'content' => !isset($keluarga->image_kk)
+                                    ? ''
+                                    : asset(Storage::disk('public')->url('KK/' . $keluarga->image_kk)),
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
 
@@ -97,24 +103,22 @@
 
                         </div>
                     </div>
-
-
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <table class="tw-w-[702px] md:tw-w-full">
-                                {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>NIK</th>
-                                    <th>Nama</th>
-                                    <th>Status Keluarga</th>
-                                    <th class="tw-w-[108px]"></th>
-                                </tr>
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                                <thead class="tw-rounded-lg">
+                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Status Keluarga</th>
+                                        <th class="tw-w-[108px]"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($keluarga->warga as $warga)
+                                    {{-- @foreach ($keluarga->warga as $warga)
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$warga->NIK}}</td>
@@ -128,7 +132,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
 
                                 </tbody>
                             </table>
@@ -140,25 +144,25 @@
                         <h2 class="">Daftar Bansos</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <table class="tw-w-[702px] md:tw-w-full">
-                                {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>Nama Bansos</th>
-                                    <th>Tanggal Menerima</th>
-                                    <th>Keterangan</th>
-                                </tr>
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarBansos">
+                                <thead class="tw-rounded-lg">
+                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                        <th>No</th>
+                                        <th>Bansos</th>
+                                        <th>Nama Bansos</th>
+                                        <th>Tanggal Menerima</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 0; $i < count($keluarga->bansos); $i++)
-                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                        <td>{{$i + 1}}</td>
-                                        <td>{{$keluarga->bansos[$i]->bansos_nama}}</td>
-                                        <td>{{$keluarga->detailBansos[$i]->tanggal_menerima}}</td>
-                                        {{-- <td>{{$keluarga->bansos[$i]->keterangan}}</td> --}}
-                                        <td>-</td>
-                                    </tr>
-                                    @endfor
+                                    {{-- @for ($i = 0; $i < count($keluarga->bansos); $i++)
+                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>{{ $keluarga->bansos[$i]->bansos_nama }}</td>
+                                            <td>{{ $keluarga->detailBansos[$i]->tanggal_menerima }}</td>
+                                            <td>{{$keluarga->bansos[$i]->keterangan}}</td>
+                                            <td>-</td>
+                                        </tr>
+                                    @endfor --}}
                                 </tbody>
                             </table>
 
@@ -169,13 +173,13 @@
 
 
                 <div class="tw-flex">
-                    <a href="javascript:history.back()"
-                    class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
-                    type="button">
-                    <x-icons.actionable.arrow-left class="" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
-                    <span class="tw-hidden md:tw-inline-block">
-                        Kembali
-                    </span>
+                    <a href="javascript:history.back()" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                        type="button">
+                        <x-icons.actionable.arrow-left class="" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
+                        <span class="tw-hidden md:tw-inline-block">
+                            Kembali
+                        </span>
                     </a>
                 </div>
             </div>
@@ -183,3 +187,95 @@
         </div>
     </div>
 @endsection
+
+
+@push('js')
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            dataWarga = $('#daftarWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('penduduk.keluarga.detail.listWarga', ['no_kk' => $keluarga->no_kk]) }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                paging: false,
+                info: false,
+                searching: false,
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[44px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "NIK",
+                    className: "tw-grow",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "nama",
+                    className: "tw-w-[240px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "status_keluarga",
+                    className: "tw-w-[150px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            dataBansos = $('#daftarBansos').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('penduduk.keluarga.detail.listBansos', ['no_kk' => $keluarga->no_kk]) }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                paging: false,
+                info: false,
+                searching: false,
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[44px]",
+
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "bansos_kode",
+                    className: "tw-w-[60px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "bansos_nama",
+                    className: "tw-w-[300px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "tanggal_menerima",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+        });
+    </script>
+@endpush
