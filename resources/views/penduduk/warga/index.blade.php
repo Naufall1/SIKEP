@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css')}}">
 @endpush
 
+
+
 @section('content')
     {{-- canEdit = if RW => False, RT => False --}}
     {{-- @include('layout.tableset',['pageTitle' => 'Daftar Penduduk',  'canEdit' => true, 'topMenu' => [
