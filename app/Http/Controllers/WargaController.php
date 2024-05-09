@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Demografi;
 use App\Models\HaveDemografi;
-use App\Models\Keluarga;
 use App\Models\Pengajuan;
+use App\Models\PengajuanData;
 use App\Models\Warga;
 use App\Models\WargaModified;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -122,7 +124,6 @@ class WargaController extends Controller
             'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak',
             'nama_ayah' => 'required|string|max:100',
             'nama_ibu' => 'required|string|max:100',
-            // 'status_warga' => 'required|in:Aktif,Meninggal,Migrasi,Menunggu',
             'penghasilan' => 'required|integer',
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
@@ -189,32 +190,230 @@ class WargaController extends Controller
     }
     public function edit($nik)
     {
+        $request = new Request;
+        $request->merge(['nik' => $nik]);
+        $request->validate([
+            'nik' => 'required|numeric|exists:warga,NIK'
+        ]);
+
+        // Get Data warga
         $warga = Warga::find($nik);
-        if (!$warga) {
-            return redirect()->back();
-        }
-        return view('penduduk.warga.edit', compact('warga'));
+
+        // Get data demografi warga terakhir yang terkonfirmasi
+        $demografi = HaveDemografi::with('demografi')
+            ->where('nik','=', $warga->NIK)
+            ->where('status_request', '=', 'Dikonfirmasi')
+            ->orderBy('tanggal_request', 'DESC')
+            ->first();
+
+        // dd($demografi);
+
+        return view('penduduk.warga.edit', compact(['warga', 'demografi']));
     }
     public function update(Request $request, $nik)
     {
-        // TODO: add validation
+        $request->merge(['nik' => $nik]);
+        $request->validate([
+            'nik' => 'required|numeric'
+        ]);
 
+        // Jika data tidak ditemukan, maka akan dikembalikan ke halaman warga
         if (!Warga::find($nik)) {
             return redirect()->route('warga')->with('danger', 'Data tidak ditemukan');
         }
+
+        // Ambil data warga
         $warga = Warga::find($nik);
-        $warga->agama = $request->agama;
-        $warga->status_perkawinan = $request->status_perkawinan;
-        $warga->status_keluarga = $request->status_keluarga;
-        $warga->status_warga = $request->status_warga;
-        $warga->jenis_pekerjaan = $request->jenis_pekerjaan;
-        $warga->penghasilan = $request->penghasilan;
-        $warga->pendidikan = $request->pendidikan;
+        // Ambil data demografi warga (diambil data terakhir dan sudah dikonformasi)
+        $demografi = HaveDemografi::with('demografi')
+            ->where('nik','=', $warga->NIK)
+            ->where('status_request', '=', 'Dikonfirmasi')
+            ->orderBy('tanggal_request', 'DESC')
+            ->first();
 
-        // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
-        WargaModified::updateWarga($warga);
 
-        return redirect()->route('wargaDetail', ['nik' => $request->nik]);
+        // Validasi dasar
+        $rules = [
+            'pendidikan' => 'required|string|max:50',
+            'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Konghucu',
+            'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
+            'jenis_pekerjaan' => 'required|string|max:50',
+            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak',
+            'penghasilan' => 'required|integer',
+            'no_paspor' => 'nullable|string|max:10',
+            'no_kitas' => 'nullable|string|max:10',
+        ];
+
+
+        // Ketika seorang warga merubah data demografi
+        if (
+            ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar)) ||
+            (!$demografi && $request->jenis_demografi_keluar != null)
+        ) {
+            // dd($request->hasFile('berkas_demografi_keluar'));
+            if (!session()->exists('berkas_demografi_keluar') || $request->hasFile('berkas_demografi_keluar')) {
+                $validator_file = Validator::make($request->only('berkas_demografi_keluar'),[
+                    'berkas_demografi_keluar' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ]);
+            }
+
+            if (isset($validator_file) && !$validator_file->fails()) {
+                $filename = Str::uuid()->getHex()->toString();
+                $extension = $request->file('berkas_demografi_keluar')->getClientOriginalExtension();
+                $filenameSimpan = $filename . '.' . $extension;
+                $request->file('berkas_demografi_keluar')->storeAs('', $filenameSimpan, 'temp');
+            }
+
+            if (session()->exists('berkas_demografi_keluar') && (isset($validator_file) && !$validator_file->fails() )) {
+                Storage::disk('temp')->delete(session()->get('berkas_demografi_keluar')->path);
+            }
+
+            $rules = array_merge($rules, [
+                'tanggal_kejadian_demografi_keluar' => 'required|date'
+            ]);
+        }
+
+        // Jika data demografi sebelumnya ada, maka tambahkan validasi berikut
+        else if ($demografi) {
+            $rules = array_merge($rules, [
+                'tanggal_kejadian' => 'required|date',
+            ]);
+
+            if ($request->hasFile('berkas_demografi')) {
+                $validator_file_2 = Validator::make($request->only('berkas_demografi'),[
+                    'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ]);
+            }
+
+            if (isset($validator_file_2) && !$validator_file_2->fails()) {
+                $filename = Str::uuid()->getHex()->toString();
+                $extension = $request->file('berkas_demografi')->getClientOriginalExtension();
+                $filenameSimpan_2 = $filename . '.' . $extension;
+                $request->file('berkas_demografi')->storeAs('', $filenameSimpan_2, 'temp');
+            }
+
+            if (session()->exists('berkas_demografi') && (isset($validator_file_2) && !$validator_file_2->fails() )) {
+                Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
+            }
+
+        }
+
+        // Dilakukan validasi terhadap semua rule yang telah ditambahkan kedalam $rules
+        $validator = Validator::make($request->all(), $rules);
+
+        // Jika terdapat file yang diupload, maka akan disimpan informasinya pada session
+        if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
+            session()->put('berkas_demografi_keluar', (object) [
+                'path' => $filenameSimpan,
+                'ext' => explode('.', $filenameSimpan)[1],
+            ]);
+        }
+        if ( isset($validator_file_2) && !$validator_file_2->fails() && $validator->fails()) {
+            session()->put('berkas_demografi_keluar', (object) [
+                'path' => $filenameSimpan_2,
+                'ext' => explode('.', $filenameSimpan_2)[1],
+            ]);
+        }
+
+
+        // Jika terdapat validasi yang gagal maka akan dikembalikan menuju form sebelumnya untuk diisi dengan benar.
+        if ($validator->fails() || (isset($validator_file) && $validator_file->fails()) || (isset($validator_file_2) && $validator_file_2->fails())) {
+            if (isset($validator_file)) {
+                $errors = $validator->errors()->merge($validator_file);
+            } else if (isset($validator_file_2)) {
+                $errors = $validator->errors()->merge($validator_file_2);
+            }
+
+            return redirect()->back()
+                ->withErrors(isset($errors) ? $errors : $validator->errors())
+                ->withInput();
+        }
+
+        try {
+            $message = [];
+            $message['message'] = 'Tidak ada data yang diubah';
+            DB::beginTransaction();
+            // passing data dari request kedalam object warga
+            $warga->agama = $request->agama;
+            $warga->status_perkawinan = $request->status_perkawinan;
+            $warga->status_keluarga = $request->status_keluarga;
+            // $warga->status_warga = $request->status_warga;
+            $warga->jenis_pekerjaan = $request->jenis_pekerjaan;
+            $warga->penghasilan = $request->penghasilan;
+            $warga->pendidikan = $request->pendidikan;
+            if (isset($demografi)) {
+                $demografi->tanggal_kejadian = $request->tanggal_kejadian;
+            }
+
+            // Ketika seorang warga merubah data demografi
+            if (
+                ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar)) ||
+                (!$demografi && $request->jenis_demografi_keluar != null)
+            ) {
+                $dm = Demografi::create([
+                    'user_id' => Auth::user()->user_id,
+                    'jenis' => $request->jenis_demografi_keluar
+                ]);
+                HaveDemografi::create([
+                    'NIK' => $warga->NIK,
+                    'demografi_id' => $dm->demografi_id,
+                    'tanggal_kejadian' => $request->tanggal_kejadian_demografi_keluar,
+                    'tanggal_request' => now(),
+                    'dokumen_pendukung' => $filenameSimpan,
+                    'status_request' => 'Menunggu',
+                ]);
+
+                PengajuanData::create([
+                    'user_id' => Auth::user()->user_id,
+                    'no_kk' => $warga->no_kk,
+                    'tanggal_request' => now(),
+                    'status_request' => 'Menunggu',
+                    'tipe' => 'Perubahan Warga'
+                ]);
+                $message['message'] = 'Edit Warga Berhasil!';
+            }
+
+            // Hapus session berkas demografi.
+            if (session()->has('berkas_demografi_keluar')) {
+                session()->forget('berkas_demografi_keluar');
+            }
+
+            // Jika data warga ada yang berubah maka akan ditambahkan kedalam tabel wargaModified
+            if (!empty($warga->getDirty()) || ($demografi && $demografi->isDirty('tanggal_kejadian')) || isset($filenameSimpan_2)) {
+                // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
+                WargaModified::updateWarga($warga);
+
+                $demografi->fill($request->only('tanggal_kejadian'));
+
+                if ($demografi->isDirty('tanggal_kejadian') || isset($filenameSimpan)) {
+                    HaveDemografi::create([
+                        'demografi_id' => $demografi->demografi_id,
+                        'NIK' => $warga->NIK,
+                        'tanggal_kejadian' => $demografi->tanggal_kejadian,
+                        'tanggal_request' => now(),
+                        'dokumen_pendukung' => isset($filenameSimpan) ? $filenameSimpan : $demografi->dokumen_pendukung,
+                        'status_request' => 'Menunggu',
+                    ]);
+                }
+
+                // Membuat data request
+                PengajuanData::create([
+                    'user_id' => Auth::user()->user_id,
+                    'no_kk' => $warga->no_kk,
+                    'tanggal_request' => now(),
+                    'status_request' => 'Menunggu',
+                    'tipe' => 'Perubahan Warga'
+                ]);
+                $message['message'] = 'Edit Warga Berhasil!';
+            }
+
+            DB::commit();
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', $message['message']);
+        } catch (Exception $e) {
+            dd($e);
+            DB::rollBack();
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', 'Edit warga gagal');
+        }
     }
     /**
      * fungsi untuk merubah no_kk dari sebuah warga,
@@ -233,10 +432,7 @@ class WargaController extends Controller
             ->withErrors($validator->errors())
             ->withInput();
         }
-        // dd($request->all());
-        // $warga = Warga::find($request->NIK);
-        // $warga->no_kk = $request->no_kk;
-        // $warga->storeTemp();
+
         $pengajuan = new Pengajuan();
         $pengajuan->pindahKK(Warga::find($request->NIK));
         return redirect()->route('keluarga-tambah');
@@ -245,9 +441,14 @@ class WargaController extends Controller
     public function detail($nik)
     {
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
+        $pengajuanInProgres = PengajuanData::where('no_kk','=', $warga->no_kk)
+            ->where('status_request','=', 'Menunggu')
+            ->orderBy('tanggal_request', 'DESC')
+            ->first();
+
         if (!$warga) {
             return redirect()->back();
         }
-        return view('penduduk.warga.detail', compact('warga'));
+        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres']));
     }
 }

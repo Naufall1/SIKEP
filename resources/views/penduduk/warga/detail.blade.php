@@ -15,13 +15,21 @@
                 class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : '' }}  tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
-                @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                @if (Auth::user()->hasLevel['level_kode'] == 'RT' && !$pengajuanInProgres)
                     <a href="{{ route('warga-edit', ['nik'=>$warga->NIK]) }}"
                         class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full"
                         type="button">
                         <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
                         <span class="">
                             Perbarui
+                        </span>
+                    </a>
+                @endif
+                @if ($pengajuanInProgres)
+                    <a href="#"
+                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                        <span class="">
+                            Data Sedang Dalam Pengajuan
                         </span>
                     </a>
                 @endif
@@ -68,7 +76,7 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pekerjaan',
-                                'content' => $warga->pekerjaan,
+                                'content' => $warga->jenis_pekerjaan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kewarganegaraan',
@@ -138,7 +146,6 @@
                         </div>
 
                         {{-- if user status user migrasi/meninggal --}}
-                        {{-- @if ()
 
                         <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                             <h2 class="">Demografi Keluar</h2>
@@ -157,12 +164,11 @@
                                     'title' => 'Berkas Pendukung',
                                     'content' => 'akfdj',
                                 ])
-                                kalau label kasih value var $isLabel with true
+                                {{-- kalau label kasih value var $isLabel with true --}}
 
                             </div>
                         </div>
 
-                        @endif --}}
                     </div>
 
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
@@ -217,6 +223,9 @@
 
         </div>
     </div>
+    @if (Session::has('message'))
+        <script>alert('{{Session::get('message')}}')</script>
+    @endif
 
 @endsection
 

@@ -49,7 +49,7 @@ Route::prefix('penduduk')->group(function () {
     // FIX THIS DETAIL WARGA ROUTE
     Route::get('/warga/detail/{nik}', [WargaController::class, 'detail'])->name('wargaDetail')->middleware('role:rw,rt'); // untuk menampilkan detail warga
 
-    Route::middleware('role:rt')->group(function () {
+    Route::middleware(['role:rt', 'auth'])->group(function () {
         Route::get('/warga/ubah/{nik}', [WargaController::class, 'edit'])->name('warga-edit'); // untuk menampilkan form edit data Warga
         Route::put('/warga/ubah/{nik}', [WargaController::class, 'update'])->name('warga-edit'); // untuk menangani update data Warga dan menyimpan pada database
         Route::get('/warga/tambah/{no_kk}', [WargaController::class, 'create'])->name('tambah-warga'); // untuk menampilkan form penambahan data warga
@@ -66,7 +66,7 @@ Route::prefix('penduduk')->group(function () {
 
     Route::middleware('role:rt')->group(function () {
         Route::get('/keluarga/{no_kk}/ubah', [KeluargaController::class, 'edit'])->name('keluarga-edit'); // untuk menampilkan form edit data keluarga
-        Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('keluarga-editP'); // untuk menangani update data Keluarga dan menyimpan pada database
+        Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('penduduk.keluarga.update'); // untuk menangani update data Keluarga dan menyimpan pada database
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
         // Route::post('/keluarga/tambah/save-state', [KeluargaController::class, 'saveFormState']); // untuk menyimpan data form sementara pada session
@@ -108,7 +108,7 @@ Route::prefix('pengajuan')->group(function () {
         Route::put('/confirm/pembaharuan', [PengajuanController::class, 'confirmPembaharuan'])->name('pengajuan.confirm.pembaharuan');
         Route::put('/confirm/perubahanKeluarga', [PengajuanController::class, 'confirmPerubahanKeluarga'])->name('pengajuan.confirm.perubahan.keluarga');
         Route::put('/confirm/perubahanWarga', [PengajuanController::class, 'confirmPerubahanWarga'])->name('pengajuan.confirm.perubahan.warga');
-        
+
         Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
         Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
     });

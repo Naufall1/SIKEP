@@ -34,7 +34,8 @@ class HaveDemografi extends Model
     protected function setKeysForSaveQuery($query)
     {
         $query->where('NIK', '=', $this->NIK)
-            ->where('demografi_id', '=', $this->demografi_id);
+            ->where('demografi_id', '=', $this->demografi_id)
+            ->where('tanggal_request', '=', $this->tanggal_request);
 
         return $query;
     }
