@@ -69,11 +69,43 @@ class PengajuanController extends Controller
             'id' => 'required|exists:pengajuan,id'
         ]);
 
-        $daftarWarga = Warga::where('no_kk', '=', PengajuanData::find($request->id)->no_kk)->get();
+        // Ambil Nomor KK dari pengajuan yang dipilih
+        $no_kk = PengajuanData::find($request->id)->no_kk;
+        // Ambil daftar anggota keluarga asli
+        $daftarWarga = Warga::where('no_kk', '=', $no_kk)->where('status_warga', '!=', 'Menunggu')->get();
+        // Ambil daftar anggota keluarga yang ditambahkan dari data baru
+        $daftarWargaBaru = Warga::where('no_kk', '=', $no_kk)->where('status_warga', '=', 'Menunggu')->get();
+        // Ambil daftar anggota keluarga yang berasal dari pindah KK
+        $daftarWargaPindahKK = WargaModified::where('no_kk', '=', $no_kk)->where('status_request', '=', 'Menunggu')->get();
+
+        // Ambil data warga dari tabel WargaModified
+        if ($daftarWargaPindahKK) {
+            $warga = [];
+            foreach ($daftarWargaPindahKK as $wargaMod) {
+                $tmp = Warga::find($wargaMod->NIK);
+                $tmp->status_warga = 'Menunggu';
+                // Tambahkan keterangan `(Baru)` pada nama anggota keluarga
+                $tmp->nama = $tmp->nama . ' (Baru)';
+                $warga[] = $tmp;
+            }
+        }
+        if ($daftarWargaBaru) {
+            // Tambahkan keterangan `(Baru)` pada setiap nama anggota keluarga
+            foreach ($daftarWargaBaru as $tmp) {
+                $tmp->nama = $tmp->nama . ' (Baru)';
+            }
+            // Gabungkan data anggota keluarga asli dengan anggota keluarga baru
+            $daftarWarga = $daftarWarga->merge($daftarWargaBaru);
+        }
+        if ($daftarWargaPindahKK) {
+            // Gabungkan data anggota keluarga asli dengan anggota keluarga pindah KK
+            $daftarWarga = $daftarWarga->merge($warga);
+        }
+
         return DataTables::of($daftarWarga)
             ->addIndexColumn()
-            ->addColumn('aksi', function () {
-                $btn = '<a href="' . route('pengajuan.pembaharuan.detailwarga', ['id' => 1, 'nik' => 1]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
+            ->addColumn('aksi', function ($warga) use ($request) {
+                $btn = '<a href="' . route('pengajuan.pembaharuan.detailwarga', ['id' => $request->id, 'nik' => $warga->NIK]) . '" class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md"> Detail </a>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
