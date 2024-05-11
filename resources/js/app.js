@@ -44,7 +44,80 @@ $(document).ready(function () {
     console.log('halo');
 
     $('#closeFlash').click(function (e) { 
-        console.log(this);
         $(this).parent().remove();
     });
+
+    $(".dropItems").delegate(".dropdownItem", "click", function(){
+        let selected = $(this).text();
+        let button = $(this).parents().parents().parents().children().children().first();
+        let name = $(button).parents().attr('name');
+        // console.log(name);
+        let input = $(button).parents().parents().find('input[id='+name+']');
+        // console.log($(button).parents().parents().find('input').val());
+        // console.log('input[id='+name+']');
+        $(button).text(selected);
+        // console.log('DEFAULT VALUE = '+$(input).val());
+        $(input).val(selected);
+        $(this).parents().find('.dropContent').addClass('tw-hidden');
+        // console.log('NEW VALUE = '+$(input).val());
+        rotateArrow($(button).siblings().last())
+     });
+
+    
+    $('.dropdownTrigger').click(function() {
+        // $(this).val();
+        if ($(this).siblings().hasClass('tw-hidden')) {
+            rotateArrow($(this).children().last())
+            $('.dropdownTrigger').siblings().addClass('tw-hidden');
+            $(this).siblings().removeClass('tw-hidden');
+            let dropItems = $(this).siblings().children().last();
+            $(dropItems).children().remove();
+            let content = ``;
+            $.each(getDropdownItems($(this).attr('id')), function (indexInArray, item) { 
+                content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
+                //  console.log(dropdownItem);
+            });
+            $(dropItems).append(content);
+            
+            $(this).siblings().children().focus();
+        } else {
+            $(this).siblings().addClass('tw-hidden');
+            rotateArrow($(this).children().last())
+        }
+    });
+
+    function rotateArrow(element) {
+        $(element).hasClass('tw-rotate-180') ? $(element).removeClass('tw-rotate-180') : $(element).addClass('tw-rotate-180');;
+    }
+
+    function getDropdownItems(id) {
+        if (id=='jenis_pekerjaan-list') {
+            return ["Belum/Tidak Bekerja", "Mengurus Rumah Tangga", "Pelajar/Mahasiswa", "Pensiunan", "Pegawai Negeri Sipil", "Tentara Nasional Indonesia", "Kepolisian RI", "Perdagangan", "Petani/Pekebun", "Peternak", "Nelayan/Perikanan", "Industri", "Konstruksi", "Transportasi", "Karyawan Swasta", "Karyawan BUMN", "Karyawan BUMD", "Karyawan Honorer", "Buruh Harian Lepas", "Buruh Tani/Perkebunan", "Buruh Nelayan/Perikanan", "Buruh Peternakan", "Pembantu Rumah Tangga", "Tukang Cukur", "Tukang Listrik", "Tukang Batu", "Tukang Kayu", "Tukang Sol Sepatu", "Tukang Las/Pandai Besi", "Tukang Jahit", "Penata Rambut", "Penata Rias", "Penata Busana", "Mekanik", "Tukang Gigi", "Seniman", "Tabib", "Paraji", "Perancang Busana", "Penerjemah", "Imam Masjid", "Pendeta", "Pastur", "Wartawan", "Ustadz/Mubaligh", "Juru Masak", "Promotor Acara", "Anggota DPR-RI", "Anggota DPD", "Anggota BPK", "Presiden", "Wakil Presiden", "Anggota Mahkamah Konstitusi", "Anggota Kabinet/Kementerian", "Duta Besar", "Gubernur", "Wakil Gubernur", "Bupati", "Wakil Bupati", "Walikota", "Wakil Walikota", "Anggota DPRD Provinsi", "Anggota DPRD Kabupaten", "Dosen", "Guru", "Pilot", "Pengacara", "Notaris", "Arsitek", "Akuntan", "Konsultan", "Dokter", "Bidan", "Perawat", "Apoteker", "Psikiater/Psikolog", "Penyiar Televisi", "Penyiar Radio", "Pelaut", "Peneliti", "Sopir", "Pialang", "Paranormal", "Pedagang", "Perangkat Desa", "Kepala Desa", "Biarawati", "Wiraswasta", "Anggota Lembaga Tinggi", "Artis", "Atlit", "Chef", "Manajer", "Tenaga Tata Usaha", "Operator", "Pekerja Pengolahan, Kerajinan", "Teknisi", "Asisten Ahli", "Lainnya"];
+        } else if (id == 'status_perkawinan-list') {
+            return ["Kawin", "Belum Kawin", "Cerai", "Cerai Hidup"]
+        }   
+    }
+    
+    $('input[name=searchDropItem]').keyup(function (e) { 
+        let id = $(this).parents().parents().parents().children().attr('id');
+        let parent = $(this).parents().parents();
+        let dropdownItems = $(parent).find('ul');
+        let arr = [];
+        let filter = $(this).val();
+        let items = getDropdownItems(id);
+        arr = $.grep(items, function(item) {
+            return item.toLowerCase().includes(filter);
+        }).map(item => `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`).join("");
+
+        if (arr) {
+            $(dropdownItems).children().remove();
+            $(dropdownItems).append(arr);
+        } else {
+            $(dropdownItems).children().remove();
+            $(dropdownItems).append(`<p>Data Tidak Ada</p>`);
+        }
+    });
+
+    // console.log($('#jenis_perkawinan').val());
+
 });

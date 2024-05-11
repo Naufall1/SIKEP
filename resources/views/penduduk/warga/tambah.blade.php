@@ -40,7 +40,8 @@
                                 <x-input.input value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
                                 <x-input.select class="tw-hidden" name="NIK" id="nik-list">
-                                    <option value="no" disabled selected>{{ $daftarWarga->count() == 0 ? "Tidak ada data":"Pilih NIK"}}</option>
+                                    <option value="no" disabled selected>
+                                        {{ $daftarWarga->count() == 0 ? 'Tidak ada data' : 'Pilih NIK' }}</option>
                                     @foreach ($daftarWarga as $warga)
                                         <option value="{{ $warga->NIK }}">{{ $warga->NIK . ' - ' . $warga->nama }}
                                         </option>
@@ -167,7 +168,17 @@
                                 </select>
                             </label> --}}
 
-                            <x-input.label for="status_perkawinan" label="Status Perkawinan">
+
+
+                            <x-input.label class="tw-relative" for="status_perkawinan" label="Status Perkawinan">
+                                <x-input.select2 name="status_perkawinan" placeholder="{{old('status_perkawinan') ? old('status_perkawinan') : 'Pilih Status Perkawinan'}}"></x-input.select2>
+                                
+                                @error('status_perkawinan')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
+                            {{-- <x-input.label for="status_perkawinan" label="Status Perkawinan">
                                 <x-input.select name="status_perkawinan" id="status_perkawinan">
                                     <option disabled @selected(!old('status_perkawinan'))>Pilih Status</option>
                                     <option value="Belum Kawin" @selected(old('status_perkawinan') == 'Belum Kawin')>Belum Kawin</option>
@@ -177,7 +188,7 @@
                                 @error('status_perkawinan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
-                            </x-input.label>
+                            </x-input.label> --}}
 
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="status_perkawinan">Status Perkawinan
@@ -189,7 +200,34 @@
                                 </select>
                             </label> --}}
 
-                            <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
+                            <x-input.label class="tw-relative" for="jenis_pekerjaan" label="Jenis Pekerjaan">
+                                <x-input.select2 name="jenis_pekerjaan" searchable placeholder="Pilih Jenis Pekerjaan"></x-input.select2>
+                                
+                                @error('jenis_pekerjaan')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
+                            {{-- <x-input.label class="tw-relative tw-max-h-20" for="pendidikan" label="pendidikan">
+                                <button type="button" id="pendidikan"
+                                    class="dropdownTrigger tw-cursor-pointer tw-input-enabled tw-flex tw-items-center  tw-justify-between">
+                                    Pilih Jenis Pekerjaan
+                                    <x-icons.actionable.arrow-down-1 stroke="1.5"
+                                        color="n1000"></x-icons.actionable.arrow-down-1>
+                                </button>
+                                <div
+                                    class="dropContent tw-hidden tw-absolute tw-flex tw-flex-col tw-gap-3 tw-top-20 tw-z-10 tw-p-3 tw-w-full tw-bg-n100 tw-rounded-lg tw-border-[1.5px] tw-border-n400">
+                                    <x-input.leadicon type="text" name="searchDropItem">
+                                        <x-icons.actionable.search color="n1000" size="20"
+                                            stroke="1.5"></x-icons.actionable.search>
+                                    </x-input.leadicon>
+                                    <ul class="dropOptions tw-w-full">
+
+                                    </ul>
+                                </div>
+                            </x-input.label> --}}
+
+                            {{-- <x-input.label for="jenis_pekerjaan" label="Jenis Pekerjaan">
                                 <x-input.select name="jenis_pekerjaan" id="jenis_pekerjaan">
                                     <option disabled @selected(!old('jenis_pekerjaan'))>Pilih Jenis Pekerjaan</option>
                                     <option value="Belum/Tidak Bekerja" @selected(old('jenis_pekerjaan') == 'Belum/Tidak Bekerja')>Belum/Tidak Bekerja
@@ -205,7 +243,7 @@
                                 @error('jenis_pekerjaan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
-                            </x-input.label>
+                            </x-input.label> --}}
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_pekerjaan">Jenis Pekerjaan
                                 <select class="tw-input-enabled tw-placeholder" name="jenis_pekerjaan" id="jenis_pekerjaan">
@@ -375,14 +413,14 @@
                             </x-input.label>
 
                             @if (session()->has('berkas_demografi'))
-                            @php
-                                $img = session()->get('berkas_demografi');
-                            @endphp
-                            @include('components.form.textdetail', [
-                                'title' => '',
-                                'isImage' => true,
-                                'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
-                            ])
+                                @php
+                                    $img = session()->get('berkas_demografi');
+                                @endphp
+                                @include('components.form.textdetail', [
+                                    'title' => '',
+                                    'isImage' => true,
+                                    'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
+                                ])
                             @endif
 
                         </div>
@@ -456,7 +494,9 @@
             $('#status_perkawinan').addClass('tw-input-disabled');
             $('#status_perkawinan').prop('disabled', true);
 
+            $('#jenis_pekerjaan-list').addClass('tw-hidden');
             $('#jenis_pekerjaan').val('');
+            $('#jenis_pekerjaan').attr('type','text');
             $('#jenis_pekerjaan').removeClass('tw-input-enabled');
             $('#jenis_pekerjaan').addClass('tw-input-disabled');
             $('#jenis_pekerjaan').prop('disabled', true);
@@ -605,6 +645,8 @@
             $('#status_perkawinan').removeClass('tw-input-disabled');
             $('#status_perkawinan').prop('disabled', false);
 
+            $('#jenis_pekerjaan-list').removeClass('tw-hidden');
+            $('#jenis_pekerjaan').attr('type','hidden');
             $('#jenis_pekerjaan').addClass('tw-input-enabled');
             $('#jenis_pekerjaan').removeClass('tw-input-disabled');
             $('#jenis_pekerjaan').prop('disabled', false);
@@ -648,7 +690,7 @@
             $('#nik-list').prop('disabled', true);
         }
         $(document).ready(function() {
-            if (`{{ session()->exists('data_lama')? session()->get('data_lama') : false  }}`) {
+            if (`{{ session()->exists('data_lama') ? session()->get('data_lama') : false }}`) {
                 data_lama();
                 $('#jenis-data').val('data-lama');
             }

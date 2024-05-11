@@ -302,9 +302,7 @@
                                                 </a>
                                                 <a href="{{ route('removeAnggotaKeluarga', $loop->index) }}"
                                                     class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
-                                                    <img class="tw-h-5 tw-bg-cover"
-                                                        src="{{ asset('assets/icons/actionable/trash.svg') }}"
-                                                        alt="del">
+                                                    <x-icons.actionable.trash size="20" stroke="2" color="n100"></x-icons.actionable.trash>
                                                 </a>
                                             </td>
                                         </tr>
