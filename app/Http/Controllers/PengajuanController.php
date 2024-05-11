@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HaveDemografi;
 use App\Models\Keluarga;
 use App\Models\KeluargaModified;
+use App\Models\Pengajuan;
 use App\Models\PengajuanData;
 use App\Models\Warga;
 use App\Models\WargaHistory;
@@ -28,7 +29,15 @@ class PengajuanController extends Controller
 
     public function list()
     {
-        $pengajuan =  PengajuanData::with(['user', 'keluarga'])->orderBy('tanggal_request', 'desc')->get();
+        if (Auth::user()->hasLevel['level_kode'] == 'RW') {
+            $pengajuan =  PengajuanData::with(['user', 'keluarga'])->orderBy('tanggal_request', 'desc')->get();
+        } else if (Auth::user()->hasLevel['level_kode'] == 'RT') {
+            $pengajuan =  PengajuanData::with(['user', 'keluarga'])
+                ->where('user_id', '=', Auth::user()->user_id)
+                ->orderBy('tanggal_request', 'desc')
+                ->get();
+        }
+
         return DataTables::of($pengajuan)
             ->addIndexColumn()
             ->addColumn('status', function ($pengajuan) {
