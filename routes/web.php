@@ -82,7 +82,7 @@ Route::prefix('pengajuan')->group(function () {
      * Route untuk menampilkan tabel-tabel data pengajuan
      */
     Route::get('/', [PengajuanController::class, 'index'])
-        ->name('dataBaru')
+        ->name('pengajuan')
         ->middleware('role:rw,rt'); // menampilkan tabel pengajuan
     Route::post('/list', [PengajuanController::class, 'list'])
         ->name('pengajuan.list')

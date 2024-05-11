@@ -155,7 +155,7 @@
                                 id="buttonReject">Tolak</button>
                             {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
                             <form class="d-inline-block" method="POST"
-                                action="{{ route('pengajuan.confirm.perubahan.keluarga') }}">
+                                action="{{ route('pengajuan.confirm.perubahan.keluarga') }}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
                                 <input type="hidden" name="id" value="{{ $pengajuan->id }}">

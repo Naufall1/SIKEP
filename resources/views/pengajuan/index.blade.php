@@ -20,8 +20,8 @@
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href="{{ route('dataBaru') }}"
-                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'dataBaru' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                <a href="{{ route('pengajuan') }}"
+                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'pengajuan' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Pengajuan
                 </a>
                 <div
