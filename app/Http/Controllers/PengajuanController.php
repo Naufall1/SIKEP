@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class PengajuanController extends Controller
@@ -191,25 +192,42 @@ class PengajuanController extends Controller
         $user = Auth::user()->level_id;
         $pengajuan = PengajuanData::with('keluarga')->find($request->id);
         $currentKeluarga = Keluarga::find($pengajuan->no_kk);
-        $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)->where('status_request', '=', 'Menunggu');
+        $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                                // ->where('status_request', '=', 'Menunggu')
+                                ->first();
 
         return view('pengajuan.perubahankeluarga.detail', compact(['user', 'pengajuan', 'currentKeluarga', 'modifiedKeluarga']));
     }
     public function confirmPerubahanKeluarga(Request $request)
     {
-        $request->merge(['id' => $request->route('id')]);
-        $request->validate([
+        // $request->merge(['id' => $request->route('id')]);
+        $validator = Validator::make($request->all(),[
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
         ]);
+
+        // dd($validator->fails());
 
         try {
             DB::beginTransaction();
 
+            $pengajuan = PengajuanData::with('keluarga')->find($request->id);
+            $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                ->where('status_request', '=', 'Menunggu')
+                ->first();
+
+            if (!Keluarga::applyModifications($modifiedKeluarga)){
+                throw new Exception('Gagal menyimpan perubahan kedalam table Keluarga.');
+            }
+
+            $pengajuan->status_request = 'Dikonfirmasi';
+            $pengajuan->save();
+
             DB::commit();
+            return redirect()->route('pengajuan')->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
+            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
         }
     }
 

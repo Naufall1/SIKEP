@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('tagihan_listrik');
             $table->integer('luas_bangunan');
             $table->enum('status', ['Aktif', 'Tidak Aktif', 'Menunggu']);
+            $table->timestamps();
         });
     }
 
