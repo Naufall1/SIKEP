@@ -383,9 +383,11 @@ class WargaController extends Controller
                 // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
                 WargaModified::updateWarga($warga);
 
-                $demografi->fill($request->only('tanggal_kejadian'));
+                if ($request->has('tanggal_kejadian')) {
+                    $demografi->fill($request->only('tanggal_kejadian'));
+                }
 
-                if ($demografi->isDirty('tanggal_kejadian') || isset($filenameSimpan)) {
+                if (($demografi && $demografi->isDirty('tanggal_kejadian')) || isset($filenameSimpan)) {
                     HaveDemografi::create([
                         'demografi_id' => $demografi->demografi_id,
                         'NIK' => $warga->NIK,

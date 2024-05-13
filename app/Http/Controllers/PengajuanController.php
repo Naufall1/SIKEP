@@ -257,32 +257,66 @@ class PengajuanController extends Controller
     public function showPerubahanWarga(Request $request)
     {
         $request->merge(['id' => $request->route('id')]);
+
         $request->validate([
             'id' => 'required|exists:pengajuan,id'
         ]);
 
         $user = Auth::user()->level_id;
         $pengajuan = PengajuanData::with('keluarga')->find($request->id);
-        $currentWarga = Warga::where('no_kk', '=', $pengajuan->no_kk)->first();
-        $modifiedWarga = WargaModified::where('status_request', '=', 'Menunggu')->where('NIK', '=', $currentWarga->NIK)->first();
+
+        if ($pengajuan->status_request == 'Menunggu') {
+            $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('status_request', '=', 'Menunggu')
+                                    ->first();
+            $currentWarga = Warga::find($modifiedWarga->NIK);
+        } else if ($pengajuan->status_request == 'Dikonfirmasi') {
+            $currentWarga = WargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_from', '<=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_to', 'desc')
+                                    ->first();
+            $modifiedWarga = WargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_from', '>=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_from', 'asc')
+                                    ->first();
+            if (!$modifiedWarga) {
+                $modifiedWarga = WargaModified::where('tanggal_request', '=', $pengajuan->tanggal_request)->first();
+            }
+        }
 
         return view('pengajuan.perubahanwarga.detail', compact(['user', 'pengajuan', 'currentWarga', 'modifiedWarga']));
     }
     public function confirmPerubahanWarga(Request $request)
     {
-        $request->merge(['id' => $request->route('id')]);
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
         ]);
 
         try {
             DB::beginTransaction();
 
+            $pengajuan = PengajuanData::with('keluarga')->find($request->id);
+            $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('status_request', '=', 'Menunggu')
+                                    ->first();
+
+            WargaHistory::track(Warga::find($modifiedWarga->NIK));
+
+            if (!Warga::applyModifications($modifiedWarga)){
+                throw new Exception('Gagal menyimpan perubahan kedalam table Keluarga.');
+            }
+
+            $pengajuan->status_request = 'Dikonfirmasi';
+            $pengajuan->save();
+
             DB::commit();
+            return redirect()->route('pengajuan')->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
+            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
         }
     }
 

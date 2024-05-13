@@ -31,8 +31,8 @@ return new class extends Migration
             $table->char('no_kitas', 10)->nullable();
             $table->string('nama_ayah', 100);
             $table->string('nama_ibu', 100);
-            $table->date('valid_from');
-            $table->date('valid_to');
+            $table->datetime('valid_from');
+            $table->datetime('valid_to');
 
             $table->foreign('NIK')->references('NIK')->on('warga');
         });
