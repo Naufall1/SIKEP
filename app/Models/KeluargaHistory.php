@@ -38,18 +38,18 @@ class KeluargaHistory extends Model
     public static function track(Keluarga $keluarga): void
     {
         // cari tanggal terakhir data warga tertentu dirubah
-        $valid_from = KeluargaHistory::where('no_kk', '=', $keluarga)
+        $last_data = KeluargaHistory::where('no_kk', '=', $keluarga->no_kk)
             ->orderBy('id_history_keluarga', 'desc')
             ->first();
 
-        if ($valid_from) {
-            $valid_from = $valid_from->value('valid_to');
+
+        if ($last_data) {
+            $valid_from = $last_data->valid_to;
         }
 
         // jika tidak ada data, maka valid_from adalah tanggal dibuat
-        if (is_null($valid_from)) {
+        if (is_null($last_data)) {
             $valid_from = $keluarga->created_at;
-            // $valid_from = null;
         }
 
         KeluargaHistory::create([

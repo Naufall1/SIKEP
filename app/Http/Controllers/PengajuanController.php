@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HaveDemografi;
 use App\Models\Keluarga;
+use App\Models\KeluargaHistory;
 use App\Models\KeluargaModified;
 use App\Models\Pengajuan;
 use App\Models\PengajuanData;
@@ -31,12 +32,14 @@ class PengajuanController extends Controller
     public function list()
     {
         if (Auth::user()->hasLevel['level_kode'] == 'RW') {
-            $pengajuan =  PengajuanData::with(['user', 'keluarga'])->orderBy('tanggal_request', 'desc')->get();
+            $pengajuan =  PengajuanData::with(['user', 'keluarga'])
+                            ->orderBy('id', 'desc')
+                            ->get();
         } else if (Auth::user()->hasLevel['level_kode'] == 'RT') {
             $pengajuan =  PengajuanData::with(['user', 'keluarga'])
-                ->where('user_id', '=', Auth::user()->user_id)
-                ->orderBy('tanggal_request', 'desc')
-                ->get();
+                            ->where('user_id', '=', Auth::user()->user_id)
+                            ->orderBy('id', 'desc')
+                            ->get();
         }
 
         return DataTables::of($pengajuan)
@@ -191,10 +194,26 @@ class PengajuanController extends Controller
 
         $user = Auth::user()->level_id;
         $pengajuan = PengajuanData::with('keluarga')->find($request->id);
-        $currentKeluarga = Keluarga::find($pengajuan->no_kk);
-        $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
-                                // ->where('status_request', '=', 'Menunggu')
-                                ->first();
+
+        if ($pengajuan->status_request == 'Menunggu') {
+            $currentKeluarga = Keluarga::find($pengajuan->no_kk);
+            $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('status_request', '=', 'Menunggu')
+                                    ->first();
+        } else if ($pengajuan->status_request == 'Dikonfirmasi') {
+            $currentKeluarga = KeluargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_from', '<=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_to', 'desc')
+                                    ->first();
+            $modifiedKeluarga = KeluargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_from', '>=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_from', 'asc')
+                                    ->first();
+            if (!$modifiedKeluarga) {
+                $modifiedKeluarga = KeluargaModified::where('tanggal_request', '=', $pengajuan->tanggal_request)->first();
+            }
+        }
 
         return view('pengajuan.perubahankeluarga.detail', compact(['user', 'pengajuan', 'currentKeluarga', 'modifiedKeluarga']));
     }
@@ -212,6 +231,7 @@ class PengajuanController extends Controller
 
             $pengajuan = PengajuanData::with('keluarga')->find($request->id);
             $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                ->where('tanggal_request', '=', $pengajuan->tanggal_request)
                 ->where('status_request', '=', 'Menunggu')
                 ->first();
 

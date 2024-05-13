@@ -144,7 +144,8 @@
     </div>
 @endsection
 @push('js')
-<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
@@ -193,7 +194,7 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[5, 'desc']],
+                // order: [[1, 'desc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[44px]",
@@ -222,6 +223,12 @@
                 }, {
                     data: "tanggal_request",
                     className: "tw-w-[140px]",
+                    render: function(data, type, row){
+                        if(type === "sort" || type === "type"){
+                            return data;
+                        }
+                        return moment(data).format("YYYY-MM-DD");
+                    },
                     orderable: true,
                     searchable: true
                 }, {

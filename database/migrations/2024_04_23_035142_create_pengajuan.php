@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->char('no_kk', 16);
-            $table->date('tanggal_request');
+            $table->datetime('tanggal_request');
             $table->enum('status_request', ['Dikonfirmasi', 'Ditolak', 'Menunggu']);
             $table->text('catatan')->nullable();
             $table->enum('tipe', ['Pembaruan', 'Perubahan Keluarga', 'Perubahan Warga']);
