@@ -50,21 +50,19 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
-                                'content' => 'Perubahan Keluarga',
+                                'content' => $pengajuan->tipe,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Pengajuan',
-                                'content' => 'Ditolak',
+                                'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
-                            {{-- @if ($data->status === 'Ditolak') --}}
-
-                            @include('components.form.textdetail', [
-                                'title' => 'Catatan',
-                                'content' =>
-                                    'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
-                            ])
-                            {{-- @endif --}}
+                            @if ($pengajuan->status_request === 'Ditolak')
+                                @include('components.form.textdetail', [
+                                    'title' => 'Catatan',
+                                    'content' => $pengajuan->catatan,
+                                ])
+                            @endif
 
                         </div>
                     </div>
