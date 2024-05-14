@@ -46,13 +46,19 @@
 </div>
 
 <script>
+    let pekerjaan;
+    let jenis_kelamin;
+    let agama;
+    let tingkat_pendidikan;
+    let usia;
+    let bansos;
     document.addEventListener('DOMContentLoaded', function() {
-        chartPekerjaan();
-        chartJenisKelamin();
-        chartAgama();
-        chartTingkatPendidikan();
-        chartUsia();
-        chartBansos();
+        pekerjaan = chartPekerjaan();
+        jenis_kelamin = chartJenisKelamin();
+        agama = chartAgama();
+        tingkat_pendidikan = chartTingkatPendidikan();
+        usia = chartUsia();
+        bansos = chartBansos();
     });
 
     function createChart(ctx, labels, data, label) {
@@ -126,7 +132,7 @@
                                 innerHtml += ' %</h3>';
 
                                 let tableRoot = tooltipEl.querySelector('div');
-                                console.log(tableRoot);
+                                // console.log(tableRoot);
                                 tableRoot.innerHTML = innerHtml;
                             }
 
@@ -173,7 +179,7 @@
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.persentase);
-        createChart(ctx, agama, jmlWarga, 'Persentase');
+        return createChart(ctx, agama, jmlWarga, 'Persentase');
     }
 
     function chartTingkatPendidikan() {
@@ -181,7 +187,7 @@
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.persentase);
-        createChart(ctx, pendidikan, jmlWarga, 'Persentase');
+        return createChart(ctx, pendidikan, jmlWarga, 'Persentase');
     }
 
     function chartPekerjaan() {
@@ -189,7 +195,7 @@
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
         const jmlWarga = dataPekerjaan.map(item => item.persentase);
-        createChart(ctx, jenisPekerjaan, jmlWarga, 'Persentase');
+        return createChart(ctx, jenisPekerjaan, jmlWarga, 'Persentase');
     }
 
     function chartJenisKelamin() {
@@ -197,7 +203,7 @@
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
         const jmlWarga = dataJenisKelamin.map(item => item.persentase);
-        createChart(ctx, jenisKelamin, jmlWarga, 'Persentase');
+        return createChart(ctx, jenisKelamin, jmlWarga, 'Persentase');
     }
 
     function chartBansos() {
@@ -205,7 +211,7 @@
         const dataBansos = @json($dataBansosByMonth);
         const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
         const jmlWarga = dataBansos.map(item => item.persentase);
-        createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
+        return createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
     }
 
     function chartUsia() {
@@ -213,22 +219,19 @@
         const dataUsia = @json($dataUsia);
         const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
         const jumlahPenduduk = dataUsia.map(item => item.persentase);
-        createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
+        return createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
     }
 
     // generate chart e ga work (gpt)
-    function updateChart(chartInstance, newData) {
+    function updateChart(chartInstance, newData, jenisData) {
         // Mendefinisikan variabel datasets dan labels
         let datasets = chartInstance.data.datasets;
         let labels = chartInstance.data.labels;
+        let data = []
 
-        // Memperbarui data dalam datasets dan labels berdasarkan newData
-        datasets.forEach((dataset, index) => {
-            dataset.data = newData[index].data;
+        datasets[0].data.forEach((dataset, index) => {
+            chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
         });
-        labels = newData[0].labels;
-
-        // Memanggil fungsi update dari chartInstance untuk merender ulang chart dengan data dan label yang baru
         chartInstance.update();
     }
 
@@ -251,10 +254,6 @@
         const ctxUsia = document.getElementById('chartUsiaPie').getContext('2d');
         chartUsia = createChart(ctxUsia, [], [], 'Persentase');
     }
-
-    $(document).ready(function() {
-        initializeCharts();
-    });
 
     function dropdownChartData(selectedRT) {
         const selectedChart = document.getElementById('chartType').value;
@@ -281,26 +280,28 @@
                 _token: "{{ csrf_token() }}"
             },
             success: function(data) {
-                console.log("selected rt =", selectedRTValue);
-                console.log("data array =", data);
+                // console.log("selected rt =", selectedRTValue);
+                // console.log("data array =", data);
+                // console.log("chart obj = ", pekerjaan);
                 switch (selectedChart) {
                     case 'pekerjaan':
-                        updateChart(chartPekerjaan, data);
+                        updateChart(pekerjaan, data, 'dataPekerjaan');
                         break;
                     case 'jenis_kelamin':
-                        updateChart(chartJenisKelamin, data);
+                        updateChart(jenis_kelamin, data, 'dataJenisKelamin');
                         break;
                     case 'agama':
-                        updateChart(chartAgama, data);
+                        updateChart(agama, data, 'dataAgama');
                         break;
                     case 'tingkat_pendidikan':
-                        updateChart(chartTingkatPendidikan, data);
+                        updateChart(tingkat_pendidikan, data, 'dataTingkatPendidikan');
                         break;
                     case 'bansos':
-                        updateChart(chartBansos, data);
+                        updateChart(bansos, data, 'dataBansos');
                         break;
                     case 'usia':
-                        updateChart(chartUsia, data);
+                        console.log(data);
+                        updateChart(usia, data, 'dataUsia');
                         break;
                     default:
                         console.error('dropdownChartDataRT() error');
