@@ -12,7 +12,7 @@
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
     <div class="tw-w-28">
         <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
-            <option value="all">Semua</option>
+            <option value="ketua">Semua</option>
             @foreach ($semuaRT as $rt)
                 <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
             @endforeach
@@ -233,26 +233,6 @@
             chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
         });
         chartInstance.update();
-    }
-
-    function initializeCharts() {
-        const ctxPekerjaan = document.getElementById('chartPekerjaanPie').getContext('2d');
-        chartPekerjaan = createChart(ctxPekerjaan, [], [], 'Persentase');
-
-        const ctxJenisKelamin = document.getElementById('chartJenisKelaminPie').getContext('2d');
-        chartJenisKelamin = createChart(ctxJenisKelamin, [], [], 'Persentase');
-
-        const ctxAgama = document.getElementById('chartAgamaPie').getContext('2d');
-        chartAgama = createChart(ctxAgama, [], [], 'Persentase');
-
-        const ctxTingkatPendidikan = document.getElementById('chartTingkatPendidikanPie').getContext('2d');
-        chartTingkatPendidikan = createChart(ctxTingkatPendidikan, [], [], 'Persentase');
-
-        const ctxBansos = document.getElementById('chartBansosPie').getContext('2d');
-        chartBansos = createChart(ctxBansos, [], [], 'Persentase');
-
-        const ctxUsia = document.getElementById('chartUsiaPie').getContext('2d');
-        chartUsia = createChart(ctxUsia, [], [], 'Persentase');
     }
 
     function dropdownChartData(selectedRT) {
