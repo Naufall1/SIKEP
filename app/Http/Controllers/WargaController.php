@@ -350,6 +350,9 @@ class WargaController extends Controller
                 ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar)) ||
                 (!$demografi && $request->jenis_demografi_keluar != null)
             ) {
+                $warga->status_warga = $request->jenis_demografi_keluar;
+                WargaModified::updateWarga($warga);
+
                 $dm = Demografi::create([
                     'user_id' => Auth::user()->user_id,
                     'jenis' => $request->jenis_demografi_keluar
@@ -371,6 +374,7 @@ class WargaController extends Controller
                     'tipe' => 'Perubahan Warga'
                 ]);
                 $message['message'] = 'Edit Warga Berhasil!';
+                $warga = null;
             }
 
             // Hapus session berkas demografi.
@@ -379,7 +383,7 @@ class WargaController extends Controller
             }
 
             // Jika data warga ada yang berubah maka akan ditambahkan kedalam tabel wargaModified
-            if (!empty($warga->getDirty()) || ($demografi && $demografi->isDirty('tanggal_kejadian')) || isset($filenameSimpan_2)) {
+            if (($warga && !empty($warga->getDirty())) || ($demografi && $demografi->isDirty('tanggal_kejadian')) || isset($filenameSimpan_2)) {
                 // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
                 WargaModified::updateWarga($warga);
 
@@ -443,6 +447,13 @@ class WargaController extends Controller
     public function detail($nik)
     {
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
+        $demografiMasuk = HaveDemografi::getDemografiMasuk($warga->NIK, 'Dikonfirmasi');
+        $demografiKeluar = HaveDemografi::join('demografi', 'demografi.demografi_id', '=', 'have_demografi.demografi_id')
+                            ->where('NIK', '=', $warga->NIK)
+                            ->whereIn('demografi.jenis', ['Meninggal', 'Migrasi Keluar'])
+                            ->where('status_request','=', 'Dikonfirmasi')
+                            ->orderBy('tanggal_request', 'DESC')
+                            ->first();
         $pengajuanInProgres = PengajuanData::where('no_kk','=', $warga->no_kk)
             ->where('status_request','=', 'Menunggu')
             ->orderBy('tanggal_request', 'DESC')
@@ -451,6 +462,6 @@ class WargaController extends Controller
         if (!$warga) {
             return redirect()->back();
         }
-        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres']));
+        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres', 'demografiMasuk', 'demografiKeluar']));
     }
 }

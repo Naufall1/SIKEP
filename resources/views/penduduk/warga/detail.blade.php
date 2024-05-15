@@ -125,49 +125,50 @@
 
                     <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between">
 
-                        <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
-                            <h2 class="">Demografi Masuk</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-                                @include('components.form.textdetail', [
-                                    'title' => 'Jenis',
-                                    'content' => !isset($warga->haveDemografi[0]->demografi) ? "-" : $warga->haveDemografi[0]->demografi->jenis,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Tanggal',
-                                    'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian) ? "-" : $warga->haveDemografi[0]->tanggal_kejadian,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
+                        @if ($demografiMasuk)
+                            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                                <h2 class="">Demografi Masuk</h2>
+                                <div class="tw-flex tw-flex-col tw-gap-3">
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Jenis',
+                                        'content' => !isset($warga->haveDemografi[0]->demografi) ? "-" : $warga->haveDemografi[0]->demografi->jenis,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Tanggal',
+                                        'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian) ? "-" : $warga->haveDemografi[0]->tanggal_kejadian,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'isImage' => true,
+                                        'title' => 'Berkas Pendukung',
+                                        'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
 
                         {{-- if user status user migrasi/meninggal --}}
 
-                        <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
-                            <h2 class="">Demografi Keluar</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'title' => 'Jenis',
-                                    'content' => 'Meninggal',
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Tanggal',
-                                    'content' => '01/12/2020',
-                                ])
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => 'akfdj',
-                                ])
-                                {{-- kalau label kasih value var $isLabel with true --}}
-
+                        @if ($demografiKeluar)
+                            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                                <h2 class="">Demografi Keluar</h2>
+                                <div class="tw-flex tw-flex-col tw-gap-3">
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Jenis',
+                                        'content' => !isset($demografiKeluar->demografi) ? "-" : $demografiKeluar->demografi->jenis,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Tanggal',
+                                        'content' => !isset($demografiKeluar->tanggal_kejadian) ? "-" : $demografiKeluar->tanggal_kejadian,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'isImage' => true,
+                                        'title' => 'Berkas Pendukung',
+                                        'content' => !isset($demografiKeluar->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$demografiKeluar->dokumen_pendukung)),
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                     </div>
 

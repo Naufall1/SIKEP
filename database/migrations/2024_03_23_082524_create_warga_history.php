@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']);
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
             $table->string('status_keluarga', 15);
-            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi']);
+            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi Keluar']);
             $table->string('jenis_pekerjaan', 50);
             $table->integer('penghasilan');
             $table->enum('kewarganegaraan', ['WNI', 'WNA']);

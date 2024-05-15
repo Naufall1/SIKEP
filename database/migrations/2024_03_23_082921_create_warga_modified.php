@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', '-'])->nullable();
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati', '-'])->nullable();
             $table->string('status_keluarga', 15)->nullable();
-            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi', '-'])->nullable();
+            $table->enum('status_warga', ['Aktif', 'Migrasi Masuk', 'Lahir', 'Meninggal', 'Migrasi Keluar', '-'])->nullable();
             $table->string('jenis_pekerjaan', 50)->nullable();
             $table->integer('penghasilan')->nullable();
             $table->string('pendidikan', 50)->nullable();
