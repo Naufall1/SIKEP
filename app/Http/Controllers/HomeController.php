@@ -9,6 +9,7 @@ use App\Models\Keluarga;
 use App\Models\KeluargaModified;
 use App\Models\Warga;
 use App\Models\WargaModified;
+use Illuminate\Console\View\Components\Warn;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -67,11 +68,28 @@ class HomeController extends Controller
                     ->orWhere('keterangan', 'ketua');
             })
             ->get();
-            $countPenduduk = Warga::count();
+
         $countKeluarga = Keluarga::count();
         $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
+
+        if ($keterangan !== 'ketua') {
+            $countPenduduk = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
+                            ->join('warga as w', 'keluarga.no_kk', '=', 'w.no_kk')
+                            ->where('keluarga.RT', $keterangan)
+                            ->count('w.no_kk');
+            $countKeluarga = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
+                            ->where('keluarga.RT', $keterangan)
+                            ->count();
+            $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
+
+        } else {
+            $countPenduduk = Warga::count();
+            $countKeluarga = Keluarga::count();
+            $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
+        }
 
         return compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataBansosByMonth', 'dataUsia', 'semuaRT',
             'countPengajuan', 'countKeluarga', 'countPenduduk');
     }
+
 }

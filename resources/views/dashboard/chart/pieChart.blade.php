@@ -1,9 +1,9 @@
 <div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
     <div class="tw-w-56">
         <x-input.select id="chartType" onchange="dropdownChartData()">
-            <option value="pekerjaan" selected>Pekerjaan</option>
+            <option value="pekerjaan">Pekerjaan</option>
             <option value="jenis_kelamin">Jenis Kelamin</option>
-            <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
+            <option value="tingkat_pendidikan" selected>Tingkat Pendidikan</option>
             <option value="agama">Agama</option>
             <option value="bansos">Bansos</option>
             <option value="usia">Usia</option>
@@ -22,7 +22,7 @@
 </div>
 
 <div id="chartPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartPekerjaanPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
@@ -53,6 +53,7 @@
     let usia;
     let bansos;
     document.addEventListener('DOMContentLoaded', function() {
+        dropdownChartData();
         pekerjaan = chartPekerjaan();
         jenis_kelamin = chartJenisKelamin();
         agama = chartAgama();
@@ -208,7 +209,7 @@
 
     function chartBansos() {
         const ctx = document.getElementById('chartBansosPie').getContext('2d');
-        const dataBansos = @json($dataBansosByMonth);
+        const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
         const jmlWarga = dataBansos.map(item => item.persentase);
         return createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
@@ -223,21 +224,42 @@
     }
 
     // generate chart e ga work (gpt)
+    // function updateChart(chartInstance, newData, jenisData) {
+    //     // Mendefinisikan variabel datasets dan labels
+    //     let datasets = chartInstance.data.datasets;
+    //     let labels = chartInstance.data.labels;
+    //     let data = []
+
+    //     datasets[0].data.forEach((dataset, index) => {
+    //         chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
+    //     });
+    //     chartInstance.update();
+    // }
+
     function updateChart(chartInstance, newData, jenisData) {
-        // Mendefinisikan variabel datasets dan labels
         let datasets = chartInstance.data.datasets;
         let labels = chartInstance.data.labels;
-        let data = []
 
-        datasets[0].data.forEach((dataset, index) => {
-            chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
-        });
+        // Jika data baru ada dan tidak kosong, perbarui data chart
+        if (newData[jenisData] && newData[jenisData].length > 0) {
+            datasets[0].data = newData[jenisData].map((item, index) => {
+                return item['persentase'] !== undefined ? item['persentase'] : 0;
+            });
+        } else {
+            // Jika data kosong, set semua data pada chart ke 0
+            datasets[0].data = labels.map(() => 0);
+        }
+
         chartInstance.update();
     }
 
     function dropdownChartData(selectedRT) {
         const selectedChart = document.getElementById('chartType').value;
-        const selectedRTValue = document.getElementById('rtFilter').value;
+        var selectedRTValue = '{{Auth::user()->keterangan}}';
+        console.log(document.getElementById('rtFilter'));
+        if (document.getElementById('rtFilter') != null) {
+            selectedRTValue = document.getElementById('rtFilter').value;
+        }
         const containers = {
             pekerjaan: 'chartPekerjaanContainer',
             jenis_kelamin: 'chartJenisKelaminContainer',
@@ -255,7 +277,7 @@
             url: "{{ route('filter-data') }}",
             type: "POST",
             data: {
-                selectedRT: selectedRTValue,
+                selectedRT: selectedRTValue ? selectedRTValue : selectedRT,
                 selectedChart: selectedChart,
                 _token: "{{ csrf_token() }}"
             },

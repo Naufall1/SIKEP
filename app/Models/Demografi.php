@@ -61,7 +61,7 @@ class Demografi extends Model
             if ($persentase != 0) {
                 foreach ($data as $key => $value) {
                     if ($value['rentang_usia'] == $row->rentang_usia) {
-                        $data[$key]['jumlah_penduduk'] = $row->jumlah_penduduk;
+                        $data[$key]['jumlah'] = $row->jumlah_penduduk;
                         $data[$key]['persentase'] = round($persentase, 1);
                     }
                 }

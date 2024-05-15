@@ -13,7 +13,7 @@ class ChartController extends Controller
     public function filterData(Request $request)
     {
         $selectedRT = $request->input('selectedRT');
-        // $selectedChart = $request->input('selectedChart');
+        $selectedChart = $request->input('selectedChart');
 
         $dataPekerjaan = Warga::getDataPekerjaan($selectedRT);
         $dataJenisKelamin = Warga::getDataJenisKelamin($selectedRT);

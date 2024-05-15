@@ -139,7 +139,7 @@ class Warga extends Model
         $persentase = ($total > 0) ? ($count / $total) * 100 : 0;
         $data[] = [
             'jenis_pekerjaan' => $jenis,
-            'total' => $count, // barchart
+            'jumlah' => $count, // barchart
             'persentase' => round($persentase, 1)
         ];
     }
