@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']);
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
             $table->string('status_keluarga', 15);
-            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi']);
+            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi Keluar']);
             $table->string('jenis_pekerjaan', 50);
             $table->integer('penghasilan');
             $table->enum('kewarganegaraan', ['WNI', 'WNA']);
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->char('no_kitas', 10)->nullable();
             $table->string('nama_ayah', 100);
             $table->string('nama_ibu', 100);
-            $table->date('valid_from');
-            $table->date('valid_to');
+            $table->datetime('valid_from');
+            $table->datetime('valid_to');
 
             $table->foreign('NIK')->references('NIK')->on('warga');
         });

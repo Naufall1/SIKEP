@@ -47,6 +47,7 @@ class Warga extends Model
         $warga->fill($wargaModified->toArray());
         $warga->save();
         $wargaModified->status_request = 'Dikonfirmasi';
+        return $wargaModified->save();
     }
 
     // buat chart

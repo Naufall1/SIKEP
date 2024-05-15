@@ -16,15 +16,16 @@ return new class extends Migration
             $table->char('NIK', 16);
             $table->char('no_kk', 16)->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->string('nama', 100);
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', '-'])->nullable();
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati', '-'])->nullable();
             $table->string('status_keluarga', 15)->nullable();
-            $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi', '-'])->nullable();
+            $table->enum('status_warga', ['Aktif', 'Migrasi Masuk', 'Lahir', 'Meninggal', 'Migrasi Keluar', '-'])->nullable();
             $table->string('jenis_pekerjaan', 50)->nullable();
             $table->integer('penghasilan')->nullable();
             $table->string('pendidikan', 50)->nullable();
-            $table->date('tanggal_request');
-            $table->string('status_request', 20);
+            $table->datetime('tanggal_request');
+            $table->enum('status_request', ['Menunggu', 'Dikonfirmasi']);
             $table->text('catatan')->nullable();
 
             $table->foreign('NIK')->references('NIK')->on('warga');

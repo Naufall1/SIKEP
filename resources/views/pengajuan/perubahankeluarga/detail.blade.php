@@ -50,21 +50,19 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
-                                'content' => 'Perubahan Keluarga',
+                                'content' => $pengajuan->tipe,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Pengajuan',
-                                'content' => 'Ditolak',
+                                'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
-                            {{-- @if ($data->status === 'Ditolak') --}}
-
-                            @include('components.form.textdetail', [
-                                'title' => 'Catatan',
-                                'content' =>
-                                    'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
-                            ])
-                            {{-- @endif --}}
+                            @if ($pengajuan->status_request === 'Ditolak')
+                                @include('components.form.textdetail', [
+                                    'title' => 'Catatan',
+                                    'content' => $pengajuan->catatan,
+                                ])
+                            @endif
 
                         </div>
                     </div>
@@ -155,7 +153,7 @@
                                 id="buttonReject">Tolak</button>
                             {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
                             <form class="d-inline-block" method="POST"
-                                action="{{ route('pengajuan.confirm.perubahan.keluarga') }}">
+                                action="{{ route('pengajuan.confirm.perubahan.keluarga') }}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
                                 <input type="hidden" name="id" value="{{ $pengajuan->id }}">

@@ -52,9 +52,6 @@
                     <div class="tw-flex tw-flex-col tw-gap-2">
                         <h2 class="">Informasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-                            {{-- @php
-                                dd($pengajuan);
-                            @endphp --}}
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
                                 'content' => $pengajuan->tipe,
@@ -64,15 +61,12 @@
                                 'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
-                            {{-- @if ($data->status === 'Ditolak') --}}
-
-                            @include('components.form.textdetail', [
-                                'title' => 'Catatan',
-                                'content' =>
-                                    'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
-                            ])
-                            {{-- @endif --}}
-
+                            @if ($pengajuan->status_request === 'Ditolak')
+                                @include('components.form.textdetail', [
+                                    'title' => 'Catatan',
+                                    'content' => $pengajuan->catatan,
+                                ])
+                            @endif
                         </div>
                     </div>
 
@@ -186,7 +180,7 @@
 
                 {{-- level_id 1 == RW --}}
                 <div class="tw-flex tw-justify-between">
-                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="{{route('pengajuan')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>

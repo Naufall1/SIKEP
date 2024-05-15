@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('image_kk', 100);
             $table->integer('tagihan_listrik');
             $table->integer('luas_bangunan');
-            $table->date('valid_from');
-            $table->date('valid_to');
+            $table->datetime('valid_from');
+            $table->datetime('valid_to');
 
             $table->foreign('no_kk')->references('no_kk')->on('keluarga');
         });
