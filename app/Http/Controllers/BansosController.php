@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Bansos;
 use App\Models\Keluarga;
+use App\Models\KeluargaHistory;
+use App\Models\KeluargaModified;
 use App\Models\MightGet;
+use App\Models\PengajuanData;
 use App\Models\Warga;
+use App\Models\WargaHistory;
+use App\Models\WargaModified;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class BansosController extends Controller
@@ -54,27 +61,68 @@ class BansosController extends Controller
     }
 
 
-    public function update(Request $request, $id)
-{
-    $request->validate([
-        //
-    ]);
-
-    $dataKeluarga = Keluarga::findOrFail($id);
-    $dataKeluarga->fill($request->all());
-    $dataKeluarga->save();
-
-    foreach ($request->nik as $key => $nik) {
-        $dataWarga = Warga::where('nik', $nik)->firstOrFail();
-        $dataWarga->update([
-            'penghasilan' => $request->penghasilan[$key],
-            'jenis_pekerjaan' => $request->jenis_pekerjaan[$key],
+    public function update(Request $request, $no_kk)
+    {
+        $request->merge(['no_kk' => $no_kk]);
+        $request->validate([
+            'no_kk' => 'required|size:16|exists:keluarga,no_kk',
+            'tagihan_listrik' => 'required',
+            'luas_bangunan' => 'required',
+            'penghasilan' => 'required|array',
+            'penghasilan.*' => 'integer'
         ]);
-    }
 
-    return redirect()->route('kriteria')
-        ->with('success', 'Data berhasil disimpan.');
-}
+        try {
+            DB::beginTransaction();
+
+            $keluargaModified = false;
+            $wargaModified = false;
+
+            $dataKeluarga = Keluarga::findOrFail($no_kk);
+            $dataKeluarga->fill($request->all());
+
+            if (!empty($dataKeluarga->getDirty())) {
+                KeluargaHistory::track($dataKeluarga);
+                $dataKeluarga->save();
+                $keluargaModified = true;
+            }
+
+            foreach ($request->penghasilan as $nik => $data) {
+                $dataWarga = Warga::findOrFail($nik);
+                $dataWarga->penghasilan = $data;
+                if (!empty($dataWarga->getDirty())) {
+                    WargaHistory::track($dataWarga);
+                    $dataWarga->save();
+                    $wargaModified = true;
+                }
+            }
+
+            DB::commit();
+
+            if (!$wargaModified && !$keluargaModified) {
+                return redirect()->route('bansos.kriteria')
+                    ->with('flash', (object)[
+                        'type' => 'success',
+                        'message' => 'Tidak ada data yang diubah.'
+                    ]);
+            }
+
+            return redirect()->route('bansos.kriteria')
+                ->with('flash', (object)[
+                    'type' => 'success',
+                    'message' => 'Data berhasil dikirimkan.'
+                ]);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('bansos.kriteria')
+                ->with('flash', (object)[
+                    'type' => 'fail',
+                    'message' => 'Data gagal dikirimkan.'
+                ]);
+        }
+
+    }
 
 
 }

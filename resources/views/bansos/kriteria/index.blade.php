@@ -102,6 +102,9 @@
     </div>
 @endsection
 @push('js')
+    @if (session()->has('flash'))
+        <script>alert('{{ session()->get("flash")->message }}');</script>
+    @endif
     <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
