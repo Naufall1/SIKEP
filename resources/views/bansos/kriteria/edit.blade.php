@@ -10,7 +10,7 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Kriteria</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7 " action="{{ route('kriteriaUpdate', $dataKeluarga->no_kk) }}"
+            <form class="tw-flex tw-flex-col tw-gap-7 " action="{{ route('bansos.kriteria.update', $dataKeluarga->no_kk) }}"
                 method="POST">
                 @csrf
                 @method('PUT')
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{route('kriteria')}}"
+                    <a href="{{route('bansos.kriteria')}}"
                         class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>

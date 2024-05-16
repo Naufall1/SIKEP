@@ -8,20 +8,36 @@ use App\Models\Keluarga;
 use App\Models\MightGet;
 use App\Models\Warga;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class BansosController extends Controller
 {
     public function index()
     {
+        return view('bansos.kriteria.index');
+    }
+    public function list()
+    {
         $user = Auth::user();
         $dataKeluarga = null;
 
-        if ($user->keterangan === 'ketua') {
+        if (Auth::user()->keterangan === 'ketua') {
             $dataKeluarga = Keluarga::dataBansos($user->keterangan);
         } else {
             $dataKeluarga = Keluarga::dataBansos($user->keterangan);
         }
-        return view('bansos.kriteria.index', compact('dataKeluarga'));
+        return DataTables::of($dataKeluarga)
+            ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+            ->addColumn('action', function ($bansos) {
+                return '<td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                            <a href="'. route('bansos.kriteria.form', $bansos->no_kk) . '"
+                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                Ubah
+                            </a>
+                        </td>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function edit($id)
