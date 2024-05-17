@@ -7,6 +7,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WargaController;
 use App\Models\Bansos;
@@ -26,7 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/testchart', [HomeController::class, 'chart']);
 
+Route::get('/spk', [PerhitunganController::class, 'kriteria']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::post('/filter-data', [ChartController::class, 'filterData'])->name('filter-data');
 
 Route::get('/test/{id}', [AuthController::class, 'test'])->name('test');
