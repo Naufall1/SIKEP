@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('tagihan_listrik')->nullable();
             $table->integer('luas_bangunan')->nullable();
             $table->datetime('tanggal_request');
-            $table->string('status_request', 20);
+            $table->enum('status_request', ['Menunggu', 'Dikonfirmasi', 'Ditolak']);
             $table->text('catatan')->nullable();
 
             $table->foreign('no_kk')->references('no_kk')->on('keluarga');
