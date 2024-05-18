@@ -55,14 +55,6 @@ class PengajuanSeeder extends Seeder
                 'tipe'=> 'Pembaruan',
             ],
             [
-                'user_id' => 6,
-                'no_kk' => '2313678100011671',
-                'tanggal_request' => '2024-04-30',
-                'status_request' => 'Menunggu',
-                'catatan' => null,
-                'tipe'=> 'Perubahan Keluarga',
-            ],
-            [
                 'user_id' => 4,
                 'no_kk' => '9876543210987654',
                 'tanggal_request' => '2024-03-23',
@@ -85,6 +77,14 @@ class PengajuanSeeder extends Seeder
                 'status_request' => 'Menunggu',
                 'catatan' => null,
                 'tipe'=> 'Perubahan Warga',
+            ],
+            [
+                'user_id' => 7,
+                'no_kk' => '2313678100011671',
+                'tanggal_request' => '2024-05-16',
+                'status_request' => 'Menunggu',
+                'catatan' => null,
+                'tipe'=> 'Perubahan Keluarga',
             ],
         ]);
     }
