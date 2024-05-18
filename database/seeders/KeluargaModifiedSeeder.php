@@ -13,7 +13,7 @@ class KeluargaModifiedSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('keluargamodified')->insert([
+        DB::table('keluargaModified')->insert([
             [
                 'no_kk' => '9876543210987654',
                 'user_id'=> 4,

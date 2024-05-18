@@ -13,7 +13,7 @@ class WargaModifiedSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('wargamodified')->insert([
+        DB::table('wargaModified')->insert([
             [
                 'NIK' => '7913579246801357',
                 'no_kk' => '9876543210987654',
