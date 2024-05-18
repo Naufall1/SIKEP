@@ -63,7 +63,7 @@ class Warga extends Model
 
             if ($keterangan !== 'ketua') {
                 $count = $query->where('keluarga.RT', $keterangan)->count();
-                $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
+                $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();
 
             } else{
@@ -95,7 +95,7 @@ class Warga extends Model
 
         if ($keterangan !== 'ketua') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
-            $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
+            $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
 
         } else{
@@ -128,7 +128,7 @@ class Warga extends Model
 
         if ($keterangan !== 'ketua') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
-            $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
+            $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
 
         } else{
@@ -161,8 +161,8 @@ class Warga extends Model
                         ->where('warga.jenis_kelamin', $jenis);
 
             if ($keterangan !== 'ketua') {
-                $count = $query->where('keluarga.RT', $keterangan)->count();
-                $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
+                $count = $query->where('Keluarga.RT', $keterangan)->count();
+                $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();
 
             } else{
