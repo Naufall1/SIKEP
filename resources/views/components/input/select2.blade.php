@@ -12,7 +12,7 @@
     <span class="tw-line-clamp-1">{{isset($default) ? $default : $placeholder}}</span>
     <x-icons.actionable.arrow-down-1 stroke="1.5" color="n1000"></x-icons.actionable.arrow-down-1>
 </button>
-<x-input.input value="{{isset($default) ? ($default != $placeholder ? $default : '' ) : ''}}" type="text" placeholder="{{$placeholder}}" name="{{ $name }}"
+<x-input.input value="{{isset($default) ? ($default != $placeholder ? $default : '' ) : ''}}" type="hidden" placeholder="{{$placeholder}}" name="{{ $name }}"
     id="{{ $name }}"></x-input.input>
 <div
     class="dropContent tw-hidden tw-absolute tw-flex tw-flex-col tw-gap-3 tw-top-20 tw-z-10 tw-p-3 tw-w-full tw-bg-n100 tw-rounded-lg tw-border-[1.5px] tw-border-n400">
