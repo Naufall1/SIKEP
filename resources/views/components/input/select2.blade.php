@@ -4,14 +4,15 @@
     'id' => '',
     'placeholder' => '',
     'searchable' => '',
+    'default'
 ])
 
-<div type="button" id="{{ $name }}-list" name="{{ $name }}"
+<button type="button" id="{{ $name }}-list" name="{{ $name }}"
     class="dropdownTrigger tw-cursor-pointer tw-input-enabled tw-flex tw-items-center tw-justify-between">
-    <span>{{ $placeholder }}</span>
+    <span class="tw-line-clamp-1">{{isset($default) ? $default : $placeholder}}</span>
     <x-icons.actionable.arrow-down-1 stroke="1.5" color="n1000"></x-icons.actionable.arrow-down-1>
-</div>
-<x-input.input value="{{$placeholder}}" type="hidden" placeholder="Pilih" name="{{ $name }}"
+</button>
+<x-input.input value="{{isset($default) ? ($default != $placeholder ? $default : '' ) : ''}}" type="text" placeholder="{{$placeholder}}" name="{{ $name }}"
     id="{{ $name }}"></x-input.input>
 <div
     class="dropContent tw-hidden tw-absolute tw-flex tw-flex-col tw-gap-3 tw-top-20 tw-z-10 tw-p-3 tw-w-full tw-bg-n100 tw-rounded-lg tw-border-[1.5px] tw-border-n400">

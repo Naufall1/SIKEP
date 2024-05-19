@@ -47,7 +47,8 @@ $(document).ready(function () {
         $(this).parent().remove();
     });
 
-    $(".dropItems").delegate(".dropdownItem", "click", function(){
+    $(document).on("click", ".dropdownItem" , function(){
+        console.log('items');
         let selected = $(this).text();
         let button = $(this).parents().parents().parents().children().children().first();
         let name = $(button).parents().attr('name');
@@ -58,17 +59,22 @@ $(document).ready(function () {
         $(button).text(selected);
         // console.log('DEFAULT VALUE = '+$(input).val());
         $(input).val(selected);
-        $(this).parents().find('.dropContent').addClass('tw-hidden');
+        if (!$('.dropContent').hasClass('tw-hidden')) {
+            $('.dropContent').addClass('tw-hidden');
+        }
+        // console.log($(this).parents().parents().parents().html());
         // console.log('NEW VALUE = '+$(input).val());
-        rotateArrow($(button).siblings().last())
-     });
+        // rotateArrow($(button).siblings().last())
+    });
 
     
-    $('.dropdownTrigger').click(function() {
+    $(document).on("click", ".dropdownTrigger", function() {
         // $(this).val();
+        console.log('tes');
         if ($(this).siblings().hasClass('tw-hidden')) {
-            rotateArrow($(this).children().last())
+            // rotateArrow($(this).children().last())
             $('.dropdownTrigger').siblings().addClass('tw-hidden');
+            // rotateArrow($('.dropdownTrigger').children().last())
             $(this).siblings().removeClass('tw-hidden');
             let dropItems = $(this).siblings().children().last();
             $(dropItems).children().remove();
@@ -82,7 +88,7 @@ $(document).ready(function () {
             $(this).siblings().children().focus();
         } else {
             $(this).siblings().addClass('tw-hidden');
-            rotateArrow($(this).children().last())
+            // rotateArrow($(this).children().last())
         }
     });
 
@@ -92,13 +98,31 @@ $(document).ready(function () {
 
     function getDropdownItems(id) {
         if (id=='jenis_pekerjaan-list') {
-            return ["Belum/Tidak Bekerja", "Mengurus Rumah Tangga", "Pelajar/Mahasiswa", "Pensiunan", "Pegawai Negeri Sipil", "Tentara Nasional Indonesia", "Kepolisian RI", "Perdagangan", "Petani/Pekebun", "Peternak", "Nelayan/Perikanan", "Industri", "Konstruksi", "Transportasi", "Karyawan Swasta", "Karyawan BUMN", "Karyawan BUMD", "Karyawan Honorer", "Buruh Harian Lepas", "Buruh Tani/Perkebunan", "Buruh Nelayan/Perikanan", "Buruh Peternakan", "Pembantu Rumah Tangga", "Tukang Cukur", "Tukang Listrik", "Tukang Batu", "Tukang Kayu", "Tukang Sol Sepatu", "Tukang Las/Pandai Besi", "Tukang Jahit", "Penata Rambut", "Penata Rias", "Penata Busana", "Mekanik", "Tukang Gigi", "Seniman", "Tabib", "Paraji", "Perancang Busana", "Penerjemah", "Imam Masjid", "Pendeta", "Pastur", "Wartawan", "Ustadz/Mubaligh", "Juru Masak", "Promotor Acara", "Anggota DPR-RI", "Anggota DPD", "Anggota BPK", "Presiden", "Wakil Presiden", "Anggota Mahkamah Konstitusi", "Anggota Kabinet/Kementerian", "Duta Besar", "Gubernur", "Wakil Gubernur", "Bupati", "Wakil Bupati", "Walikota", "Wakil Walikota", "Anggota DPRD Provinsi", "Anggota DPRD Kabupaten", "Dosen", "Guru", "Pilot", "Pengacara", "Notaris", "Arsitek", "Akuntan", "Konsultan", "Dokter", "Bidan", "Perawat", "Apoteker", "Psikiater/Psikolog", "Penyiar Televisi", "Penyiar Radio", "Pelaut", "Peneliti", "Sopir", "Pialang", "Paranormal", "Pedagang", "Perangkat Desa", "Kepala Desa", "Biarawati", "Wiraswasta", "Anggota Lembaga Tinggi", "Artis", "Atlit", "Chef", "Manajer", "Tenaga Tata Usaha", "Operator", "Pekerja Pengolahan, Kerajinan", "Teknisi", "Asisten Ahli", "Lainnya"];
+            let jenisPekerjaan = ["Belum/Tidak Bekerja", "Mengurus Rumah Tangga", "Pelajar/Mahasiswa", "Pensiunan", "Pegawai Negeri Sipil", "Tentara Nasional Indonesia", "Kepolisian RI", "Perdagangan", "Petani/Pekebun", "Peternak", "Nelayan/Perikanan", "Industri", "Konstruksi", "Transportasi", "Karyawan Swasta", "Karyawan BUMN", "Karyawan BUMD", "Karyawan Honorer", "Buruh Harian Lepas", "Buruh Tani/Perkebunan", "Buruh Nelayan/Perikanan", "Buruh Peternakan", "Pembantu Rumah Tangga", "Tukang Cukur", "Tukang Listrik", "Tukang Batu", "Tukang Kayu", "Tukang Sol Sepatu", "Tukang Las/Pandai Besi", "Tukang Jahit", "Penata Rambut", "Penata Rias", "Penata Busana", "Mekanik", "Tukang Gigi", "Seniman", "Tabib", "Paraji", "Perancang Busana", "Penerjemah", "Imam Masjid", "Pendeta", "Pastur", "Wartawan", "Ustadz/Mubaligh", "Juru Masak", "Promotor Acara", "Anggota DPR-RI", "Anggota DPD", "Anggota BPK", "Presiden", "Wakil Presiden", "Anggota Mahkamah Konstitusi", "Anggota Kabinet/Kementerian", "Duta Besar", "Gubernur", "Wakil Gubernur", "Bupati", "Wakil Bupati", "Walikota", "Wakil Walikota", "Anggota DPRD Provinsi", "Anggota DPRD Kabupaten", "Dosen", "Guru", "Pilot", "Pengacara", "Notaris", "Arsitek", "Akuntan", "Konsultan", "Dokter", "Bidan", "Perawat", "Apoteker", "Psikiater/Psikolog", "Penyiar Televisi", "Penyiar Radio", "Pelaut", "Peneliti", "Sopir", "Pialang", "Paranormal", "Pedagang", "Perangkat Desa", "Kepala Desa", "Biarawati", "Wiraswasta", "Anggota Lembaga Tinggi", "Artis", "Atlit", "Chef", "Manajer", "Tenaga Tata Usaha", "Operator", "Pekerja Pengolahan, Kerajinan", "Teknisi", "Asisten Ahli", "Lainnya"];
+            return jenisPekerjaan.sort();
         } else if (id == 'status_perkawinan-list') {
             return ["Kawin", "Belum Kawin", "Cerai", "Cerai Hidup"]
-        }   
+        } else if (id == 'nik-list'){
+            return getWarga();
+        } else if (id == 'jenis_data-list'){
+            return ['Data Baru', 'Data Lama'];
+        } else if (id == 'jenis_kelamin-list'){
+            return ['L', 'P'];
+        } else if (id == 'agama-list'){
+            let agama = ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Kristen', 'Konghuchu'];
+            return agama.sort();
+        } else if (id == 'kewarganegaraan-list'){
+            return ['WNI', 'WNA'];
+        } else if (id == 'status_keluarga-list'){
+            return ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
+        } else if (id == 'jenis_demografi-list'){
+            return getJenisDemografi();
+        } else if (id == 'pendidikan-list'){
+            return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
+        }
     }
-    
-    $('input[name=searchDropItem]').keyup(function (e) { 
+    $(document).on( "keyup", "input[name=searchDropItem]", function (e) { 
+        console.log($(this).val());
         let id = $(this).parents().parents().parents().children().attr('id');
         let parent = $(this).parents().parents();
         let dropdownItems = $(parent).find('ul');
@@ -106,7 +130,7 @@ $(document).ready(function () {
         let filter = $(this).val();
         let items = getDropdownItems(id);
         arr = $.grep(items, function(item) {
-            return item.toLowerCase().includes(filter);
+            return item.toLowerCase().includes(filter.toLowerCase());
         }).map(item => `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`).join("");
 
         if (arr) {
