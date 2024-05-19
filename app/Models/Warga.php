@@ -161,7 +161,7 @@ class Warga extends Model
                         ->where('warga.jenis_kelamin', $jenis);
 
             if ($keterangan !== 'ketua') {
-                $count = $query->where('Keluarga.RT', $keterangan)->count();
+                $count = $query->where('keluarga.RT', $keterangan)->count();
                 $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();
 
