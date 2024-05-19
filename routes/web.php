@@ -45,7 +45,7 @@ Route::prefix('penduduk')->group(function () {
     /**
      * Route untuk manage Warga
      */
-    Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
+    Route::get('/warga', [WargaController::class, 'index'])->name('penduduk.warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
     Route::post('/warga/list', [WargaController::class, 'list'])->name('warga.list')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
 
     // FIX THIS DETAIL WARGA ROUTE
@@ -70,6 +70,7 @@ Route::prefix('penduduk')->group(function () {
         Route::get('/keluarga/{no_kk}/ubah', [KeluargaController::class, 'edit'])->name('keluarga-edit'); // untuk menampilkan form edit data keluarga
         Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('penduduk.keluarga.update'); // untuk menangani update data Keluarga dan menyimpan pada database
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
+        Route::get('/keluarga/tambah/back', [KeluargaController::class, 'back'])->name('penduduk.keluarga.tambah.back'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
         // Route::post('/keluarga/tambah/save-state', [KeluargaController::class, 'saveFormState']); // untuk menyimpan data form sementara pada session
         Route::get('/keluarga/tambah/removeWarga/{idx}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
