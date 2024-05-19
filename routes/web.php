@@ -45,7 +45,7 @@ Route::prefix('penduduk')->group(function () {
     /**
      * Route untuk manage Warga
      */
-    Route::get('/warga', [WargaController::class, 'index'])->name('warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
+    Route::get('/warga', [WargaController::class, 'index'])->name('penduduk.warga')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
     Route::post('/warga/list', [WargaController::class, 'list'])->name('warga.list')->middleware('role:rw,rt'); // untuk menampilkan tabel warga
 
     // FIX THIS DETAIL WARGA ROUTE
@@ -70,6 +70,7 @@ Route::prefix('penduduk')->group(function () {
         Route::get('/keluarga/{no_kk}/ubah', [KeluargaController::class, 'edit'])->name('keluarga-edit'); // untuk menampilkan form edit data keluarga
         Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('penduduk.keluarga.update'); // untuk menangani update data Keluarga dan menyimpan pada database
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
+        Route::get('/keluarga/tambah/back', [KeluargaController::class, 'back'])->name('penduduk.keluarga.tambah.back'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
         // Route::post('/keluarga/tambah/save-state', [KeluargaController::class, 'saveFormState']); // untuk menyimpan data form sementara pada session
         Route::get('/keluarga/tambah/removeWarga/{idx}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
@@ -118,15 +119,16 @@ Route::prefix('pengajuan')->group(function () {
     });
 })->name('pengajuan');
 
-Route::prefix('bansos')->group(function () {
-    Route::get('/kriteria', [BansosController::class, 'index'])->name('kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)
-    Route::get('/kriteria/ubah/{id}', [BansosController::class, 'edit'])->name('kriteriaForm'); // menampilkan form yang digunakan untuk merubah data kriteria
-    Route::put('/kriteria/ubah/{id}', [BansosController::class, 'update'])->name('kriteriaUpdate'); // menerima data dari form edit dan menyimpannya pada database
+Route::prefix('bansos')->middleware('role:rw,rt')->group(function () {
+    route::post('/list', [BansosController::class, 'list'])->name('bansos.list');
+    Route::get('/kriteria', [BansosController::class, 'index'])->name('bansos.kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)
+    Route::get('/kriteria/{id}/ubah', [BansosController::class, 'edit'])->name('bansos.kriteria.form'); // menampilkan form yang digunakan untuk merubah data kriteria
+    Route::put('/kriteria/{id}/ubah', [BansosController::class, 'update'])->name('bansos.kriteria.update'); // menerima data dari form edit dan menyimpannya pada database
 
     Route::get('/perhitungan', [])->name('perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
     Route::get('/perhitungan/detail/{}', []); // menampilkan detail dari keluarga
     Route::post('/tambah', [])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
-})->middleware('role:rw,rt');
+});
 
 Route::prefix('profile')->group(function () {
     Route::get('/', [ProfilController::class, 'index'])->name('profil');// menampilkan halaman profile user

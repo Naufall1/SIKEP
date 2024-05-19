@@ -498,4 +498,10 @@ class KeluargaController extends Controller
 
         return view('penduduk.keluarga.detail', compact(['keluarga', 'pengajuanInProgres']));
     }
+
+    public function back()
+    {
+        FormStateKeluarga::clear();
+        return redirect()->route('penduduk.warga');
+    }
 }
