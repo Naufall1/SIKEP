@@ -63,14 +63,14 @@ Route::prefix('penduduk')->group(function () {
      * Route untuk manage Keluarga
      */
 
-
     Route::middleware(['auth','role:rt'])->group(function () {
         Route::get('/keluarga/{no_kk}/ubah', [KeluargaController::class, 'edit'])->name('keluarga-edit'); // untuk menampilkan form edit data keluarga
         Route::put('/keluarga/{no_kk}', [KeluargaController::class, 'update'])->name('penduduk.keluarga.update'); // untuk menangani update data Keluarga dan menyimpan pada database
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
         Route::get('/keluarga/tambah/back', [KeluargaController::class, 'back'])->name('penduduk.keluarga.tambah.back'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
-        Route::get('/keluarga/tambah/removeWarga/{idx}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
+        Route::get('/keluarga/tambah/removeWarga/{nik}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
+        Route::post('/keluarga/listWarga', [KeluargaController::class, 'listWargaCreate'])->name('penduduk.keluarga.tambah.listwarga'); // menghapus warga pada anggota keluarga
     });
 
     Route::middleware(['auth','role:rw,rt'])->group(function () {

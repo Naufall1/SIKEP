@@ -156,7 +156,42 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        // return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default);
+    }
+
+    public function listWargaCreate(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'no_kk' => 'numeric|nullable'
+        ]);
+        $pengajuan = new Pengajuan();
+        $pengajuan->keluarga = new Keluarga;
+        $pengajuan->keluarga->no_kk = $request->no_kk;
+        $daftarWarga = $pengajuan->getDaftarWargaOnly();
+        return DataTables::of($daftarWarga)
+            ->addIndexColumn()
+            ->addColumn('action', function (Warga $warga) {
+                $trash = '
+                    <a href="'. route('removeAnggotaKeluarga', $warga->NIK) .'"
+                        class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
+                        <img class="tw-h-5 tw-bg-cover"
+                            src="'. asset('assets/icons/actionable/trash.svg') .'"
+                            alt="del">
+                    </a>';
+                $show = '
+                    <a href=""
+                        class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                        Lihat
+                    </a>';
+                if (str_contains($warga->nama, '(Baru)')) {
+                    return $trash . $show;
+                }
+                return $show;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -460,11 +495,11 @@ class KeluargaController extends Controller
      * @param integer $idx
      * @return \Illuminate\Http\RedirectResponse
      */
-    function removeAnggotaKeluarga($idx)
+    function removeAnggotaKeluarga($nik)
     {
         // Warga::removeTemp($idx);
         $pengajuan = new Pengajuan();
-        $pengajuan->removeWarga($idx);
+        $pengajuan->removeWarga($nik);
         return redirect(route('keluarga-tambah') . '#anggota_keluarga');
     }
 

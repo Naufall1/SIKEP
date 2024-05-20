@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -110,9 +111,15 @@ class Pengajuan
         ];
         $this->save();
     }
-    public function removeWarga(int $idx)
+    public function removeWarga(string $nik)
     {
-        if (!count($this->daftarWarga) == 0) {
+        $idx = -1;
+        foreach ($this->daftarWarga as $key => $value) {
+            if ($value['warga']->NIK == $nik) {
+                $idx = $key;
+            }
+        }
+        if (!count($this->daftarWarga) == 0 && $idx != -1) {
             array_splice($this->daftarWarga, $idx, 1);
             $this->save();
         }
@@ -120,6 +127,21 @@ class Pengajuan
     public function getDaftarWarga()
     {
         return $this->daftarWarga;
+    }
+    public function getDaftarWargaOnly(): Collection|Warga
+    {
+        $temp = new Collection;
+        if ($this->keluarga && Keluarga::find($this->keluarga->no_kk)) {
+            foreach (Warga::where('no_kk', '=', $this->keluarga->no_kk)->where('status_warga', '!=', 'Menunggu')->get() as $tempWarga) {
+               $temp->push($tempWarga);
+            }
+        }
+        foreach ($this->daftarWarga as $value) {
+            $warga = clone $value['warga'];
+            $warga->nama .= ' (Baru)';
+            $temp->push($warga);
+        }
+        return $temp;
     }
     private function save()
     {
