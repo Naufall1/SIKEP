@@ -37,6 +37,11 @@ RUN chown -R sikep:sikep /var/www/app \
 # install composer
 COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
 
+# Mount storage from host
+ADD ./storage /var/www/app/storage
+# Change owner of the storage
+RUN chown -R sikep:sikep /var/www/app/storage
+
 # Set current user to [sikep]
 USER $user
 
