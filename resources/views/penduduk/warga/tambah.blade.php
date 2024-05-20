@@ -27,21 +27,6 @@
                                     placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            {{-- <x-input.label for="jenis-data" label="Jenis Data">
-                                <x-input.select name="jenis-data">
-                                    <option value="data-baru">Warga Baru</option>
-                                    <option value="data-lama">Warga Lama</option>
-                                </x-input.select>
-                            </x-input.label> --}}
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis-data">Jenis Data
-                                <select class="tw-input-enabled" name="jenis-data" id="jenis-data">
-                                    <option value="data-baru">Warga Baru</option>
-                                    <option value="data-lama">Warga Lama</option>
-                                </select>
-                            </label> --}}
-
-
                             <x-input.label class="tw-relative" for="NIK" label="NIK">
                                 <x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                 placeholder="Masukkan NIK"></x-input.input>
@@ -125,12 +110,6 @@
                                 <x-input.select2 name="kewarganegaraan"
                                     default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>
-
-                                {{-- <x-input.select name="kewarganegaraan" id="kewarganegaraan">
-                                    <option disabled @selected(!old('kewarganegaraan'))>Pilih Kewarganegaraan</option>
-                                    <option value="WNI" @selected(old('kewarganegaraan', 'WNI') == 'WNI')>WNI</option>
-                                    <option value="WNA" @selected(old('kewarganegaraan') == 'WNA')>WNA</option>
-                                </x-input.select> --}}
                                 @error('kewarganegaraan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -147,12 +126,6 @@
                                 <x-input.select2 name="status_keluarga"
                                     default="{{ old('status_keluarga') ? old('status_keluarga') : 'Pilih Status' }}"
                                     placeholder="Pilih Status"></x-input.select2>
-                                {{-- <x-input.select name="status_keluarga" id="status_keluarga">
-                                    <option disabled @selected(!old('status_keluarga'))>Pilih Status</option>
-                                    <option value="Kepala Keluarga" @selected(old('status_keluarga') == 'Kepala Keluarga')>Kepala Keluarga</option>
-                                    <option value="Istri" @selected(old('status_keluarga') == 'Istri')>Istri</option>
-                                    <option value="Anak" @selected(old('status_keluarga') == 'Anak')>Anak</option>
-                                </x-input.select> --}}
                                 @error('status_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -211,14 +184,6 @@
                                 <x-input.select2 name="jenis_demografi"
                                     default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
                                     placeholder="Pilih Jenis Demografi"></x-input.select2>
-                                {{-- <x-input.select placeholder="Pilih Jenis Demografi" type="text" id="jenis_demografi"
-                                    name="jenis_demografi">
-                                    <option disabled @selected(!old('jenis_demografi'))>Pilih Jenis Demografi</option>
-                                    <option value="Lahir" @selected(old('jenis_demografi') == 'Lahir')>Lahir</option>
-                                    <option value="Migrasi Masuk" @selected(old('jenis_demografi') == 'Migrasi Masuk')>Migrasi Masuk</option>
-                                    <option value="Migrasi Keluar" @selected(old('jenis_demografi') == 'Migrasi Keluar')>Migrasi Keluar</option>
-                                    <option value="Meninggal" @selected(old('jenis_demografi') == 'Meninggal')>Meninggal</option>
-                                </x-input.select> --}}
                                 @error('jenis_demografi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
