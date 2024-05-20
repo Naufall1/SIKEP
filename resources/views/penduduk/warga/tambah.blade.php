@@ -22,23 +22,14 @@
 
                             <input type="hidden" name="no_kk" id="no_kk" value="{{ $no_kk }}">
 
-                            <x-input.label for="jenis-data" label="Jenis Data">
-                                <x-input.select name="jenis-data">
-                                    <option value="data-baru">Warga Baru</option>
-                                    <option value="data-lama">Warga Lama</option>
-                                </x-input.select>
+                            <x-input.label required class="tw-relative" for="jenis_data-list" label="Jenis Data">
+                                <x-input.select2 name="jenis_data" default="Data Baru"
+                                    placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            <x-input.label for="nik" label="NIK">
-                                <x-input.input value="{{ old('NIK') }}" type="text" name="NIK"
-                                    placeholder="Masukkan NIK"></x-input.input>
-                                <x-input.select class="tw-hidden" name="NIK" id="nik-list">
-                                    <option value="no" disabled selected>{{ $daftarWarga->count() == 0 ? "Tidak ada data":"Pilih NIK"}}</option>
-                                    @foreach ($daftarWarga as $warga)
-                                        <option value="{{ $warga->NIK }}">{{ $warga->NIK . ' - ' . $warga->nama }}
-                                        </option>
-                                    @endforeach
-                                </x-input.select>
+                            <x-input.label class="tw-relative" for="NIK" label="NIK">
+                                <x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
+                                placeholder="Masukkan NIK"></x-input.input>
                                 @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -140,13 +131,10 @@
                                 @enderror
                             </x-input.label>
 
-
-                            <x-input.label for="kewarganegaraan" label="Kewarganegaraan">
-                                <x-input.select name="kewarganegaraan" id="kewarganegaraan">
-                                    <option disabled @selected(!old('kewarganegaraan'))>Pilih Kewarganegaraan</option>
-                                    <option value="WNI" @selected(old('kewarganegaraan', 'WNI') == 'WNI')>WNI</option>
-                                    <option value="WNA" @selected(old('kewarganegaraan') == 'WNA')>WNA</option>
-                                </x-input.select>
+                            <x-input.label class="tw-relative" for="kewarganegaraan-list" label="Kewarganegaraan">
+                                <x-input.select2 name="kewarganegaraan"
+                                    default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
+                                    placeholder="Pilih Kewarganegaraan"></x-input.select2>
                                 @error('kewarganegaraan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -159,13 +147,11 @@
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label for="status_keluarga" label="Status Keluarga">
-                                <x-input.select name="status_keluarga" id="status_keluarga">
-                                    <option disabled @selected(!old('status_keluarga'))>Pilih Status</option>
-                                    <option value="Kepala Keluarga" @selected(old('status_keluarga') == 'Kepala Keluarga')>Kepala Keluarga</option>
-                                    <option value="Istri" @selected(old('status_keluarga') == 'Istri')>Istri</option>
-                                    <option value="Anak" @selected(old('status_keluarga') == 'Anak')>Anak</option>
-                                </x-input.select>
+
+                            <x-input.label class="tw-relative" for="status_keluarga-list" label="Status Keluarga">
+                                <x-input.select2 name="status_keluarga"
+                                    default="{{ old('status_keluarga') ? old('status_keluarga') : 'Pilih Status' }}"
+                                    placeholder="Pilih Status"></x-input.select2>
                                 @error('status_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -220,15 +206,10 @@
                         <h2 class="">Demografi Masuk</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label for="jenis_demografi" label="Jenis">
-                                <x-input.select placeholder="Pilih Jenis Demografi" type="text" id="jenis_demografi"
-                                    name="jenis_demografi">
-                                    <option disabled @selected(!old('jenis_demografi'))>Pilih Jenis Demografi</option>
-                                    <option value="Lahir" @selected(old('jenis_demografi') == 'Lahir')>Lahir</option>
-                                    <option value="Migrasi Masuk" @selected(old('jenis_demografi') == 'Migrasi Masuk')>Migrasi Masuk</option>
-                                    <option value="Migrasi Keluar" @selected(old('jenis_demografi') == 'Migrasi Keluar')>Migrasi Keluar</option>
-                                    <option value="Meninggal" @selected(old('jenis_demografi') == 'Meninggal')>Meninggal</option>
-                                </x-input.select>
+                            <x-input.label class="tw-relative" for="jenis_demografi-list" label="Jenis">
+                                <x-input.select2 name="jenis_demografi"
+                                    default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
+                                    placeholder="Pilih Jenis Demografi"></x-input.select2>
                                 @error('jenis_demografi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
