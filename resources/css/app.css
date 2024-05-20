@@ -19,10 +19,6 @@
         @apply tw-box-border tw-border-[1.5px] tw-border-n500 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n400 placeholder:tw-placeholder placeholder:tw-text-n1000;
     }
 
-    input:disabled {
-        @apply tw-box-border tw-border-[1.5px] tw-border-n500 tw-bg-n400 placeholder:tw-placeholder placeholder:tw-text-n1000 hover:tw-border-n500;
-    }
-
 
     input {
         @apply focus-visible:tw-outline-none;
