@@ -176,7 +176,11 @@ class WargaController extends Controller
 
         $haveDemografi = new HaveDemografi();
         $haveDemografi->NIK = $warga->NIK;
-        $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
+        if ($request->jenis_demografi == 'Lahir') {
+            $haveDemografi->tanggal_kejadian = $request->tanggal_lahir;
+        } else {
+            $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
+        }
         $haveDemografi->tanggal_request = now();
         $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
         $haveDemografi->status_request = 'Menunggu';
