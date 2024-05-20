@@ -41,6 +41,7 @@
                                 </select>
                             </label> --}}
 
+                            
                             <x-input.label class="tw-relative" for="NIK" label="NIK">
                                 <x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
