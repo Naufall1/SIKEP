@@ -43,7 +43,7 @@ $(document).ready(function () {
 
     console.log('halo');
 
-    $('#closeFlash').click(function (e) { 
+    $('#closeFlash').click(function (e) {
         $(this).parent().remove();
     });
 
@@ -67,7 +67,7 @@ $(document).ready(function () {
         // rotateArrow($(button).siblings().last())
     });
 
-    
+
     $(document).on("click", ".dropdownTrigger", function() {
         // $(this).val();
         // console.log('tes');
@@ -79,12 +79,15 @@ $(document).ready(function () {
             let dropItems = $(this).siblings().children().last();
             $(dropItems).children().remove();
             let content = ``;
-            $.each(getDropdownItems($(this).attr('id')), function (indexInArray, item) { 
-                content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
-                //  console.log(dropdownItem);
-            });
+            if (getDropdownItems($(this).attr('id')).length != 0) {
+                $.each(getDropdownItems($(this).attr('id')), function (indexInArray, item) {
+                    content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
+                    //  console.log(dropdownItem);
+                });
+            } else {
+                content = `Tidak ada data`;
+            }
             $(dropItems).append(content);
-            
             $(this).siblings().children().focus();
         } else {
             $(this).siblings().addClass('tw-hidden');
@@ -121,7 +124,7 @@ $(document).ready(function () {
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
         }
     }
-    $(document).on( "keyup", "input[name=searchDropItem]", function (e) { 
+    $(document).on( "keyup", "input[name=searchDropItem]", function (e) {
         // console.log($(this).val());
         let id = $(this).parents().parents().parents().children().attr('id');
         let parent = $(this).parents().parents();
