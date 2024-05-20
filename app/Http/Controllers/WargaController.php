@@ -110,7 +110,7 @@ class WargaController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'nik' => 'required|size:16|unique:warga,nik',
+            'NIK' => 'required|size:16|unique:warga,NIK',
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
@@ -121,7 +121,7 @@ class WargaController extends Controller
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'jenis_pekerjaan' => 'required|string|max:50',
             'kewarganegaraan' => 'required|in:WNI,WNA',
-            'status_keluarga' => 'required|in:Kepala Keluarga,Bapak,Istri,Anak',
+            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak',
             'nama_ayah' => 'required|string|max:100',
             'nama_ibu' => 'required|string|max:100',
             'penghasilan' => 'required|integer',
@@ -176,11 +176,7 @@ class WargaController extends Controller
 
         $haveDemografi = new HaveDemografi();
         $haveDemografi->NIK = $warga->NIK;
-        if ($request->jenis_demografi == 'Lahir') {
-            $haveDemografi->tanggal_kejadian = $request->tanggal_lahir;
-        } else {
-            $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
-        }
+        $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
         $haveDemografi->tanggal_request = now();
         $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
         $haveDemografi->status_request = 'Menunggu';
