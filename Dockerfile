@@ -47,7 +47,7 @@ USER $user
 
 # install the aplication
 RUN composer install && \
-    php artisan storage:link && \
+    # php artisan storage:link && \
     php artisan key:generate && \
     npm install && \
     npm run build
