@@ -41,7 +41,7 @@
                                 </select>
                             </label> --}}
 
-                            <x-input.label class="tw-relative" for="nik" label="NIK">
+                            <x-input.label class="tw-relative" for="NIK" label="NIK">
                                 <x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
                                 {{-- <x-input.select class="tw-hidden" name="NIK" id="nik-list">
@@ -492,9 +492,9 @@
                 // $('#NIK').prop('disabled', true);
 
                 console.log("data_lama()");
-                $("label[for='nik']").attr('for', 'nik-list');
-                $("label[for='nik-list']").children().remove();
-                $("label[for='nik-list']").append(`<x-input.select2 name="nik" searchable
+                $("label[for='NIK']").attr('for', 'NIK-list');
+                $("label[for='NIK-list']").children().remove();
+                $("label[for='NIK-list']").append(`<x-input.select2 name="NIK" searchable
                                     placeholder="Pilih NIK"></x-input.select2>`);
 
                 $('#demografiMasuk').remove();
@@ -643,9 +643,9 @@
                 // $('#NIK').prop('disabled', false);
 
                 console.log("data_baru()");
-                $("label[for='nik-list']").attr('for', 'nik');
-                $("label[for='nik']").children().remove();
-                $("label[for='nik']").append(`<x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
+                $("label[for='NIK-list']").attr('for', 'NIK');
+                $("label[for='NIK']").children().remove();
+                $("label[for='NIK']").append(`<x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>`);
 
 
@@ -816,10 +816,12 @@
                 let birthDate = $('#tanggal_lahir').val();
                 $('#tanggal_kejadian').val(birthDate);
                 $('#tanggal_kejadian').attr('readonly', true);
+                $('#tanggal_kejadian').addClass('tw-input-disabled');
             }
-
+            
             function non_demografi_birth_date() {
-                $('#tanggal_kejadian').attr('disabled', false);
+                $('#tanggal_kejadian').removeClass('tw-input-disabled');
+                $('#tanggal_kejadian').attr('readonly', false);
                 $('#tanggal_kejadian').val('');
             }
             $(document).ready(function() {
@@ -852,12 +854,10 @@
 
                     console.log('EOI');
                     if ($('#jenis_data').val() == 'Data Lama' && $(this).parents().parents().parents().attr(
-                            'for') == 'nik-list') {
+                            'for') == 'NIK-list') {
                         var data = $(this).text().split(' - ');
                         var nik = data[0];
-                        $('input#nik').val(nik);
-                        console.log($('input#nik').val());
-                        console.log($('input#nik').html());
+                        $('input#NIK').val(nik);
                         $.ajax({
                             type: "GET",
                             url: "/api/warga/" + nik,
@@ -866,14 +866,13 @@
                                 $.each(response, function(key, val) {
                                     // console.log(key+val);
                                     if (val === null) {
-                                        console.log(val);
+                                        // console.log(val);
                                         if (key == 'nik') {
 
                                         }
                                         $('#' + key).attr('placeholder', '-');
                                     }
-                                    console.log(key.toLowerCase()+"=>"+val);
-                                    $('#' + key.toLowerCase()).val(val);
+                                    $('#' + key).val(val);
                                 });
                             }
                         });

@@ -48,7 +48,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".dropdownItem" , function(){
-        console.log('items');
+        // console.log('items');
         let selected = $(this).text();
         let button = $(this).parents().parents().parents().children().children().first();
         let name = $(button).parents().attr('name');
@@ -70,7 +70,7 @@ $(document).ready(function () {
     
     $(document).on("click", ".dropdownTrigger", function() {
         // $(this).val();
-        console.log('tes');
+        // console.log('tes');
         if ($(this).siblings().hasClass('tw-hidden')) {
             // rotateArrow($(this).children().last())
             $('.dropdownTrigger').siblings().addClass('tw-hidden');
@@ -102,7 +102,7 @@ $(document).ready(function () {
             return jenisPekerjaan.sort();
         } else if (id == 'status_perkawinan-list') {
             return ["Kawin", "Belum Kawin", "Cerai", "Cerai Hidup"]
-        } else if (id == 'nik-list'){
+        } else if (id == 'NIK-list'){
             return getWarga();
         } else if (id == 'jenis_data-list'){
             return ['Data Baru', 'Data Lama'];
@@ -122,7 +122,7 @@ $(document).ready(function () {
         }
     }
     $(document).on( "keyup", "input[name=searchDropItem]", function (e) { 
-        console.log($(this).val());
+        // console.log($(this).val());
         let id = $(this).parents().parents().parents().children().attr('id');
         let parent = $(this).parents().parents();
         let dropdownItems = $(parent).find('ul');
