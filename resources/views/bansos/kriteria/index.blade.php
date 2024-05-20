@@ -56,7 +56,7 @@
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button">
+                            type="button" id="searchBox">
                         </input>
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
@@ -70,7 +70,7 @@
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-scroll">
 
-                    <table class="tw-min-w-[1400px] md:tw-w-full">
+                    <table class="tw-min-w-[1400px] md:tw-w-full" id="dataBansos">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
@@ -85,24 +85,9 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            @foreach ($dataKeluarga as $k)
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td>{{ $k->kepala_keluarga }}</td>
-                                    <td>{{ $k->tagihan_listrik }}</td>
-                                    <td>{{ $k->luas_bangunan }} m</td>
-                                    <td>{{ $k->total_penghasilan }}</td>
-                                    <td>{{ $k->jumlah_warga_berpenghasilan }}</td>
-                                    <td>{{ $k->tanggungan }}</td>
-                                    <td>{{ $k->jumlah_warga_bersekolah }}</td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href="{{ route('kriteriaForm', $k->no_kk) }}"
-                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                            Ubah
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+
+                            {{-- DATA HERE --}}
+
                         </tbody>
                     </table>
 
@@ -113,79 +98,116 @@
                 </div>
                 {{-- End: Table HERE --}}
             </div>
-
-            <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
-                        alt="<">
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300 tw-bg-n400"
-                    href="">
-                    1
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    2
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    ...
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
-                        alt="<">
-                </a>
-            </div>
-
         </div>
     </div>
 @endsection
-{{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Daftar Kriteria</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h1>Daftar Kriteria</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Kepala Keluarga</th>
-                <th>Tagihan Listrik</th>
-                <th>Luas Bangunan</th>
-                <th>Total Penghasilan Keluarga</th>
-                <th>Jumlah Warga dengan Penghasilan</th>
-                <th>Tanggungan</th>
-                <th>Jumlah Bersekolah</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($dataKeluarga as $k)
-            <tr>
-                <td>{{ $k->kepala_keluarga }}</td>
-                <td>{{ $k->tagihan_listrik }}</td>
-                <td>{{ $k->luas_bangunan }} m</td>
-                <td>{{ $k->total_penghasilan }}</td>
-                <td>{{ $k->jumlah_warga_berpenghasilan }}</td>
-                <td>{{ $k->tanggungan }}</td>
-                <td>{{ $k->jumlah_warga_bersekolah }}</td>
-                <td><a href="{{ route('kriteriaForm', $k->no_kk) }}">Edit</a></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html> --}}
+@push('js')
+    @if (session()->has('flash'))
+        <script>alert('{{ session()->get("flash")->message }}');</script>
+    @endif
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            dataBansos = $('#dataBansos').DataTable({
+                serverSide: true,
+                ajax: {
+                    "url": "{{ route('bansos.list') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                paging: true,
+                language: {
+                    paginate: {
+                        previous: '<',
+                        next: '>',
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass(
+                        'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
+                        );
+                    $('.paginate_button').addClass(
+                        'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
+                    $('.paginate_button.active').addClass(
+                        'tw-bg-n400');
+                    $('.dataTables_filter').css('display', 'none');
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                    $('.dataTables_empty').html(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none" viewBox="0 0 150 151">
+                        <g clip-path="url(#a)">
+                            <path fill="#E3E3E3" d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z"/>
+                            <path fill="#fff" d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z"/>
+                            <path fill="#0284FF" d="M75 102.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24Z"/>
+                            <path fill="#fff" d="M83.485 89.814 75 81.329l-8.485 8.485-2.829-2.829 8.486-8.485-8.486-8.485 2.829-2.829L75 75.672l8.485-8.486 2.829 2.829-8.486 8.485 8.486 8.485-2.829 2.829Z"/>
+                            <path fill="#CCE4FF" d="M88 108.5H62a3 3 0 1 0 0 6h26a3 3 0 1 0 0-6Zm9 12H53a3 3 0 1 0 0 6h44a3 3 0 1 0 0-6Z"/>
+                        </g>
+                        <defs>
+                            <clipPath id="a">
+                            <rect width="150" height="150" y=".5" fill="#fff" rx="75"/>
+                            </clipPath>
+                        </defs>
+                        </svg>
+                        <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
+                    `);
+                },
+                order: [[2, 'asc']],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[48px]",
+                    orderable: false,
+                    // searchable: false
+                }, {
+                    data: "kepala_keluarga",
+                    className: "tw-w-[240px]",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "tagihan_listrik",
+                    className: "tw-grow",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "luas_bangunan",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "total_penghasilan",
+                    className: "tw-w-[172px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "jumlah_warga_berpenghasilan",
+                    className: "tw-w-[92px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "tanggungan",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "jumlah_warga_bersekolah",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            // $('#level_id').on('change', function () {
+            //     dataBansos.ajax.reload();
+            // });
+        });
+        $('#searchBox').keyup(function () {
+            dataBansos.search($(this).val()).draw();
+        });
+        </script>
+@endpush

@@ -80,29 +80,37 @@
                                     'title' => 'Nama',
                                     'content' => $modifiedWarga->nama,
                                 ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Pendidikan',
-                                    'content' => $modifiedWarga->pendidikan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Agama',
-                                    'content' => $modifiedWarga->agama,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Perkawinan',
-                                    'content' => $modifiedWarga->status_perkawinan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Pekerjaan',
-                                    'content' => $modifiedWarga->jenis_pekerjaan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Warga',
-                                    'content' => $modifiedWarga->status_warga,
-                                    'isLabel' => true,
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-
+                                @if ($modifiedWarga->pendidikan != $currentWarga->pendidikan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Pendidikan',
+                                        'content' => $modifiedWarga->pendidikan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->agama != $currentWarga->agama)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Agama',
+                                        'content' => $modifiedWarga->agama,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->status_perkawinan != $currentWarga->status_perkawinan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Status Perkawinan',
+                                        'content' => $modifiedWarga->status_perkawinan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->jenis_pekerjaan != $currentWarga->jenis_pekerjaan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Pekerjaan',
+                                        'content' => $modifiedWarga->jenis_pekerjaan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->status_warga != $currentWarga->status_warga)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Status Warga',
+                                        'content' => $modifiedWarga->status_warga,
+                                        'isLabel' => true,
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                @endif
                             </div>
                         </div>
 
@@ -118,152 +126,217 @@
                                     'title' => 'Nama',
                                     'content' => $currentWarga->nama,
                                 ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Pendidikan',
-                                    'content' => $currentWarga->pendidikan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Agama',
-                                    'content' => $currentWarga->agama,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Perkawinan',
-                                    'content' => $currentWarga->status_perkawinan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Pekerjaan',
-                                    'content' => $currentWarga->jenis_pekerjaan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Warga',
-                                    'content' => $currentWarga->status_warga,
-                                    'isLabel' => true,
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-
+                                @if ($modifiedWarga->pendidikan != $currentWarga->pendidikan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Pendidikan',
+                                        'content' => $currentWarga->pendidikan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->agama != $currentWarga->agama)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Agama',
+                                        'content' => $currentWarga->agama,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->status_perkawinan != $currentWarga->status_perkawinan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Status Perkawinan',
+                                        'content' => $currentWarga->status_perkawinan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->jenis_pekerjaan != $currentWarga->jenis_pekerjaan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Pekerjaan',
+                                        'content' => $currentWarga->jenis_pekerjaan,
+                                    ])
+                                @endif
+                                @if ($modifiedWarga->status_warga != $currentWarga->status_warga)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Status Warga',
+                                        'content' => $currentWarga->status_warga,
+                                        'isLabel' => true,
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                @endif
                             </div>
                         </div>
 
                     </div>
 
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Detail Tambahan Baru</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
+                    @if (($modifiedWarga->status_keluarga != $currentWarga->status_keluarga) || ($modifiedWarga->penghasilan != $currentWarga->penghasilan) || ($modifiedWarga->no_paspor != $currentWarga->no_paspor) || ($modifiedWarga->no_kitas != $currentWarga->no_kitas))
+                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                <h2 class="">Detail Tambahan Baru</h2>
+                                <div class="tw-flex tw-flex-col tw-gap-3">
+                                    @if ($modifiedWarga->status_keluarga != $currentWarga->status_keluarga)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Status Keluarga',
+                                            'content' => $modifiedWarga->status_keluarga,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Penghasilan',
+                                            'content' => $modifiedWarga->penghasilan,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Nomor Paspor',
+                                            'content' => $modifiedWarga->no_paspor,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->no_kitas != $currentWarga->no_kitas)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Nomor Kitas',
+                                            'content' => $modifiedWarga->no_kitas,
+                                        ])
+                                    @endif
+                                </div>
+                            </div>
 
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Keluarga',
-                                    'content' => $modifiedWarga->status_keluarga,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Penghasilan',
-                                    'content' => $modifiedWarga->penghasilan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Nomor Paspor',
-                                    'content' => $modifiedWarga->no_paspor,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Nomor Kitas',
-                                    'content' => $modifiedWarga->no_kitas,
-                                ])
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                <h2 class="">Detail Tambahan Lama</h2>
+                                <div class="tw-flex tw-flex-col tw-gap-3">
+                                    @if ($modifiedWarga->status_keluarga != $currentWarga->status_keluarga)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Status Keluarga',
+                                        'content' => $currentWarga->status_keluarga,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Penghasilan',
+                                            'content' => $currentWarga->penghasilan,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Nomor Paspor',
+                                            'content' => $currentWarga->no_paspor,
+                                        ])
+                                    @endif
+                                    @if ($modifiedWarga->no_kitas != $currentWarga->no_kitas)
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Nomor Kitas',
+                                            'content' => $currentWarga->no_kitas,
+                                        ])
+                                    @endif
+                                </div>
+                            </div>
 
+                        </div>
+                    @endif
+
+                    @if ($demografiMasukNew)
+                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                @if ($demografiMasukNew)
+                                    <h2 class="">Demografi Masuk Baru</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => $demografiMasukNew->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal Kejadian',
+                                            'content' => $demografiMasukNew->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' =>
+                                                'data:image/' .
+                                                explode('.', $demografiMasukNew->dokumen_pendukung)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $demografiMasukNew->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                @if ($demografiMasukOld)
+                                    <h2 class="">Demografi Masuk Lama</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => $demografiMasukOld->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal Kejadian',
+                                            'content' => $demografiMasukOld->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' =>
+                                                'data:image/' .
+                                                explode('.', $demografiMasukOld->dokumen_pendukung)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $demografiMasukOld->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                    @endif
 
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Detail Tambahan Lama</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'title' => 'Status Keluarga',
-                                    'content' => $currentWarga->status_keluarga,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Penghasilan',
-                                    'content' => $currentWarga->penghasilan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Nomor Paspor',
-                                    'content' => $currentWarga->no_paspor,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Nomor Kitas',
-                                    'content' => $currentWarga->no_kitas,
-                                ])
-
+                    @if ($demografiKeluarNew)
+                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                @if ($demografiKeluarNew)
+                                    <h2 class="">Demografi Keluar Baru</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => $demografiKeluarNew->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal Kejadian',
+                                            'content' => $demografiKeluarNew->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' =>
+                                                'data:image/' .
+                                                explode('.', $demografiKeluarNew->dokumen_pendukung)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $demografiKeluarNew->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
+                                @if ($demografiKeluarOld)
+                                    <h2 class="">Demografi Keluar Lama</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => $demografiKeluarOld->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal Kejadian',
+                                            'content' => $demografiKeluarOld->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' =>
+                                                'data:image/' .
+                                                explode('.', $demografiKeluarOld->dokumen_pendukung)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $demografiKeluarOld->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Demografi Masuk Baru</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => '',
-                                    // 'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-
-                            </div>
-                        </div>
-
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Demografi Masuk Lama</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => '',
-                                    // 'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Demografi Keluar Baru</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => '',
-                                    // 'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
-                            <h2 class="">Demografi Keluar Lama</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' => '',
-                                    // 'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-                            </div>
-                        </div>
-
-                    </div>
-
-
-
+                    @endif
                 </div>
 
 

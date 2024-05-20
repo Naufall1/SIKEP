@@ -20,7 +20,17 @@ class Demografi extends Model
     ];
 
     public static function getDataUsia($keterangan) {
-        $data = [];
+        $data = [
+            ['rentang_usia' => '0-8', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '9-16', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '17-24', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '25-32', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '33-40', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '41-48', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '49-56', 'jumlah_penduduk' => 0, 'persentase' => 0],
+            ['rentang_usia' => '57-63', 'jumlah_penduduk' => 0, 'persentase' => 0],
+
+        ];
 
         $dataUsia = Warga::selectRaw('
                 CASE
@@ -46,12 +56,16 @@ class Demografi extends Model
         $count = $result->sum('jumlah_penduduk');
 
         foreach ($result as $row) {
+
             $persentase = ($count != 0) ? ($row->jumlah_penduduk / $count) * 100 : 0;
-            $data[] = [
-                'rentang_usia' => $row->rentang_usia,
-                'jumlah_penduduk' => $row->jumlah_penduduk,
-                'persentase' => round($persentase, 1)
-            ];
+            if ($persentase != 0) {
+                foreach ($data as $key => $value) {
+                    if ($value['rentang_usia'] == $row->rentang_usia) {
+                        $data[$key]['jumlah'] = $row->jumlah_penduduk;
+                        $data[$key]['persentase'] = round($persentase, 1);
+                    }
+                }
+            }
         }
 
         return $data;

@@ -42,12 +42,10 @@ class KeluargaModified extends Model
     public static function updateKeluarga(Keluarga $keluarga)
     {
         $modif = new KeluargaModified();
-        $modif->no_kk = $keluarga->no_kk;
+        $modif->fill($keluarga->toArray());
+        // $modif->no_kk = $keluarga->no_kk;
         $modif->user_id = Auth::user()->user_id;
-        $modif->kepala_keluarga = $keluarga->isDirty('kepala_keluarga') ? $keluarga->kepala_keluarga : '';
-        $modif->image_kk = $keluarga->isDirty('image_kk') ? $keluarga->image_kk : '';
-        $modif->tagihan_listrik = $keluarga->isDirty('tagihan_listrik') ? $keluarga->tagihan_listrik : 0;
-        $modif->luas_bangunan = $keluarga->isDirty('luas_bangunan') ? $keluarga->luas_bangunan : 0;
+
         $modif->tanggal_request = now();
         $modif->status_request = 'Menunggu';
         return $modif->save();
