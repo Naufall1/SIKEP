@@ -1,20 +1,20 @@
 <div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
     <div class="tw-w-56">
         <x-input.select id="lineChart" onchange="dropdownChartLine()">
-            <option value="pekerjaan" selected>Pekerjaan</option>
+            <option value="pekerjaan">Pekerjaan</option>
             <option value="jenis_kelamin">Jenis Kelamin</option>
             <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
             <option value="agama">Agama</option>
             <option value="bansos">Bansos</option>
-            <option value="usia">Usia</option>
+            <option value="usia" selected>Usia</option>
         </x-input.select>
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
         <div class="tw-w-28">
-            <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartLine()">
-                <option value="all">Semua</option>
+            <x-input.select class="tw-w-28" id="rtLine" onchange="dropdownChartLine(this.value)">
+                <option value="ketua">Semua</option>
                 @foreach ($semuaRT as $rt)
-                    <option value="{{ $rt->rt }}">RT. {{ $rt->keterangan }}</option>
+                    <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
                 @endforeach
             </x-input.select>
         </div>
@@ -46,42 +46,20 @@
 </div>
 
 <script>
-    function dropdownChartLine() {
-        const selectedChart = document.getElementById('lineChart').value;
-        console.log(selectedChart);
-
-        const containers = {
-            pekerjaan: 'chartLinePekerjaanContainer',
-            jenis_kelamin: 'chartLineJenisKelaminContainer',
-            agama: 'chartLineAgamaContainer',
-            tingkat_pendidikan: 'chartLineTingkatPendidikanContainer',
-            bansos: 'chartLineBansosContainer',
-            usia: 'chartLineUsiaContainer'
-        };
-
-        if (selectedChart in containers) {
-            for (const container in containers) {
-                const element = document.getElementById(containers[container]);
-                if (element) {
-                    element.style.display = (container === selectedChart) ? 'block' : 'none';
-                } else {
-                    console.error('Elemen dengan id ' + containers[container] + ' tidak ditemukan');
-                }
-            }
-            window[selectedChart]();
-        } else {
-            console.error('error pada fungsi dropdownChartData()'); // tampil dek console inspect
-        }
-    }
-
-
+    let pekerjaanLine;
+    let jenis_kelaminLine;
+    let agamaLine;
+    let tingkat_pendidikanLine;
+    let usiaLine;
+    let bansosLine;
     document.addEventListener('DOMContentLoaded', function() {
-        linePekerjaan();
-        lineJenisKelamin();
-        lineAgama();
-        lineTingkatPendidikan();
-        lineUsia();
-        lineBansos();
+        dropdownChartLine();
+        pekerjaanLine = linePekerjaan();
+        jenis_kelaminLine = lineJenisKelamin();
+        agamaLine = lineAgama();
+        tingkat_pendidikanLine = lineTingkatPendidikan();
+        usiaLine = lineUsia();
+        bansosLine = lineBansos();
     });
 
     function createChartLine(ctx, labels, data, label) {
@@ -178,7 +156,6 @@
                                 });
 
                                 let tableRoot = tooltipEl.querySelector('div');
-                                console.log(tableRoot);
                                 tableRoot.innerHTML = innerHtml;
                             }
 
@@ -214,7 +191,7 @@
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.jumlah);
-        createChartLine(ctx, agama, jmlWarga, 'Jumlah');
+        return createChartLine(ctx, agama, jmlWarga, 'Jumlah');
     }
 
     function lineTingkatPendidikan() {
@@ -222,15 +199,15 @@
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.jumlah);
-        createChartLine(ctx, pendidikan, jmlWarga, 'Jumlah');
+        return createChartLine(ctx, pendidikan, jmlWarga, 'Jumlah');
     }
 
     function linePekerjaan() {
         const ctx = document.getElementById('linePekerjaanLine').getContext('2d');
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
-        const jmlWarga = dataPekerjaan.map(item => item.total);
-        createChartLine(ctx, jenisPekerjaan, jmlWarga, 'Jumlah');
+        const jmlWarga = dataPekerjaan.map(item => item.jumlah);
+        return createChartLine(ctx, jenisPekerjaan, jmlWarga, 'Jumlah');
     }
 
     function lineJenisKelamin() {
@@ -238,15 +215,15 @@
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
         const jmlWarga = dataJenisKelamin.map(item => item.jumlah);
-        createChartLine(ctx, jenisKelamin, jmlWarga, 'Jumlah');
+        return createChartLine(ctx, jenisKelamin, jmlWarga, 'Jumlah');
     }
 
     function lineBansos() {
         const ctx = document.getElementById('chartBansosLine').getContext('2d');
-        const dataBansos = @json($dataBansos);
+        const dataBansos = @json($dataBansosByMonth);
         const bulanTahun = dataBansos.map(item => `${item.bulan} (${item.tahun})`);
         const jmlWarga = dataBansos.map(item => item.jumlah);
-        createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
+        return createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
     }
 
     function lineUsia() {
@@ -254,6 +231,86 @@
         const dataUsia = @json($dataUsia);
         const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
         const jumlahPenduduk = dataUsia.map(item => item.jumlah_penduduk);
-        createChartLine(ctx, rentangUsia, jumlahPenduduk, 'Jumlah Penduduk');
+        return createChartLine(ctx, rentangUsia, jumlahPenduduk, 'Jumlah Penduduk');
+    }
+
+    function updateChartLine(chartInstance, newData, jenisData) {
+        let datasets = chartInstance.data.datasets;
+        let labels = chartInstance.data.labels;
+
+        // Jika data baru ada dan tidak kosong, perbarui data chart
+        if (newData[jenisData] && newData[jenisData].length > 0) {
+            datasets[0].data = newData[jenisData].map((item, index) => {
+                return item['jumlah'] !== undefined ? item['jumlah'] : 0;
+            });
+        } else {
+            // Jika data kosong, set semua data pada chart ke 0
+            datasets[0].data = labels.map(() => 0);
+        }
+
+    chartInstance.update();
+}
+
+
+    function dropdownChartLine(selectedRT) {
+        const selectedChart = document.getElementById('lineChart').value;
+        var selectedRTValue = '{{Auth::user()->keterangan}}';
+        if (document.getElementById('rtLine') != null) {
+            selectedRTValue = document.getElementById('rtLine').value;
+        }
+
+        const containers = {
+            pekerjaan: 'chartLinePekerjaanContainer',
+            jenis_kelamin: 'chartLineJenisKelaminContainer',
+            agama: 'chartLineAgamaContainer',
+            tingkat_pendidikan: 'chartLineTingkatPendidikanContainer',
+            bansos: 'chartLineBansosContainer',
+            usia: 'chartLineUsiaContainer'
+        };
+
+        for (const container in containers) {
+            document.getElementById(containers[container]).style.display = (container === selectedChart || container === selectedRTValue) ? 'block' : 'none';
+        }
+
+        $.ajax({
+            url: "{{ route('filter-data') }}",
+            type: "POST",
+            data: {
+                selectedRT: selectedRTValue,
+                selectedChart: selectedChart,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(data) {
+                console.log("selected rt =", selectedRTValue);
+                console.log("data array =", data);
+                console.log("chart obj = ", pekerjaanLine);
+                switch (selectedChart) {
+                    case 'pekerjaan':
+                        updateChartLine(pekerjaanLine, data, 'dataPekerjaan');
+                        break;
+                    case 'jenis_kelamin':
+                        updateChartLine(jenis_kelaminLine, data, 'dataJenisKelamin');
+                        break;
+                    case 'agama':
+                        updateChartLine(agamaLine, data, 'dataAgama');
+                        break;
+                    case 'tingkat_pendidikan':
+                        updateChartLine(tingkat_pendidikanLine, data, 'dataTingkatPendidikan');
+                        break;
+                    case 'bansos':
+                        updateChartLine(bansosLine, data, 'dataBansos');
+                        break;
+                    case 'usia':
+                        console.log(selectedChart);
+                        updateChartLine(usiaLine, data, 'dataUsia');
+                        break;
+                    default:
+                        console.error('dropdownChartDataRT() error');
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
     }
 </script>

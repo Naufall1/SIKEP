@@ -13,7 +13,7 @@ class KeluargaModifiedSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('keluargamodified')->insert([
+        DB::table('keluargaModified')->insert([
             [
                 'no_kk' => '9876543210987654',
                 'user_id'=> 4,
@@ -30,9 +30,9 @@ class KeluargaModifiedSeeder extends Seeder
                 'user_id'=> 6,
                 "kepala_keluarga"=> "Budi Santoso",
                 "image_kk"=> "kk_11.jpg",
-                "tagihan_listrik"=> "400000",
-                "luas_bangunan"=> "300",
-                'tanggal_request' => '2024-04-30',
+                "tagihan_listrik"=> "300000",
+                "luas_bangunan"=> "120",
+                'tanggal_request' => '2024-05-16',
                 'status_request' => 'Menunggu',
                 'catatan' => null,
             ],

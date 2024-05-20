@@ -20,8 +20,8 @@
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href="{{ route('dataBaru') }}"
-                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'dataBaru' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                <a href="{{ route('pengajuan') }}"
+                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'pengajuan' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Pengajuan
                 </a>
                 <div
@@ -144,7 +144,8 @@
     </div>
 @endsection
 @push('js')
-<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
@@ -193,7 +194,7 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[5, 'desc']],
+                // order: [[1, 'desc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[44px]",
@@ -222,6 +223,12 @@
                 }, {
                     data: "tanggal_request",
                     className: "tw-w-[140px]",
+                    render: function(data, type, row){
+                        if(type === "sort" || type === "type"){
+                            return data;
+                        }
+                        return moment(data).format("YYYY-MM-DD");
+                    },
                     orderable: true,
                     searchable: true
                 }, {

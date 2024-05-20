@@ -1,10 +1,9 @@
-
 <div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
     <div class="tw-w-56">
         <x-input.select id="chartType" onchange="dropdownChartData()">
-            <option value="pekerjaan" selected>Pekerjaan</option>
+            <option value="pekerjaan">Pekerjaan</option>
             <option value="jenis_kelamin">Jenis Kelamin</option>
-            <option value="tingkat_pendidikan">Tingkat Pendidikan</option>
+            <option value="tingkat_pendidikan" selected>Tingkat Pendidikan</option>
             <option value="agama">Agama</option>
             <option value="bansos">Bansos</option>
             <option value="usia">Usia</option>
@@ -12,29 +11,29 @@
     </div>
     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
     <div class="tw-w-28">
-        <x-input.select class="tw-w-28" id="rt" onchange="dropdownChartData()">
-            <option value="all">Semua</option>
-                @foreach ($semuaRT as $rt)
-            <option value="{{ $rt->rt }}">RT. {{ $rt->keterangan }}</option>
-        @endforeach
+        <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
+            <option value="ketua">Semua</option>
+            @foreach ($semuaRT as $rt)
+                <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
+            @endforeach
         </x-input.select>
     </div>
     @endif
 </div>
 
 <div id="chartPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartPekerjaanPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none" >
+<div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
     <canvas height="242" id="chartJenisKelaminPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartAgamaContainer" class="tw-flex tw-w-full" style="display: none" >
+<div id="chartAgamaContainer" class="tw-flex tw-w-full" style="display: none">
     <canvas height="242" id="chartAgamaPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
-<div id="chartTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none" >
+<div id="chartTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
     <canvas height="242" id="chartTingkatPendidikanPie" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
@@ -47,35 +46,20 @@
 </div>
 
 <script>
-    function dropdownChartData() {
-        const selectedChart = document.getElementById('chartType').value;
-        const containers = {
-            pekerjaan: 'chartPekerjaanContainer',
-            jenis_kelamin: 'chartJenisKelaminContainer',
-            agama: 'chartAgamaContainer',
-            tingkat_pendidikan: 'chartTingkatPendidikanContainer',
-            bansos: 'chartPieBansosContainer',
-            usia: 'chartPieUsiaContainer'
-        };
-
-        if (selectedChart in containers) {
-        for (const container in containers) {
-            document.getElementById(containers[container]).style.display = (container === selectedChart) ? 'block' : 'none';
-        }
-
-        window[selectedChart]();
-    } else {
-        console.error('error pada fungsi dropdownChartData()'); // tampil ndek console inspect
-    }
-}
-
+    let pekerjaan;
+    let jenis_kelamin;
+    let agama;
+    let tingkat_pendidikan;
+    let usia;
+    let bansos;
     document.addEventListener('DOMContentLoaded', function() {
-        chartPekerjaan();
-        chartJenisKelamin();
-        chartAgama();
-        chartTingkatPendidikan();
-        chartUsia();
-        chartBansos();
+        dropdownChartData();
+        pekerjaan = chartPekerjaan();
+        jenis_kelamin = chartJenisKelamin();
+        agama = chartAgama();
+        tingkat_pendidikan = chartTingkatPendidikan();
+        usia = chartUsia();
+        bansos = chartBansos();
     });
 
     function createChart(ctx, labels, data, label) {
@@ -149,7 +133,7 @@
                                 innerHtml += ' %</h3>';
 
                                 let tableRoot = tooltipEl.querySelector('div');
-                                console.log(tableRoot);
+                                // console.log(tableRoot);
                                 tableRoot.innerHTML = innerHtml;
                             }
 
@@ -188,6 +172,7 @@
                 },
             }
         });
+
     }
 
     function chartAgama() {
@@ -195,7 +180,7 @@
         const dataAgama = @json($dataAgama);
         const agama = dataAgama.map(item => item.agama);
         const jmlWarga = dataAgama.map(item => item.persentase);
-        createChart(ctx, agama, jmlWarga, 'Persentase');
+        return createChart(ctx, agama, jmlWarga, 'Persentase');
     }
 
     function chartTingkatPendidikan() {
@@ -203,7 +188,7 @@
         const dataTingkatPendidikan = @json($dataTingkatPendidikan);
         const pendidikan = dataTingkatPendidikan.map(item => item.pendidikan);
         const jmlWarga = dataTingkatPendidikan.map(item => item.persentase);
-        createChart(ctx, pendidikan, jmlWarga, 'Persentase');
+        return createChart(ctx, pendidikan, jmlWarga, 'Persentase');
     }
 
     function chartPekerjaan() {
@@ -211,23 +196,23 @@
         const dataPekerjaan = @json($dataPekerjaan);
         const jenisPekerjaan = dataPekerjaan.map(item => item.jenis_pekerjaan);
         const jmlWarga = dataPekerjaan.map(item => item.persentase);
-        createChart(ctx, jenisPekerjaan, jmlWarga, 'Persentase');
+        return createChart(ctx, jenisPekerjaan, jmlWarga, 'Persentase');
     }
 
     function chartJenisKelamin() {
         const ctx = document.getElementById('chartJenisKelaminPie').getContext('2d');
         const dataJenisKelamin = @json($dataJenisKelamin);
         const jenisKelamin = dataJenisKelamin.map(item => item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan');
-        const jmlWarga = dataJenisKelamin.map(item => item.persentase); // sementara sek gaiso persentase karena blom nemu cara nambahi atribut % di akhir elemen
-        createChart(ctx, jenisKelamin, jmlWarga, 'Persentase');
+        const jmlWarga = dataJenisKelamin.map(item => item.persentase);
+        return createChart(ctx, jenisKelamin, jmlWarga, 'Persentase');
     }
 
     function chartBansos() {
         const ctx = document.getElementById('chartBansosPie').getContext('2d');
-        const dataBansos = @json($dataBansosByMonth);
+        const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
         const jmlWarga = dataBansos.map(item => item.persentase);
-        createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
+        return createChart(ctx, bulanTahun, jmlWarga, 'Persetase');
     }
 
     function chartUsia() {
@@ -235,7 +220,98 @@
         const dataUsia = @json($dataUsia);
         const rentangUsia = dataUsia.map(item => `Usia ${item.rentang_usia}`);
         const jumlahPenduduk = dataUsia.map(item => item.persentase);
-        createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
+        return createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
     }
 
+    // generate chart e ga work (gpt)
+    // function updateChart(chartInstance, newData, jenisData) {
+    //     // Mendefinisikan variabel datasets dan labels
+    //     let datasets = chartInstance.data.datasets;
+    //     let labels = chartInstance.data.labels;
+    //     let data = []
+
+    //     datasets[0].data.forEach((dataset, index) => {
+    //         chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
+    //     });
+    //     chartInstance.update();
+    // }
+
+    function updateChart(chartInstance, newData, jenisData) {
+        let datasets = chartInstance.data.datasets;
+        let labels = chartInstance.data.labels;
+
+        // Jika data baru ada dan tidak kosong, perbarui data chart
+        if (newData[jenisData] && newData[jenisData].length > 0) {
+            datasets[0].data = newData[jenisData].map((item, index) => {
+                return item['persentase'] !== undefined ? item['persentase'] : 0;
+            });
+        } else {
+            // Jika data kosong, set semua data pada chart ke 0
+            datasets[0].data = labels.map(() => 0);
+        }
+
+        chartInstance.update();
+    }
+
+    function dropdownChartData(selectedRT) {
+        const selectedChart = document.getElementById('chartType').value;
+        var selectedRTValue = '{{Auth::user()->keterangan}}';
+        console.log(document.getElementById('rtFilter'));
+        if (document.getElementById('rtFilter') != null) {
+            selectedRTValue = document.getElementById('rtFilter').value;
+        }
+        const containers = {
+            pekerjaan: 'chartPekerjaanContainer',
+            jenis_kelamin: 'chartJenisKelaminContainer',
+            agama: 'chartAgamaContainer',
+            tingkat_pendidikan: 'chartTingkatPendidikanContainer',
+            bansos: 'chartPieBansosContainer',
+            usia: 'chartPieUsiaContainer'
+        };
+
+        for (const container in containers) {
+            document.getElementById(containers[container]).style.display = (container === selectedChart || container === selectedRTValue) ? 'block' : 'none';
+        }
+
+        $.ajax({
+            url: "{{ route('filter-data') }}",
+            type: "POST",
+            data: {
+                selectedRT: selectedRTValue ? selectedRTValue : selectedRT,
+                selectedChart: selectedChart,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(data) {
+                // console.log("selected rt =", selectedRTValue);
+                // console.log("data array =", data);
+                // console.log("chart obj = ", pekerjaan);
+                switch (selectedChart) {
+                    case 'pekerjaan':
+                        updateChart(pekerjaan, data, 'dataPekerjaan');
+                        break;
+                    case 'jenis_kelamin':
+                        updateChart(jenis_kelamin, data, 'dataJenisKelamin');
+                        break;
+                    case 'agama':
+                        updateChart(agama, data, 'dataAgama');
+                        break;
+                    case 'tingkat_pendidikan':
+                        updateChart(tingkat_pendidikan, data, 'dataTingkatPendidikan');
+                        break;
+                    case 'bansos':
+                        updateChart(bansos, data, 'dataBansos');
+                        break;
+                    case 'usia':
+                        console.log(data);
+                        updateChart(usia, data, 'dataUsia');
+                        break;
+                    default:
+                        console.error('dropdownChartDataRT() error');
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    }
 </script>
