@@ -117,6 +117,10 @@ class Pengajuan
         foreach ($this->daftarWarga as $key => $value) {
             if ($value['warga']->NIK == $nik) {
                 $idx = $key;
+                if ($value['warga']->nama == $this->keluarga->kepala_keluarga) {
+                    $this->keluarga->kepala_keluarga = null;
+                }
+                break;
             }
         }
         if (!count($this->daftarWarga) == 0 && $idx != -1) {
@@ -148,7 +152,7 @@ class Pengajuan
         session()->put('pengajuan', ['keluarga' => $this->keluarga, 'daftarWarga' => $this->daftarWarga]);
         session()->save();
     }
-    private function clear()
+    public function clear()
     {
         $this->keluarga = null;
         $this->daftarWarga = [];

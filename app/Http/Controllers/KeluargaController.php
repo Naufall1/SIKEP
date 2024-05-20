@@ -280,7 +280,6 @@ class KeluargaController extends Controller
 
             $validator = Validator::make($request->except('kartu_keluarga'), [
                 'no_kk' => 'required|size:16|unique:keluarga,no_kk',
-                'kepala_keluarga' => 'required|max:100',
                 'alamat' => 'required',
                 'RT' => 'required|integer',
                 'RW' => 'required|integer',
@@ -329,6 +328,12 @@ class KeluargaController extends Controller
         if ($request->action == 'tambah') {
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
+
+        $request->validate([
+            'kepala_keluarga' => 'required|max:100'
+        ], [
+            'kepala_keluarga.required' => 'Tambahkan minimal 1 warga sebagai kepala keluarga.'
+        ]);
 
         if (Keluarga::find($request->no_kk)) {
             $keluarga = Keluarga::find($request->no_kk);
@@ -537,6 +542,13 @@ class KeluargaController extends Controller
     public function back()
     {
         FormStateKeluarga::clear();
+
+        session()->forget('berkas_demografi');
+        session()->save();
+
+        $pengajuan = new Pengajuan();
+        $pengajuan->clear();
+
         return redirect()->route('penduduk.warga');
     }
 }

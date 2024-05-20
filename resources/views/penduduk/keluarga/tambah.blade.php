@@ -50,8 +50,8 @@
                             </x-input.label>
 
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.input type="text" name="kepala_keluarga" placeholder="Masukkan Kepala Keluarga"
-                                    value="{{ old('kepala_keluarga', isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '') }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kepala_keluarga" placeholder="Tambahkan Warga"
+                                    value="{{ isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '' }}"></x-input.input>
                                 @error('kepala_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -239,6 +239,7 @@
             $('#provinsi').prop('disabled', false);
             $('#tagihan_listrik').prop('disabled', false);
             $('#luas_bangunan').prop('disabled', false);
+            $('#kepala_keluarga').prop('disabled', false);
             return true;
         });
         $(document).ready(function() {
