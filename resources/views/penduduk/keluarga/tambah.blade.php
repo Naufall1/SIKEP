@@ -24,26 +24,22 @@
                         <h2 class="">Data Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-
-                            <x-input.label for="jenis_data" label="Jenis Data">
-                                <x-input.select name="jenis_data">
-                                    <option value="data_baru" @selected(old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) == 'data_baru') {{-- {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }} --}}>
-                                        KK Baru</option>
-                                    <option value="data_lama" @selected(old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) == 'data_lama') {{-- {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }} --}}>
-                                        KK Lama</option>
-                                </x-input.select>
+                            <x-input.label required class="tw-relative" for="jenis_data-list" label="Jenis Data">
+                                <x-input.select2 name="jenis_data"
+                                    default="{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}"
+                                    placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            <x-input.label for="no_kk" label="No KK">
-                                <x-input.input type="text" name="no_kk" placeholder="Masukkan No KK"
+                            <x-input.label class="tw-relative" for="no_kk" label="No KK">
+                                <x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
                                     value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>
-                                <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
+                                {{-- <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
                                     <option value="no" disabled selected>Pilih KK</option>
                                     @foreach ($daftarKeluarga as $keluarga)
                                         <option value="{{ $keluarga->no_kk }}" @selected(old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') == $keluarga->no_kk)>
                                             {{ $keluarga->no_kk . ' - ' . $keluarga->kepala_keluarga }}</option>
                                     @endforeach
-                                </x-input.select>
+                                </x-input.select> --}}
                                 @error('no_kk')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -111,7 +107,7 @@
                                 @php
                                     $img = session()->get('formState')['kartu_keluarga'];
                                     // dd($img);
-                                    @endphp
+                                @endphp
                                 @include('components.form.textdetail', [
                                     'title' => '',
                                     'isImage' => true,
@@ -128,7 +124,9 @@
                         <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon type="text" id="tagihan_listrik" name="tagihan_listrik" value="{{ old('tagihan_listrik', $formState['tagihan_listrik'] ?? 0) }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
+                                <x-input.leadingicon type="text" id="tagihan_listrik" name="tagihan_listrik"
+                                    value="{{ old('tagihan_listrik', $formState['tagihan_listrik'] ?? 0) }}" icon="rupiah"
+                                    alt="Rp"></x-input.leadingicon>
                                 @error('tagihan_listrik')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -136,7 +134,7 @@
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan (m2)">
                                 <x-input.input type="text" id="luas_bangunan" name="luas_bangunan"
-                                value="{{ old('luas_bangunan', $formState['luas_bangunan'] ?? 0) }}"></x-input.input>
+                                    value="{{ old('luas_bangunan', $formState['luas_bangunan'] ?? 0) }}"></x-input.input>
                                 @error('luas_bangunan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -210,8 +208,8 @@
                     </div>
                 </div>
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('penduduk.keluarga.tambah.back') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
-                        type="button">
+                    <a href="{{ route('penduduk.keluarga.tambah.back') }}"
+                        class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline" type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
@@ -244,11 +242,11 @@
         });
         $(document).ready(function() {
             changeJenisData(
-                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) }}'
+                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectKK(
                 '{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}',
-                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) }}'
+                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
 
@@ -338,99 +336,131 @@
         //     });
         // }
 
-        function changeJenisData(data) {
-            if (data == 'data_lama') {
-                $('#formData').attr('action', '{{ route('pindahKK') }}');
-                $('#no_kk').removeClass('tw-input-enabled');
-                $('#no_kk').attr('type', 'hidden');
-                $('#no_kk').prop('disabled', true);
+        function data_lama() {
+            $('#formData').attr('action', '{{ route('pindahKK') }}');
 
-                $('#alamat').removeClass('tw-input-enabled');
-                $('#alamat').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#alamat').attr('placeholder', 'Pilih No KK');
-                $('#alamat').prop('disabled', true);
+            $("label[for='no_kk']").attr('for', 'no_kk-list');
+            $("label[for='no_kk-list']").children().remove();
+            $("label[for='no_kk-list']").append(`<x-input.select2 name="no_kk" searchable
+                                    placeholder="Pilih No KK"></x-input.select2>`);
 
-                $('#kepala_keluarga').removeClass('tw-input-enabled');
-                $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#kepala_keluarga').attr('placeholder', 'Pilih No KK');
-                $('#kepala_keluarga').prop('readonly', true);
+            // $('#no_kk').removeClass('tw-input-enabled');
+            // $('#no_kk').attr('type', 'hidden');
+            // $('#no_kk').prop('disabled', true);
 
-                $('#RT').removeClass('tw-input-enabled');
-                $('#RT').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#RT').attr('placeholder', 'Pilih No KK');
-                $('#RT').prop('disabled', true);
+            // $('#kepala_keluarga').val('');
+            $('#kepala_keluarga').removeClass('tw-input-enabled');
+            $('#kepala_keluarga').addClass('tw-input-disabled');
+            // $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#kepala_keluarga').attr('placeholder', 'Pilih No KK');
+            $('#kepala_keluarga').prop('readonly', true);
 
-                $('#tagihan_listrik').removeClass('tw-input-enabled');
-                $('#tagihan_listrik').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
-                $('#tagihan_listrik').prop('disabled', true);
+            // $('#alamat').val('');
+            $('#alamat').removeClass('tw-input-enabled');
+            $('#alamat').addClass('tw-input-disabled');
+            $('#alamat').attr('placeholder', 'Pilih No KK');
+            $('#alamat').prop('disabled', true);
 
-                $('#luas_bangunan').removeClass('tw-input-enabled');
-                $('#luas_bangunan').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
-                $('#luas_bangunan').prop('disabled', true);
+            // $('#RT').removeClass('tw-input-enabled');
+            // $('#RT').addClass('tw-input-disabled placeholder:tw-text-n600');
+            // $('#RT').attr('placeholder', 'Pilih No KK');
+            // $('#RT').prop('disabled', true);
 
-                $('#no_kk-list').addClass('tw-input-enabled');
-                $('#no_kk-list').parent().removeClass('tw-hidden');
-                $('#no_kk-list').prop('disabled', false);
-                // $('#no_kk-list').val('no').change();
-                // $.ajax({
-                //     type: "GET",
-                //     url: "/api/keluarga",
-                //     success: function(response) {
-                //         // console.log(response);
-                //         response.forEach(keluarga => {
-                //             let optionHTML =
-                //                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
-                //             $('#no_kk-list').append(optionHTML);
-                //         });
-                //         $('#no_kk-list').val(
-                //             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                //         ).change();
-                //         // $('#no_kk-list').val('no').change();
-                //         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
-                //     }
-                // });
-                $('#no_kk-list').val(
-                    '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                ).change();
-            }
-            if (data == 'data_baru') {
-                $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
-                $('#no_kk').addClass('tw-input-enabled');
-                $('#no_kk').attr('type', 'text');
-                $('#no_kk').prop('disabled', false);
+            // $('#tagihan_listrik').val('');
+            $('#tagihan_listrik').removeClass('tw-input-enabled');
+            $('#tagihan_listrik').addClass('tw-input-disabled');
+            $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
+            $('#tagihan_listrik').prop('disabled', true);
+            
+            // $('#luas_bangunan').val('');
+            $('#luas_bangunan').removeClass('tw-input-enabled');
+            $('#luas_bangunan').addClass('tw-input-disabled');
+            $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
+            $('#luas_bangunan').prop('disabled', true);
 
+            // $('#no_kk-list').addClass('tw-input-enabled');
+            // $('#no_kk-list').parent().removeClass('tw-hidden');
+            // $('#no_kk-list').prop('disabled', false);
 
-                $('#alamat').addClass('tw-input-enabled');
-                $('#alamat').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#alamat').attr('placeholder', 'Masukkan Alamat');
-                $('#alamat').prop('disabled', false);
+            // $('#no_kk-list').val('no').change();
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/api/keluarga",
+            //     success: function(response) {
+            //         // console.log(response);
+            //         response.forEach(keluarga => {
+            //             let optionHTML =
+            //                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
+            //             $('#no_kk-list').append(optionHTML);
+            //         });
+            //         $('#no_kk-list').val(
+            //             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+            //         ).change();
+            //         // $('#no_kk-list').val('no').change();
+            //         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
+            //     }
+            // });
+            // $('#no_kk-list').val(
+            //     '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+            // ).change();
 
-                $('#kepala_keluarga').addClass('tw-input-enabled');
-                $('#kepala_keluarga').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
-                $('#kepala_keluarga').prop('readonly', false);
+        }
 
-                // $('#RT').val('001');
-                // $('#RT').addClass('tw-input-enabled');
-                // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
-                // $('#RT').prop('disabled', false);
+        function data_baru() {
+            $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
+            // $('#no_kk').addClass('tw-input-enabled');
+            // $('#no_kk').attr('type', 'text');
+            // $('#no_kk').prop('disabled', false);
 
-                $('#tagihan_listrik').addClass('tw-input-enabled');
-                $('#tagihan_listrik').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
-                $('#tagihan_listrik').prop('disabled', false);
+            $("label[for='no_kk-list']").attr('for', 'no_kk');
+            $("label[for='no_kk']").children().remove();
+            $("label[for='no_kk']").append(
+                `<x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
+                                    value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>`
+            );
 
-                $('#luas_bangunan').addClass('tw-input-enabled');
-                $('#luas_bangunan').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#luas_bangunan').attr('placeholder', 'Misal: 100');
-                $('#luas_bangunan').prop('disabled', false);
+            $('#kepala_keluarga').val('');
+            $('#kepala_keluarga').addClass('tw-input-enabled');
+            $('#kepala_keluarga').removeClass('tw-input-disabled');
+            $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
+            $('#kepala_keluarga').prop('readonly', false);
 
-                $('#no_kk-list').removeClass('tw-input-enabled');
-                $('#no_kk-list').parent().addClass('tw-hidden');
-                $('#no_kk-list').prop('disabled', true);
+            $('#alamat').val('');
+            $('#alamat').addClass('tw-input-enabled');
+            $('#alamat').removeClass('tw-input-disabled');
+            $('#alamat').attr('placeholder', 'Masukkan Alamat');
+            $('#alamat').prop('disabled', false);
+
+            // $('#RT').val('001');
+            // $('#RT').addClass('tw-input-enabled');
+            // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
+            // $('#RT').prop('disabled', false);
+
+            $('#tagihan_listrik').val('');
+            $('#tagihan_listrik').addClass('tw-input-enabled');
+            $('#tagihan_listrik').removeClass('tw-input-disabled');
+            $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
+            $('#tagihan_listrik').prop('disabled', false);
+            
+            $('#luas_bangunan').val('');
+            $('#luas_bangunan').addClass('tw-input-enabled');
+            $('#luas_bangunan').removeClass('tw-input-disabled');
+            $('#luas_bangunan').attr('placeholder', 'Misal: 100');
+            $('#luas_bangunan').prop('disabled', false);
+
+            // $('#no_kk-list').removeClass('tw-input-enabled');
+            // $('#no_kk-list').parent().addClass('tw-hidden');
+            // $('#no_kk-list').prop('disabled', true);
+        }
+
+        function changeJenisData(jenisData) {  
+            if (jenisData == 'Data Lama') {
+                data_lama();
+                let button = $('label[for="no_kk-list"]').children();
+                let selected = '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}' + ' - ' + '{{ empty(session()->get('formState')['kepala_keluarga']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['kepala_keluarga']) }}'
+                // console.log($('#no_kk').parents().html());
+                $(button).children().first().text(selected);
             }
         }
 
@@ -448,10 +478,10 @@
         }
 
         function selectKK(no_kk, jenis_data) {
-            console.log(jenis_data);
-            if (jenis_data == 'data_lama') {
+            // console.log(jenis_data);
+            if (jenis_data == 'Data Lama') {
                 if (no_kk != '') {
-                    console.log(no_kk);
+                    // console.log(no_kk);
                     $.ajax({
                         type: "GET",
                         url: "/api/keluarga/" + no_kk,
@@ -470,36 +500,49 @@
             }
         }
 
-        $('#jenis_data').on('change', function() {
-            changeJenisData(this.value);
-            resetNonDefaultValues();
+        $(document).on("click", ".dropdownItem", function() {
+            // if ($(this).text() == 'Data Baru' || $(this).text() == 'Data Lama') {
+            //     console.log(this.value);
+            //     changeJenisData(this.value);
+            //     resetNonDefaultValues();
+            // }
+
+            if ($(this).text() == 'Data Baru') {
+                data_baru();
+            }
+            if ($(this).text() == 'Data Lama') {
+                data_lama();
+            }
+            if ($('#jenis_data').val() == 'Data Lama' && $(this).parents().parents().parents().attr(
+                    'for') == 'no_kk-list') {
+                var data = $(this).text().split(' - ');
+                var no_kk = data[0];
+                selectKK(no_kk, $('#jenis_data').val());
+            }
+
         });
 
-        $('#no_kk-list').on('change', function() {
-            selectKK(this.value, 'data_lama');
-        });
 
-        // $('#kartu_keluarga').change(function (e) {
-        //     var kk = $('#kartu_keluarga').prop('files')[0];
-        //     var form_data = new FormData();
-        //     form_data.append('image_kk', kk);
-        //     alert(form_data);
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '',
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         data: form_data,
-        //         type: 'post',
-        //         success: function(php_script_response){
-        //             alert(php_script_response); // <-- display response from the PHP script, if any
-        //         }
-        //     });
-        // });
+    
     </script>
 @endsection
+
+@push('js')
+    <script>
+        function getKeluarga() {
+            let arrayKeluarga = [];
+            @foreach ($daftarKeluarga as $keluarga)
+                arrayKeluarga.push({
+                    no_kk: '{{ $keluarga->no_kk }}',
+                    kepala_keluarga: '{{ $keluarga->kepala_keluarga }}'
+                })
+            @endforeach
+            let dataKeluarga = [];
+            for (let i = 0; i < arrayKeluarga.length; i++) {
+                dataKeluarga[i] = arrayKeluarga[i].no_kk + ' - ' + arrayKeluarga[i].kepala_keluarga;
+                // dataKeluarga[i] = i;
+            }
+            return dataKeluarga;
+        }
+    </script>
+@endpush

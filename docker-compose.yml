@@ -18,6 +18,7 @@ services:
     volumes:
       - ./docker-compose/nginx:/etc/nginx/conf.d
       - shared-data:/var/www/app
+      - ./storage/app/public:/var/www/app/public/file:ro
       # - /etc/letsencrypt/live/sikep-rw2.site:/etc/letsencrypt/live/sikep-rw2.site:ro
     networks:
       - laravel
@@ -34,6 +35,7 @@ services:
     tty: true
     volumes:
       - shared-data:/var/www/app
+      - ./storage/app:/var/www/app/storage/app:rw
     networks:
       - laravel
     expose:

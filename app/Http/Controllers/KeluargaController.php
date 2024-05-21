@@ -202,7 +202,7 @@ class KeluargaController extends Controller
             'luas_bangunan' => (int)$request->get('luas_bangunan'),
         ]);
 
-        if ($request->jenis_data == 'data_lama') {
+        if ($request->jenis_data == 'Data Lama') {
             if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
                 $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
@@ -253,7 +253,7 @@ class KeluargaController extends Controller
             FormStateKeluarga::setKK($kk);
 
             // $keluarga = Keluarga::find($request->no_kk);
-        } else if ($request->jenis_data == 'data_baru') {
+        } else if ($request->jenis_data == 'Data Baru') {
             if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
                 $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
