@@ -258,8 +258,8 @@
                     "url": "{{ route('penduduk.keluarga.tambah.listwarga') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": {
-                        no_kk: '{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}'
+                    "data": function(d) {
+                        d.no_kk = $('#no_kk-list').val();
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -300,6 +300,9 @@
                     orderable: false,
                     searchable: false
                 }]
+            });
+            $('#no_kk-list').on('change', function () {
+                dataWarga.ajax.reload();
             });
         });
 
