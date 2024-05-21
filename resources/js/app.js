@@ -43,7 +43,7 @@ $(document).ready(function () {
 
     console.log('halo');
 
-    $('#closeFlash').click(function (e) { 
+    $('#closeFlash').click(function (e) {
         $(this).parent().remove();
     });
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
         // rotateArrow($(button).siblings().last())
     });
 
-    
+
     $(document).on("click", ".dropdownTrigger", function() {
         // $(this).val();
         // console.log('tes');
@@ -90,7 +90,6 @@ $(document).ready(function () {
                 content += `<li class="">Tidak Ada Data</li>`
             }
             $(dropItems).append(content);
-            
             $(this).siblings().children().focus();
         } else {
             $(this).siblings().addClass('tw-hidden');
@@ -130,7 +129,7 @@ $(document).ready(function () {
             return getKeluarga();
         }
     }
-    $(document).on( "keyup", "input[name=searchDropItem]", function (e) { 
+    $(document).on( "keyup", "input[name=searchDropItem]", function (e) {
         // console.log($(this).val());
         let id = $(this).parents().parents().parents().children().attr('id');
         let parent = $(this).parents().parents();

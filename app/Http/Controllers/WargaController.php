@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Demografi;
+use App\Models\FormStateKeluarga;
 use App\Models\HaveDemografi;
 use App\Models\Pengajuan;
 use App\Models\PengajuanData;
@@ -109,7 +110,7 @@ class WargaController extends Controller
             $request->file('berkas_demografi')->storeAs('', $filenameSimpan, 'temp');
         }
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'NIK' => 'required|size:16|unique:warga,NIK',
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
@@ -121,7 +122,6 @@ class WargaController extends Controller
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'jenis_pekerjaan' => 'required|string|max:50',
             'kewarganegaraan' => 'required|in:WNI,WNA',
-            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak',
             'nama_ayah' => 'required|string|max:100',
             'nama_ibu' => 'required|string|max:100',
             'penghasilan' => 'required|integer',
@@ -129,7 +129,17 @@ class WargaController extends Controller
             'no_kitas' => 'nullable|string|max:10',
             'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar',
             'tanggal_kejadian' => 'required|date',
-        ]);
+        ];
+
+        $pengajuan = new Pengajuan();
+
+        if ($pengajuan->keluarga->kepala_keluarga == null) {
+            $rules['status_keluarga'] = 'required|in:Kepala Keluarga';
+            $validator = Validator::make($request->all(), $rules, ['status_keluarga.in' => 'Warga pertama WAJIB Kepala Keluarga']);
+        } else {
+            $validator = Validator::make($request->all(), $rules);
+        }
+        // dd($pengajuan->keluarga->kepala_keluarga);
 
         if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails() )) {
             Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
@@ -185,7 +195,10 @@ class WargaController extends Controller
         $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
         $haveDemografi->status_request = 'Menunggu';
 
-        $pengajuan = new Pengajuan();
+        if ($warga->status_keluarga == 'Kepala Keluarga') {
+            FormStateKeluarga::setKepalaKeluarga($warga->nama);
+            $pengajuan->keluarga->kepala_keluarga = $warga->nama;
+        }
         $pengajuan->tambahWarga($warga, $demografi, $haveDemografi);
         session()->forget('berkas_demografi');
 
@@ -444,7 +457,9 @@ class WargaController extends Controller
         }
 
         $pengajuan = new Pengajuan();
-        $pengajuan->pindahKK(Warga::find($request->NIK));
+        $warga = Warga::find($request->NIK);
+        $warga->status_keluarga = $request->status_keluarga;
+        $pengajuan->pindahKK($warga);
         return redirect()->route('keluarga-tambah');
     }
 

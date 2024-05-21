@@ -46,8 +46,8 @@
                             </x-input.label>
 
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.input type="text" name="kepala_keluarga" placeholder="Masukkan Kepala Keluarga"
-                                    value="{{ old('kepala_keluarga', isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '') }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kepala_keluarga" placeholder="Tambahkan Warga"
+                                    value="{{ isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '' }}"></x-input.input>
                                 @error('kepala_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -112,10 +112,7 @@
                                     'title' => '',
                                     'isImage' => true,
                                     'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
-                                ])
-                            @else
-                                {{-- @if (isset($kartu_keluarga))
-                                    @endif --}}
+                                    ])
                             @endif
 
                         </div>
@@ -153,18 +150,23 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                            <table class="tw-w-[702px] md:tw-w-full">
-                                {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>NIK</th>
-                                    <th>Nama</th>
-                                    <th>Status Keluarga</th>
-                                    <th class="tw-w-[108px]"></th>
-                                </tr>
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                                <div class="tw-border-b-[1.5px] tw-border-n400">
+                                    <button type="submit" name="action" value="tambah"
+                                    class="  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                    Tambah</button>
+                                </div>
+                                <thead class="tw-rounded-lg">
+                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Status Keluarga</th>
+                                        <th class="tw-w-[108px]"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($daftarWarga as $warga)
+                                    {{-- @foreach ($daftarWarga as $warga)
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $warga['warga']->NIK }}</td>
@@ -184,7 +186,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                     <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
                                             {{-- <a href="#"
@@ -192,9 +194,9 @@
                                             onclick="tambahAnggotaKeluarga()">
                                             Tambah
                                         </a> --}}
-                                            <button type="submit" name="action" value="tambah"
+                                            {{-- <button type="submit" name="action" value="tambah"
                                                 class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                Tambah</button>
+                                                Tambah</button> --}}
                                         </td>
                                     </tr>
 
@@ -220,6 +222,9 @@
 
         </div>
     </div>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $('#formdata').submit(function(e) {
             // e.preventDefault();
@@ -232,6 +237,7 @@
             $('#provinsi').prop('disabled', false);
             $('#tagihan_listrik').prop('disabled', false);
             $('#luas_bangunan').prop('disabled', false);
+            $('#kepala_keluarga').prop('disabled', false);
             return true;
         });
         $(document).ready(function() {
@@ -243,6 +249,59 @@
                 '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
+
+            dataWarga = $('#daftarWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('penduduk.keluarga.tambah.listwarga') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": function(d) {
+                        d.no_kk = $('#no_kk-list').val();
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                paging: false,
+                info: false,
+                searching: false,
+                // order: [
+                //     [2, 'asc']
+                // ],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[44px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "NIK",
+                    className: "tw-w-[180px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "nama",
+                    className: "tw-grow",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "status_keluarga",
+                    className: "tw-w-[180px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "tw-w-[140px] tw-flex tw-items-center tw-justify-center tw-gap-2",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            $('#no_kk-list').on('change', function () {
+                dataWarga.ajax.reload();
+            });
         });
 
         // function getFormData($form) {

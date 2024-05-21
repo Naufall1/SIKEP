@@ -119,18 +119,7 @@ class KeluargaController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-
-        if ($user->keterangan == 'ketua') {
-            $keluarga = Keluarga::where('status', '!=', 'Menunggu')->get();
-        } else {
-            $keluarga = Keluarga::select('keluarga.*', 'user.keterangan')
-                ->join('user', 'keluarga.rt', '=', 'user.keterangan')
-                ->where('user.keterangan', $user->keterangan)
-                // ->where('status', '!=', 'Menunggu')
-                ->get();
-        }
-        return view('penduduk.keluarga.index', compact('keluarga'));
+        return view('penduduk.keluarga.index');
     }
 
     /**
@@ -156,7 +145,42 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
-        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        // return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
+        return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default);
+    }
+
+    public function listWargaCreate(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'no_kk' => 'numeric|nullable'
+        ]);
+        $pengajuan = new Pengajuan();
+        $pengajuan->keluarga = new Keluarga;
+        $pengajuan->keluarga->no_kk = $request->no_kk;
+        $daftarWarga = $pengajuan->getDaftarWargaOnly();
+        return DataTables::of($daftarWarga)
+            ->addIndexColumn()
+            ->addColumn('action', function (Warga $warga) {
+                $trash = '
+                    <a href="'. route('removeAnggotaKeluarga', $warga->NIK) .'"
+                        class="tw-h-10 tw-px-2 tw-bg-r500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-r600 active:tw-bg-r700 tw-flex tw-items-center">
+                        <img class="tw-h-5 tw-bg-cover"
+                            src="'. asset('assets/icons/actionable/trash.svg') .'"
+                            alt="del">
+                    </a>';
+                $show = '
+                    <a href=""
+                        class="tw-h-10 tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                        Lihat
+                    </a>';
+                if (str_contains($warga->nama, '(Baru)')) {
+                    return $trash . $show;
+                }
+                return $show;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -245,7 +269,6 @@ class KeluargaController extends Controller
 
             $validator = Validator::make($request->except('kartu_keluarga'), [
                 'no_kk' => 'required|size:16|unique:keluarga,no_kk',
-                'kepala_keluarga' => 'required|max:100',
                 'alamat' => 'required',
                 'RT' => 'required|integer',
                 'RW' => 'required|integer',
@@ -292,8 +315,16 @@ class KeluargaController extends Controller
         }
 
         if ($request->action == 'tambah') {
+            $pengajuan = new Pengajuan();
+            $pengajuan->keluarga->kepala_keluarga = $request->kepala_keluarga ?? null;
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
+
+        $request->validate([
+            'kepala_keluarga' => 'required|max:100'
+        ], [
+            'kepala_keluarga.required' => 'Tambahkan minimal 1 warga sebagai kepala keluarga.'
+        ]);
 
         if (Keluarga::find($request->no_kk)) {
             $keluarga = Keluarga::find($request->no_kk);
@@ -435,24 +466,6 @@ class KeluargaController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * Method ini berfungsi untuk menyimpan semua data warga yang ditambahkan kedalam Keluarga yang sudah ada.
-     */
-    // public function tambahWarga(Request $request){
-    //     // TODO: Add validation
-    //     Warga::saveTemp(Keluarga::find($request->no_kk));
-    //     return redirect()->route('keluarga');
-    // }
-
-    /**
-     * @param Request $request
-     * Fungsi ini untuk menyimpan kondisi terakhir form penambahan data.
-     */
-    // public function saveFormState(Request $request){
-    //     FormStateKeluarga::update($request);
-    //     return true;
-    // }
 
     /**
      * Fungsi untuk menghapus anggota keluarga yang disimpan sementara.
@@ -460,11 +473,11 @@ class KeluargaController extends Controller
      * @param integer $idx
      * @return \Illuminate\Http\RedirectResponse
      */
-    function removeAnggotaKeluarga($idx)
+    function removeAnggotaKeluarga($nik)
     {
         // Warga::removeTemp($idx);
         $pengajuan = new Pengajuan();
-        $pengajuan->removeWarga($idx);
+        $pengajuan->removeWarga($nik);
         return redirect(route('keluarga-tambah') . '#anggota_keluarga');
     }
 
@@ -502,6 +515,13 @@ class KeluargaController extends Controller
     public function back()
     {
         FormStateKeluarga::clear();
+
+        session()->forget('berkas_demografi');
+        session()->save();
+
+        $pengajuan = new Pengajuan();
+        $pengajuan->clear();
+
         return redirect()->route('penduduk.warga');
     }
 }
