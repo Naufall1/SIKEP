@@ -48,7 +48,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".dropdownItem" , function(){
-        // console.log('items');
+        console.log('items');
         let selected = $(this).text();
         let button = $(this).parents().parents().parents().children().children().first();
         let name = $(button).parents().attr('name');
@@ -59,8 +59,10 @@ $(document).ready(function () {
         $(button).text(selected);
         // console.log('DEFAULT VALUE = '+$(input).val());
         $(input).val(selected);
-        if (!$('.dropContent').hasClass('tw-hidden')) {
-            $('.dropContent').addClass('tw-hidden');
+        console.log(!$('.dropContent').hasClass('tw-hidden'));
+        if (!($('.dropContent').hasClass('tw-hidden'))) {
+            console.log($('.dropContent').html());
+            // $('.dropContent').addClass('tw-hidden');
         }
         // console.log($(this).parents().parents().parents().html());
         // console.log('NEW VALUE = '+$(input).val());
@@ -73,7 +75,8 @@ $(document).ready(function () {
         // console.log('tes');
         if ($(this).siblings().hasClass('tw-hidden')) {
             // rotateArrow($(this).children().last())
-            $('.dropdownTrigger').siblings().addClass('tw-hidden');
+            // $('.dropdownTrigger').siblings().addClass('tw-hidden');
+            console.log(`if` + $('.dropdownTrigger').siblings().html());
             // rotateArrow($('.dropdownTrigger').children().last())
             $(this).siblings().removeClass('tw-hidden');
             let dropItems = $(this).siblings().children().last();
@@ -83,11 +86,15 @@ $(document).ready(function () {
                 content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
                 //  console.log(dropdownItem);
             });
+            if(getDropdownItems($(this).attr('id')) == ['']){
+                content += `<li class="">Tidak Ada Data</li>`
+            }
             $(dropItems).append(content);
             
             $(this).siblings().children().focus();
         } else {
             $(this).siblings().addClass('tw-hidden');
+
             // rotateArrow($(this).children().last())
         }
     });
@@ -119,6 +126,8 @@ $(document).ready(function () {
             return getJenisDemografi();
         } else if (id == 'pendidikan-list'){
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
+        } else if (id == 'no_kk-list'){
+            return getKeluarga();
         }
     }
     $(document).on( "keyup", "input[name=searchDropItem]", function (e) { 
