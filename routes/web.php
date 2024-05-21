@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ARASController;
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BansosController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\MERECController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfilController;
@@ -27,7 +29,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/testchart', [HomeController::class, 'chart']);
 
-Route::get('/spk', [PerhitunganController::class, 'kriteria']);
+Route::get('/spk/merec', [MERECController::class,'MEREC'])->name('spk.merec');
+Route::get('/spk/aras', [ARASController::class, 'rankingBansos'])->name('spk.aras');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
