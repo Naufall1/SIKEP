@@ -83,12 +83,19 @@ class PengajuanController extends Controller
             'id' => 'required|exists:pengajuan,id'
         ]);
 
+        $pengajuan = PengajuanData::find($request->id);
         // Ambil Nomor KK dari pengajuan yang dipilih
-        $no_kk = PengajuanData::find($request->id)->no_kk;
+        $no_kk = $pengajuan->no_kk;
         // Ambil daftar anggota keluarga asli
-        $daftarWarga = Warga::where('no_kk', '=', $no_kk)->where('status_warga', '!=', 'Menunggu')->get();
+        $daftarWarga = Warga::where('no_kk', '=', $no_kk)
+                                ->where('status_warga', '!=', 'Menunggu')
+                                ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                ->get();
         // Ambil daftar anggota keluarga yang ditambahkan dari data baru
-        $daftarWargaBaru = Warga::where('no_kk', '=', $no_kk)->where('status_warga', '=', 'Menunggu')->get();
+        $daftarWargaBaru = Warga::where('no_kk', '=', $no_kk)
+                                ->where('status_warga', '=', 'Menunggu')
+                                ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                ->get();
         // Ambil daftar anggota keluarga yang berasal dari pindah KK
         $daftarWargaPindahKK = WargaModified::where('no_kk', '=', $no_kk)->where('status_request', '=', 'Menunggu')->get();
 
