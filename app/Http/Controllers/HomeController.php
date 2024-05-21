@@ -69,9 +69,6 @@ class HomeController extends Controller
             })
             ->get();
 
-        $countKeluarga = Keluarga::count();
-        $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
-
         if ($keterangan !== 'ketua') {
             $countPenduduk = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
                             ->join('warga as w', 'keluarga.no_kk', '=', 'w.no_kk')
@@ -83,8 +80,8 @@ class HomeController extends Controller
             $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
 
         } else {
-            $countPenduduk = Warga::count();
-            $countKeluarga = Keluarga::count();
+            $countPenduduk = Warga::where('status_warga', '!=', 'Menunggu')->count();
+            $countKeluarga = Keluarga::where('status', '=', 'Aktif')->count();
             $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
         }
 
