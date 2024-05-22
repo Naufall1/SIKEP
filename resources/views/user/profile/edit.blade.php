@@ -46,7 +46,7 @@
                             </x-input.label>
 
                             <x-input.label class="tw-w-full" for="old_password" label="Kata Sandi Lama">
-                                <x-input.password placeholder="Masukkan Kata Sansi" id="old_password"
+                                <x-input.password placeholder="Masukkan Kata Sandi" id="old_password"
                                     name="old_password"></x-input.password>
                                 @if (session('error'))
                                     <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
@@ -56,7 +56,7 @@
                             </x-input.label>
 
                             <x-input.label class="tw-w-full" for="password" label="Kata Sandi Baru">
-                                <x-input.password placeholder="Masukkan Kata Sansi" id="password"
+                                <x-input.password placeholder="Masukkan Kata Sandi" id="password"
                                     name="password"></x-input.password>
                                 @if (session('error'))
                                     <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
@@ -66,7 +66,7 @@
                             </x-input.label>
 
                             <x-input.label class="tw-w-full" for="password" label="Ulangi Kata Sandi Baru">
-                                <x-input.password placeholder="Masukkan Kata Sansi" id="password"
+                                <x-input.password placeholder="Masukkan Kata Sandi" id="password"
                                     name="password"></x-input.password>
                                 @if (session('error'))
                                     <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
@@ -97,44 +97,3 @@
         </div>
     </div>
 @endsection
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profil</title>
-</head>
-<body>
-    <h1>Edit Profilku</h1>
-    flash message dadakno kudu dikei ngene wkw
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
-<form action="{{ route('profilUpdate', ['user_id' => $user->user_id]) }}" method="POST">
-    @csrf
-    @method('PUT')
-
-    <label for="old_password">Password Lama:</label><br>
-    <input type="password" id="old_password" name="old_password" required><br>
-
-    <label for="password">Password Baru:</label><br>
-    <input type="password" id="password" name="password"><br>
-
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" value="{{ $user->username }}"><br>
-
-    <label for="nama">Nama:</label><br>
-    <input type="text" id="nama" name="nama" value="{{ $user->nama }}"><br>
-
-    <label for="keterangan">Keterangan:</label><br>
-    <textarea id="keterangan" name="keterangan">{{ $user->keterangan }}</textarea><br>
-
-    <button type="submit">Simpan</button>
-</form>
-</body>
-
-</html> --}}
