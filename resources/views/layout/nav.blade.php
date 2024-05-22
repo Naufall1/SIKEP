@@ -2,12 +2,12 @@
     switch (!empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum') {
         case 'Umum':
             echo '<nav
-    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-30 tw-h-20 tw-w-svw tw-px-5 md:tw-px-[100px] tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
             break;
 
         default:
             echo '<nav
-    class="tw-bg-n100 tw-z-10 tw-h-20 tw-w-svw tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
+    class="tw-bg-n100 tw-z-30 tw-h-20 tw-w-svw tw-px-5 md:tw-px-5 tw-flex tw-content-center tw-items-center tw-justify-between tw-border-b-[1.5px] tw-border-n400 tw-fixed">';
             break;
     }
 @endphp
