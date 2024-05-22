@@ -109,7 +109,7 @@
                 </x-input.label>
 
                 <x-input.label class="tw-w-full" for="password" label="Kata Sandi">
-                    <x-input.password placeholder="Masukkan Kata Sansi"
+                    <x-input.password placeholder="Masukkan Kata Sandi"
                         id="password" name="password"></x-input.password>
                 </x-input.label>
 
