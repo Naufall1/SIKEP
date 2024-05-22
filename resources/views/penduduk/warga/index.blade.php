@@ -1,7 +1,7 @@
 @extends('layout.layout', ['isForm' => false])
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css') }}">
 @endpush
 
 
@@ -45,7 +45,11 @@
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
                     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
-                        <button
+                        <x-input.label class="tw-relative tw-w-40" for="scope_data-list">
+                            <x-input.select2  name="scope_data" default="Semua"
+                                placeholder="" gap="tw-top-12"></x-input.select2>
+                        </x-input.label>
+                        {{-- <button
                             class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
                             type="button">
                             <span class="tw-placeholder">
@@ -56,20 +60,55 @@
                                 <img class="tw-w-5 tw-bg-cover"
                                     src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="back">
                             </span>
-                        </button>
+                        </button> --}}
                     @endif
-                    <button
-                        class="tw-relative tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                        type="button">
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center  tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/filter.svg') }}"
-                                alt="back">
-                        </span>
-                        <span class="tw-placeholder">
-                            Filter
-                        </span>
-                    </button>
+                    <div class="tw-relative">
+                        <button id="filter"
+                            class="tw-btn tw-btn-outline tw-btn-round-md tw-btn-lg tw-pl-3 tw-pr-4 tw-gap-1 tw-bg-n100"
+                            type="button">
+                            <span class="tw-flex tw-items-center  tw-cursor-pointer">
+                                <x-icons.actionable.filter color="n1000" size="20"
+                                    stroke="2"></x-icons.actionable.filter>
+                            </span>
+                            <span class="tw-placeholder">
+                                Filter
+                            </span>
+                        </button>
+                        <div
+                            class="tw-absolute tw-top-12 tw-bg-n100 tw-filter-w-sm sm:tw-w-[280px] tw-flex tw-flex-col tw-gap-0 tw-border-[1.5px] tw-border-n400 tw-divide-n400 tw-rounded-lg tw-z-10">
+                            {{-- Head --}}
+                            <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-px-4 tw-py-3">
+                                <h3>Filter</h3>
+                                <a href="#"
+                                    class="tw-text-sm tw-font-sans tw-font-medium tw-text-b500 tw-underline">Reset
+                                    Filter</a>
+                            </div>
+                            {{-- Body --}}
+                            <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-p-4 tw-border-t-[1.5px]">
+                                {{-- Filter Group --}}
+                                <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full">
+                                    <h3 class="tw-text-sm">Filter Title</h3>
+                                    {{-- Items Group --}}
+                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2">
+                                        <button
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Item 1
+                                        </button>
+                                        <button
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Item 1
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Footer --}}
+                            <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-px-4 tw-py-3 tw-border-t-[1.5px]">
+                                <button class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md">
+                                    Terapkan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
@@ -77,8 +116,9 @@
                         </input>
                         <span
                             class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}"
-                                alt="back">
+                            <x-icons.actionable.search color="n1000" size="20"
+                                stroke="2"></x-icons.actionable.search>
+                        </span>
                         </span>
                     </div>
                 </div>
@@ -152,12 +192,12 @@
 
         </div>
     </div>
-    @endsection
+@endsection
 
 @push('js')
-<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             dataUser = $('#dataWarga').DataTable({
@@ -180,7 +220,7 @@
                 drawCallback: function() {
                     $('.pagination').addClass(
                         'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
-                        );
+                    );
                     $('.paginate_button').addClass(
                         'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
                     $('.paginate_button.active').addClass(
@@ -204,7 +244,9 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[2, 'asc']],
+                order: [
+                    [2, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[48px]",
@@ -251,8 +293,8 @@
             //     dataUser.ajax.reload();
             // });
         });
-        $('#searchBox').keyup(function () {
+        $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
         });
-        </script>
+    </script>
 @endpush

@@ -10,6 +10,20 @@
 
 @layer components {
 
+    /* Filter */
+    .tw-filter-default{
+        @apply tw-bg-n100 hover:tw-bg-b50 hover:tw-border-b50;
+    }
+
+    .tw-filter-active{
+        @apply tw-border-b500 tw-bg-b50 hover:tw-bg-n200;
+    }
+
+    .tw-filter-w-sm{
+        width: calc(100vw - 200px);
+        /* width: 2px; */
+    }
+
     /* Input */
     .tw-input-enabled {
         @apply tw-box-border tw-border-[1.5px] tw-border-n400 tw-w-full tw-h-11 tw-rounded-lg tw-px-3 tw-bg-n100 placeholder:tw-placeholder hover:tw-border-n600 focus-visible:tw-outline-none focus-visible:tw-border-[1.5px] focus-visible:tw-border-b500;
@@ -63,7 +77,7 @@
 
     /* Button/Style - Outline */
     .tw-btn-outline {
-        @apply tw-text-n1000 tw-border-[1.5px] tw-border-n500 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
+        @apply tw-text-n1000 tw-border-[1.5px] tw-border-n400 hover:tw-border-n800 active:tw-border-n1000 active:tw-bg-n300;
     }
 
     /* Button/Size */

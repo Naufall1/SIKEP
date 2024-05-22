@@ -127,6 +127,8 @@ $(document).ready(function () {
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
         } else if (id == 'no_kk-list'){
             return getKeluarga();
+        } else if (id == 'scope_data-list'){
+            return ['Semua', 'RT 001', 'RT 002', 'RT 003', 'RT 004', 'RT 005', 'RT 006', 'RT 007', 'RT 008', 'RT 009', 'RT 010', 'RT 011'];;
         }
     }
     $(document).on( "keyup", "input[name=searchDropItem]", function (e) {
@@ -149,6 +151,25 @@ $(document).ready(function () {
             $(dropdownItems).append(`<p>Data Tidak Ada</p>`);
         }
     });
+
+    $(document).on("click", "button#filter", function () {
+        if ($(this).siblings().hasClass('tw-hidden')) {
+            $(this).siblings().removeClass('tw-hidden')
+        } else {
+            $(this).siblings().addClass('tw-hidden')
+        }
+    });
+    
+    $(document).on("click", "button.filterItem", function () {
+        if ($(this).hasClass('tw-filter-default')) {
+            $(this).removeClass('tw-filter-default');
+            $(this).addClass('tw-filter-active');
+        } else if ($(this).hasClass('tw-filter-active')){
+            $(this).removeClass('tw-filter-active');
+            $(this).addClass('tw-filter-default');
+        }
+    });
+
 
     // console.log($('#jenis_perkawinan').val());
 
