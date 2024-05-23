@@ -29,22 +29,51 @@ class WargaController extends Controller
     {
         return Warga::find($nik);
     }
-    public function list()
+    public function list(Request $request)
     {
         $user = Auth::user();
+        $request->validate([
+            'scope_data' => 'max:8',
+            'agama' => 'array|max:6',
+            'agama.*' => 'string|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghuchu',
+            'status_warga' => 'array|max:3',
+            'status_warga.*' => 'string|in:Aktif,Meninggal,Migrasi Keluar',
+        ]);
 
         if ($user->keterangan == 'ketua') {
-            $daftar_warga = Warga::select('warga.*')
-                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
-                ->get();
+            $query = Warga::select('warga.*', 'keluarga.rt')
+                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk');
+
+            if (explode(" ", $request->scope_data)[1] ?? false) {
+                    $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
+            }
+
+            if (isset($request->agama)) {
+                $query->whereIn('warga.agama', $request->agama);
+            }
+
+            if (isset($request->status_warga)) {
+                $query->whereIn('warga.status_warga', $request->status_warga);
+            }
+
+            $daftar_warga = $query->get();
         } else {
-            $daftar_warga = Warga::select('warga.*', 'keluarga.rt')
+            $query = Warga::select('warga.*', 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
                         ->where('keluarga.rt', '=', $user->keterangan);
-                })
-                ->get();
+                });
+
+            if (isset($request->agama)) {
+                $query->whereIn('warga.agama', $request->agama);
+            }
+
+            if (isset($request->status_warga)) {
+                $query->whereIn('warga.status_warga', $request->status_warga);
+            }
+
+            $daftar_warga = $query->get();
         }
 
         return DataTables::of($daftar_warga)
