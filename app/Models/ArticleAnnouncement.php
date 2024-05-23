@@ -27,6 +27,7 @@ class ArticleAnnouncement extends Model
         'isi',
         'status',
         'image_url',
+        'caption',
     ];
 
 

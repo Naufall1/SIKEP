@@ -37,6 +37,7 @@ class ArticleAnnouncementController extends Controller
             'isi' => 'required|string',
             'status' => 'required',
             'image_url' => 'nullable|string|max:255',
+            'caption' => 'nullable|string|max:255'
         ]);
 
         ArticleAnnouncement::create($validatedData);
@@ -75,6 +76,7 @@ class ArticleAnnouncementController extends Controller
             'isi' => 'required|string',
             'status' => 'required',
             'image_url' => 'nullable|string|max:255',
+            'caption' => 'nullable|string|max:255'
         ]);
 
         $announcement->update($validatedData);
