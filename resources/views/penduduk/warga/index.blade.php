@@ -87,23 +87,67 @@
                             <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-p-4 tw-border-t-[1.5px]">
                                 {{-- Filter Group --}}
                                 <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full">
-                                    <h3 class="tw-text-sm">Filter Title</h3>
+                                    <h3 class="tw-text-sm">Agama</h3>
                                     {{-- Items Group --}}
-                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2">
+                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2" id="agama">
                                         <button
+                                            id="Buddha"
                                             class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Item 1
+                                            Buddha
                                         </button>
                                         <button
+                                        id="Hindu"
                                             class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Item 1
+                                            Hindu
+                                        </button>
+                                        <button
+                                            id="Islam"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Islam
+                                        </button>
+                                        <button
+                                        id="Katolik"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Katolik
+                                        </button>
+                                        <button
+                                            id="Konghuchu"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Konghuchu
+                                        </button>
+                                        <button
+                                        id="Kristen"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Kristen
+                                        </button>
+                                    </div>
+                                </div>
+                                {{-- Filter Group --}}
+                                <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full">
+                                    <h3 class="tw-text-sm">Status Warga</h3>
+                                    {{-- Items Group --}}
+                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2" id="status_warga">
+                                        <button
+                                            id="Aktif"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Aktif
+                                        </button>
+                                        <button
+                                            id="Migrasi Keluar"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Migrasi
+                                        </button>
+                                        <button
+                                            id="Meninggal"
+                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
+                                            Meninggal
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             {{-- Footer --}}
                             <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-px-4 tw-py-3 tw-border-t-[1.5px]">
-                                <button class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md">
+                                <button class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md" id="apply-filter">
                                     Terapkan
                                 </button>
                             </div>
@@ -168,28 +212,6 @@
                 </div>
                 {{-- End: Table HERE --}}
             </div>
-
-            {{-- <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
-                        alt="<">
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300 tw-bg-n400"
-                    href="">
-                    1
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    2
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    ...
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
-                        alt="<">
-                </a>
-            </div> --}}
-
         </div>
     </div>
 @endsection
@@ -199,6 +221,8 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
+        var filter_agama = [];
+        var filter_statusWarga = [];
         $(document).ready(function() {
             dataUser = $('#dataWarga').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
@@ -206,6 +230,11 @@
                     "url": "{{ route('warga.list') }}",
                     "dataType": "json",
                     "type": "POST",
+                    "data": function (d) {
+                        d.scope_data = $('input[name="scope_data"]').val();
+                        d.agama = filter_agama;
+                        d.status_warga = filter_statusWarga;
+                    }
                 },
                 paging: true,
                 language: {
@@ -289,12 +318,23 @@
                     searchable: false
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataUser.ajax.reload();
-            // });
+            $('input[name="scope_data"]').on('change', function () {
+                dataUser.ajax.reload();
+            });
         });
         $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
+        });
+        $('#apply-filter').on('click', function () {
+            filter_agama = [];
+            filter_statusWarga = [];
+            $.each($('#agama button.tw-filter-active'), function (idx, val) {
+                 filter_agama.push($(val).attr('id'))
+            });
+            $.each($('#status_warga button.tw-filter-active'), function (idx, val) {
+                 filter_statusWarga.push($(val).attr('id'))
+            });
+            dataUser.ajax.reload();
         });
     </script>
 @endpush
