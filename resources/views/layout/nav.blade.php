@@ -125,7 +125,7 @@
 </nav>
 
 <div id="modalBg"
-    class="modal-menu tw-z-20 tw-animate-disolve tw-hidden tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+    class="modal-menu tw-z-40 tw-animate-disolve tw-hidden tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
     <div
         class="tw-w-11/12 tw-relative tw-top-5 tw-left-1/2 -tw-translate-x-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
         <div class="tw-flex tw-justify-between tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
