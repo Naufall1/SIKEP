@@ -81,12 +81,15 @@ $(document).ready(function () {
             $(this).siblings().removeClass('tw-hidden');
             let dropItems = $(this).siblings().children().last();
             $(dropItems).children().remove();
+            let items = getDropdownItems($(this).attr('id'));
             let content = ``;
-            $.each(getDropdownItems($(this).attr('id')), function (indexInArray, item) {
+
+            $.each(items, function (indexInArray, item) { 
                 content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
                 //  console.log(dropdownItem);
             });
-            if(getDropdownItems($(this).attr('id')) == ['']){
+            console.log(items);
+            if(items == [''] || items == undefined){
                 content += `<li class="">Tidak Ada Data</li>`
             }
             $(dropItems).append(content);
@@ -121,7 +124,7 @@ $(document).ready(function () {
             return ['WNI', 'WNA'];
         } else if (id == 'status_keluarga-list'){
             return ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
-        } else if (id == 'jenis_demografi-list'){
+        } else if (id == 'jenis_demografi-list' || id == 'jenis_demografi_keluar-list'){
             return getJenisDemografi();
         } else if (id == 'pendidikan-list'){
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];

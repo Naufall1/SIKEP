@@ -15,23 +15,25 @@
                 class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : '' }}  tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
-                @if (Auth::user()->hasLevel['level_kode'] == 'RT' && !$pengajuanInProgres)
-                    <a href="{{ route('warga-edit', ['nik'=>$warga->NIK]) }}"
-                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full"
-                        type="button">
-                        <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
-                        <span class="">
-                            Perbarui
-                        </span>
-                    </a>
-                @endif
-                @if ($pengajuanInProgres)
-                    <a href="#"
-                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
-                        <span class="">
-                            Data Sedang Dalam Pengajuan
-                        </span>
-                    </a>
+                @if (Auth::user()->hasLevel['level_kode'] == 'RT')
+                    @if (!$pengajuanInProgres)
+                        <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}"
+                            class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                            <x-icons.actionable.edit class="" stroke="2" size="20"
+                                color="n100"></x-icons.actionable.edit>
+                            <span class="">
+                                Perbarui
+                            </span>
+                        </a>
+                    @else
+                        <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
+                            <x-icons.actionable.edit class="" stroke="2" size="20"
+                                color="n100"></x-icons.actionable.edit>
+                            <span class="">
+                                Perbarui
+                            </span>
+                        </button>
+                    @endif
                 @endif
             </div>
 
@@ -131,16 +133,24 @@
                                 <div class="tw-flex tw-flex-col tw-gap-3">
                                     @include('components.form.textdetail', [
                                         'title' => 'Jenis',
-                                        'content' => !isset($warga->haveDemografi[0]->demografi) ? "-" : $warga->haveDemografi[0]->demografi->jenis,
+                                        'content' => !isset($warga->haveDemografi[0]->demografi)
+                                            ? '-'
+                                            : $warga->haveDemografi[0]->demografi->jenis,
                                     ])
                                     @include('components.form.textdetail', [
                                         'title' => 'Tanggal',
-                                        'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian) ? "-" : $warga->haveDemografi[0]->tanggal_kejadian,
+                                        'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian)
+                                            ? '-'
+                                            : $warga->haveDemografi[0]->tanggal_kejadian,
                                     ])
                                     @include('components.form.textdetail', [
                                         'isImage' => true,
                                         'title' => 'Berkas Pendukung',
-                                        'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$warga->haveDemografi[0]->dokumen_pendukung)),
+                                        'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung)
+                                            ? ''
+                                            : asset(Storage::disk('public')->url(
+                                                    'Dokumen-Pendukung/' .
+                                                        $warga->haveDemografi[0]->dokumen_pendukung)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 </div>
                             </div>
@@ -155,16 +165,23 @@
                                 <div class="tw-flex tw-flex-col tw-gap-3">
                                     @include('components.form.textdetail', [
                                         'title' => 'Jenis',
-                                        'content' => !isset($demografiKeluar->demografi) ? "-" : $demografiKeluar->demografi->jenis,
+                                        'content' => !isset($demografiKeluar->demografi)
+                                            ? '-'
+                                            : $demografiKeluar->demografi->jenis,
                                     ])
                                     @include('components.form.textdetail', [
                                         'title' => 'Tanggal',
-                                        'content' => !isset($demografiKeluar->tanggal_kejadian) ? "-" : $demografiKeluar->tanggal_kejadian,
+                                        'content' => !isset($demografiKeluar->tanggal_kejadian)
+                                            ? '-'
+                                            : $demografiKeluar->tanggal_kejadian,
                                     ])
                                     @include('components.form.textdetail', [
                                         'isImage' => true,
                                         'title' => 'Berkas Pendukung',
-                                        'content' => !isset($demografiKeluar->dokumen_pendukung) ? "" : asset(Storage::disk('public')->url('Dokumen-Pendukung/'.$demografiKeluar->dokumen_pendukung)),
+                                        'content' => !isset($demografiKeluar->dokumen_pendukung)
+                                            ? ''
+                                            : asset(Storage::disk('public')->url(
+                                                    'Dokumen-Pendukung/' . $demografiKeluar->dokumen_pendukung)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 </div>
                             </div>
@@ -187,19 +204,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                            <td></td>
-                                            <td>{{$warga->keluarga->no_kk}}</td>
-                                            <td>{{$warga->keluarga->kepala_keluarga}}</td>
-                                            <td>{{$warga->keluarga->RT}}</td>
-                                            <td
-                                                class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
-                                                <a href=""
-                                                    class="tw-btn tw-btn-md tw-btn-round-md tw-btn-primary">
-                                                    Detail
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                        <td></td>
+                                        <td>{{ $warga->keluarga->no_kk }}</td>
+                                        <td>{{ $warga->keluarga->kepala_keluarga }}</td>
+                                        <td>{{ $warga->keluarga->RT }}</td>
+                                        <td class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
+                                            <a href="" class="tw-btn tw-btn-md tw-btn-round-md tw-btn-primary">
+                                                Detail
+                                            </a>
+                                        </td>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -211,10 +226,10 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{ route('penduduk.warga') }}"
-                        class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('penduduk.warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
-                        <x-icons.actionable.arrow-left class="" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
+                        <x-icons.actionable.arrow-left class="" stroke="1.5"
+                            color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
@@ -225,7 +240,9 @@
         </div>
     </div>
     @if (Session::has('message'))
-        <script>alert('{{Session::get('message')}}');</script>
+        <script>
+            alert('{{ Session::get('message') }}');
+        </script>
     @endif
 
 @endsection
