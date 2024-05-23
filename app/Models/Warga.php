@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Warga extends Model
 {
@@ -60,7 +61,7 @@ class Warga extends Model
                 ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                 ->where('warga.agama', $agama);
 
-            if ($keterangan !== 'ketua') {
+        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
                 $count = $query->where('keluarga.RT', $keterangan)->count();
                 $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -92,7 +93,7 @@ class Warga extends Model
             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
             ->where('warga.pendidikan', $tingkat);
 
-        if ($keterangan !== 'ketua') {
+        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
             $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -125,7 +126,7 @@ class Warga extends Model
                             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                             ->where('warga.jenis_pekerjaan',$jenis);
 
-        if ($keterangan !== 'ketua') {
+        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
             $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -159,7 +160,7 @@ class Warga extends Model
                         ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                         ->where('warga.jenis_kelamin', $jenis);
 
-            if ($keterangan !== 'ketua') {
+            if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
                 $count = $query->where('keluarga.RT', $keterangan)->count();
                 $total = keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();

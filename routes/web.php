@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ARASController;
+use App\Http\Controllers\ArticleAnnouncementController;
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BansosController;
@@ -151,4 +152,14 @@ Route::prefix('api')->group(function () {
     Route::get('/warga/{nik}', [WargaController::class, 'getWarga'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi informasi detail dari sebuah data warga
     Route::get('/keluarga', [KeluargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data keluarga (TODO data keluarga berdasarkan RT)
     Route::get('/keluarga/{no_kk}', [KeluargaController::class, 'getKeluarga'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi informasi detail dari sebuah data keluarga
+});
+// artikel publikasi
+Route::prefix('article_announcements')->middleware('auth')->group(function () {
+    Route::get('/', [ArticleAnnouncementController::class, 'index'])->name('article_announcements.index');
+    Route::get('/create', [ArticleAnnouncementController::class, 'create'])->name('article_announcements.create');
+    Route::post('/', [ArticleAnnouncementController::class, 'store'])->name('article_announcements.store');
+    Route::get('/{kode}', [ArticleAnnouncementController::class, 'show'])->name('article_announcements.show');
+    Route::get('/{kode}/edit', [ArticleAnnouncementController::class, 'edit'])->name('article_announcements.edit');
+    Route::put('/{kode}', [ArticleAnnouncementController::class, 'update'])->name('article_announcements.update');
+    Route::delete('/{kode}', [ArticleAnnouncementController::class, 'destroy'])->name('article_announcements.destroy');
 });
