@@ -58,13 +58,22 @@ class WargaController extends Controller
 
             $daftar_warga = $query->get();
         } else {
-            $daftar_warga = Warga::select('warga.*', 'keluarga.rt')
+            $query = Warga::select('warga.*', 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
                         ->where('keluarga.rt', '=', $user->keterangan);
-                })
-                ->get();
+                });
+
+            if (isset($request->agama)) {
+                $query->whereIn('warga.agama', $request->agama);
+            }
+
+            if (isset($request->status_warga)) {
+                $query->whereIn('warga.status_warga', $request->status_warga);
+            }
+
+            $daftar_warga = $query->get();
         }
 
         return DataTables::of($daftar_warga)
