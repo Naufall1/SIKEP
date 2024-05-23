@@ -141,7 +141,9 @@ Route::prefix('profile')->group(function () {
 Route::prefix('publikasi')->group(function () {
     Route::get('/', []); // menampilkan halaman yang berisi tabel daftar publikasi
     Route::get('/detail/{id}', []); // menampilkan detail dari sebuah publikasi
-    Route::get('/tambah', []); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::get('/tambah', function(){
+        return view('publikasi.tambah');
+    }); // menampilkan form untuk menambahkan sebuah article atau pengumuman
     Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
 })->middleware('role:adm');
 

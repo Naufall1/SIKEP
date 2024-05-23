@@ -119,6 +119,8 @@ $(document).ready(function () {
             return agama.sort();
         } else if (id == 'kewarganegaraan-list'){
             return ['WNI', 'WNA'];
+        } else if (id == 'kategori-list'){
+            return ['Artikel', 'Pengumuman'];
         } else if (id == 'status_keluarga-list'){
             return ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
         } else if (id == 'jenis_demografi-list'){

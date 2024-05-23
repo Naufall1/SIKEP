@@ -42,7 +42,7 @@ class HomeController extends Controller
     }
 
     private function dashboardADM() {
-        return view('dashboard.index', ['title' => 'Admin', 'text' => 'Admin']);
+        return view('publikasi.index', ['title' => 'Admin', 'text' => 'Admin']);
     }
 
     private function dashboardGuest() {

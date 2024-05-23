@@ -1,0 +1,4 @@
+<a href="{{route('pengajuan')}}" id="pengajuan" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md {{ (Route::currentRouteName() == 'pengajuan') || (Route::currentRouteName() == 'perubahanWarga') || (Route::currentRouteName() == 'perubahanKeluarga') ? ' tw-bg-b500 tw-outline tw-outline-2 tw-outline-b300 ' : 'tw-bg-n100 hover:tw-bg-n200' }}">
+    <x-icons.actionable.publikasi stroke="2" size="20" active="{{ (Route::currentRouteName() == 'pengajuan') || (Route::currentRouteName() == 'perubahanWarga') || (Route::currentRouteName() == 'perubahanKeluarga') ? true : false }}"></x-icons.actionable.publikasi>
+    <p class="tw-menu-text {{ (Route::currentRouteName() == 'pengajuan') || (Route::currentRouteName() == 'perubahanWarga') || (Route::currentRouteName() == 'perubahanKeluarga') ? 'tw-text-n100' : 'tw-text-n1000' }}">Publikasi</p>
+</a>
