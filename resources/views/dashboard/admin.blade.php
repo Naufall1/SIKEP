@@ -75,7 +75,7 @@
                             </span>
                         </button>
                         <div
-                            class="tw-absolute tw-top-12 tw-bg-n100 tw-filter-w-sm sm:tw-w-[280px] tw-flex tw-flex-col tw-gap-0 tw-border-[1.5px] tw-border-n400 tw-divide-n400 tw-rounded-lg tw-z-10">
+                            class="tw-hidden tw-absolute tw-top-12 tw-bg-n100 tw-filter-w-sm sm:tw-w-[280px] tw-flex tw-flex-col tw-gap-0 tw-border-[1.5px] tw-border-n400 tw-divide-n400 tw-rounded-lg tw-z-10">
                             {{-- Head --}}
                             <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-px-4 tw-py-3">
                                 <h3>Filter</h3>
