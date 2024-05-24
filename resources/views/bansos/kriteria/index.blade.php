@@ -15,7 +15,7 @@
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
                     Kriteria
                 </a>
-                <a href=""
+                <a href="{{route('bansos.perhitungan')}}"
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
                     Perhitungan
                 </a>
@@ -27,32 +27,7 @@
             <div class="tw-flex tw-flex-col tw-gap-3">
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
-                    {{-- IF NOT RW = HIDE --}}
-                    <button
-                        class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                        type="button">
-                        <span class="tw-placeholder">
-                            Semua
-                        </span>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-2 tw-flex tw-items-center  tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}"
-                                alt="back">
-                        </span>
-                    </button>
-
-                    <button
-                        class="tw-relative tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                        type="button">
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center  tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/filter.svg') }}"
-                                alt="back">
-                        </span>
-                        <span class="tw-placeholder">
-                            Filter
-                        </span>
-                    </button>
+                
                     <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                         <input type="text" placeholder="Cari"
                             class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
