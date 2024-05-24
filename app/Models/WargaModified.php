@@ -39,8 +39,15 @@ class WargaModified extends Model
 
         $modif->tanggal_request = now();
         $modif->status_request = 'Menunggu';
-        
+
         $modif->save();
+    }
+
+    public static function getMenunggu(string $no_kk): WargaModified|null
+    {
+        return WargaModified::where('no_kk', '=', $no_kk)
+                ->where('status_request', '=', 'Menunggu')
+                ->first();
     }
 
     public function warga():BelongsTo

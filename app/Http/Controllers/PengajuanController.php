@@ -307,7 +307,30 @@ class PengajuanController extends Controller
             $demografiMasukNew = HaveDemografi::getDemografiMasuk($warga->NIK, 'Dikonfirmasi', tanggal_request:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
             $demografiKeluarOld = HaveDemografi::getDemografiKeluar($warga->NIK, 'Dikonfirmasi', valid_before:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
             $demografiMasukOld = HaveDemografi::getDemografiMasuk($warga->NIK, 'Dikonfirmasi', valid_before:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
-            // dd($demografiKeluarOld,$demografiMasukOld, $pengajuan->tanggal_request);
+
+        } else if ($pengajuan->status_request == 'Ditolak') {
+            $warga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                        ->where('tanggal_request', '>=', Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'))
+                        ->orderBy('id_modify_warga', 'asc')
+                        ->first();
+
+            $currentWarga = WargaHistory::where('NIK', '=', $warga->NIK)
+                                    ->where('valid_to', '>=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_to', 'desc')
+                                    ->first();
+            if (!$currentWarga) {
+                $currentWarga = Warga::find($warga->NIK);
+            }
+            $modifiedWarga = WargaModified::where('NIK', '=', $warga->NIK)
+                                ->where('status_request', '=', 'Ditolak')
+                                ->where('tanggal_request', '>=', Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'))
+                                ->orderBy('id_modify_warga', 'asc')
+                                ->first();
+
+            $demografiKeluarNew = HaveDemografi::getDemografiKeluar($warga->NIK, 'Ditolak', tanggal_request:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
+            $demografiMasukNew = HaveDemografi::getDemografiMasuk($warga->NIK, 'Ditolak', tanggal_request:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
+            $demografiKeluarOld = HaveDemografi::getDemografiKeluar($warga->NIK, 'Dikonfirmasi', valid_before:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
+            $demografiMasukOld = HaveDemografi::getDemografiMasuk($warga->NIK, 'Dikonfirmasi', valid_before:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
         }
 
         return view('pengajuan.perubahanwarga.detail', compact(['user', 'pengajuan', 'currentWarga', 'modifiedWarga', 'demografiKeluarNew', 'demografiMasukNew', 'demografiKeluarOld', 'demografiMasukOld']));
@@ -363,6 +386,51 @@ class PengajuanController extends Controller
             DB::rollBack();
             dd($e);
             return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
+        }
+    }
+
+    public function rejectPerubahanWarga(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
+            'catatan' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            return redirect()->back();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $pengajuan = PengajuanData::getById($request->id);
+
+            $modifiedWarga = WargaModified::getMenunggu($pengajuan->no_kk);
+
+            $currentWarga = Warga::find($modifiedWarga->NIK);
+
+            if ($modifiedWarga->status_warga != $currentWarga->status_warga) {
+                $have_demografi = HaveDemografi::getMenunggu($modifiedWarga->NIK);
+
+                $have_demografi->status_request = 'Ditolak';
+
+                $have_demografi->save();
+            }
+
+            $modifiedWarga->status_request = 'Ditolak';
+            $modifiedWarga->save();
+
+            $pengajuan->status_request = 'Ditolak';
+            $pengajuan->catatan = $request->catatan;
+            $pengajuan->save();
+
+            DB::commit();
+            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+        } catch (Exception $e) {
+            // dd($e);
+            DB::rollBack();
+            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
     }
 
