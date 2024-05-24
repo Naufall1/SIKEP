@@ -22,7 +22,7 @@
 </div>
 
 <div id="chartLinePekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="linePekerjaanLine" style="width: 100%;" class="tw-flex"></canvas>
+    <canvas height="242" id="linePekerjaanLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartLineJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">

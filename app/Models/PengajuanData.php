@@ -29,4 +29,9 @@ class PengajuanData extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
+
+    public static function getById(int $id)
+    {
+        return PengajuanData::with('keluarga')->find($id);
+    }
 }

@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\ARASController;
+use App\Http\Controllers\ArticleAnnouncementController;
 use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BansosController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
+use App\Http\Controllers\MERECController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WargaController;
 use App\Models\Bansos;
@@ -26,7 +30,11 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/testchart', [HomeController::class, 'chart']);
 
+Route::get('/spk/merec', [MERECController::class,'MEREC'])->name('spk.merec');
+Route::get('/spk/aras', [ARASController::class, 'rankingBansos'])->name('spk.aras');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::post('/filter-data', [ChartController::class, 'filterData'])->name('filter-data');
 
 Route::get('/test/{id}', [AuthController::class, 'test'])->name('test');
@@ -100,9 +108,7 @@ Route::prefix('pengajuan')->group(function () {
         Route::get('/pembaharuan/{id}', [PengajuanController::class, 'showPembaharuan'])->name('pengajuan.pembaharuan'); // memberikan halaman detail sebuah pengajuan data pembaharuan
         Route::post('/pembaharuan/{id}/listWarga', [PengajuanController::class, 'listWarga'])->name('pengajuan.pembaharuan.listWarga'); //
 
-        Route::get('/pembaharuan/{id}/warga/{nik}', [function(){
-            return view('pengajuan.pembaharuan.detailwarga');
-        }])->name('pengajuan.pembaharuan.detailwarga'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
+        Route::get('/pembaharuan/{id}/warga/{nik}', [PengajuanController::class, 'detailWarga'])->name('pengajuan.pembaharuan.detailwarga'); // memberikan halaman detail warga sebuah pengajuan data pembaharuan
 
         Route::get('/perubahan-keluarga/{id}', [PengajuanController::class, 'showPerubahanKeluarga'])->name('pengajuan.perubahankeluarga'); // memberikan halaman detail warga pengajuan perubahan warga
         Route::get('/perubahan-warga/{id}', [PengajuanController::class, 'showPerubahanWarga'])->name('pengajuan.perubahanwarga'); // memberikan halaman detail warga dari sebuah data pengajuan
@@ -116,8 +122,9 @@ Route::prefix('pengajuan')->group(function () {
         Route::put('/confirm/perubahanKeluarga', [PengajuanController::class, 'confirmPerubahanKeluarga'])->name('pengajuan.confirm.perubahan.keluarga');
         Route::put('/confirm/perubahanWarga', [PengajuanController::class, 'confirmPerubahanWarga'])->name('pengajuan.confirm.perubahan.warga');
 
-        Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
-        Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
+        Route::put('/reject/pembaharuan', [PengajuanController::class, 'rejectPembaharuan'])->name('pengajuan.reject.pembaharuan');
+        Route::put('/reject/perubahanKeluarga', [PengajuanController::class, 'rejectPerubahanKeluarga'])->name('pengajuan.reject.perubahan.keluarga');
+        Route::put('/reject/perubahanWarga', [PengajuanController::class, 'rejectPerubahanWarga'])->name('pengajuan.reject.perubahan.warga');
     });
 })->name('pengajuan');
 
@@ -125,11 +132,13 @@ Route::prefix('bansos')->middleware('role:rw,rt')->group(function () {
     route::post('/list', [BansosController::class, 'list'])->name('bansos.list');
     Route::get('/kriteria', [BansosController::class, 'index'])->name('bansos.kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)
     Route::get('/kriteria/{id}/ubah', [BansosController::class, 'edit'])->name('bansos.kriteria.form'); // menampilkan form yang digunakan untuk merubah data kriteria
+    Route::get('/kriteria/{id}/detail', [BansosController::class, 'detail'])->name('bansos.kriteria.detail'); // menampilkan form yang digunakan untuk merubah data kriteria
     Route::put('/kriteria/{id}/ubah', [BansosController::class, 'update'])->name('bansos.kriteria.update'); // menerima data dari form edit dan menyimpannya pada database
 
-    Route::get('/perhitungan', [])->name('perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
-    Route::get('/perhitungan/detail/{}', []); // menampilkan detail dari keluarga
-    Route::post('/tambah', [])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
+    route::post('/gdss', [BansosController::class, 'gdss'])->name('perhitungan.gdss');
+    Route::get('/perhitungan', [BansosController::class, 'calc'])->name('bansos.perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
+    Route::get('/perhitungan/{id}/detail', [BansosController::class, 'detailCalc'])->name('bansos.perhitungan.detail'); // menampilkan detail dari keluarga
+    Route::post('/tambah', [BansosController::class, 'tambah'])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
 });
 
 Route::prefix('profile')->group(function () {
@@ -170,3 +179,23 @@ Route::prefix('api')->group(function () {
     Route::get('/keluarga', [KeluargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data keluarga (TODO data keluarga berdasarkan RT)
     Route::get('/keluarga/{no_kk}', [KeluargaController::class, 'getKeluarga'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi informasi detail dari sebuah data keluarga
 });
+
+// artikel publikasi
+Route::prefix('article_announcements')->middleware('auth')->group(function () {
+    Route::get('/', [ArticleAnnouncementController::class, 'index'])->name('article_announcements.index');
+    Route::get('/create', [ArticleAnnouncementController::class, 'create'])->name('article_announcements.create');
+    Route::post('/', [ArticleAnnouncementController::class, 'store'])->name('article_announcements.store');
+    Route::get('/{kode}', [ArticleAnnouncementController::class, 'show'])->name('article_announcements.show');
+    Route::get('/{kode}/edit', [ArticleAnnouncementController::class, 'edit'])->name('article_announcements.edit');
+    Route::put('/{kode}', [ArticleAnnouncementController::class, 'update'])->name('article_announcements.update');
+    Route::delete('/{kode}', [ArticleAnnouncementController::class, 'destroy'])->name('article_announcements.destroy');
+});
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [function (){return view('admin.index');}])->name('admin'); // menampilkan halaman yang berisi tabel daftar publikasi
+    Route::get('/detail/{id}', [function (){return view('admin.detail');}])->name('admin.detail'); // menampilkan detail dari sebuah publikasi
+    Route::get('/tambah', [function (){return view('admin.tambah');}])->name('admin.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+})->middleware('role:rw');
+

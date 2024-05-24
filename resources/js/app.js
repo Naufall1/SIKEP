@@ -58,7 +58,7 @@ $(document).ready(function () {
         // console.log('input[id='+name+']');
         $(button).text(selected);
         // console.log('DEFAULT VALUE = '+$(input).val());
-        $(input).val(selected);
+        $(input).val(selected).trigger('change');
         console.log(!$('.dropContent').hasClass('tw-hidden'));
         if (!($('.dropContent').hasClass('tw-hidden'))) {
             console.log($('.dropContent').html());
@@ -81,12 +81,15 @@ $(document).ready(function () {
             $(this).siblings().removeClass('tw-hidden');
             let dropItems = $(this).siblings().children().last();
             $(dropItems).children().remove();
+            let items = getDropdownItems($(this).attr('id'));
             let content = ``;
-            $.each(getDropdownItems($(this).attr('id')), function (indexInArray, item) { 
+
+            $.each(items, function (indexInArray, item) { 
                 content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
                 //  console.log(dropdownItem);
             });
-            if(getDropdownItems($(this).attr('id')) == ['']){
+            console.log(items);
+            if(items == [''] || items == undefined){
                 content += `<li class="">Tidak Ada Data</li>`
             }
             $(dropItems).append(content);
@@ -125,12 +128,14 @@ $(document).ready(function () {
             return ['Ditampilkan', 'Disembunyikan'];
         } else if (id == 'status_keluarga-list'){
             return ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
-        } else if (id == 'jenis_demografi-list'){
+        } else if (id == 'jenis_demografi-list' || id == 'jenis_demografi_keluar-list'){
             return getJenisDemografi();
         } else if (id == 'pendidikan-list'){
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
         } else if (id == 'no_kk-list'){
             return getKeluarga();
+        } else if (id == 'jenis_bansos-list'){
+            return getJenisBansos();
         } else if (id == 'scope_data-list'){
             return ['Semua', 'RT 001', 'RT 002', 'RT 003', 'RT 004', 'RT 005', 'RT 006', 'RT 007', 'RT 008', 'RT 009', 'RT 010', 'RT 011'];;
         }
@@ -163,7 +168,7 @@ $(document).ready(function () {
             $(this).siblings().addClass('tw-hidden')
         }
     });
-    
+
     $(document).on("click", "button.filterItem", function () {
         if ($(this).hasClass('tw-filter-default')) {
             $(this).removeClass('tw-filter-default');

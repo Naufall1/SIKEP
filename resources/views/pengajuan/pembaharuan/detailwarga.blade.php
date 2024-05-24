@@ -22,47 +22,47 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'NIK',
-                                'content' => 'Dummy',
+                                'content' => $warga->NIK,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama',
-                                'content' => 'Dummy',
+                                'content' => $warga->nama,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Tempat Lahir',
-                                'content' => 'Dummy',
+                                'content' => $warga->tempat_lahir,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Tanggal Lahir',
-                                'content' => 'Dummy',
+                                'content' => $warga->tanggal_lahir,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis Kelamin',
-                                'content' => 'Dummy',
+                                'content' => $warga->jenis_kelamin,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pendidikan',
-                                'content' => 'Dummy',
+                                'content' => $warga->pendidikan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Agama',
-                                'content' => 'Dummy',
+                                'content' => $warga->agama,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Perkawinan',
-                                'content' => 'Dummy',
+                                'content' => $warga->status_perkawinan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Pekerjaan',
-                                'content' => 'Dummy',
+                                'content' => $warga->jenis_pekerjaan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kewarganegaraan',
-                                'content' => 'Dummy',
+                                'content' => $warga->kewarganegaraan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status Warga',
-                                'content' => 'Aktif',
+                                'content' => $warga->status_warga,
                                 'isLabel' => true,
                             ]) {{-- kalau label kasih value var $isLabel with true --}}
 
@@ -75,27 +75,27 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Status Keluarga',
-                                'content' => 'Dummy',
+                                'content' => $warga->status_keluarga,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama Ayah',
-                                'content' => 'Dummy',
+                                'content' => $warga->nama_ayah,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nama Ibu',
-                                'content' => 'Dummy',
+                                'content' => $warga->nama_ibu,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp. ',
+                                'content' => 'Rp. ' . $warga->penghasilan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Paspor',
-                                'content' => 'Dummy',
+                                'content' => $warga->no_paspor,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Kitas',
-                                'content' => 'Dummy',
+                                'content' => $warga->no_kitas,
                             ])
 
                         </div>
@@ -108,16 +108,22 @@
                             <div class="tw-flex tw-flex-col tw-gap-3">
                                 @include('components.form.textdetail', [
                                     'title' => 'Jenis',
-                                    'content' => 'Dummy',
+                                    'content' => $haveDemografi->demografi->jenis,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Tanggal',
-                                    'content' => 'Dummy',
+                                    'content' => $haveDemografi->tanggal_kejadian,
                                 ])
                                 @include('components.form.textdetail', [
                                     'isImage' => true,
                                     'title' => 'Berkas Pendukung',
-                                    'content' => 'Dummy',
+                                    'content' =>
+                                            asset(Storage::disk('public')->url('Dokumen-Pendukung/' . $haveDemografi->dokumen_pendukung)) ??
+                                            'data:image/' .
+                                                explode('.', $haveDemografi->dokumen_pendukung)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $haveDemografi->dokumen_pendukung)),
                                 ]) {{-- kalau label kasih value var $isLabel with true --}}
 
                             </div>
@@ -127,7 +133,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="#" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round" type="button">
+                    <a href="{{route('pengajuan.pembaharuan',['id'=>$id])}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round" type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">

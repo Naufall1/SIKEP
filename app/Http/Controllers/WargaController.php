@@ -29,22 +29,51 @@ class WargaController extends Controller
     {
         return Warga::find($nik);
     }
-    public function list()
+    public function list(Request $request)
     {
         $user = Auth::user();
+        $request->validate([
+            'scope_data' => 'max:8',
+            'agama' => 'array|max:6',
+            'agama.*' => 'string|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghuchu',
+            'status_warga' => 'array|max:3',
+            'status_warga.*' => 'string|in:Aktif,Meninggal,Migrasi Keluar',
+        ]);
 
         if ($user->keterangan == 'ketua') {
-            $daftar_warga = Warga::select('warga.*')
-                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
-                ->get();
+            $query = Warga::select('warga.*', 'keluarga.rt')
+                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk');
+
+            if (explode(" ", $request->scope_data)[1] ?? false) {
+                    $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
+            }
+
+            if (isset($request->agama)) {
+                $query->whereIn('warga.agama', $request->agama);
+            }
+
+            if (isset($request->status_warga)) {
+                $query->whereIn('warga.status_warga', $request->status_warga);
+            }
+
+            $daftar_warga = $query->get();
         } else {
-            $daftar_warga = Warga::select('warga.*', 'keluarga.rt')
+            $query = Warga::select('warga.*', 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
                         ->where('keluarga.rt', '=', $user->keterangan);
-                })
-                ->get();
+                });
+
+            if (isset($request->agama)) {
+                $query->whereIn('warga.agama', $request->agama);
+            }
+
+            if (isset($request->status_warga)) {
+                $query->whereIn('warga.status_warga', $request->status_warga);
+            }
+
+            $daftar_warga = $query->get();
         }
 
         return DataTables::of($daftar_warga)
@@ -62,7 +91,7 @@ class WargaController extends Controller
                     return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-g50 tw-w-fit tw-h-fit">
                                 <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-g500">' . $warga->status_warga . '</p>
                             </div>';
-                } elseif (strtolower($warga->status_warga) == 'migrasi') {
+                } elseif (strtolower($warga->status_warga) == 'migrasi keluar') {
                     return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-r50 tw-w-fit tw-h-fit">
                                 <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-r500">' . $warga->status_warga . '</p>
                             </div>';
@@ -84,21 +113,21 @@ class WargaController extends Controller
         $user = Auth::user();
 
         $daftarWarga = Warga::select('warga.*', 'keluarga.rt')
-        ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
-        ->join('user', function ($join) use ($user) {
-            $join->on('keluarga.rt', '=', 'user.keterangan')
-                ->where('keluarga.rt', '=', $user->keterangan);
-        })
-        ->where('status_warga', '!=', 'Menunggu')
-        ->where('warga.no_kk', '!=', $no_kk)
-        ->get();
+            ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+            ->join('user', function ($join) use ($user) {
+                $join->on('keluarga.rt', '=', 'user.keterangan')
+                    ->where('keluarga.rt', '=', $user->keterangan);
+            })
+            ->where('status_warga', '!=', 'Menunggu')
+            ->where('warga.no_kk', '!=', $no_kk)
+            ->get();
         return view('penduduk.warga.tambah', compact('daftarWarga'))->with('no_kk', $no_kk);
     }
     public function store(Request $request)
     {
         // Validasi data yang masuk
         if (!session()->exists('berkas_demografi') || $request->has('berkas_demografi')) {
-            $validator_file = Validator::make($request->only('berkas_demografi'),[
+            $validator_file = Validator::make($request->only('berkas_demografi'), [
                 'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
             ]);
         }
@@ -141,10 +170,10 @@ class WargaController extends Controller
         }
         // dd($pengajuan->keluarga->kepala_keluarga);
 
-        if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails() )) {
+        if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails())) {
             Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
         }
-        if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
+        if (isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
             session()->put('berkas_demografi', (object) [
                 'path' => $filenameSimpan,
                 'ext' => explode('.', $filenameSimpan)[1],
@@ -218,7 +247,7 @@ class WargaController extends Controller
 
         // Get data demografi warga terakhir yang terkonfirmasi
         $demografi = HaveDemografi::with('demografi')
-            ->where('nik','=', $warga->NIK)
+            ->where('nik', '=', $warga->NIK)
             ->where('status_request', '=', 'Dikonfirmasi')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
@@ -243,7 +272,7 @@ class WargaController extends Controller
         $warga = Warga::find($nik);
         // Ambil data demografi warga (diambil data terakhir dan sudah dikonformasi)
         $demografi = HaveDemografi::with('demografi')
-            ->where('nik','=', $warga->NIK)
+            ->where('nik', '=', $warga->NIK)
             ->where('status_request', '=', 'Dikonfirmasi')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
@@ -263,13 +292,13 @@ class WargaController extends Controller
 
 
         // Ketika seorang warga merubah data demografi
+        // dd($request->jenis_demografi_keluar);
         if (
-            ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar)) ||
-            (!$demografi && $request->jenis_demografi_keluar != null)
+            ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar))  || (!$demografi && $request->jenis_demografi_keluar != 'Aktif')
         ) {
             // dd($request->hasFile('berkas_demografi_keluar'));
             if (!session()->exists('berkas_demografi_keluar') || $request->hasFile('berkas_demografi_keluar')) {
-                $validator_file = Validator::make($request->only('berkas_demografi_keluar'),[
+                $validator_file = Validator::make($request->only('berkas_demografi_keluar'), [
                     'berkas_demografi_keluar' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
                 ]);
             }
@@ -281,7 +310,7 @@ class WargaController extends Controller
                 $request->file('berkas_demografi_keluar')->storeAs('', $filenameSimpan, 'temp');
             }
 
-            if (session()->exists('berkas_demografi_keluar') && (isset($validator_file) && !$validator_file->fails() )) {
+            if (session()->exists('berkas_demografi_keluar') && (isset($validator_file) && !$validator_file->fails())) {
                 Storage::disk('temp')->delete(session()->get('berkas_demografi_keluar')->path);
             }
 
@@ -297,7 +326,7 @@ class WargaController extends Controller
             ]);
 
             if ($request->hasFile('berkas_demografi')) {
-                $validator_file_2 = Validator::make($request->only('berkas_demografi'),[
+                $validator_file_2 = Validator::make($request->only('berkas_demografi'), [
                     'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
                 ]);
             }
@@ -309,23 +338,22 @@ class WargaController extends Controller
                 $request->file('berkas_demografi')->storeAs('', $filenameSimpan_2, 'temp');
             }
 
-            if (session()->exists('berkas_demografi') && (isset($validator_file_2) && !$validator_file_2->fails() )) {
+            if (session()->exists('berkas_demografi') && (isset($validator_file_2) && !$validator_file_2->fails())) {
                 Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
             }
-
         }
 
         // Dilakukan validasi terhadap semua rule yang telah ditambahkan kedalam $rules
         $validator = Validator::make($request->all(), $rules);
 
         // Jika terdapat file yang diupload, maka akan disimpan informasinya pada session
-        if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
+        if (isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
             session()->put('berkas_demografi_keluar', (object) [
                 'path' => $filenameSimpan,
                 'ext' => explode('.', $filenameSimpan)[1],
             ]);
         }
-        if ( isset($validator_file_2) && !$validator_file_2->fails() && $validator->fails()) {
+        if (isset($validator_file_2) && !$validator_file_2->fails() && $validator->fails()) {
             session()->put('berkas_demografi_keluar', (object) [
                 'path' => $filenameSimpan_2,
                 'ext' => explode('.', $filenameSimpan_2)[1],
@@ -365,7 +393,7 @@ class WargaController extends Controller
             // Ketika seorang warga merubah data demografi
             if (
                 ($demografi && ($demografi->demografi->jenis != $request->jenis_demografi_keluar)) ||
-                (!$demografi && $request->jenis_demografi_keluar != null)
+                (!$demografi && $request->jenis_demografi_keluar != 'Aktif')
             ) {
                 $warga->status_warga = $request->jenis_demografi_keluar;
                 WargaModified::updateWarga($warga);
@@ -451,9 +479,9 @@ class WargaController extends Controller
         ]);
         if ($validator->fails()) {
             return redirect()->back()
-            ->with('data_lama', true)
-            ->withErrors($validator->errors())
-            ->withInput();
+                ->with('data_lama', true)
+                ->withErrors($validator->errors())
+                ->withInput();
         }
 
         $pengajuan = new Pengajuan();
@@ -468,13 +496,13 @@ class WargaController extends Controller
         $warga = Warga::with(['keluarga', 'haveDemografi', 'haveDemografi.demografi'])->find($nik);
         $demografiMasuk = HaveDemografi::getDemografiMasuk($warga->NIK, 'Dikonfirmasi');
         $demografiKeluar = HaveDemografi::join('demografi', 'demografi.demografi_id', '=', 'have_demografi.demografi_id')
-                            ->where('NIK', '=', $warga->NIK)
-                            ->whereIn('demografi.jenis', ['Meninggal', 'Migrasi Keluar'])
-                            ->where('status_request','=', 'Dikonfirmasi')
-                            ->orderBy('tanggal_request', 'DESC')
-                            ->first();
-        $pengajuanInProgres = PengajuanData::where('no_kk','=', $warga->no_kk)
-            ->where('status_request','=', 'Menunggu')
+            ->where('NIK', '=', $warga->NIK)
+            ->whereIn('demografi.jenis', ['Meninggal', 'Migrasi Keluar'])
+            ->where('status_request', '=', 'Dikonfirmasi')
+            ->orderBy('tanggal_request', 'DESC')
+            ->first();
+        $pengajuanInProgres = PengajuanData::where('no_kk', '=', $warga->no_kk)
+            ->where('status_request', '=', 'Menunggu')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
 

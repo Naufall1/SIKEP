@@ -43,6 +43,8 @@ class HomeController extends Controller
 
     private function dashboardADM() {
         return view('publikasi.index', ['title' => 'Admin', 'text' => 'Admin']);
+        {{-- $data = $this->getData(Auth::user()->nama);
+        return view('dashboard.index', $data, ['title' => 'Admin', 'text' => 'Admin Berita']);--}}
     }
 
     private function dashboardGuest() {
@@ -69,7 +71,7 @@ class HomeController extends Controller
             })
             ->get();
 
-        if ($keterangan !== 'ketua') {
+        if ($keterangan !== 'ketua' && $keterangan !== 'Admin') {
             $countPenduduk = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
                             ->join('warga as w', 'keluarga.no_kk', '=', 'w.no_kk')
                             ->where('keluarga.RT', $keterangan)

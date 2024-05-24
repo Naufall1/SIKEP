@@ -1,67 +1,87 @@
 @extends('layout.layout', ['isForm' => false])
 
-@section('content')
-    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
-            <h1 class="tw-h1 tw-w-1/2">
-                Penerimaan Bansos
-            </h1>
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css') }}">
+@endpush
 
-            {{-- <a href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"> Tambah Data</a>     --}}
+
+@section('content')
+    {{-- canEdit = if RW => False, RT => False --}}
+    {{-- @include('layout.tableset',['pageTitle' => 'Daftar Penduduk',  'canEdit' => true, 'topMenu' => [
+        ['title' => 'Warga', 'url' => '#'],
+        ['title' => 'Keluarga', 'url' => '#'],
+    ], ] ) --}}
+
+    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+        <div class="tw-flex tw-items-center md:tw-items-start">
+            <h1 class="tw-h1 tw-w-1/2 tw-flex-grow">
+                Daftar Admin
+            </h1>
+            <a href="" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
+                Tambah Data
+            </a>
         </div>
+        
         <div class="tw-flex tw-flex-col tw-gap-4">
-            <div class="tw-flex">
-                <a href=""
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
-                    Kriteria
+             {{-- <div class="tw-flex">
+                <a href="{{ route('penduduk.warga') }}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'penduduk.warga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                    Warga
                 </a>
-                <a href="{{ route('spk.aras') }}"
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
-                    Perhitungan
-                </a>
+                <a href="{{ route('keluarga') }}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'keluarga' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                    Keluarga
+                </a> --}}
                 <div
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
-                </div>
+                </div> 
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-3">
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
                     <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
-                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari Kepala Keluarga">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari">
                             <x-icons.actionable.search color="n1000" size="20"
                                 stroke="2"></x-icons.actionable.search>
-                        </x-input.leadicon>
+                        </x-input.leadicon> 
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-scroll">
+                <div class="tw-w-vw tw-overflow-x-auto">
 
-                    <table class="tw-min-w-[1400px] md:tw-w-full" id="dataBansos">
+                    <table class="tw-w-[780px] md:tw-w-full" id="dataWarga">
                         <thead>
-                            <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                <th>No</th>
-                                <th>Kepala Keluarga</th>
-                                <th>Tagihan Listrik</th>
-                                <th>Luas Bangunan</th>
-                                <th>Total Penghasilan Keluarga</th>
-                                <th>Jumlah Warga dengan Penghasilan</th>
-                                <th>Tanggungan</th>
-                                <th>Jumlah Bersekolah</th>
-                                <th class="tw-w-[108px]"></th>
+                            <tr class="">
+                                <th class="tw-w-[48px]">No</th>
+                                <th class="md:tw-grow tw-min-w-fit">Nama</th>
+                                <th class="tw-w-[150px]">Username</th>
+                                <th class="tw-w-[172px]">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-
-                            {{-- DATA HERE --}}
-
+                            {{-- @foreach ($warga as $w) --}}
+                            {{-- <tr class="tw-h-16 hover:tw-bg-n300">
+                                    <td></td>
+                                    <td>{{ $w->NIK }}</td>
+                                    <td>{{ $w->nama }}</td>
+                                    <td>{{ $w->jenis_kelamin }}</td>
+                                    <td>{{ $w->tanggal_lahir }}</td>
+                                    <td>{{ $w->agama }}</td>
+                                    <td>{{ $w->status_warga }}</td>
+                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                        <a href="{{ route('wargaDetail', [$w->NIK]) }}"
+                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr> --}}
+                            {{-- @endforeach --}}
                         </tbody>
                     </table>
-
                     <div>
-
                     </div>
 
                 </div>
@@ -70,21 +90,25 @@
         </div>
     </div>
 @endsection
+
 @push('js')
-    @if (session()->has('flash'))
-        <script>alert('{{ session()->get("flash")->message }}');</script>
-    @endif
-    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
+
         $(document).ready(function() {
-            dataBansos = $('#dataBansos').DataTable({
-                serverSide: true,
+            dataUser = $('#dataWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "{{ route('bansos.list') }}",
+                    "url": "{{ route('warga.list') }}",
                     "dataType": "json",
                     "type": "POST",
+                    "data": function(d) {
+                        d.scope_data = $('input[name="scope_data"]').val();
+                        d.agama = filter_agama;
+                        d.status_warga = filter_statusWarga;
+                    }
                 },
                 paging: true,
                 language: {
@@ -99,7 +123,7 @@
                 drawCallback: function() {
                     $('.pagination').addClass(
                         'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
-                        );
+                    );
                     $('.paginate_button').addClass(
                         'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
                     $('.paginate_button.active').addClass(
@@ -123,46 +147,28 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[2, 'asc']],
+                order: [
+                    [2, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[48px]",
-                    orderable: false,
+                    orderable: true,
                     // searchable: false
                 }, {
-                    data: "kepala_keluarga",
-                    className: "tw-w-[240px]",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "tagihan_listrik",
+                    data: "nama",
                     className: "tw-grow",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "luas_bangunan",
+                    data: "username",
                     className: "tw-w-[150px]",
                     orderable: true,
                     searchable: false
                 }, {
-                    data: "total_penghasilan",
+                    data: "keterangan",
                     className: "tw-w-[172px]",
-                    orderable: true,
-                    searchable: false
-                }, {
-                    data: "jumlah_warga_berpenghasilan",
-                    className: "tw-w-[92px]",
-                    orderable: true,
-                    searchable: false
-                }, {
-                    data: "tanggungan",
-                    className: "tw-w-[150px]",
-                    orderable: true,
-                    searchable: false
-                }, {
-                    data: "jumlah_warga_bersekolah",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "action",
@@ -171,12 +177,12 @@
                     searchable: false
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataBansos.ajax.reload();
-            // });
+            $('input[name="scope_data"]').on('change', function() {
+                dataUser.ajax.reload();
+            });
         });
-        $('#searchBox').keyup(function () {
-            dataBansos.search($(this).val()).draw();
+        $('#searchBox').keyup(function() {
+            dataUser.search($(this).val()).draw();
         });
-        </script>
+    </script>
 @endpush

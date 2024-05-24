@@ -49,6 +49,13 @@ class HaveDemografi extends Model
     {
         return $this->belongsTo(Demografi::class, 'demografi_id', 'demografi_id');
     }
+
+    public static function getMenunggu(string $NIK): HaveDemografi|null
+    {
+        return HaveDemografi::where('NIK', '=', $NIK)
+                ->where('status_request', '=', 'Menunggu')
+                ->first();
+    }
     /**
      * @param string $nik
      * @param string $status in ['Menunggu', 'Dikonfirmasi]

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Keluarga extends Model
@@ -84,7 +85,7 @@ class Keluarga extends Model
         ->groupBy('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik', 'keluarga.luas_bangunan')
         ->orderBy('total_penghasilan');
 
-        if ($keterangan === 'ketua') {
+        if ($keterangan === 'ketua' && Auth::user()->nama === 'Admin') {
             return $query->get();
         }
         $query->where('user.keterangan', '<>', 'ketua')

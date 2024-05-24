@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Demografi extends Model
 {
@@ -48,7 +49,7 @@ class Demografi extends Model
             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
             ->groupBy('rentang_usia');
 
-        if ($keterangan !== 'ketua') {
+        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
             $result = $dataUsia->where('user.keterangan', '=', $keterangan);
         }
 
