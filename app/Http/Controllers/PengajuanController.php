@@ -127,21 +127,32 @@ class PengajuanController extends Controller
             'id' => 'required|exists:pengajuan,id'
         ]);
 
+        $select = [
+            'NIK',
+            'nama',
+            'status_keluarga'
+        ];
+
         $pengajuan = PengajuanData::find($request->id);
         // Ambil Nomor KK dari pengajuan yang dipilih
         $no_kk = $pengajuan->no_kk;
         // Ambil daftar anggota keluarga asli
-        $daftarWarga = Warga::where('no_kk', '=', $no_kk)
+        $daftarWarga = Warga::select($select)
+                                ->where('no_kk', '=', $no_kk)
                                 ->where('status_warga', '!=', 'Menunggu')
                                 ->where('created_at', '<=', $pengajuan->tanggal_request)
                                 ->get();
         // Ambil daftar anggota keluarga yang ditambahkan dari data baru
-        $daftarWargaBaru = Warga::where('no_kk', '=', $no_kk)
+        $daftarWargaBaru = Warga::select($select)
+                                ->where('no_kk', '=', $no_kk)
                                 ->where('status_warga', '=', 'Menunggu')
                                 ->where('created_at', '<=', $pengajuan->tanggal_request)
                                 ->get();
         // Ambil daftar anggota keluarga yang berasal dari pindah KK
-        $daftarWargaPindahKK = WargaModified::where('no_kk', '=', $no_kk)->where('status_request', '=', 'Menunggu')->get();
+        $daftarWargaPindahKK = WargaModified::select($select)
+                                            ->where('no_kk', '=', $no_kk)
+                                            ->where('status_request', '=', 'Menunggu')
+                                            ->get();
 
         // Ambil data warga dari tabel WargaModified
         if ($daftarWargaPindahKK) {
@@ -175,6 +186,37 @@ class PengajuanController extends Controller
             })
             ->rawColumns(['aksi'])
             ->make(true);
+    }
+    public function detailWarga(Request $request)
+    {
+        $request->merge(['id' => $request->route('id')]);
+        $request->merge(['nik' => $request->route('nik')]);
+
+        $request->validate([
+            'id' => 'required|exists:pengajuan,id',
+            'nik' => 'required|exists:warga,NIK'
+        ]);
+
+        $id = $request->id;
+
+        $pengajuan = PengajuanData::find($request->id);
+        // Ambil Nomor KK dari pengajuan yang dipilih
+        $no_kk = $pengajuan->no_kk;
+        // Ambil daftar anggota keluarga asli / baru
+        $wargaNew = Warga::where('NIK', '=', $request->nik)
+                                ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                ->first();
+
+        // Ambil daftar anggota keluarga yang berasal dari pindah KK
+        $wargaPindahKK = WargaModified::where('no_kk', '=', $no_kk)->where('status_request', '=', 'Menunggu')->first();
+        $warga = $wargaNew ?? $wargaPindahKK;
+
+        $haveDemografi = HaveDemografi::with('demografi')->where('NIK', '=', $warga->NIK)
+                                ->where('tanggal_request', '<=', $pengajuan->tanggal_request)
+                                ->orderByDesc('tanggal_request')
+                                ->first();
+
+        return view('pengajuan.pembaharuan.detailwarga', compact(['warga', 'haveDemografi', 'id']));
     }
     public function confirmPembaharuan(Request $request)
     {
