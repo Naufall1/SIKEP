@@ -46,21 +46,9 @@
                 <div class="tw-flex tw-gap-2 tw-w-full">
                     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
                         <x-input.label class="tw-relative tw-w-40" for="scope_data-list">
-                            <x-input.select2  name="scope_data" default="Semua"
-                                placeholder="" gap="tw-top-12"></x-input.select2>
+                            <x-input.select2 name="scope_data" default="Semua" placeholder=""
+                                gap="tw-top-12"></x-input.select2>
                         </x-input.label>
-                        {{-- <button
-                            class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                            type="button">
-                            <span class="tw-placeholder">
-                                Semua
-                            </span>
-                            <span
-                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-2 tw-flex tw-items-center  tw-cursor-pointer">
-                                <img class="tw-w-5 tw-bg-cover"
-                                    src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="back">
-                            </span>
-                        </button> --}}
                     @endif
                     <div class="tw-relative">
                         <button id="filter"
@@ -74,96 +62,40 @@
                                 Filter
                             </span>
                         </button>
-                        <div
-                            class="tw-absolute tw-top-12 tw-bg-n100 tw-filter-w-sm sm:tw-w-[280px] tw-flex tw-flex-col tw-gap-0 tw-border-[1.5px] tw-border-n400 tw-divide-n400 tw-rounded-lg tw-z-10">
-                            {{-- Head --}}
-                            <div class="tw-w-full tw-flex tw-items-center tw-justify-between tw-px-4 tw-py-3">
-                                <h3>Filter</h3>
-                                <a href="#"
-                                    class="tw-text-sm tw-font-sans tw-font-medium tw-text-b500 tw-underline">Reset
-                                    Filter</a>
-                            </div>
+                        <x-filter.index>
+
+                            <x-filter.head></x-filter.head>
                             {{-- Body --}}
-                            <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-p-4 tw-border-t-[1.5px]">
+                            <x-filter.body>
                                 {{-- Filter Group --}}
-                                <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full">
-                                    <h3 class="tw-text-sm">Agama</h3>
-                                    {{-- Items Group --}}
-                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2" id="agama">
-                                        <button
-                                            id="Buddha"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Buddha
-                                        </button>
-                                        <button
-                                        id="Hindu"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Hindu
-                                        </button>
-                                        <button
-                                            id="Islam"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Islam
-                                        </button>
-                                        <button
-                                        id="Katolik"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Katolik
-                                        </button>
-                                        <button
-                                            id="Konghuchu"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Konghuchu
-                                        </button>
-                                        <button
-                                        id="Kristen"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Kristen
-                                        </button>
-                                    </div>
-                                </div>
+                                <x-filter.items-group id="agama" title="Agama">
+                                    <x-filter.item id="Buddha">Buddha</x-filter.item>
+                                    <x-filter.item id="Hindu">Hindu</x-filter.item>
+                                    <x-filter.item id="Islam">Islam</x-filter.item>
+                                    <x-filter.item id="Katolik">Katolik</x-filter.item>
+                                    <x-filter.item id="Konghuchu">Konghuchu</x-filter.item>
+                                    <x-filter.item id="Kristen">Kristen</x-filter.item>
+                                </x-filter.items-group>
                                 {{-- Filter Group --}}
-                                <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full">
-                                    <h3 class="tw-text-sm">Status Warga</h3>
-                                    {{-- Items Group --}}
-                                    <div class="tw-grid tw-grid-cols-2 tw-gap-2" id="status_warga">
-                                        <button
-                                            id="Aktif"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Aktif
-                                        </button>
-                                        <button
-                                            id="Migrasi Keluar"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Migrasi
-                                        </button>
-                                        <button
-                                            id="Meninggal"
-                                            class="filterItem tw-col-span-2 sm:tw-col-span-1 tw-flex tw-items-center tw-rounded-full tw-justify-center tw-w-grow tw-h-10 tw-border-[1.5px] tw-text-sm tw-font-medium tw-filter-default">
-                                            Meninggal
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                <x-filter.items-group id="status_warga" title="Status Warga">
+                                    <x-filter.item id="Aktif">Aktif</x-filter.item>
+                                    <x-filter.item id="Migrasi Keluar">Migrasi</x-filter.item>
+                                    <x-filter.item id="Meninggal">Meninggal</x-filter.item>
+                                </x-filter.items-group>
+                            </x-filter.body>
                             {{-- Footer --}}
-                            <div class="tw-w-full tw-flex tw-items-center tw-justify-end tw-px-4 tw-py-3 tw-border-t-[1.5px]">
+                            <x-filter.footer>
                                 <button class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md" id="apply-filter">
                                     Terapkan
                                 </button>
-                            </div>
-                        </div>
+                            </x-filter.footer>
+                        </x-filter.index>
                     </div>
-                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                        <input type="text" placeholder="Cari"
-                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button" id="searchBox">
-                        </input>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
+                    <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari NIK, Nama">
                             <x-icons.actionable.search color="n1000" size="20"
                                 stroke="2"></x-icons.actionable.search>
-                        </span>
-                        </span>
+                        </x-input.leadicon>
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
@@ -223,6 +155,37 @@
     <script>
         var filter_agama = [];
         var filter_statusWarga = [];
+
+        function styling_filter_button(filter_count) {
+            if ((filter_count) != 0) {
+                $('button#filter').addClass('tw-border-b500');
+            } else {
+                $('button#filter').removeClass('tw-border-b500');
+            }
+        }
+
+        function reload_filter(filterItem) {
+            $.each($('button.filterItem'), function(idx, val) {
+                var id = $(this).attr('id');
+                var item = $(this);
+                if ($(item).hasClass('tw-filter-active')) {
+                    $(item).removeClass('tw-filter-active');
+                    $(item).addClass('tw-filter-default');
+                }
+                $.each(filterItem, function(idx, val) {
+                    // console.log(id + ' =? ' + val);
+                    if (id == val) {
+                        // console.log(id + ' == ' + val);
+                        if ($(item).hasClass('tw-filter-default')) {
+                            $(item).removeClass('tw-filter-default');
+                        }
+                        $(item).addClass('tw-filter-active');
+
+                    }
+                });
+            });
+        }
+
         $(document).ready(function() {
             dataUser = $('#dataWarga').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
@@ -230,7 +193,7 @@
                     "url": "{{ route('warga.list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d) {
+                    "data": function(d) {
                         d.scope_data = $('input[name="scope_data"]').val();
                         d.agama = filter_agama;
                         d.status_warga = filter_statusWarga;
@@ -318,23 +281,42 @@
                     searchable: false
                 }]
             });
-            $('input[name="scope_data"]').on('change', function () {
+            $('input[name="scope_data"]').on('change', function() {
                 dataUser.ajax.reload();
             });
         });
         $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
         });
-        $('#apply-filter').on('click', function () {
+        
+        $('button#reset-filter').on('click', function () {
             filter_agama = [];
             filter_statusWarga = [];
-            $.each($('#agama button.tw-filter-active'), function (idx, val) {
-                 filter_agama.push($(val).attr('id'))
+            var filterItem = filter_agama.concat(filter_statusWarga);
+            reload_filter(filterItem);
+            dataUser.ajax.reload();
+        });
+        
+        $('button#filter').click(function() {
+            var filterItem = filter_agama.concat(filter_statusWarga);
+            reload_filter(filterItem);
+            styling_filter_button(filter_agama.length + filter_statusWarga);
+
+        });
+        $('#apply-filter').on('click', function() {
+            filter_agama = [];
+            filter_statusWarga = [];
+            $.each($('#agama button.tw-filter-active'), function(idx, val) {
+                filter_agama.push($(val).attr('id'))
             });
-            $.each($('#status_warga button.tw-filter-active'), function (idx, val) {
-                 filter_statusWarga.push($(val).attr('id'))
+            $.each($('#status_warga button.tw-filter-active'), function(idx, val) {
+                filter_statusWarga.push($(val).attr('id'))
             });
             dataUser.ajax.reload();
+            $('.filterArea').addClass('tw-hidden');
+            // console.log();
+            // console.log((filter_agama.length + filter_statusWarga));
+            styling_filter_button(filter_agama.length + filter_statusWarga);
         });
     </script>
 @endpush

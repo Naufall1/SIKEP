@@ -27,17 +27,11 @@
             <div class="tw-flex tw-flex-col tw-gap-3">
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
-                
-                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                        <input type="text" placeholder="Cari"
-                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button" id="searchBox">
-                        </input>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}"
-                                alt="back">
-                        </span>
+                    <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari Kepala Keluarga">
+                            <x-icons.actionable.search color="n1000" size="20"
+                                stroke="2"></x-icons.actionable.search>
+                        </x-input.leadicon>
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}

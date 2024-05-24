@@ -116,6 +116,10 @@ Route::prefix('pengajuan')->group(function () {
         Route::put('/confirm/perubahanKeluarga', [PengajuanController::class, 'confirmPerubahanKeluarga'])->name('pengajuan.confirm.perubahan.keluarga');
         Route::put('/confirm/perubahanWarga', [PengajuanController::class, 'confirmPerubahanWarga'])->name('pengajuan.confirm.perubahan.warga');
 
+        Route::put('/reject/pembaharuan', [PengajuanController::class, 'rejectPembaharuan'])->name('pengajuan.reject.pembaharuan');
+        Route::put('/reject/perubahanKeluarga', [PengajuanController::class, 'rejectPerubahanKeluarga'])->name('pengajuan.reject.perubahan.keluarga');
+        Route::put('/reject/perubahanWarga', [PengajuanController::class, 'rejectPerubahanWarga'])->name('pengajuan.reject.perubahan.warga');
+
         Route::get('/konfirmasi/{id}', [ 'konfirmasi'])->name('confirmPengajuan'); // melakukan proses konfirmasi/terima sebuah data pengajuan
         Route::post('/tolak/{id}', [ 'tolak'])->name('rejectPengajuan'); // melakukan proses tolak sebuah data pengajuan
     });
