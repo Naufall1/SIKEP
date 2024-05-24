@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,8 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ArticleAnnouncement extends Model
 {
     use HasFactory;
+
     protected $table = 'article_announcement';
     protected $primaryKey = 'kode';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = false;
+
     protected $fillable = [
         'kode',
         'user_id',
@@ -23,12 +27,14 @@ class ArticleAnnouncement extends Model
         'isi',
         'status',
         'image_url',
+        'caption',
     ];
 
-    public function user():BelongsTo
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
-
 }
+
 
