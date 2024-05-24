@@ -221,6 +221,23 @@ class PengajuanController extends Controller
             if (!$modifiedKeluarga) {
                 $modifiedKeluarga = KeluargaModified::where('tanggal_request', '=', $pengajuan->tanggal_request)->first();
             }
+        } else if ($pengajuan->status_request == 'Ditolak')
+        {
+            $currentKeluarga = KeluargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_to', '>=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_to', 'desc')
+                                    ->first();
+            if(!$currentKeluarga){
+                $currentKeluarga = $pengajuan->keluarga;
+            }
+
+            $modifiedKeluarga = KeluargaHistory::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('valid_from', '>=', $pengajuan->tanggal_request)
+                                    ->orderBy('valid_from', 'asc')
+                                    ->first();
+            if (!$modifiedKeluarga) {
+                $modifiedKeluarga = KeluargaModified::where('tanggal_request', '=', $pengajuan->tanggal_request)->first();
+            }
         }
 
         return view('pengajuan.perubahankeluarga.detail', compact(['user', 'pengajuan', 'currentKeluarga', 'modifiedKeluarga']));
@@ -256,6 +273,40 @@ class PengajuanController extends Controller
             DB::rollBack();
             dd($e);
             return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
+        }
+    }
+
+    public function rejectPerubahanKeluarga(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
+            'catatan' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            return redirect()->back();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $pengajuan = PengajuanData::with('keluarga')->find($request->id);
+            $modifiedKeluarga = KeluargaModified::getByDate($pengajuan->no_kk, $pengajuan->tanggal_request);
+
+            $modifiedKeluarga->status_request = 'Ditolak';
+            $modifiedKeluarga->save();
+
+            $pengajuan->status_request = 'Ditolak';
+            $pengajuan->catatan = $request->catatan;
+            $pengajuan->save();
+
+            DB::commit();
+            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            // dd($e);
+            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
     }
 
