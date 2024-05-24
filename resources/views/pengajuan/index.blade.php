@@ -293,9 +293,9 @@
                     searchable: false
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataUser.ajax.reload();
-            // });
+            $('input[name="scope_data"]').on('change', function() {
+                dataUser.ajax.reload();
+            });
         });
         $('#searchBox').keyup(function () {
             dataUser.search($(this).val()).draw();
@@ -308,7 +308,7 @@
             reload_filter(filterItem);
             dataUser.ajax.reload();
         });
-        
+
         $('button#filter').click(function() {
             var filterItem = filter_jenis.concat(filter_statusPengajuan);
             reload_filter(filterItem);
@@ -316,7 +316,7 @@
 
         });
         $('#apply-filter').on('click', function() {
-            console.log('apply flter');
+            // console.log('apply flter');
             filter_jenis = [];
             filter_statusPengajuan = [];
             $.each($('#jenis button.tw-filter-active'), function(idx, val) {

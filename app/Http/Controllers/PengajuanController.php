@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
+use function Laravel\Prompts\select;
+
 class PengajuanController extends Controller
 {
     public function index()
@@ -30,17 +32,63 @@ class PengajuanController extends Controller
         return view('pengajuan.index');
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        $request->validate([
+            'scope_data' => 'max:8',
+            'jenis' => 'array|max:3',
+            'jenis.*' => 'string|in:Perubahan Warga,Perubahan Keluarga,Pembaruan',
+            'status_pengajuan' => 'array|max:3',
+            'status_pengajuan.*' => 'string|in:Menunggu,Dikonfirmasi,Ditolak',
+        ]);
+
+        $select = [
+            'pengajuan.user_id',
+            'pengajuan.id',
+            'pengajuan.no_kk',
+            'pengajuan.tipe',
+            'pengajuan.tanggal_request',
+            'pengajuan.status_request'
+        ];
+        $with = [
+            'user:user_id,nama',
+            'keluarga:no_kk,kepala_keluarga'
+        ];
+
         if (Auth::user()->hasLevel['level_kode'] == 'RW') {
-            $pengajuan =  PengajuanData::with(['user', 'keluarga'])
-                            ->orderBy('id', 'desc')
-                            ->get();
+            $query = PengajuanData::select($select)
+                            ->with($with)
+                            ->join('keluarga', 'keluarga.no_kk', '=', 'pengajuan.no_kk')
+                            ->orderBy('id', 'desc');
+
+            if (explode(" ", $request->scope_data)[1] ?? false) {
+                $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
+            }
+
+            if (isset($request->jenis)) {
+                $query->whereIn('pengajuan.tipe', $request->jenis);
+            }
+
+            if (isset($request->status_pengajuan)) {
+                $query->whereIn('pengajuan.status_request', $request->status_pengajuan);
+            }
+
+            $pengajuan = $query->get();
         } else if (Auth::user()->hasLevel['level_kode'] == 'RT') {
-            $pengajuan =  PengajuanData::with(['user', 'keluarga'])
+            $query = PengajuanData::select($select)
+                            ->with($with)
                             ->where('user_id', '=', Auth::user()->user_id)
-                            ->orderBy('id', 'desc')
-                            ->get();
+                            ->orderBy('id', 'desc');
+
+            if (isset($request->jenis)) {
+                $query->whereIn('pengajuan.tipe', $request->jenis);
+            }
+
+            if (isset($request->status_pengajuan)) {
+                $query->whereIn('pengajuan.status_request', $request->status_pengajuan);
+            }
+
+            $pengajuan = $query->get();
         }
 
         return DataTables::of($pengajuan)
