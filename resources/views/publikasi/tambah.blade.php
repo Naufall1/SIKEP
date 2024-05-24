@@ -28,6 +28,14 @@
                                 @enderror --}}
                             </x-input.label>
                             
+                            <x-input.label for="penulis" label="Nama Penulis">
+                                <x-input.input type="text" name="penulis"
+                                    placeholder="" disabled></x-input.input>
+                                {{-- @error('NIK')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror --}}
+                            </x-input.label>
+                            
                             <x-input.label for="gambar" label="Gambar">
                                 <x-input.file id="gambar" name="gambar"></x-input.file>
                                 {{-- @error('nama')
@@ -51,14 +59,6 @@
                                 @enderror --}}
                             </x-input.label>
 
-                            <x-input.label for="penulis" label="Nama Penulis">
-                                <x-input.input type="text" name="penulis"
-                                    placeholder="" disabled></x-input.input>
-                                {{-- @error('NIK')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
-                            </x-input.label>
-
                             <x-input.label class="tw-relative" for="kategori-list" label="Kategori">
                                 <x-input.select2 name="kategori"
                                     placeholder="Pilih Kategori"></x-input.select2>
@@ -74,7 +74,7 @@
 
 
                 <div class="tw-flex tw-justify-between tw-w-full">
-                    <a href="{{ route('keluarga-tambah') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('publikasi') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>

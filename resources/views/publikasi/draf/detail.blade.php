@@ -12,12 +12,12 @@
             <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Publikasi</h1>
-                <a href="{{ route('publikasi.ubah', ['id' => '1']) }}"
+                <a href="{{ route('publikasi.draf.ubah', ['id' => '1']) }}"
                     class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
                     <x-icons.actionable.edit class="" stroke="2" size="20"
                         color="n100"></x-icons.actionable.edit>
                     <span class="">
-                        Ubah Status
+                        Perbarui
                     </span>
                 </a>
             </div>
@@ -48,7 +48,7 @@
                             @include('components.form.textdetail', [
                                 'title' => 'Status',
                                 'isLabel' => true,
-                                'content' => '',
+                                'content' => 'Ditampilkan',
                             ])
                         </div>
                     </div>
@@ -66,7 +66,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{ route('publikasi') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('publikasi.draf') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
