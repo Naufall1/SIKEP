@@ -13,8 +13,11 @@
                 <h2>Tolak Pengajuan</h2>
             </div>
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{route('pengajuan.reject.pembaharuan')}}" method="POST">
+                    @method('PUT')
+                    @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
+                        <input type="hidden" name="id" value="{{$pengajuan->id}}">
 
                         <x-input.label for="catatan" label="Catatan">
                             <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
@@ -23,9 +26,9 @@
                     </div>
 
                     <div class="tw-flex tw-gap-2">
-                        <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                        <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                             id="closeModal">Batal</button>
-                        <a href="" class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
+                        <button class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
                 </form>
@@ -34,6 +37,10 @@
     </div>
 
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+        @if (session()->has('flash'))
+            <x-flash-message.information message="{{session()->get('flash')->message}}"></x-flash-message.information>
+        @else
+        @endif {{-- DONT DELETE THIS LINE --}}
         <p class="tw-breadcrumb tw-text-n500">Daftar Data Baru /
             <span class="tw-font-bold tw-text-b500">Detail Pengajuan</span>
         </p>
@@ -52,9 +59,6 @@
                     <div class="tw-flex tw-flex-col tw-gap-2">
                         <h2 class="">Informasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-                            {{-- @php
-                                dd($pengajuan);
-                            @endphp --}}
                             @include('components.form.textdetail', [
                                 'title' => 'Jenis',
                                 'content' => $pengajuan->tipe,
@@ -64,15 +68,12 @@
                                 'content' => $pengajuan->status_request,
                                 'isLabel' => true,
                             ])
-                            {{-- @if ($data->status === 'Ditolak') --}}
-
-                            @include('components.form.textdetail', [
-                                'title' => 'Catatan',
-                                'content' =>
-                                    'Terdapat kesalahan input data pada nomer kk dan status perkawinan mbak citra. Bisa di benahi dulu dan ajukan ulang',
-                            ])
-                            {{-- @endif --}}
-
+                            @if ($pengajuan->status_request === 'Ditolak')
+                                @include('components.form.textdetail', [
+                                    'title' => 'Catatan',
+                                    'content' => $pengajuan->catatan,
+                                ])
+                            @endif
                         </div>
                     </div>
 
@@ -186,7 +187,7 @@
 
                 {{-- level_id 1 == RW --}}
                 <div class="tw-flex tw-justify-between">
-                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="{{route('pengajuan')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -234,7 +235,7 @@
                 });
             });
 
-            $("#modalReject, #closeModal").click(function() {
+            $("#modalReject #closeModal").click(function() {
                 $("#modalReject").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',

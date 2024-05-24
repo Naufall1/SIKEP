@@ -8,25 +8,32 @@
     @stack('css')
     @yield('head')
     <title>{{ config('app.name') }}</title>
-    <link rel="icon" type="image/icon" href="{{asset('assets/logo/sikep.png')}}">
+    <link rel="icon" type="image/icon" href="{{ asset('assets/logo/sikep.png') }}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     @vite('resources/css/app.css', 'build/')
-    {{-- @vite('resources/js/app.js', 'build/') --}}
+    @vite('resources/js/app.js', 'build/')
 </head>
 
 <body class="{{ $isForm ? 'tw-bg-n100' : 'tw-bg-n200' }} scroll selection:tw-bg-b500 selection:tw-text-n100">
 
     @include('layout.nav')
 
+
+
     @yield('content')
 
     <script type="text/javascript">
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
-    @stack('js')
 
     @yield('footer')
+    
+    @stack('js')
 
 </body>
 

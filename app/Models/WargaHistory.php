@@ -45,18 +45,17 @@ class WargaHistory extends Model
     public static function track(Warga $warga): void
     {
         // cari tanggal terakhir data warga tertentu dirubah
-        $valid_from = WargaHistory::where('NIK', '=', $warga->NIK)
+        $last_data = WargaHistory::where('NIK', '=', $warga->NIK)
             ->orderBy('id_history_warga', 'desc')
             ->first();
 
-        if ($valid_from) {
-            $valid_from = $valid_from->value('valid_to');
+        if ($last_data) {
+            $valid_from = $last_data->valid_to;
         }
 
         // jika tidak ada data, maka valid_from adalah tanggal dibuat
-        if (is_null($valid_from)) {
-            // $valid_from = $warga->created_at;
-            $valid_from = null;
+        if (is_null($last_data)) {
+            $valid_from = $warga->created_at;
         }
 
         WargaHistory::create([
@@ -78,7 +77,7 @@ class WargaHistory extends Model
             'no_kitas' => $warga->no_kitas,
             'nama_ayah' => $warga->nama_ayah,
             'nama_ibu' => $warga->nama_ibu,
-            'valid_from' => now(),
+            'valid_from' => $valid_from,
             'valid_to' => now()
         ]);
     }

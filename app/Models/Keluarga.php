@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\BelongsToRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Keluarga extends Model
 {
@@ -17,7 +19,7 @@ class Keluarga extends Model
 
     protected $table = 'keluarga';
     protected $primaryKey = 'no_kk';
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $fillable = [
         'no_kk',
@@ -89,5 +91,29 @@ class Keluarga extends Model
         $query->where('user.keterangan', '<>', 'ketua')
         ->where('user.keterangan', $keterangan);
         return $query->get();
+    }
+
+    public static function applyModifications(KeluargaModified $keluargaModified): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            $keluarga = Keluarga::find($keluargaModified->no_kk);
+
+            KeluargaHistory::track($keluarga);
+
+            $keluarga->fill($keluargaModified->toArray());
+            $keluarga->save();
+
+            $keluargaModified->status_request = 'Dikonfirmasi';
+            $keluargaModified->save();
+
+            DB::commit();
+            return true;
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return false;
+        }
     }
 }

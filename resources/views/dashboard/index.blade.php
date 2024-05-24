@@ -12,9 +12,9 @@
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-grid md:tw-grid-flow-col tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-4">
                 {{-- <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4"> --}}
-                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('warga') }}" title="Jumlah Penduduk" value='{{$countPenduduk}}'></x-cards.overview>
+                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('penduduk.warga') }}" title="Jumlah Penduduk" value='{{$countPenduduk}}'></x-cards.overview>
                 <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" title="Jumlah Keluarga" value='{{$countKeluarga}}'></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('dataBaru') }}" title="Pengajuan" value='{{$countPengajuan}}'></x-cards.overview>
+                <x-cards.overview class="tw-col-span-1" url="{{ route('pengajuan') }}" title="Pengajuan" value='{{$countPengajuan}}'></x-cards.overview>
             </div>
 
             <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-h-full">

@@ -1,0 +1,42 @@
+# version: "3"
+
+networks:
+  laravel:
+    driver: bridge
+
+volumes:
+  shared-data:
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: sikep-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+      - shared-data:/var/www/app
+      - ./storage/app/public:/var/www/app/public/file:ro
+      # - /etc/letsencrypt/live/sikep-rw2.site:/etc/letsencrypt/live/sikep-rw2.site:ro
+    networks:
+      - laravel
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+          user: sikep
+          uid: 1000
+    container_name: sikep-app
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - shared-data:/var/www/app
+      - ./storage/app:/var/www/app/storage/app:rw
+    networks:
+      - laravel
+    expose:
+      - 9000

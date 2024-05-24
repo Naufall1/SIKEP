@@ -20,8 +20,8 @@
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
-                <a href="{{ route('dataBaru') }}"
-                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'dataBaru' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
+                <a href="{{ route('pengajuan') }}"
+                    class="tw-flex tw-w-fit tw-justify-center tw-items-center tw-h-8 tw-px-2 {{ Route::currentRouteName() == 'pengajuan' ? 'tw-border-b-2 tw-border-b500' : 'tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700' }} tw-top-menu-text">
                     Pengajuan
                 </a>
                 <div
@@ -33,41 +33,53 @@
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full">
                     @if (Auth::user()->hasLevel['level_kode'] == 'RW')
-                        <button
-                            class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
+                        <x-input.label class="tw-relative tw-w-40" for="scope_data-list">
+                            <x-input.select2 name="scope_data" default="Semua" placeholder=""
+                                gap="tw-top-12"></x-input.select2>
+                        </x-input.label>
+                    @endif
+                    <div class="tw-relative">
+                        <button id="filter"
+                            class="tw-btn tw-btn-outline tw-btn-round-md tw-btn-lg tw-pl-3 tw-pr-4 tw-gap-1 tw-bg-n100"
                             type="button">
-                            <span class="tw-placeholder">
-                                Semua
+                            <span class="tw-flex tw-items-center  tw-cursor-pointer">
+                                <x-icons.actionable.filter color="n1000" size="20"
+                                    stroke="2"></x-icons.actionable.filter>
                             </span>
-                            <span
-                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-2 tw-flex tw-items-center  tw-cursor-pointer">
-                                <img class="tw-w-5 tw-bg-cover"
-                                    src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="back">
+                            <span class="tw-placeholder">
+                                Filter
                             </span>
                         </button>
-                    @endif
-                    <button
-                        class="tw-relative tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                        type="button">
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center  tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/filter.svg') }}"
-                                alt="back">
-                        </span>
-                        <span class="tw-placeholder">
-                            Filter
-                        </span>
-                    </button>
-                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                        <input type="text" placeholder="Cari"
-                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button" id="searchBox">
-                        </input>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}"
-                                alt="back">
-                        </span>
+                        <x-filter.index>
+
+                            <x-filter.head></x-filter.head>
+                            {{-- Body --}}
+                            <x-filter.body>
+                                {{-- Filter Group --}}
+                                <x-filter.items-group id="jenis" title="Jenis">
+                                    <x-filter.item id="Perubahan Warga">Perubahan Warga</x-filter.item>
+                                    <x-filter.item id="Perubahan Keluarga">Perubahan Keluarga</x-filter.item>
+                                    <x-filter.item id="Pembaruan">Pembaruan</x-filter.item>
+                                </x-filter.items-group>
+                                <x-filter.items-group id="status_pengajuan" title="Status Pengajuan">
+                                    <x-filter.item id="Menunggu">Menunggu</x-filter.item>
+                                    <x-filter.item id="Dikonfirmasi">Dikonfirmasi</x-filter.item>
+                                    <x-filter.item id="Ditolak">Ditolak</x-filter.item>
+                                </x-filter.items-group>
+                            </x-filter.body>
+                            {{-- Footer --}}
+                            <x-filter.footer>
+                                <button class="tw-btn tw-btn-primary tw-btn-round-md tw-btn-md" id="apply-filter">
+                                    Terapkan
+                                </button>
+                            </x-filter.footer>
+                        </x-filter.index>
+                    </div>
+                    <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari No KK, Kepala Keluarga">
+                            <x-icons.actionable.search color="n1000" size="20"
+                                stroke="2"></x-icons.actionable.search>
+                        </x-input.leadicon>
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
@@ -144,10 +156,44 @@
     </div>
 @endsection
 @push('js')
-<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
+        var filter_jenis = [];
+        var filter_statusPengajuan = [];
+
+        function styling_filter_button(filter_count) {
+            if ((filter_count) != 0) {
+                $('button#filter').addClass('tw-border-b500');
+            } else {
+                $('button#filter').removeClass('tw-border-b500');
+            }
+        }
+
+        function reload_filter(filterItem) {
+            $.each($('button.filterItem'), function(idx, val) {
+                var id = $(this).attr('id');
+                var item = $(this);
+                if ($(item).hasClass('tw-filter-active')) {
+                    $(item).removeClass('tw-filter-active');
+                    $(item).addClass('tw-filter-default');
+                }
+                $.each(filterItem, function(idx, val) {
+                    // console.log(id + ' =? ' + val);
+                    if (id == val) {
+                        // console.log(id + ' == ' + val);
+                        if ($(item).hasClass('tw-filter-default')) {
+                            $(item).removeClass('tw-filter-default');
+                        }
+                        $(item).addClass('tw-filter-active');
+
+                    }
+                });
+            });
+        }
+
         $(document).ready(function() {
             dataUser = $('#tablePengajuan').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
@@ -155,6 +201,11 @@
                     "url": "{{ route('pengajuan.list') }}",
                     "dataType": "json",
                     "type": "POST",
+                    "data": function(d) {
+                        d.scope_data = $('input[name="scope_data"]').val();
+                        d.jenis = filter_jenis;
+                        d.status_pengajuan = filter_statusPengajuan;
+                    }
                 },
                 paging: true,
                 language: {
@@ -193,7 +244,7 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[5, 'desc']],
+                // order: [[1, 'desc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[44px]",
@@ -222,6 +273,12 @@
                 }, {
                     data: "tanggal_request",
                     className: "tw-w-[140px]",
+                    render: function(data, type, row){
+                        if(type === "sort" || type === "type"){
+                            return data;
+                        }
+                        return moment(data).format("YYYY-MM-DD");
+                    },
                     orderable: true,
                     searchable: true
                 }, {
@@ -236,12 +293,44 @@
                     searchable: false
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataUser.ajax.reload();
-            // });
+            $('input[name="scope_data"]').on('change', function() {
+                dataUser.ajax.reload();
+            });
         });
         $('#searchBox').keyup(function () {
             dataUser.search($(this).val()).draw();
         });
+
+        $('button#reset-filter').on('click', function () {
+            filter_jenis = [];
+            filter_statusPengajuan = [];
+            var filterItem = filter_jenis.concat(filter_statusPengajuan);
+            reload_filter(filterItem);
+            dataUser.ajax.reload();
+        });
+
+        $('button#filter').click(function() {
+            var filterItem = filter_jenis.concat(filter_statusPengajuan);
+            reload_filter(filterItem);
+            styling_filter_button(filter_jenis.length + filter_statusPengajuan);
+
+        });
+        $('#apply-filter').on('click', function() {
+            // console.log('apply flter');
+            filter_jenis = [];
+            filter_statusPengajuan = [];
+            $.each($('#jenis button.tw-filter-active'), function(idx, val) {
+                filter_jenis.push($(val).attr('id'))
+            });
+            $.each($('#status_pengajuan button.tw-filter-active'), function(idx, val) {
+                filter_statusPengajuan.push($(val).attr('id'))
+            });
+            dataUser.ajax.reload();
+            $('.filterArea').addClass('tw-hidden');
+            // console.log();
+            // console.log((filter_jenis.length + filter_statusPengajuan));
+            styling_filter_button(filter_jenis.length + filter_statusPengajuan);
+        });
+
         </script>
 @endpush

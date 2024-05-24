@@ -19,6 +19,12 @@ class FormStateKeluarga
     public static function update(Request $request)
     {
         session()->put('formState', $request->all());
+        $pengajuan = new Pengajuan();
+        if ($pengajuan->keluarga->kepala_keluarga != null) {
+            self::setKepalaKeluarga($pengajuan->keluarga->kepala_keluarga);
+        } else {
+            self::setKepalaKeluarga('');
+        }
     }
 
     /**
@@ -70,6 +76,14 @@ class FormStateKeluarga
         $keluarga = new Keluarga();
         session()->has('formState') ? $keluarga->fill(session()->get('formState')) : null;
         return $keluarga;
+    }
+    public static function setKepalaKeluarga(string $kepala_keluarga)
+    {
+        if (session()->has('formState')) {
+            $formState = session()->get('formState');
+            $formState['kepala_keluarga'] = $kepala_keluarga;
+            session()->put('formState', $formState);
+        }
     }
 
 }

@@ -24,71 +24,34 @@
                         <h2 class="">Data Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-
-                            <x-input.label for="jenis_data" label="Jenis Data">
-                                <x-input.select name="jenis_data">
-                                    <option value="data_baru" @selected(old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) == 'data_baru') {{-- {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }} --}}>
-                                        KK Baru</option>
-                                    <option value="data_lama" @selected(old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) == 'data_lama') {{-- {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }} --}}>
-                                        KK Lama</option>
-                                </x-input.select>
+                            <x-input.label required class="tw-relative" for="jenis_data-list" label="Jenis Data">
+                                <x-input.select2 name="jenis_data"
+                                    default="{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}"
+                                    placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="jenis_data">Jenis Data
-                                <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
-                                    <select class="item tw-input-enabled tw-appearance-none" name="jenis_data" id="jenis_data">
-                                        <option value="data_baru"
-                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'selected' : '') }}>
-                                            KK Baru</option>
-                                        <option value="data_lama"
-                                            {{ empty(session()->get('formState')['jenis_data']) ? '' : (session()->get('formState')['jenis_data'] == 'data_lama' ? 'selected' : '') }}>
-                                            KK Lama</option>
-                                    </select>
-                                    <span
-                                        class="toggleDrop tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-3 tw-flex tw-items-center tw-pl-2">
-                                        <img id="arrowDown" src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}"
-                                            alt="\/">
-                                    </span>
-                                </div>
-                            </label> --}}
-
-                            <x-input.label for="no_kk" label="No KK">
-                                <x-input.input type="text" name="no_kk" placeholder="Masukkan No KK"
+                            <x-input.label class="tw-relative" for="no_kk" label="No KK">
+                                <x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
                                     value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>
-                                <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
+                                {{-- <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
                                     <option value="no" disabled selected>Pilih KK</option>
                                     @foreach ($daftarKeluarga as $keluarga)
                                         <option value="{{ $keluarga->no_kk }}" @selected(old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') == $keluarga->no_kk)>
                                             {{ $keluarga->no_kk . ' - ' . $keluarga->kepala_keluarga }}</option>
                                     @endforeach
-                                </x-input.select>
+                                </x-input.select> --}}
                                 @error('no_kk')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
 
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="no_kk">No KK
-                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan No KK" type="text"
-                                    id="no_kk" name="no_kk"
-                                    value="{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}">
-                                <select class="tw-hidden tw-placeholder" name="no_kk" id="no_kk-list" disabled>
-                                    <option value="no" disabled selected>Pilih KK</option>
-                                </select>
-                            </label> --}}
-
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.input type="text" name="kepala_keluarga" placeholder="Masukkan Kepala Keluarga"
-                                    value="{{ old('kepala_keluarga', isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '') }}"></x-input.input>
+                                <x-input.input disabled type="text" name="kepala_keluarga" placeholder="Tambahkan Warga"
+                                    value="{{ isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '' }}"></x-input.input>
                                 @error('kepala_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
-                                <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan Kepala Keluarga"
-                                    type="text" id="kepala_keluarga" name="kepala_keluarga"
-                                    value="{{ empty(session()->get('formState')['kepala_keluarga']) ? '' : session()->get('formState')['kepala_keluarga'] }}">
-                            </label> --}}
 
                             <x-input.label for="alamat" label="Alamat">
                                 <x-input.textarea name="alamat" placeholder="Masukkan Alamat"
@@ -99,41 +62,10 @@
                                 @enderror
                             </x-input.label>
 
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="alamat">Alamat
-                                <textarea class="tw-input-enabled tw-pt-[10px] tw-placeholder" placeholder="Masukkan Alamat" type="text"
-                                    id="alamat" name="alamat">{{ empty(session()->get('formState')['alamat']) ? '' : session()->get('formState')['alamat'] }}</textarea>
-                            </label> --}}
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
-                            <input class="tw-input-enabled tw-placeholder" placeholder="Masukkan RT" type="text"
-                                id="RT" name="RT">
-                        </label> --}}
-
                             <x-input.label for="RT" label="RT">
                                 <x-input.input disabled type="number" name="RT" placeholder="RT"
                                     value="{{ Auth::user()->keterangan }}"></x-input.input>
                             </x-input.label>
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RT">RT
-                                <select class="tw-input-enabled tw-placeholder" name="RT" id="RT">
-                                    <option value="1">001</option>
-                                    <option value="2">002</option>
-                                    <option value="3">003</option>
-                                    <option value="4">004</option>
-                                    <option value="5">005</option>
-                                    <option value="6">006</option>
-                                    <option value="7">007</option>
-                                    <option value="8">008</option>
-                                    <option value="9">009</option>
-                                    <option value="10">010</option>
-                                    <option value="11">011</option>
-                                </select>
-                            </label> --}}
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="RW">RW
-                                <input class="tw-input-disabled tw-placeholder" placeholder="Masukkan RW" type="text"
-                                    id="RW" name="RW" value="{{ $default['rw'] }}" disabled>
-                            </label> --}}
 
                             <x-input.label for="RW" label="RW">
                                 <x-input.input disabled type="number" name="RW" placeholder="Masukkan RW"
@@ -175,50 +107,13 @@
                                 @php
                                     $img = session()->get('formState')['kartu_keluarga'];
                                     // dd($img);
-                                    @endphp
+                                @endphp
                                 @include('components.form.textdetail', [
                                     'title' => '',
                                     'isImage' => true,
                                     'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
                                     ])
-                            @else
-                                {{-- @if (isset($kartu_keluarga))
-                                    @endif --}}
                             @endif
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kode_pos">Kode POS
-                                <input class="tw-input-disabled tw-placeholder" type="text" id="kode_pos"
-                                name="kode_pos" value="{{ $default['kode_pos'] }}" disabled>
-                            </label>
-
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kelurahan">Kelurahan
-                                <input class="tw-input-disabled tw-placeholder" type="text" id="kelurahan"
-                                name="kelurahan" value="{{ $default['kelurahan'] }}" disabled>
-                            </label>
-
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kecamatan">Kecamatan
-                                <input class="tw-input-disabled tw-placeholder" type="text" id="kecamatan"
-                                name="kecamatan" value="{{ $default['kecamatan'] }}" disabled>
-                            </label>
-
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kota">Kota
-                                <input class="tw-input-disabled tw-placeholder" type="text" id="kota"
-                                name="kota" value="{{ $default['kota'] }}" disabled>
-                            </label>
-
-                            <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="provinsi">Provinsi
-                                <input class="tw-input-disabled tw-placeholder" type="text" id="provinsi"
-                                name="provinsi" value="{{ $default['provinsi'] }}" disabled>
-                            </label> --}}
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2"
-                            for="kartu_keluarga">Kartu Keluarga
-                            <div class="tw-relative tw-cursor-pointer tw-input-enabled">
-                                <input
-                                id="kartu_keluarga" name="kartu_keluarga" type="file"
-                                class=" tw-flex tw-py-[9px] file:tw-absolute file:tw-top-1/2 file:-tw-translate-y-1/2 file:tw-right-0 file:tw-h-full file:tw-border-y-0 file: file:tw-border-r-0 file:tw-border-l-[1.5px] file:tw-rounded-r-md file:tw-px-2 file:hover:tw-bg-n200 file:hover:tw-border-n600 file:active:tw-border-n600 file:tw-justify-center tw-cursor-pointer file:tw-cursor-pointer  file:tw-border-n400 file:tw-bg-n100 file:tw-m-0 ">
-                            </div>
-                        </label> --}}
 
                         </div>
 
@@ -229,40 +124,21 @@
                         <div class="md:tw-w-80 tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
-                                    value="{{ (int) old('tagihan_listrik', isset($formState['tagihan_listrik']) ? $formState['tagihan_listrik'] : '') }}"
-                                    icon="rupiah" alt="Rp">
-                                </x-input.leadingicon>
+                                <x-input.leadingicon type="text" id="tagihan_listrik" name="tagihan_listrik"
+                                    value="{{ old('tagihan_listrik', $formState['tagihan_listrik'] ?? 0) }}" icon="rupiah"
+                                    alt="Rp"></x-input.leadingicon>
                                 @error('tagihan_listrik')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
 
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
-                                <div class="tw-relative tw-flex tw-w-full">
-                                    <input type="number" min="0" id="tagihan_listrik" name="tagihan_listrik" placeholder="1000000"
-                                    value="{{ empty(session()->get('formState')['tagihan_listrik']) ? '' : session()->get('formState')['tagihan_listrik'] }}" class="tw-input-enabled tw-pl-8 tw-pr-3" type="text">
-                                </input>
-                                <span
-                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-[6px] tw-flex tw-items-center tw-cursor-pointer">
-                                <img class="tw-w-7 tw-bg-cover"
-                                src="{{ asset('assets/icons/actionable/rupiah.svg') }}" alt="Rp">
-                            </span>
-                        </div>
-                    </label> --}}
-
                             <x-input.label for="luas_bangunan" label="Luas Bangunan (m2)">
-                                <x-input.input type="number" name="luas_bangunan" placeholder="Masukkan Luas Bangunan"
-                                    value="{{ (int) old('luas_bangunan', isset($formState['luas_bangunan']) ? $formState['luas_bangunan'] : '') }}"></x-input.input>
+                                <x-input.input type="text" id="luas_bangunan" name="luas_bangunan"
+                                    value="{{ old('luas_bangunan', $formState['luas_bangunan'] ?? 0) }}"></x-input.input>
                                 @error('luas_bangunan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
-
-                            {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan (m2)
-                                <input class="tw-input-enabled tw-placeholder tw-appearance-none" placeholder="Masukkan Luas Bangunan"
-                                type="number" min="0" id="luas_bangunan" name="luas_bangunan" value="{{ empty(session()->get('formState')['luas_bangunan']) ? '' : session()->get('formState')['luas_bangunan'] }}">
-                            </label> --}}
 
                         </div>
                     </div>
@@ -274,21 +150,23 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                            <table class="tw-w-[702px] md:tw-w-full">
-                                {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>NIK</th>
-                                    <th>Nama</th>
-                                    <th>Status Keluarga</th>
-                                    <th class="tw-w-[108px]"></th>
-                                </tr>
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                                <div class="tw-border-b-[1.5px] tw-border-n400">
+                                    <button type="submit" name="action" value="tambah"
+                                    class="  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                    Tambah</button>
+                                </div>
+                                <thead class="tw-rounded-lg">
+                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Status Keluarga</th>
+                                        <th class="tw-w-[108px]"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        // dd($daftarWarga);
-                                    @endphp
-                                    @foreach ($daftarWarga as $warga)
+                                    {{-- @foreach ($daftarWarga as $warga)
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $warga['warga']->NIK }}</td>
@@ -308,7 +186,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                     <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
                                             {{-- <a href="#"
@@ -316,9 +194,9 @@
                                             onclick="tambahAnggotaKeluarga()">
                                             Tambah
                                         </a> --}}
-                                            <button type="submit" name="action" value="tambah"
+                                            {{-- <button type="submit" name="action" value="tambah"
                                                 class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                Tambah</button>
+                                                Tambah</button> --}}
                                         </td>
                                     </tr>
 
@@ -330,8 +208,8 @@
                     </div>
                 </div>
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
-                        type="button">
+                    <a href="{{ route('penduduk.keluarga.tambah.back') }}"
+                        class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline" type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
@@ -344,10 +222,9 @@
 
         </div>
     </div>
-    {{-- @php
-        dd(session()->get('formState'))
-    @endphp --}}
-    {{-- {{dd(session()->get('formState'))}} --}}
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $('#formdata').submit(function(e) {
             // e.preventDefault();
@@ -360,17 +237,71 @@
             $('#provinsi').prop('disabled', false);
             $('#tagihan_listrik').prop('disabled', false);
             $('#luas_bangunan').prop('disabled', false);
+            $('#kepala_keluarga').prop('disabled', false);
             return true;
         });
         $(document).ready(function() {
             changeJenisData(
-                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) }}'
+                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectKK(
                 '{{ empty(session()->get('formState')['no_kk']) ? '' : session()->get('formState')['no_kk'] }}',
-                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? '' : session()->get('formState')['jenis_data']) }}'
+                '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
+
+            dataWarga = $('#daftarWarga').DataTable({
+                serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
+                ajax: {
+                    "url": "{{ route('penduduk.keluarga.tambah.listwarga') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": function(d) {
+                        d.no_kk = $('#no_kk-list').val();
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                },
+                paging: false,
+                info: false,
+                searching: false,
+                // order: [
+                //     [2, 'asc']
+                // ],
+                columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[44px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "NIK",
+                    className: "tw-w-[180px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "nama",
+                    className: "tw-grow",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "status_keluarga",
+                    className: "tw-w-[180px]",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "tw-w-[140px] tw-flex tw-items-center tw-justify-center tw-gap-2",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            $('#no_kk-list').on('change', function () {
+                dataWarga.ajax.reload();
+            });
         });
 
         // function getFormData($form) {
@@ -405,101 +336,131 @@
         //     });
         // }
 
-        function changeJenisData(data) {
-            if (data == 'data_lama') {
-                $('#formData').attr('action', '{{ route('pindahKK') }}');
-                $('#no_kk').removeClass('tw-input-enabled');
-                $('#no_kk').attr('type', 'hidden');
-                $('#no_kk').prop('disabled', true);
+        function data_lama() {
+            $('#formData').attr('action', '{{ route('pindahKK') }}');
 
-                $('#alamat').removeClass('tw-input-enabled');
-                $('#alamat').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#alamat').attr('placeholder', 'Pilih No KK');
-                $('#alamat').prop('disabled', true);
+            $("label[for='no_kk']").attr('for', 'no_kk-list');
+            $("label[for='no_kk-list']").children().remove();
+            $("label[for='no_kk-list']").append(`<x-input.select2 name="no_kk" searchable
+                                    placeholder="Pilih No KK"></x-input.select2>`);
 
-                $('#kepala_keluarga').removeClass('tw-input-enabled');
-                $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#kepala_keluarga').attr('placeholder', 'Pilih No KK');
-                $('#kepala_keluarga').prop('readonly', true);
+            // $('#no_kk').removeClass('tw-input-enabled');
+            // $('#no_kk').attr('type', 'hidden');
+            // $('#no_kk').prop('disabled', true);
 
-                $('#RT').removeClass('tw-input-enabled');
-                $('#RT').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#RT').attr('placeholder', 'Pilih No KK');
-                $('#RT').prop('disabled', true);
+            // $('#kepala_keluarga').val('');
+            $('#kepala_keluarga').removeClass('tw-input-enabled');
+            $('#kepala_keluarga').addClass('tw-input-disabled');
+            // $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
+            $('#kepala_keluarga').attr('placeholder', 'Pilih No KK');
+            $('#kepala_keluarga').prop('readonly', true);
 
-                $('#tagihan_listrik').removeClass('tw-input-enabled');
-                $('#tagihan_listrik').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
-                $('#tagihan_listrik').prop('disabled', true);
+            // $('#alamat').val('');
+            $('#alamat').removeClass('tw-input-enabled');
+            $('#alamat').addClass('tw-input-disabled');
+            $('#alamat').attr('placeholder', 'Pilih No KK');
+            $('#alamat').prop('disabled', true);
 
-                $('#luas_bangunan').removeClass('tw-input-enabled');
-                $('#luas_bangunan').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
-                $('#luas_bangunan').prop('disabled', true);
+            // $('#RT').removeClass('tw-input-enabled');
+            // $('#RT').addClass('tw-input-disabled placeholder:tw-text-n600');
+            // $('#RT').attr('placeholder', 'Pilih No KK');
+            // $('#RT').prop('disabled', true);
 
-                $('#no_kk-list').addClass('tw-input-enabled');
-                $('#no_kk-list').parent().removeClass('tw-hidden');
-                $('#no_kk-list').prop('disabled', false);
-                // $('#no_kk-list').val('no').change();
-                // $.ajax({
-                //     type: "GET",
-                //     url: "/api/keluarga",
-                //     success: function(response) {
-                //         // console.log(response);
-                //         response.forEach(keluarga => {
-                //             let optionHTML =
-                //                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
-                //             $('#no_kk-list').append(optionHTML);
-                //         });
-                //         $('#no_kk-list').val(
-                //             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                //         ).change();
-                //         // $('#no_kk-list').val('no').change();
-                //         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
-                //     }
-                // });
-                $('#no_kk-list').val(
-                    '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
-                ).change();
-            }
-            if (data == 'data_baru') {
-                $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
-                $('#no_kk').addClass('tw-input-enabled');
-                $('#no_kk').attr('type', 'text');
-                $('#no_kk').prop('disabled', false);
+            // $('#tagihan_listrik').val('');
+            $('#tagihan_listrik').removeClass('tw-input-enabled');
+            $('#tagihan_listrik').addClass('tw-input-disabled');
+            $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
+            $('#tagihan_listrik').prop('disabled', true);
+            
+            // $('#luas_bangunan').val('');
+            $('#luas_bangunan').removeClass('tw-input-enabled');
+            $('#luas_bangunan').addClass('tw-input-disabled');
+            $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
+            $('#luas_bangunan').prop('disabled', true);
 
+            // $('#no_kk-list').addClass('tw-input-enabled');
+            // $('#no_kk-list').parent().removeClass('tw-hidden');
+            // $('#no_kk-list').prop('disabled', false);
 
-                $('#alamat').addClass('tw-input-enabled');
-                $('#alamat').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#alamat').attr('placeholder', 'Masukkan Alamat');
-                $('#alamat').prop('disabled', false);
+            // $('#no_kk-list').val('no').change();
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/api/keluarga",
+            //     success: function(response) {
+            //         // console.log(response);
+            //         response.forEach(keluarga => {
+            //             let optionHTML =
+            //                 `<option value="${keluarga.no_kk}">${keluarga.no_kk} - ${keluarga.kepala_keluarga}</option>`;
+            //             $('#no_kk-list').append(optionHTML);
+            //         });
+            //         $('#no_kk-list').val(
+            //             '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+            //         ).change();
+            //         // $('#no_kk-list').val('no').change();
+            //         // console.log('{{ empty(session()->get('formState')['no_kk']) ? 'no' : session()->get('formState')['no_kk'] }}');
+            //     }
+            // });
+            // $('#no_kk-list').val(
+            //     '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}'
+            // ).change();
 
-                $('#kepala_keluarga').addClass('tw-input-enabled');
-                $('#kepala_keluarga').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
-                $('#kepala_keluarga').prop('readonly', false);
+        }
 
-                // $('#RT').val('001');
-                // $('#RT').addClass('tw-input-enabled');
-                // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
-                // $('#RT').prop('disabled', false);
+        function data_baru() {
+            $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
+            // $('#no_kk').addClass('tw-input-enabled');
+            // $('#no_kk').attr('type', 'text');
+            // $('#no_kk').prop('disabled', false);
 
-                $('#tagihan_listrik').val('001');
-                $('#tagihan_listrik').addClass('tw-input-enabled');
-                $('#tagihan_listrik').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tagihan_listrik').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#tagihan_listrik').prop('disabled', false);
+            $("label[for='no_kk-list']").attr('for', 'no_kk');
+            $("label[for='no_kk']").children().remove();
+            $("label[for='no_kk']").append(
+                `<x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
+                                    value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>`
+            );
 
-                $('#luas_bangunan').val('001');
-                $('#luas_bangunan').addClass('tw-input-enabled');
-                $('#luas_bangunan').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#luas_bangunan').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#luas_bangunan').prop('disabled', false);
+            $('#kepala_keluarga').val('');
+            $('#kepala_keluarga').addClass('tw-input-enabled');
+            $('#kepala_keluarga').removeClass('tw-input-disabled');
+            $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
+            $('#kepala_keluarga').prop('readonly', false);
 
-                $('#no_kk-list').removeClass('tw-input-enabled');
-                $('#no_kk-list').parent().addClass('tw-hidden');
-                $('#no_kk-list').prop('disabled', true);
+            $('#alamat').val('');
+            $('#alamat').addClass('tw-input-enabled');
+            $('#alamat').removeClass('tw-input-disabled');
+            $('#alamat').attr('placeholder', 'Masukkan Alamat');
+            $('#alamat').prop('disabled', false);
+
+            // $('#RT').val('001');
+            // $('#RT').addClass('tw-input-enabled');
+            // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
+            // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
+            // $('#RT').prop('disabled', false);
+
+            $('#tagihan_listrik').val('');
+            $('#tagihan_listrik').addClass('tw-input-enabled');
+            $('#tagihan_listrik').removeClass('tw-input-disabled');
+            $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
+            $('#tagihan_listrik').prop('disabled', false);
+            
+            $('#luas_bangunan').val('');
+            $('#luas_bangunan').addClass('tw-input-enabled');
+            $('#luas_bangunan').removeClass('tw-input-disabled');
+            $('#luas_bangunan').attr('placeholder', 'Misal: 100');
+            $('#luas_bangunan').prop('disabled', false);
+
+            // $('#no_kk-list').removeClass('tw-input-enabled');
+            // $('#no_kk-list').parent().addClass('tw-hidden');
+            // $('#no_kk-list').prop('disabled', true);
+        }
+
+        function changeJenisData(jenisData) {  
+            if (jenisData == 'Data Lama') {
+                data_lama();
+                let button = $('label[for="no_kk-list"]').children();
+                let selected = '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}' + ' - ' + '{{ empty(session()->get('formState')['kepala_keluarga']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['kepala_keluarga']) }}'
+                // console.log($('#no_kk').parents().html());
+                $(button).children().first().text(selected);
             }
         }
 
@@ -517,10 +478,10 @@
         }
 
         function selectKK(no_kk, jenis_data) {
-            console.log(jenis_data);
-            if (jenis_data == 'data_lama') {
+            // console.log(jenis_data);
+            if (jenis_data == 'Data Lama') {
                 if (no_kk != '') {
-                    console.log(no_kk);
+                    // console.log(no_kk);
                     $.ajax({
                         type: "GET",
                         url: "/api/keluarga/" + no_kk,
@@ -539,154 +500,49 @@
             }
         }
 
-        $('#jenis_data').on('change', function() {
-            changeJenisData(this.value);
-            resetNonDefaultValues();
+        $(document).on("click", ".dropdownItem", function() {
+            // if ($(this).text() == 'Data Baru' || $(this).text() == 'Data Lama') {
+            //     console.log(this.value);
+            //     changeJenisData(this.value);
+            //     resetNonDefaultValues();
+            // }
+
+            if ($(this).text() == 'Data Baru') {
+                data_baru();
+            }
+            if ($(this).text() == 'Data Lama') {
+                data_lama();
+            }
+            if ($('#jenis_data').val() == 'Data Lama' && $(this).parents().parents().parents().attr(
+                    'for') == 'no_kk-list') {
+                var data = $(this).text().split(' - ');
+                var no_kk = data[0];
+                selectKK(no_kk, $('#jenis_data').val());
+            }
+
         });
 
-        $('#no_kk-list').on('change', function() {
-            selectKK(this.value, 'data_lama');
-        });
 
-        // $('#kartu_keluarga').change(function (e) {
-        //     var kk = $('#kartu_keluarga').prop('files')[0];
-        //     var form_data = new FormData();
-        //     form_data.append('image_kk', kk);
-        //     alert(form_data);
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '',
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         data: form_data,
-        //         type: 'post',
-        //         success: function(php_script_response){
-        //             alert(php_script_response); // <-- display response from the PHP script, if any
-        //         }
-        //     });
-        // });
+    
     </script>
 @endsection
 
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <title>Form Penambahan Data</title>
-</head>
-<body>
-    <h2>Form Penambahan Data</h2>
-    <form action="{{ route('keluarga-tambah') }}" method="POST" enctype="multipart/form-data" id="formdata">
-        @csrf
-
-        <label for="no_kk">Nomor KK:</label><br>
-        <input type="text" id="no_kk" name="no_kk" value="{{empty(session()->get('formState')['no_kk']) ? "" : session()->get('formState')['no_kk'] }}"><br>
-
-        <label for="kepala_keluarga">Kepala Keluarga:</label><br>
-        <input type="text" id="kepala_keluarga" name="kepala_keluarga" value="{{empty(session()->get('formState')['kepala_keluarga']) ? "" : session()->get('formState')['kepala_keluarga'] }}"><br>
-
-        <label for="alamat">Alamat:</label><br>
-        <textarea id="alamat" name="alamat" value="{{empty(session()->get('formState')['alamat']) ? "" : session()->get('formState')['alamat'] }}"></textarea><br>
-
-        <label for="RT">RT:</label><br>
-        <input type="number" id="RT" name="RT" value="{{$default['rt']}}"><br>
-
-        <label for="RW">RW:</label><br>
-        <input type="number" id="RW" name="RW" value="{{$default['rw']}}"><br>
-
-        <label for="kode_pos">Kode Pos:</label><br>
-        <input type="text" id="kode_pos" name="kode_pos" value="{{$default['kode_pos']}}"><br>
-
-        <label for="kelurahan">Kelurahan:</label><br>
-        <input type="text" id="kelurahan" name="kelurahan" value="{{$default['kelurahan']}}"><br>
-
-        <label for="kecamatan">Kecamatan:</label><br>
-        <input type="text" id="kecamatan" name="kecamatan" value="{{$default['kecamatan']}}"><br>
-
-        <label for="kota">Kota:</label><br>
-        <input type="text" id="kota" name="kota" value="{{$default['kota']}}"><br>
-
-        <label for="provinsi">Provinsi:</label><br>
-        <input type="text" id="provinsi" name="provinsi" value="{{$default['provinsi']}}"><br>
-
-        <label for="image_kk">Foto KK:</label><br>
-        <input type="file" id="image_kk" name="image_kk"><br>
-
-        <label for="tagihan_listrik">Tagihan Listrik:</label><br>
-        <input type="number" id="tagihan_listrik" name="tagihan_listrik" value="{{empty(session()->get('formState')['tagihan_listrik']) ? "" : session()->get('formState')['tagihan_listrik'] }}"><br>
-
-        <label for="luas_bangunan">Luas Bangunan:</label><br>
-        <input type="number" id="luas_bangunan" name="luas_bangunan" value="{{empty(session()->get('formState')['luas_bangunan']) ? "" : session()->get('formState')['luas_bangunan'] }}"><br>
-
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
-    <h2>Daftar Warga</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>NIK</th>
-                <th>Nama</th>
-                <th>Status Keluarga</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($daftarWarga as $warga)
-            <tr>
-                <td>{{$loop->index}}</td>
-                <td>{{$warga->NIK}}</td>
-                <td>{{$warga->nama}}</td>
-                <td>{{$warga->status_keluarga}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <button onclick="tambahAnggotaKeluarga()">Tambah Anggota Keluarga</button>
+@push('js')
     <script>
-        function getFormData($form){
-            var unindexed_array = $form.serializeArray();
-            var indexed_array = {};
-            $.map(unindexed_array, function(n, i){
-                indexed_array[n['name']] = n['value'];
-            });
-            return indexed_array;
-        }
-        function tambahAnggotaKeluarga(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var kk = document.getElementById("no_kk");
-            var url = "/penduduk/warga/tambah/"+kk.value;
-
-            data = $('#formdata');
-            data = getFormData(data);
-            $.ajax({
-                type: "POST",
-                url: "/penduduk/keluarga/tambah/save-state",
-                data: JSON.stringify(data),
-                dataType: "json",
-                success: function (response) {
-                    if (kk.value != '') {
-                        window.location.href = url;
-                    } else {
-                        alert('Nomor KK Harus diisi');
-                    }
-                }
-            });
+        function getKeluarga() {
+            let arrayKeluarga = [];
+            @foreach ($daftarKeluarga as $keluarga)
+                arrayKeluarga.push({
+                    no_kk: '{{ $keluarga->no_kk }}',
+                    kepala_keluarga: '{{ $keluarga->kepala_keluarga }}'
+                })
+            @endforeach
+            let dataKeluarga = [];
+            for (let i = 0; i < arrayKeluarga.length; i++) {
+                dataKeluarga[i] = arrayKeluarga[i].no_kk + ' - ' + arrayKeluarga[i].kepala_keluarga;
+                // dataKeluarga[i] = i;
+            }
+            return dataKeluarga;
         }
     </script>
-    // {{dd($daftarWarga)}}
-</body>
-</html> --}}
+@endpush

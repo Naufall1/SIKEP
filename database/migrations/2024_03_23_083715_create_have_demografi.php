@@ -15,12 +15,12 @@ return new class extends Migration
             $table->char('NIK', 16);
             $table->unsignedBigInteger('demografi_id');
             $table->date('tanggal_kejadian')->nullable(); // nullable just for dev
-            $table->date('tanggal_request');
+            $table->dateTime('tanggal_request');
             $table->text('catatan')->nullable();
             $table->text('dokumen_pendukung');
             $table->enum('status_request', ['Dikonfirmasi', 'Ditolak', 'Menunggu']);
 
-            $table->unique(['NIK', 'demografi_id']);
+            $table->unique(['NIK', 'demografi_id', 'tanggal_request']);
 
             $table->foreign('NIK')->references('NIK')->on('warga');
             $table->foreign('demografi_id')->references('demografi_id')->on('demografi');

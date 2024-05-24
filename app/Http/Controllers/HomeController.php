@@ -80,8 +80,8 @@ class HomeController extends Controller
             $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
 
         } else {
-            $countPenduduk = Warga::count();
-            $countKeluarga = Keluarga::count();
+            $countPenduduk = Warga::where('status_warga', '!=', 'Menunggu')->count();
+            $countKeluarga = Keluarga::where('status', '=', 'Aktif')->count();
             $countPengajuan = HaveDemografi::count() + KeluargaModified::count() + WargaModified::count();
         }
 
