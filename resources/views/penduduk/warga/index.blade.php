@@ -49,18 +49,6 @@
                             <x-input.select2 name="scope_data" default="Semua" placeholder=""
                                 gap="tw-top-12"></x-input.select2>
                         </x-input.label>
-                        {{-- <button
-                            class="tw-relative tw-h-11 tw-pr-8 tw-pl-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                            type="button">
-                            <span class="tw-placeholder">
-                                Semua
-                            </span>
-                            <span
-                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-2 tw-flex tw-items-center  tw-cursor-pointer">
-                                <img class="tw-w-5 tw-bg-cover"
-                                    src="{{ asset('assets/icons/actionable/arrow-down-1.svg') }}" alt="back">
-                            </span>
-                        </button> --}}
                     @endif
                     <div class="tw-relative">
                         <button id="filter"
@@ -103,17 +91,11 @@
                             </x-filter.footer>
                         </x-filter.index>
                     </div>
-                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                        <input type="text" placeholder="Cari"
-                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button" id="searchBox">
-                        </input>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
+                    <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari NIK, Nama">
                             <x-icons.actionable.search color="n1000" size="20"
                                 stroke="2"></x-icons.actionable.search>
-                        </span>
-                        </span>
+                        </x-input.leadicon>
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
@@ -306,6 +288,7 @@
         $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
         });
+        
         $('button#reset-filter').on('click', function () {
             filter_agama = [];
             filter_statusWarga = [];
