@@ -13,7 +13,7 @@
         <div class="md:tw-w-full">
 
             <div
-                class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : '' }}  tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
+                class="tw-flex tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Admin</h1>
             </div>
