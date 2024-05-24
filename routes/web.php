@@ -157,3 +157,10 @@ Route::prefix('api')->group(function () {
     Route::get('/keluarga', [KeluargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data keluarga (TODO data keluarga berdasarkan RT)
     Route::get('/keluarga/{no_kk}', [KeluargaController::class, 'getKeluarga'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi informasi detail dari sebuah data keluarga
 });
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [function (){return view('admin.index');}])->name('admin'); // menampilkan halaman yang berisi tabel daftar publikasi
+    Route::get('/detail/{id}', [function (){return view('admin.detail');}])->name('admin.detail'); // menampilkan detail dari sebuah publikasi
+    Route::get('/tambah', [function (){return view('admin.tambah');}])->name('admin.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+})->middleware('role:rw');
