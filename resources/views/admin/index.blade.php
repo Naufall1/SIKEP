@@ -13,11 +13,11 @@
     ], ] ) --}}
 
     <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start' }}">
+        <div class="tw-flex tw-items-center md:tw-items-start">
             <h1 class="tw-h1 tw-w-1/2 tw-flex-grow">
                 Daftar Admin
             </h1>
-            <a href="{{ route('keluarga-tambah') }}" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
+            <a href="" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
                 Tambah Data
             </a>
         </div>
@@ -96,38 +96,6 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
-        var filter_agama = [];
-        var filter_statusWarga = [];
-
-        function styling_filter_button(filter_count) {
-            if ((filter_count) != 0) {
-                $('button#filter').addClass('tw-border-b500');
-            } else {
-                $('button#filter').removeClass('tw-border-b500');
-            }
-        }
-
-        function reload_filter(filterItem) {
-            $.each($('button.filterItem'), function(idx, val) {
-                var id = $(this).attr('id');
-                var item = $(this);
-                if ($(item).hasClass('tw-filter-active')) {
-                    $(item).removeClass('tw-filter-active');
-                    $(item).addClass('tw-filter-default');
-                }
-                $.each(filterItem, function(idx, val) {
-                    // console.log(id + ' =? ' + val);
-                    if (id == val) {
-                        // console.log(id + ' == ' + val);
-                        if ($(item).hasClass('tw-filter-default')) {
-                            $(item).removeClass('tw-filter-default');
-                        }
-                        $(item).addClass('tw-filter-active');
-
-                    }
-                });
-            });
-        }
 
         $(document).ready(function() {
             dataUser = $('#dataWarga').DataTable({
@@ -215,36 +183,6 @@
         });
         $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
-        });
-        
-        $('button#reset-filter').on('click', function () {
-            filter_agama = [];
-            filter_statusWarga = [];
-            var filterItem = filter_agama.concat(filter_statusWarga);
-            reload_filter(filterItem);
-            dataUser.ajax.reload();
-        });
-        
-        $('button#filter').click(function() {
-            var filterItem = filter_agama.concat(filter_statusWarga);
-            reload_filter(filterItem);
-            styling_filter_button(filter_agama.length + filter_statusWarga);
-
-        });
-        $('#apply-filter').on('click', function() {
-            filter_agama = [];
-            filter_statusWarga = [];
-            $.each($('#agama button.tw-filter-active'), function(idx, val) {
-                filter_agama.push($(val).attr('id'))
-            });
-            $.each($('#status_warga button.tw-filter-active'), function(idx, val) {
-                filter_statusWarga.push($(val).attr('id'))
-            });
-            dataUser.ajax.reload();
-            $('.filterArea').addClass('tw-hidden');
-            // console.log();
-            // console.log((filter_agama.length + filter_statusWarga));
-            styling_filter_button(filter_agama.length + filter_statusWarga);
         });
     </script>
 @endpush
