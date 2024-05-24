@@ -231,13 +231,11 @@ class PengajuanController extends Controller
                 $currentKeluarga = $pengajuan->keluarga;
             }
 
-            $modifiedKeluarga = KeluargaHistory::where('no_kk', '=', $pengajuan->no_kk)
-                                    ->where('valid_from', '>=', $pengajuan->tanggal_request)
-                                    ->orderBy('valid_from', 'asc')
+            $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
+                                    ->where('status_request', '=', 'Ditolak')
+                                    ->where('tanggal_request', '>=', Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'))
+                                    ->orderBy('id_modify_keluarga', 'asc')
                                     ->first();
-            if (!$modifiedKeluarga) {
-                $modifiedKeluarga = KeluargaModified::where('tanggal_request', '=', $pengajuan->tanggal_request)->first();
-            }
         }
 
         return view('pengajuan.perubahankeluarga.detail', compact(['user', 'pengajuan', 'currentKeluarga', 'modifiedKeluarga']));
@@ -264,11 +262,22 @@ class PengajuanController extends Controller
                 throw new Exception('Gagal menyimpan perubahan kedalam table Keluarga.');
             }
 
+            if ($pengajuan->keluarga->image_kk != $modifiedKeluarga->image_kk) {
+                $res = Storage::disk('local')->put(
+                    'public/KK/' . $modifiedKeluarga->image_kk,
+                    Storage::disk('temp')->get($modifiedKeluarga->image_kk),
+                );
+                if (!$res) {
+                    throw new Exception('Failed to move file from temporary');
+                }
+                Storage::disk('temp')->delete($modifiedKeluarga->image_kk);
+            }
+
             $pengajuan->status_request = 'Dikonfirmasi';
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->route('pengajuan')->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
+            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
             dd($e);

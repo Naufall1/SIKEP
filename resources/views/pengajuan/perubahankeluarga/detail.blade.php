@@ -103,10 +103,13 @@
                                     @include('components.form.textdetail', [
                                         'title' => 'Kartu Keluarga',
                                         'isImage' => true,
-                                        'content' => !isset($modifiedKeluarga->image_kk)
-                                            ? ''
-                                            : asset(Storage::disk('public')->url(
-                                                    'KK/' . $modifiedKeluarga->image_kk)),
+                                        'content' => $pengajuan->status_request == 'Dikonfirmasi'
+                                            ? asset(Storage::disk('public')->url('KK/' . $modifiedKeluarga->image_kk)) :
+                                            'data:image/' .
+                                                explode('.', $modifiedKeluarga->image_kk)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $modifiedKeluarga->image_kk)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 @endif
                             </div>
@@ -143,7 +146,7 @@
                                         'content' => !isset($modifiedKeluarga->image_kk)
                                             ? ''
                                             : asset(Storage::disk('public')->url(
-                                                    'KK/' . $modifiedKeluarga->image_kk)),
+                                                    'KK/' . $currentKeluarga->image_kk)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 @endif
                             </div>
