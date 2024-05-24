@@ -190,6 +190,65 @@ class PengajuanController extends Controller
         }
     }
 
+    public function rejectPembaharuan(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
+            'catatan' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            return redirect()->back();
+        }
+        try {
+            DB::beginTransaction();
+
+            $pengajuan = PengajuanData::find($request->id);
+            $keluarga = Keluarga::find($pengajuan->no_kk);
+
+            $wargaModfied = WargaModified::where('no_kk', '=', $keluarga->no_kk)
+                ->where('status_request', '=', 'Menunggu')
+                ->get();
+
+            if (count($wargaModfied) > 0) {
+                foreach ($wargaModfied as $wargaMod) {
+                    $wargaMod->status_request = 'Ditolak';
+                    $wargaMod->save();
+                }
+            }
+
+            $wargaNew = Warga::where('no_kk', '=', $keluarga->no_kk)
+                ->where('status_warga', '=', 'Menunggu')
+                ->get();
+
+            if (count($wargaNew) > 0) {
+                foreach ($wargaNew as $wargaN) {
+                    $wargaN->status_warga = 'Tidak Aktif';
+                    $demografiWarga = HaveDemografi::where('NIK', '=', $wargaN->NIK)
+                        ->where('status_request', '=', 'Menunggu')
+                        ->first();
+                    $demografiWarga->status_request = 'Ditolak';
+                    $wargaN->save();
+                    $demografiWarga->save();
+                }
+            }
+
+            $pengajuan->status_request = 'Ditolak';
+            $pengajuan->catatan = $request->catatan;
+            $keluarga->status = 'Tidak Aktif';
+
+            $keluarga->save();
+            $pengajuan->save();
+
+            DB::commit();
+            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
+        }
+    }
+
     /**
      * Fungsi-fungsi untuk jenis pengajuan Perubahan Keluarga
      */
