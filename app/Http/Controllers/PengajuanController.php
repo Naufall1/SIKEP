@@ -6,7 +6,6 @@ use App\Models\HaveDemografi;
 use App\Models\Keluarga;
 use App\Models\KeluargaHistory;
 use App\Models\KeluargaModified;
-use App\Models\Pengajuan;
 use App\Models\PengajuanData;
 use App\Models\Warga;
 use App\Models\WargaHistory;
@@ -14,15 +13,12 @@ use App\Models\WargaModified;
 use App\Rules\PengajuanNotConfirmed;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-
-use function Laravel\Prompts\select;
 
 class PengajuanController extends Controller
 {
@@ -599,20 +595,5 @@ class PengajuanController extends Controller
             DB::rollBack();
             return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
-    }
-
-    public function confirm($id)
-    {
-        $data = Keluarga::find($id);
-        $data->status = 'confirm';
-        $data->save();
-        return redirect()->route('pengajuan.index')->with('flash', 'success');
-    }
-    public function reject($id)
-    {
-        $data = Keluarga::find($id);
-        $data->status = 'reject';
-        $data->save();
-        return redirect()->route('pengajuan.index')->with('flash', 'danger');
     }
 }
