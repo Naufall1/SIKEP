@@ -50,4 +50,12 @@ class KeluargaModified extends Model
         $modif->status_request = 'Menunggu';
         return $modif->save();
     }
+
+    public static function getByDate(string $no_kk, string $tanggal_request): KeluargaModified|null
+    {
+        return KeluargaModified::where('no_kk', '=', $no_kk)
+                    ->where('tanggal_request', '=', $tanggal_request)
+                    ->where('status_request', '=', 'Menunggu')
+                    ->first();
+    }
 }

@@ -9,8 +9,11 @@
                 <h2>Tolak Pengajuan</h2>
             </div>
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{route('pengajuan.reject.perubahan.keluarga')}}" method="POST">
+                    @method('PUT')
+                    @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
+                        <input type="hidden" name="id" value="{{$pengajuan->id}}">
 
                         <x-input.label for="catatan" label="Catatan">
                             <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
@@ -21,7 +24,7 @@
                     <div class="tw-flex tw-gap-2">
                         <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                             id="closeModal">Batal</button>
-                        <a href="" class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
+                        <button class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
                 </form>
@@ -30,6 +33,10 @@
     </div>
 
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+        @if (session()->has('flash'))
+            <x-flash-message.information message="{{session()->get('flash')->message}}"></x-flash-message.information>
+        @else
+        @endif {{-- DONT DELETE THIS LINE --}}
         <p class="tw-breadcrumb tw-text-n500">Daftar Data Baru /
             <span class="tw-font-bold tw-text-b500">Detail Pengajuan</span>
         </p>
@@ -80,24 +87,31 @@
                                     'title' => 'Kepala Keluarga',
                                     'content' => $modifiedKeluarga->kepala_keluarga,
                                 ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Tagihan Listrik',
-                                    'content' => $modifiedKeluarga->tagihan_listrik,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Luas Bangunan',
-                                    'content' => $modifiedKeluarga->luas_bangunan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Kartu Keluarga',
-                                    'isImage' => true,
-                                    'content' => !isset($modifiedKeluarga->keluarga->image_kk)
-                                        ? ''
-                                        : asset(Storage::disk('public')->url(
-                                                'KK/' . $modifiedKeluarga->keluarga->image_kk)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
-
+                                @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Tagihan Listrik',
+                                        'content' => $modifiedKeluarga->tagihan_listrik,
+                                    ])
+                                @endif
+                                @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Luas Bangunan',
+                                        'content' => $modifiedKeluarga->luas_bangunan,
+                                    ])
+                                @endif
+                                @if ($modifiedKeluarga->image_kk != $currentKeluarga->image_kk)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Kartu Keluarga',
+                                        'isImage' => true,
+                                        'content' => $pengajuan->status_request == 'Dikonfirmasi'
+                                            ? asset(Storage::disk('public')->url('KK/' . $modifiedKeluarga->image_kk)) :
+                                            'data:image/' .
+                                                explode('.', $modifiedKeluarga->image_kk)[1] .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get(
+                                                        $modifiedKeluarga->image_kk)),
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                @endif
                             </div>
                         </div>
 
@@ -113,23 +127,28 @@
                                     'title' => 'Kepala Keluarga',
                                     'content' => $currentKeluarga->kepala_keluarga,
                                 ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Tagihan Listrik',
-                                    'content' => $currentKeluarga->tagihan_listrik,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Luas Bangunan',
-                                    'content' => $currentKeluarga->luas_bangunan,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Kartu Keluarga',
-                                    'isImage' => true,
-                                    'content' => !isset($modifiedKeluarga->keluarga->image_kk)
-                                        ? ''
-                                        : asset(Storage::disk('public')->url(
-                                                'KK/' . $modifiedKeluarga->keluarga->image_kk)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
+                                @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Tagihan Listrik',
+                                        'content' => $currentKeluarga->tagihan_listrik,
+                                    ])
+                                @endif
+                                @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Luas Bangunan',
+                                        'content' => $currentKeluarga->luas_bangunan,
+                                    ])
+                                @endif
+                                @if ($modifiedKeluarga->image_kk != $currentKeluarga->image_kk)
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Kartu Keluarga',
+                                        'isImage' => true,
+                                        'content' => !isset($modifiedKeluarga->image_kk)
+                                            ? ''
+                                            : asset(Storage::disk('public')->url(
+                                                    'KK/' . $currentKeluarga->image_kk)),
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                @endif
                             </div>
                         </div>
 
@@ -139,7 +158,7 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="#"  onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="{{route('pengajuan')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -176,7 +195,7 @@
                     overflow: 'hidden',
                 });
             });
-            $("#modalReject, #closeModal").click(function() {
+            $("#modalReject #closeModal").click(function() {
                 $("#modalReject").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',
