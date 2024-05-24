@@ -129,11 +129,13 @@ Route::prefix('bansos')->middleware('role:rw,rt')->group(function () {
     route::post('/list', [BansosController::class, 'list'])->name('bansos.list');
     Route::get('/kriteria', [BansosController::class, 'index'])->name('bansos.kriteria');// menampilkan tabel yang berisi semua data kriteria yang digunakan untuk SPK (Sistem Pendukung Keputusan)
     Route::get('/kriteria/{id}/ubah', [BansosController::class, 'edit'])->name('bansos.kriteria.form'); // menampilkan form yang digunakan untuk merubah data kriteria
+    Route::get('/kriteria/{id}/detail', [BansosController::class, 'detail'])->name('bansos.kriteria.detail'); // menampilkan form yang digunakan untuk merubah data kriteria
     Route::put('/kriteria/{id}/ubah', [BansosController::class, 'update'])->name('bansos.kriteria.update'); // menerima data dari form edit dan menyimpannya pada database
-
-    Route::get('/perhitungan', [])->name('perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
-    Route::get('/perhitungan/detail/{}', []); // menampilkan detail dari keluarga
-    Route::post('/tambah', [])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
+    
+    route::post('/gdss', [BansosController::class, 'gdss'])->name('perhitungan.gdss');
+    Route::get('/perhitungan', [BansosController::class, 'calc'])->name('bansos.perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
+    Route::get('/perhitungan/{id}/detail', [BansosController::class, 'detailCalc'])->name('bansos.perhitungan.detail'); // menampilkan detail dari keluarga
+    Route::post('/tambah', [BansosController::class, 'tambah'])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
 });
 
 Route::prefix('profile')->group(function () {

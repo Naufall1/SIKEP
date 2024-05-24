@@ -15,7 +15,7 @@
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
                     Kriteria
                 </a>
-                <a href=""
+                <a href="{{route('bansos.perhitungan')}}"
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
                     Perhitungan
                 </a>

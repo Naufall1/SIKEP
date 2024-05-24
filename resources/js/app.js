@@ -130,6 +130,8 @@ $(document).ready(function () {
             return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
         } else if (id == 'no_kk-list'){
             return getKeluarga();
+        } else if (id == 'jenis_bansos-list'){
+            return getJenisBansos();
         } else if (id == 'scope_data-list'){
             return ['Semua', 'RT 001', 'RT 002', 'RT 003', 'RT 004', 'RT 005', 'RT 006', 'RT 007', 'RT 008', 'RT 009', 'RT 010', 'RT 011'];;
         }
