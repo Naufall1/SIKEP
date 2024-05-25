@@ -55,14 +55,22 @@ class KeluargaController extends Controller
     public function list(Request $request)
     {
         $user = Auth::user();
+        $select = [
+            'keluarga.no_kk',
+            'keluarga.kepala_keluarga',
+            'keluarga.alamat',
+            'keluarga.RT'
+        ];
 
         if ($user->keterangan == 'ketua') {
-            $daftar_keluarga = Keluarga::where('status', '!=', 'Menunggu')->get();
+            $daftar_keluarga = Keluarga::select($select)
+                                ->where('status', '!=', 'Menunggu')
+                                ->get();
         } else {
-            $daftar_keluarga = Keluarga::select('keluarga.*', 'user.keterangan')
+            $daftar_keluarga = Keluarga::select($select, 'user.keterangan')
                 ->join('user', 'keluarga.rt', '=', 'user.keterangan')
                 ->where('user.keterangan', $user->keterangan)
-                // ->where('status', '!=', 'Menunggu')
+                ->where('status', '!=', 'Menunggu')
                 ->get();
         }
 
