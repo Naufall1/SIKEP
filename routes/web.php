@@ -148,10 +148,29 @@ Route::prefix('profile')->group(function () {
 })->middleware('role:rt,rw,adm');
 
 Route::prefix('publikasi')->group(function () {
-    Route::get('/', []); // menampilkan halaman yang berisi tabel daftar publikasi
-    Route::get('/detail/{id}', []); // menampilkan detail dari sebuah publikasi
-    Route::get('/tambah', []); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::get('/', [function(){
+        return view('publikasi.index');
+    }])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
+    Route::get('/detail/{id}', [function(){
+        return view('publikasi.detail');
+    }])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
+    Route::get('/ubah/{id}', [function(){
+        return view('publikasi.edit');
+    }])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
+    Route::get('/tambah', function(){
+        return view('publikasi.tambah');
+    })->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
     Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+
+    Route::get('/draf', [function(){
+        return view('publikasi.draf.index');
+    }])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
+    Route::get('/draf/detail/{id}', [function(){
+        return view('publikasi.draf.detail');
+    }])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
+    Route::get('/draf/ubah/{id}', [function(){
+        return view('publikasi.draf.edit');
+    }])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
 })->middleware('role:adm');
 
 Route::prefix('api')->group(function () {

@@ -1,0 +1,4 @@
+<a href="{{route('publikasi')}}" id="publikasi" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md {{ (Route::currentRouteName() == 'publikasi') || (Route::currentRouteName() == 'publikasi.draf') ? ' tw-bg-b500 tw-outline tw-outline-2 tw-outline-b300 ' : 'tw-bg-n100 hover:tw-bg-n200' }}">
+    <x-icons.actionable.publikasi stroke="2" size="20" active="{{ (Route::currentRouteName() == 'publikasi') || (Route::currentRouteName() == 'publikasi.draf') ? true : false }}"></x-icons.actionable.publikasi>
+    <p class="tw-menu-text {{ (Route::currentRouteName() == 'publikasi') || (Route::currentRouteName() == 'publikasi.draf') ? 'tw-text-n100' : 'tw-text-n1000' }}">Publikasi</p>
+</a>
