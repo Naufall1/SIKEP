@@ -93,6 +93,52 @@ class Keluarga extends Model
         return $query->get();
     }
 
+
+    public function getTagihanListrik(): int
+    {
+        return $this->tagihan_listrik;
+    }
+    public function getLuasBangunan(): int
+    {
+        return $this->luas_bangunan;
+    }
+    public function getTotalPenghasilan():int
+    {
+        return $this->warga()
+                    ->sum('warga.penghasilan');
+    }
+    public function getJumlahBekerja(): int
+    {
+        return $this->warga()
+                    ->where('warga.penghasilan', '>', '0')
+                    ->count('warga.NIK');
+    }
+    public function getJumlahTanggungan(): int
+    {
+        return $this->warga()
+                    ->where('warga.penghasilan', '=', '0')
+                    ->count('warga.NIK');
+    }
+    public function getJumlahBersekolah(): int
+    {
+        return $this->warga()
+                    ->whereNotIn('pendidikan', ['Tidak/Belum Sekolah', 'Tamat SD/Sederajat'])
+                    ->whereIn('jenis_pekerjaan', ["Belum/Tidak Bekerja", "Pelajar/Mahasiswa"])
+                    ->where('penghasilan', '=', '0')
+                    ->count();
+    }
+    public function getDataKriteria(): object|array
+    {
+        return (object) [
+            'tagihan_listrik' => $this->getTagihanListrik(),
+            'luas_bangunan' => $this->getLuasBangunan(),
+            'total_penghasilan' => $this->getTotalPenghasilan(),
+            'jumlah_bekerja' => $this->getJumlahBekerja(),
+            'jumlah_tanggungan' => $this->getJumlahTanggungan(),
+            'jumlah_bersekolah' => $this->getJumlahBersekolah(),
+        ];
+    }
+
     public static function applyModifications(KeluargaModified $keluargaModified): bool
     {
         try {
