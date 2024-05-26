@@ -40,8 +40,17 @@ class WargaController extends Controller
             'status_warga.*' => 'string|in:Aktif,Meninggal,Migrasi Keluar',
         ]);
 
+        $select = [
+            'warga.NIK',
+            'warga.nama',
+            'warga.jenis_kelamin',
+            'warga.tanggal_lahir',
+            'warga.agama',
+            'warga.status_warga'
+        ];
+
         if ($user->keterangan == 'ketua') {
-            $query = Warga::select('warga.*', 'keluarga.rt')
+            $query = Warga::select($select, 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk');
 
             if (explode(" ", $request->scope_data)[1] ?? false) {
@@ -58,7 +67,7 @@ class WargaController extends Controller
 
             $daftar_warga = $query->get();
         } else {
-            $query = Warga::select('warga.*', 'keluarga.rt')
+            $query = Warga::select($select, 'keluarga.rt')
                 ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
