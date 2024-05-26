@@ -179,11 +179,12 @@ class BansosController extends Controller
     public function detailCalc($id)
     {
         $dataKeluarga = Keluarga::findOrFail($id);
+        $dataKriteria = $dataKeluarga->getDataKriteria();
 
-        return view('bansos.perhitungan.detail', compact('dataKeluarga'));
+        return view('bansos.perhitungan.detail', compact(['dataKeluarga', 'dataKriteria']));
     }
 
     public function tambah(){
-        
+
     }
 }

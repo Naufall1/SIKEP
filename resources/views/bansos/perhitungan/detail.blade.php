@@ -85,27 +85,27 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => $dataKeluarga->tagihan_listrik,
+                                'content' => 'Rp.' . number_format($dataKriteria->tagihan_listrik, 0, ",", "."),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                'content' => $dataKeluarga->luas_bangunan,
+                                'content' => $dataKriteria->luas_bangunan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Total Penghasilan',
-                                'content' => 'Rp',
+                                'content' => 'Rp. ' . number_format( $dataKriteria->total_penghasilan, 0, ",", "."),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jumlah Bekerja',
-                                'content' => '',
+                                'content' => $dataKriteria->jumlah_bekerja,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jumlah Tanggungan',
-                                'content' => '',
+                                'content' => $dataKriteria->jumlah_tanggungan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jumlah Bersekolah',
-                                'content' => '',
+                                'content' => $dataKriteria->jumlah_bersekolah,
                             ])
 
                         </div>
