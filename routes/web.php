@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ARASController;
 use App\Http\Controllers\ArticleAnnouncementController;
-use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BansosController;
 use App\Http\Controllers\ChartController;
@@ -13,8 +13,6 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\WargaController;
-use App\Models\Bansos;
-use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -192,10 +190,10 @@ Route::prefix('article_announcements')->middleware('auth')->group(function () {
 });
 
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [function (){return view('admin.index');}])->name('admin'); // menampilkan halaman yang berisi tabel daftar publikasi
-    Route::get('/detail/{id}', [function (){return view('admin.detail');}])->name('admin.detail'); // menampilkan detail dari sebuah publikasi
-    Route::get('/tambah', [function (){return view('admin.tambah');}])->name('admin.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
-    Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
-})->middleware('role:rw');
-
+Route::prefix('admin')->middleware('role:rw')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::post('/list', [AdminController::class, 'list'])->name('admin.list');
+    Route::get('/tambah', [AdminController::class, 'create'])->name('admin.create');
+    Route::get('/{username}', [AdminController::class, 'show'])->name('admin.detail');
+    Route::post('/tambah', [AdminController::class, 'store'])->name('admin.store');
+});

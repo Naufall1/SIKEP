@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -32,6 +33,18 @@ class User extends Authenticatable
         'keterangan',
     ];
 
+    public function getAdmin(string $username = null): array|Collection|User
+    {
+        if (is_null($username)) {
+            return $this->select(['username', 'nama', 'keterangan'])->where('level_id', '=', 3)->get();
+        }
+        return $this->where('username', '=', $username)->first();
+    }
+    public function isAdmin(string $username): bool
+    {
+        return $this->where('username', '=', $username)->first()->level_id == 3;
+    }
+
     public function hasRole($role){
         return $this->with('hasLevel')->where('level_kode', $role)->exists();
     }
@@ -49,5 +62,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(ArticleAnnouncement::class, 'kode', 'kode');
     }
-   
+
 }

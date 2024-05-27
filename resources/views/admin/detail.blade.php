@@ -5,6 +5,9 @@
 @endpush
 
 @section('content')
+    @php
+        // dd($admin);
+    @endphp
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Daftar Admin /
             <span class="tw-font-bold tw-text-b500">Detail Admin</span>
@@ -28,17 +31,17 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Nama',
-                                'content' => ''
+                                'content' => $admin->nama
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Username',
-                                'content' => ''
+                                'content' => $admin->username
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Keterangan',
-                                'content' => ''
+                                'content' => $admin->keterangan
                             ])
-                
+
                         </div>
                     </div>
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto">
@@ -82,7 +85,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{ route('keluarga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('admin') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>

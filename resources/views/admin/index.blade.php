@@ -17,11 +17,9 @@
             <h1 class="tw-h1 tw-w-1/2 tw-flex-grow">
                 Daftar Admin
             </h1>
-            <a href="" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
-                Tambah Data
-            </a>
+
         </div>
-        
+
         <div class="tw-flex tw-flex-col tw-gap-4">
              {{-- <div class="tw-flex">
                 <a href="{{ route('penduduk.warga') }}"
@@ -34,18 +32,21 @@
                 </a> --}}
                 <div
                     class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
-                </div> 
+                </div>
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-3">
                 {{-- Start: Tool Bar --}}
-                <div class="tw-flex tw-gap-2 tw-w-full">
+                <div class="tw-flex tw-gap-2 tw-w-full tw-justify-between">
                     <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
                         <x-input.leadicon type="text" name="searchBox" placeholder="Cari">
                             <x-icons.actionable.search color="n1000" size="20"
                                 stroke="2"></x-icons.actionable.search>
-                        </x-input.leadicon> 
+                        </x-input.leadicon>
                     </div>
+                    <a href="{{route('admin.create')}}" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
+                        Tambah Data
+                    </a>
                 </div>
                 {{-- End: Tool Bar --}}
 
@@ -59,30 +60,14 @@
                                 <th class="md:tw-grow tw-min-w-fit">Nama</th>
                                 <th class="tw-w-[150px]">Username</th>
                                 <th class="tw-w-[172px]">Keterangan</th>
+                                <th class="tw-h-11"></th>
+
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            {{-- @foreach ($warga as $w) --}}
-                            {{-- <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td>{{ $w->NIK }}</td>
-                                    <td>{{ $w->nama }}</td>
-                                    <td>{{ $w->jenis_kelamin }}</td>
-                                    <td>{{ $w->tanggal_lahir }}</td>
-                                    <td>{{ $w->agama }}</td>
-                                    <td>{{ $w->status_warga }}</td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href="{{ route('wargaDetail', [$w->NIK]) }}"
-                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr> --}}
-                            {{-- @endforeach --}}
+                            {{-- DATA HERE --}}
                         </tbody>
                     </table>
-                    <div>
-                    </div>
 
                 </div>
                 {{-- End: Table HERE --}}
@@ -96,19 +81,13 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
-
         $(document).ready(function() {
-            dataUser = $('#dataWarga').DataTable({
+            dataAdmin = $('#dataWarga').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "{{ route('warga.list') }}",
+                    "url": "{{ route('admin.list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function(d) {
-                        d.scope_data = $('input[name="scope_data"]').val();
-                        d.agama = filter_agama;
-                        d.status_warga = filter_statusWarga;
-                    }
                 },
                 paging: true,
                 language: {
@@ -147,42 +126,43 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [
-                    [2, 'asc']
-                ],
+                // order: [
+                //     [2, 'asc']
+                // ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[48px]",
                     orderable: true,
-                    // searchable: false
-                }, {
+                },
+                {
                     data: "nama",
                     className: "tw-grow",
                     orderable: true,
                     searchable: true
-                }, {
+                },
+                {
                     data: "username",
                     className: "tw-w-[150px]",
                     orderable: true,
-                    searchable: false
-                }, {
+                    searchable: true
+                },
+                {
                     data: "keterangan",
                     className: "tw-w-[172px]",
                     orderable: false,
-                    searchable: false
-                }, {
+                    searchable: true
+                },
+                {
                     data: "action",
                     className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
-                }]
-            });
-            $('input[name="scope_data"]').on('change', function() {
-                dataUser.ajax.reload();
+                }
+            ]
             });
         });
         $('#searchBox').keyup(function() {
-            dataUser.search($(this).val()).draw();
+            dataAdmin.search($(this).val()).draw();
         });
     </script>
 @endpush
