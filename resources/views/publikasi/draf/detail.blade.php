@@ -31,24 +31,24 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'Penulis',
-                                'content' => '',
+                                'content' => $announcement->penulis,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Dibuat',
-                                'content' => '',
+                                'content' => $announcement->tanggal_dibuat,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Dibuat',
-                                'content' => '',
+                                'content' => $announcement->tanggal_publish,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kategori',
-                                'content' => '',
+                                'content' => $announcement->kategori,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status',
                                 'isLabel' => true,
-                                'content' => 'Ditampilkan',
+                                'content' => $announcement->status,
                             ])
                         </div>
                     </div>
@@ -56,8 +56,7 @@
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Preview Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-
-
+                            {!! $announcement->isi !!}
                         </div>
                     </div>
 

@@ -42,9 +42,7 @@ class HomeController extends Controller
     }
 
     private function dashboardADM() {
-        return view('publikasi.index', ['title' => 'Admin', 'text' => 'Admin']);
-        // {{-- $data = $this->getData(Auth::user()->nama);
-        // return view('dashboard.index', $data, ['title' => 'Admin', 'text' => 'Admin Berita']);--}}
+        return redirect()->route('publikasi');
     }
 
     private function dashboardGuest() {

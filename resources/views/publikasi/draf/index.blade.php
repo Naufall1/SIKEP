@@ -76,7 +76,7 @@
                 {{-- Start: Table HERE --}}
                 <div class="tw-w-vw tw-overflow-x-auto">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataKeluarga" style="">
+                    <table class="tw-w-[780px] md:tw-w-full" id="dataDraft" style="">
                         <thead>
                             <tr class="">
                                 <th class="tw-w-[48px]">No</th>
@@ -90,21 +90,7 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            {{-- @foreach ($keluarga as $k)
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td>{{ $k->no_kk }}</td>
-                                    <td>{{ $k->kepala_keluarga }}</td>
-                                    <td>{{ $k->alamat }}</td>
-                                    <td>{{ $k->RT }}</td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href="{{ route('keluargaDetail', $k->no_kk) }}"
-                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach --}}
+                            {{-- DATA HERE --}}
                         </tbody>
                     </table>
 
@@ -115,27 +101,6 @@
                 </div>
                 {{-- End: Table HERE --}}
             </div>
-
-            {{-- <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
-                        alt="<">
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300 tw-bg-n400"
-                    href="">
-                    1
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    2
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    ...
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
-                        alt="<">
-                </a>
-            </div> --}}
 
         </div>
     </div>
@@ -148,10 +113,10 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            dataKeluarga = $('#dataKeluarga').DataTable({
+            dataDraft = $('#dataDraft').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "{{ route('keluarga.list') }}",
+                    "url": "{{ route('publikasi.draf.list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
@@ -201,32 +166,32 @@
                     orderable: false,
                     // searchable: false
                 }, {
-                    data: "no_kk",
+                    data: "judul",
                     className: "tw-w-[250px]",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "kepala_keluarga",
+                    data: "penulis",
                     className: "tw-w-[280px]",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "alamat",
+                    data: "kategori",
                     className: "tw-w-[300px] md:tw-grow",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "RT",
+                    data: "status",
                     className: "tw-w-[60px]",
                     orderable: true,
                     searchable: false
                 }, {
-                    data: "RT",
+                    data: "tanggal_dibuat",
                     className: "tw-w-[60px]",
                     orderable: true,
                     searchable: false
                 }, {
-                    data: "RT",
+                    data: "tanggal_publish",
                     className: "tw-w-[60px]",
                     orderable: true,
                     searchable: false
@@ -236,13 +201,12 @@
                     orderable: false,
                     searchable: false
                 }]
-            });
             // $('#level_id').on('change', function () {
-            //     dataKeluarga.ajax.reload();
-            // });
+            //     dataDraft.ajax.reload();
+            });
         });
         $('#searchBox').keyup(function() {
-            dataKeluarga.search($(this).val()).draw();
+            dataDraft.search($(this).val()).draw();
         });
     </script>
 @endpush
