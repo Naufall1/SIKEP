@@ -82,7 +82,7 @@
                 <div class="tw-hidden md:tw-inline-block">
                     {{-- Nama --}}
                     <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}
-                        
+
                     </h3>
 
                     {{-- Keterangan --}}
@@ -120,6 +120,11 @@
     @if (Route::currentRouteName() !== 'login')
         <a href="{{ route('login') }}" class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round" type="submit">Masuk</a>
     @endif
+@endif
+
+@if (Route::currentRouteName() == 'bansos.perhitungan.detailPerhitungan')
+    <div id="scroll-progress" class="tw-absolute tw-bg-b500 tw-h-[2px] tw-bottom-0 tw-left-0 tw-z-50">
+    </div>
 @endif
 
 </nav>
@@ -175,6 +180,15 @@
     //         $("#modalMenu").removeClass("tw-hidden")
     //     })
     // });
+
+    window.addEventListener("scroll", function() {
+        const scrollableHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const progressBar = document.getElementById("scroll-progress");
+        const progress = (scrolled / scrollableHeight) * 100;
+        progressBar.style.width = progress + "%";
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         const toggleHamburger = document.getElementById('toggleHamburger');

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
+        <div class="tw-flex tw-h-11 tw-items-center md:tw-items-start tw-justify-between">
             <h1 class="tw-h1 tw-w-1/2">
                 Penerimaan Bansos
             </h1>

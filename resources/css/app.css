@@ -11,15 +11,15 @@
 @layer components {
 
     /* Filter */
-    .tw-filter-default{
+    .tw-filter-default {
         @apply tw-bg-n100 hover:tw-bg-b50 hover:tw-border-b50;
     }
 
-    .tw-filter-active{
+    .tw-filter-active {
         @apply tw-border-b500 tw-bg-b50 hover:tw-bg-n200;
     }
 
-    .tw-filter-w-sm{
+    .tw-filter-w-sm {
         width: calc(100vw - 200px);
         /* width: 2px; */
     }
@@ -223,7 +223,7 @@
         content: url('../views/components/icons/actionable/sort_desc.svg') !important;
     }
 
-    .dataTables_empty{
+    .dataTables_empty {
         /* background-image: url('../views/components/icons/empty.svg') !important; */
         @apply tw-h-40 tw-py-4 tw-flex tw-items-center tw-justify-center tw-flex-col tw-gap-2
     }
@@ -236,6 +236,9 @@
     .tw-divider-vr {
         @apply tw-w-[1.5px] tw-h-full tw-bg-n300;
     }
+
+    
+
 
 }
 

@@ -1,4 +1,4 @@
 <a href="{{route('admin')}}" id="admin" class="tw-group tw-flex tw-h-9 tw-gap-1 tw-content-center tw-items-center tw-px-3 tw-rounded-md {{ (Route::currentRouteName() == 'admin') ? ' tw-bg-b500 tw-outline tw-outline-2 tw-outline-b300 ' : 'tw-bg-n100 hover:tw-bg-n200' }}">
-    <x-icons.actionable.users stroke="2" size="20" active="{{ (Route::currentRouteName() == 'admin') ? true : false }}"></x-icons.actionable.users>
+    <x-icons.actionable.admin stroke="2" size="20" active="{{ (Route::currentRouteName() == 'admin') ? true : false }}"></x-icons.actionable.admin>
     <p class="tw-menu-text {{ (Route::currentRouteName() == 'admin') ? 'tw-text-n100' : 'tw-text-n1000' }}">Admin</p>
 </a>
