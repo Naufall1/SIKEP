@@ -194,6 +194,7 @@ Route::prefix('article_announcements')->middleware('auth')->group(function () {
 Route::prefix('admin')->middleware('role:rw')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin');
     Route::post('/list', [AdminController::class, 'list'])->name('admin.list');
+    Route::post('/list/publikasi', [AdminController::class, 'listPublikasi'])->name('admin.publikasi.list');
     Route::get('/tambah', [AdminController::class, 'create'])->name('admin.create');
     Route::get('/{username}', [AdminController::class, 'show'])->name('admin.detail');
     Route::post('/tambah', [AdminController::class, 'store'])->name('admin.store');

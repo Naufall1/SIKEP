@@ -48,7 +48,7 @@
                         <h2 class="">Daftar Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarPublikasi">
                                 <thead class="">
                                     <tr class="">
                                         <th>No</th>
@@ -99,7 +99,9 @@
         </div>
     </div>
     @if (Session::has('message'))
-        <script>alert('{{Session::get('message')[1]}}')</script>
+        <script>
+            alert('{{Session::get('message')[1]}}');
+        </script>
     @endif
 @endsection
 
@@ -110,12 +112,15 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            dataWarga = $('#daftarWarga').DataTable({
+            dataPublikasi = $('#daftarPublikasi').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "",
+                    "url": "{{route('admin.publikasi.list')}}",
                     "dataType": "json",
                     "type": "POST",
+                    "data": function (d) {
+                        d.user_id = {{$admin->user_id}}
+                     }
                 },
                 createdRow: function(row, data, dataIndex) {
                     $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
@@ -130,7 +135,7 @@
                     [2, 'asc']
                 ],
                 columns: [{
-                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    data: "kode", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-w-[44px]",
                     orderable: true,
                     searchable: false
