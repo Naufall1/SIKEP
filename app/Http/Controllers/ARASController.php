@@ -11,6 +11,8 @@ class ARASController extends Controller
     {
         $kriteriaModel = new KriteriaModel();
         $matriks = $kriteriaModel->kriteria();
+        // dd($matriks);
+
         $namaKriteria = $kriteriaModel->namaKriteria();
 
 
@@ -39,6 +41,7 @@ class ARASController extends Controller
                 } else { // Benefit arr--> indx 4 dan 5
                     $normalizedMatrix[$no_kk][$j] = $maxCol != 0 ? $bobot[$j] * ($nilai[$j] / $maxCol) : 0;
                 }
+
             }
         }
 
@@ -65,6 +68,6 @@ class ARASController extends Controller
 
         arsort($rankings);
         // dd(($rankings));
-        return view('bansos.perhitungan.ranking', compact('rankings', 'namaKriteria'));
+        return view('bansos.perhitungan.ranking', compact('rankings', 'namaKriteria', 'normalizedMatrix', 'matriks'));
     }
 }

@@ -26,6 +26,44 @@
     </style>
 </head>
 <body>
+    <h1>Matriks Awal</h1>
+    <a href="{{ route('spk.merec') }}">Bobot</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Alternatif (NO KK)</th>
+                <th>Kriteria</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($matriks as $no_kk => $matriks )
+                <tr>
+                    <td>{{ $no_kk }}</td>
+                    {{-- {{dd($nilaiARAS[0])}}; --}}
+                    <td>{{ $nilaiARAS[0] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <h1>Matriks Ternormalisasi</h1>
+    <a href="{{ route('spk.merec') }}">Bobot</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Alternatif (NO KK)</th>
+                <th>Kriteria</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($normalizedMatrix as $no_kk => $nilaiARAS )
+                <tr>
+                    <td>{{ $no_kk }}</td>
+                    {{-- {{dd($nilaiARAS[0])}}; --}}
+                    <td>{{ $nilaiARAS[0] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
     <h1>Perangkingan Metode ARAS</h1>
     <a href="{{ route('spk.merec') }}">Bobot</a>
     <table border="1">
