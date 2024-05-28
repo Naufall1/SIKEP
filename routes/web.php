@@ -28,8 +28,10 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/testchart', [HomeController::class, 'chart']);
 
-Route::get('/spk/merec', [MERECController::class,'MEREC'])->name('spk.merec');
-Route::get('/spk/aras', [ARASController::class, 'rankingBansos'])->name('spk.aras');
+Route::prefix('spk')->group(function () {
+    Route::get('/merec', [MERECController::class, 'MEREC'])->name('spk.merec');
+    Route::get('/aras', [ARASController::class, 'rankingBansos'])->name('spk.aras');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
