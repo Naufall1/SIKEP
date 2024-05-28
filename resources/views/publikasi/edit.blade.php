@@ -10,9 +10,10 @@
 
             <h1 class="tw-h1 tw-mb-3">Edit Publikasi</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="" method="POST" id="formData"
+            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('publikasi.update',  ['id' => $announcement->kode])}}" method="POST" id="formData"
                 enctype="multipart/form-data">
-                {{ csrf_field() }}
+                @csrf
+                @method('PUT')
 
                 <div id="formInput" class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
@@ -38,7 +39,7 @@
 
                             <x-input.label class="tw-relative" for="kategori-list" label="Kategori">
                                 <x-input.select2 name="kategori"
-                                    placeholder="Pilih Kategori" default="{{ old('kategori', $announcement->kategori) }}" ></x-input.select2>
+                                    placeholder="Pilih Kategori" default="{{ old('kategori', $announcement->kategori) }}" disabled></x-input.select2>
 
                                 {{-- @error('jenis_pekerjaan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
@@ -59,7 +60,7 @@
 
 
                 <div class="tw-flex tw-justify-between tw-w-full">
-                    <a href="{{ route('publikasi.detail', ['id'=>'1']) }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('publikasi.detail',  ['id' => $announcement->kode]) }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
