@@ -11,7 +11,6 @@ class MERECController extends Controller
     {
         $kriteriaModel = new KriteriaModel();
         $matriks = $kriteriaModel->kriteria();
-        // dd($matriks);
         $namaKriteria = $kriteriaModel->namaKriteria();
 
         $m = count($matriks); // qty alternatif

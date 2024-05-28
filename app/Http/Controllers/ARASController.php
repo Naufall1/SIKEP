@@ -45,20 +45,46 @@ class ARASController extends Controller
     {
         $normalizedMatrix = [];
         $n = count($namaKriteria);
+        $m = count($matriks);
+
+        // Langkah 1: Hitung nilai A0 untuk setiap kriteria
+        $a0Array = [];
+        foreach ($namaKriteria as $index => $kriteria) {
+            $col = array_column($matriks, $index);
+            $maxCol = max($col);
+            $minCol = min($col);
+
+            // Hitung nilai A0
+            if (in_array($index, [0, 1, 2, 3])) { // Cost
+                $a0Array[] = $minCol;
+            } else { // Benefit
+                $a0Array[] = $maxCol;
+            }
+        }
+
+        // Langkah 2: Normalisasi matriks dengan nilai A0
         foreach ($matriks as $no_kk => $nilai) {
             for ($j = 0; $j < $n; $j++) {
-                $col = array_column($matriks, $j);
-                $maxCol = max($col);
-                $minCol = min($col);
-                if ($j == 0 || $j == 1 || $j == 2 || $j == 3) { // Cost
-                    $normalizedMatrix[$no_kk][$j] = $nilai[$j] != 0 ? $bobot[$j] * ($minCol / $nilai[$j]) : 0;
+                if (in_array($j, [0, 1, 2, 3])) { // Cost
+                    $minCol = $a0Array[$j];
+                    $normalizedMatrix[$no_kk][$j] = $nilai[$j] != 0 ? $minCol / $nilai[$j] : 0;
                 } else { // Benefit
-                    $normalizedMatrix[$no_kk][$j] = $maxCol != 0 ? $bobot[$j] * ($nilai[$j] / $maxCol) : 0;
+                    $maxCol = $a0Array[$j];
+                    $normalizedMatrix[$no_kk][$j] = $nilai[$j] / $maxCol;
                 }
             }
         }
+
+        // Masukkan bobot dikali ke normalisasi matrik
+        foreach ($normalizedMatrix as $no_kk => $nilai) {
+            foreach ($nilai as $j => $v) {
+                $normalizedMatrix[$no_kk][$j] *= $bobot[$j];
+            }
+        }
+
         return $normalizedMatrix;
     }
+
 
     private function hitungSkorIdeal($normalizedMatrix)
     {
@@ -71,6 +97,7 @@ class ARASController extends Controller
         return $idealSolution;
     }
 
+
     private function hitungSkorAlternatif($normalizedMatrix)
     {
         $alternativesScores = [];
@@ -80,12 +107,13 @@ class ARASController extends Controller
         return $alternativesScores;
     }
 
+
     private function hitungNilaiUtilitas($alternativesScores, $idealSolution)
     {
         $rankings = [];
-        $totalIdealSolution = array_sum($idealSolution);
+        $S0 = array_sum($idealSolution); // Skor total ideal
         foreach ($alternativesScores as $no_kk => $score) {
-            $rankings[$no_kk] = $totalIdealSolution != 0 ? $score / $totalIdealSolution : 0;
+            $rankings[$no_kk] = $S0 != 0 ? $score / $S0 : 0;
         }
         return $rankings;
     }
