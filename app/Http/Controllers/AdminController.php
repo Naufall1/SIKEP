@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArticleAnnouncement;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -44,6 +45,27 @@ class AdminController extends Controller
 
         $admin = $user->getAdmin($username);
         return view('admin.detail', compact('admin'));
+    }
+    public function listPublikasi(Request $request): JsonResponse
+    {
+        $request->validate([
+            'user_id' => 'required|exists:user,user_id'
+        ]);
+
+        $publikasi = new ArticleAnnouncement();
+
+        $select = ['kode','judul', 'kategori', 'status'];
+
+        return DataTables::of($publikasi->getByAdmin($request->user_id, $select))
+                ->addColumn('action', function ($model) {
+                    return '
+                        <a href="' . route('publikasi.detail', $model->kode) . '"
+                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                            Detail
+                        </a>';
+                })
+                ->rawColumns(['action'])
+                ->make();
     }
     public function create(): View
     {
