@@ -145,31 +145,23 @@ Route::prefix('profile')->group(function () {
     Route::put('/ubah/{user_id}', [ProfilController::class, 'update'])->name('profilUpdate'); // menangani penerimaan data dari form edit user dan menyimpan pada database
 })->middleware('role:rt,rw,adm');
 
-Route::prefix('publikasi')->group(function () {
-    Route::get('/', [function(){
-        return view('publikasi.index');
-    }])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
-    Route::get('/detail/{id}', [function(){
-        return view('publikasi.detail');
-    }])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
-    Route::get('/ubah/{id}', [function(){
-        return view('publikasi.edit');
-    }])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
+Route::prefix('publikasi')->middleware('role:adm')->group(function () {
+    Route::get('/', [ArticleAnnouncementController::class, 'index_publikasi'])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
+    Route::post('/list', [ArticleAnnouncementController::class, 'list_publikasi'])->name('publikasi.list'); // menampilkan halaman yang berisi tabel daftar publikasi
+    Route::get('/{id}/detail', [ArticleAnnouncementController::class, 'show'])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
+    Route::get('/ubah/{id}', [ArticleAnnouncementController::class, ''])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
     Route::get('/tambah', function(){
         return view('publikasi.tambah');
     })->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
     Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
 
-    Route::get('/draf', [function(){
-        return view('publikasi.draf.index');
-    }])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
-    Route::get('/draf/detail/{id}', [function(){
-        return view('publikasi.draf.detail');
-    }])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
+    Route::get('/draf', [ArticleAnnouncementController::class, 'index_draf'])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
+    Route::post('/draf/list', [ArticleAnnouncementController::class, 'list_draf'])->name('publikasi.draf.list'); // menampilkan halaman yang berisi tabel daftar draf publikasi
+    Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
     Route::get('/draf/ubah/{id}', [function(){
         return view('publikasi.draf.edit');
     }])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
-})->middleware('role:adm');
+});
 
 Route::prefix('api')->group(function () {
     Route::get('/warga', [WargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data warga (TODO data warga berdasarkan RT)

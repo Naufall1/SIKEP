@@ -4,15 +4,72 @@ namespace App\Http\Controllers;
 use App\Models\ArticleAnnouncement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class ArticleAnnouncementController extends Controller
 {
     // Display a listing of the resource.
-    public function index()
+    public function index_publikasi()
     {
-        $user = Auth::user();
-        $announcements = ArticleAnnouncement::where('user_id', $user->user_id)->get();
-        return view('article_announcements.index', compact('announcements'));
+        return view('publikasi.index');
+    }
+    public function list_publikasi()
+    {
+        $select = [
+            'kode',
+            'judul',
+            'penulis',
+            'kategori',
+            'status',
+            'tanggal_dibuat',
+            'tanggal_publish'
+        ];
+
+        $announcements = ArticleAnnouncement::select($select)->get();
+
+        return DataTables::of($announcements)
+                ->addIndexColumn()
+                ->addColumn('action', function ($announcements) {
+                    return '
+                        <a href="' . route('publikasi.detail', $announcements->kode) . '"
+                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                            Detail
+                        </a>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+    }
+
+    public function index_draf()
+    {
+        return view('publikasi.draf.index');
+    }
+
+    public function list_draf()
+    {
+        $select = [
+            'kode',
+            'judul',
+            'penulis',
+            'kategori',
+            'status',
+            'tanggal_dibuat',
+            'tanggal_publish'
+        ];
+
+        $announcements = ArticleAnnouncement::select($select)->where('user_id', Auth::user()->user_id)->get();
+
+        return DataTables::of($announcements)
+                ->addIndexColumn()
+                ->addColumn('action', function ($announcements) {
+                    return '
+                        <a href="' . route('publikasi.draf.detail', $announcements->kode) . '"
+                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                            Detail
+                        </a>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
     }
 
     // Show the form for creating a new resource.
@@ -48,8 +105,14 @@ class ArticleAnnouncementController extends Controller
     // Display the specified resource.
     public function show($kode)
     {
+        // $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
+        $announcement = ArticleAnnouncement::where('kode', $kode)->firstOrFail();
+        return view('publikasi.detail', compact('announcement'));
+    }
+    public function show_draf($kode)
+    {
         $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
-        return view('article_announcements.show', compact('announcement'));
+        return view('publikasi.draf.detail', compact('announcement'));
     }
 
     // Show the form for editing the specified resource.
