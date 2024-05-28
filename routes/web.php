@@ -155,10 +155,9 @@ Route::prefix('publikasi')->group(function () {
     Route::get('/ubah/{id}', [function(){
         return view('publikasi.edit');
     }])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
-    Route::get('/tambah', function(){
-        return view('publikasi.tambah');
-    })->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
-    Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+    Route::get('/tambah', [ArticleAnnouncementController::class, 'create'])->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    ; // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::post('/tambah', [ArticleAnnouncementController::class, 'store'])->name('publikasi.store'); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
 
     Route::get('/draf', [function(){
         return view('publikasi.draf.index');

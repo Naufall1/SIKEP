@@ -30,7 +30,7 @@
 
                             <x-input.label for="penulis" label="Nama Penulis">
                                 <x-input.input type="text" name="penulis"
-                                    placeholder="" disabled></x-input.input>
+                                    placeholder="{{$user->nama}}" disabled></x-input.input>
                                 {{-- @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
@@ -46,6 +46,7 @@
                             <x-input.label for="caption" label="Caption">
                                 <x-input.input type="text" name="caption"
                                     placeholder="Masukkan Caption"></x-input.input>
+
                                 {{-- @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
@@ -63,9 +64,9 @@
                                 <x-input.select2 name="kategori"
                                     placeholder="Pilih Kategori"></x-input.select2>
 
-                                @error('jenis_pekerjaan')
+                                {{-- @error('jenis_pekerjaan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror
+                                @enderror --}}
                             </x-input.label>
 
                         </div>

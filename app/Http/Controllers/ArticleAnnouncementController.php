@@ -18,31 +18,48 @@ class ArticleAnnouncementController extends Controller
     // Show the form for creating a new resource.
     public function create()
     {
-        $announcement = new ArticleAnnouncement();
-        return view('article_announcements.create', compact('announcement'));
+        $user = Auth::user();
+        // $publikasi = new ArticleAnnouncement();
+        // return view('article_announcements.create', compact('announcement'));
+        return view('publikasi.tambah', compact('user'));
     }
 
     // Store a newly created resource in storage.
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        // dd($request);
         $validatedData = $request->validate([
-            'kode' => 'required|unique:article_announcement',
-            'user_id' => 'required|exists:user,user_id',
+            // 'kode' => 'required|unique:article_announcement',
             'kategori' => 'required|string|max:255',
-            'penulis' => 'required|string|max:255',
-            'tanggal_publish' => 'required|date',
-            'tanggal_dibuat' => 'required|date',
-            'tanggal_edit' => 'nullable|date',
+            // 'penulis' => 'required|string|max:255',
+            // 'tanggal_publish' => 'required|date',
+            // 'tanggal_dibuat' => 'required|date',
+            // 'tanggal_edit' => 'nullable|date',
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
-            'status' => 'required',
+            // 'status' => 'required',
             'image_url' => 'nullable|string|max:255',
             'caption' => 'nullable|string|max:255'
         ]);
 
-        ArticleAnnouncement::create($validatedData);
+        // ArticleAnnouncement::create($validatedData);
+        $publikasi = new ArticleAnnouncement();
 
-        return redirect()->route('article_announcements.index')->with('success', 'Announcement created successfully.');
+        $publikasi->fill($validatedData);
+
+        $publikasi->user_id = $user->user_id;
+        $publikasi->penulis = $user->nama;
+        $publikasi->tanggal_publish = null;
+        $publikasi->tanggal_dibuat = now();
+        $publikasi->tanggal_edit = null;
+        $publikasi->image_url = "coba.jpg";
+        $publikasi->status = "Disembunyikan";
+
+        $publikasi->save();
+
+        return redirect()->route('publikasi')->with('success', 'Announcement created successfully.');
     }
 
     // Display the specified resource.

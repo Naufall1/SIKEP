@@ -30,6 +30,25 @@ class ArticleAnnouncement extends Model
         'caption',
     ];
 
+    public function getIncrementing(): bool
+    {
+        return false;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            if ($model->kategori == 'Article') {
+                $prefix = 'AR';
+            } else {
+                $prefix = 'AN';
+            }
+
+            $model->kode = $prefix . ($modxel::count() + 1);
+        });
+    }
 
     public function user(): BelongsTo
     {
