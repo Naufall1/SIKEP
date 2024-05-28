@@ -133,36 +133,80 @@ class ArticleAnnouncementController extends Controller
     }
 
     // Show the form for editing the specified resource.
-    public function edit($kode)
+    public function edit_draf($kode)
     {
         $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
         return view('article_announcements.edit', compact('announcement'));
     }
+    public function edit_publikasi($kode)
+    {
+        // dd($kode);
+        $announcement = ArticleAnnouncement::where('kode', $kode)->firstOrFail();
+        return view('publikasi.edit', compact('announcement'));
+    }
 
     // Update the specified resource in storage.
-    public function update(Request $request, $kode)
+
+    public function update(Request $request, $kode) // publikasi
     {
+        $user = Auth::user();
+
+        $announcement = ArticleAnnouncement::where('kode', $kode)->firstOrFail();
+
+        // $validatedData = $request->validate([
+        //     'status' => 'required',
+        // ]);
+
+        if ($request->status_publikasi === 'Disembunyikan') {
+            $announcement->status = $request->status_publikasi;
+            $announcement->save();
+        } else {
+            $announcement->status = $request->status_publikasi;
+            $announcement->tanggal_publish = now()->toDateTimeString();
+            $announcement->save();
+        }
+
+        return redirect()->route('publikasi')->with('success', 'Pengumuman berhasil diperbarui.');
+    }
+
+    public function update_draf(Request $request, $kode)
+    {
+        $user = Auth::user();
+
         $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
 
         $validatedData = $request->validate([
-            'kode' => 'required|unique:article_announcement,kode,' . $announcement->kode . ',kode',
-            'user_id' => 'required|exists:user,user_id',
+            // 'kode' => 'required|unique:article_announcement,kode,' . $announcement->kode . ',kode',
+            // 'user_id' => 'required|exists:user,user_id',
             'kategori' => 'required|string|max:255',
             'penulis' => 'required|string|max:255',
-            'tanggal_publish' => 'required|date',
-            'tanggal_dibuat' => 'required|date',
-            'tanggal_edit' => 'nullable|date',
+            // 'tanggal_publish' => 'required|date',
+            // 'tanggal_dibuat' => 'required|date',
+            // 'tanggal_edit' => 'nullable|date',
             'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
+            // 'isi' => 'required|string',
             'status' => 'required',
-            'image_url' => 'nullable|string|max:255',
-            'caption' => 'nullable|string|max:255'
+            // 'image_url' => 'nullable|string|max:255',
+            // 'caption' => 'nullable|string|max:255'
         ]);
 
-        $announcement->update($validatedData);
+        $publikasi = new ArticleAnnouncement();
 
-        return redirect()->route('article_announcements.index')->with('success', 'Announcement updated successfully.');
+        $publikasi->fill($validatedData);
+
+        $publikasi->user_id = $user->user_id;
+        $publikasi->penulis = $user->nama;
+        $publikasi->tanggal_publish = now();
+        // $publikasi->tanggal_edit = null;
+        // $publikasi->image_url = "coba.jpg";
+        // $publikasi->status = "Disembunyikan";
+
+        $publikasi->update();
+        // $announcement->update($validatedData);
+
+        return redirect()->route('publikasi')->with('success', 'Announcement updated successfully.');
     }
+
 
     // Remove the specified resource from storage.
     public function destroy($kode)

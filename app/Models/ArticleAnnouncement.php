@@ -46,7 +46,7 @@ class ArticleAnnouncement extends Model
                 $prefix = 'AN';
             }
 
-            $model->kode = $prefix . ($modxel::count() + 1);
+            $model->kode = $prefix . ($model::count() + 1);
         });
     }
 

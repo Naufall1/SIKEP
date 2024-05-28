@@ -15,7 +15,7 @@
             <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Publikasi</h1>
-                <a href="{{ route('publikasi.ubah', ['id' => '1']) }}"
+                <a href="{{ route('publikasi.ubah', ['id' => $announcement->kode]) }}"
                     class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
                     <x-icons.actionable.edit class="" stroke="2" size="20"
                         color="n100"></x-icons.actionable.edit>

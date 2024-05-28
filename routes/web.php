@@ -149,18 +149,16 @@ Route::prefix('publikasi')->middleware('role:adm')->group(function () {
     Route::get('/', [ArticleAnnouncementController::class, 'index_publikasi'])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
     Route::post('/list', [ArticleAnnouncementController::class, 'list_publikasi'])->name('publikasi.list'); // menampilkan halaman yang berisi tabel daftar publikasi
     Route::get('/{id}/detail', [ArticleAnnouncementController::class, 'show'])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
-    Route::get('/ubah/{id}', [ArticleAnnouncementController::class, ''])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
-    Route::get('/tambah', function(){
-        return view('publikasi.tambah');
-    })->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
-    Route::post('/tambah', []); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+    Route::get('/{id}/ubah', [ArticleAnnouncementController::class, 'edit_publikasi'])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
+    Route::post('/{id}/ubah', [ArticleAnnouncementController::class, 'update'])->name('publikasi.update');
+    Route::get('/tambah', [ArticleAnnouncementController::class, 'create'])->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+    Route::post('/tambah', [ArticleAnnouncementController::class, 'store'])->name('publikasi.store'); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+
 
     Route::get('/draf', [ArticleAnnouncementController::class, 'index_draf'])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
     Route::post('/draf/list', [ArticleAnnouncementController::class, 'list_draf'])->name('publikasi.draf.list'); // menampilkan halaman yang berisi tabel daftar draf publikasi
     Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
-    Route::get('/draf/ubah/{id}', [function(){
-        return view('publikasi.draf.edit');
-    }])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
+    Route::get('/draf/ubah/{id}', [ArticleAnnouncementController::class, 'edit'])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
 });
 
 Route::prefix('api')->group(function () {

@@ -3,12 +3,12 @@
 @section('content')
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Daftar Publikasi /
-            <span class="tw-font-bold tw-text-b500">Tambah Publikasi</span>
+            <span class="tw-font-bold tw-text-b500">Edit Publikasi</span>
         </p>
 
         <div class="md:tw-w-full">
 
-            <h1 class="tw-h1 tw-mb-3">Tambah Publikasi</h1>
+            <h1 class="tw-h1 tw-mb-3">Edit Publikasi</h1>
 
             <form class="tw-flex tw-flex-col tw-gap-7" action="" method="POST" id="formData"
                 enctype="multipart/form-data">
@@ -21,29 +21,33 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="judul" label="Judul">
-                                <x-input.input readonly type="text" name="judul" value="..."
-                                    placeholder=""></x-input.input>
+                                <x-input.input readonly type="text" name="judul" value="{{ old('judul', $announcement->judul) }}"
+                                    placeholder="" disabled></x-input.input>
                                 {{-- @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
                             </x-input.label>
 
                             <x-input.label for="penulis" label="Nama Penulis">
-                                <x-input.input readonly type="text" name="penulis" value="..." placeholder=""></x-input.input>
+                                <x-input.input readonly type="text" name="penulis" value="{{ old('penulis', $announcement->penulis) }}"
+                                    placeholder="" disabled></x-input.input>
                                 {{-- @error('NIK')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                     @enderror --}}
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="kategori" label="Kategori">
-                                <x-input.input readonly type="text" name="kategori" value="..." placeholder=""></x-input.input>
+                            <x-input.label class="tw-relative" for="kategori-list" label="Kategori">
+                                <x-input.select2 name="kategori"
+                                    placeholder="Pilih Kategori" default="{{ old('kategori', $announcement->kategori) }}" ></x-input.select2>
+
                                 {{-- @error('jenis_pekerjaan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
                             </x-input.label>
 
+
                             <x-input.label class="tw-relative" for="status_publikasi-list" label="Status">
-                                <x-input.select2 name="status_publikasi" placeholder="" default="Ditampilkan"></x-input.select2>
+                                <x-input.select2 name="status_publikasi" placeholder="Ubah Status" default="{{ old('status', $announcement->status) }}"></x-input.select2>
                                 {{-- @error('jenis_pekerjaan')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
