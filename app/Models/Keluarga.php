@@ -85,7 +85,7 @@ class Keluarga extends Model
         ->groupBy('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik', 'keluarga.luas_bangunan')
         ->orderBy('total_penghasilan');
 
-        if ($keterangan === 'ketua' && Auth::user()->nama === 'Admin') {
+        if ($keterangan === 'ketua') {
             return $query->get();
         }
         $query->where('user.keterangan', '<>', 'ketua')
