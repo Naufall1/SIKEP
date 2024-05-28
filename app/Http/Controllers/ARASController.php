@@ -38,7 +38,7 @@ class ARASController extends Controller
 
         arsort($rankings);
 
-        return view('bansos.perhitungan.ranking', compact('bobot','rankings', 'namaKriteria', 'normalizedMatrix', 'matriks'));
+        return view('bansos.perhitungan.ranking', compact('bobot','rankings', 'namaKriteria', 'idealSolution', 'alternativesScores', 'normalizedMatrix', 'matriks'));
     }
 
     private function normalisasiMatriks($matriks, $namaKriteria, $bobot)
