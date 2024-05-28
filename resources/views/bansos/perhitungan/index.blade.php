@@ -7,7 +7,7 @@
             Penerimaan Bansos
         </h1>
 
-        {{-- <a href=""class="tw-h-10 tw-px-4 md:tw-h-11 md:tw-px-6 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"> Tambah Data</a>     --}}
+        <a href="{{route('bansos.perhitungan.detailPerhitungan')}}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail Perhitungan</a>  
     </div>
     <div class="tw-flex tw-flex-col tw-gap-4">
         <div class="tw-flex">
