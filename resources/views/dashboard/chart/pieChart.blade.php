@@ -22,27 +22,27 @@
 </div>
 
 <div id="chartPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartPekerjaanPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartJenisKelaminPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartJenisKelaminPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartAgamaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartAgamaPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartAgamaPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartTingkatPendidikanPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartTingkatPendidikanPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartPieBansosContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartBansosPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartBansosPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <div id="chartPieUsiaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartUsiaPie" style="width: 590px;" class="tw-flex"></canvas>
+    <canvas height="242" id="chartUsiaPie" style="width: 100%;" class="tw-flex"></canvas>
 </div>
 
 <script>
@@ -154,7 +154,7 @@
                         }
                     },
                     legend: {
-                        position: 'right',
+                        position: 'bottom',
                         labels: {
                             boxWidth: 14,
                             boxHeight: 14,
