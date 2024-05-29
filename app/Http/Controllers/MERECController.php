@@ -13,11 +13,11 @@ class MERECController extends Controller
         $matriks = $kriteriaModel->kriteria();
         $namaKriteria = $kriteriaModel->namaKriteria();
 
-        $m = count($matriks); // qty alternatif
+        $m = count($matriks); // jumlah alternatif
         if ($m == 0) {
-            return view('test',['bobot' => [], 'namaKriteria' => $namaKriteria]);
+            return view('test', ['bobot' => [], 'namaKriteria' => $namaKriteria]);
         }
-        $n = count($matriks[array_key_first($matriks)]); // qty kriteria
+        $n = count($matriks[array_key_first($matriks)]); // jumlah kriteria
 
         // Step 1: Normalisasi Matriks Keputusan
         $R = $this->normalisasiMatriks($matriks, $n);
@@ -34,7 +34,7 @@ class MERECController extends Controller
         // Step 5: Hitung Bobot
         $bobot = $this->hitungBobot($E);
 
-        return view('bansos.perhitungan.bobot', compact('matriks','R', 'S', 'S0', 'E', 'bobot', 'namaKriteria'));
+        return view('bansos.perhitungan.bobot', compact('matriks', 'R', 'S', 'S0', 'E', 'bobot', 'namaKriteria'));
     }
 
     private function normalisasiMatriks($matriks, $n)
@@ -47,9 +47,9 @@ class MERECController extends Controller
                 $minCol = min($col);
 
                 if ($j == 0 || $j == 1 || $j == 2 || $j == 3) { // cost
-                    $R[$no_kk][$j] = $v != 0 ? $minCol / $v : 0;
+                    $R[$no_kk][$j] = ($v != 0 && $minCol != 0) ? $minCol / $v : 0;
                 } else { // benefit
-                    $R[$no_kk][$j] = $maxCol != 0 ? $v / $maxCol : 0;
+                    $R[$no_kk][$j] = ($v != 0 && $maxCol != 0) ? $v / $maxCol : 0;
                 }
             }
         }
@@ -78,8 +78,8 @@ class MERECController extends Controller
             foreach ($nilai as $j => $r_ij) {
                 $sumLog = 0;
                 foreach ($nilai as $k => $r_ik) {
-                    if ($j != $k && $r_ik > 0) {
-                        $sumLog += abs(log($r_ik));
+                    if ($j != $k && $r_ik > 0 && $r_ij > 0) {
+                        $sumLog += abs(log($r_ik) - log($r_ij));
                     }
                 }
                 $S0[$no_kk][$j] = log(1 + ($sumLog / ($n - 1)));
