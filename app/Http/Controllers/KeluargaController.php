@@ -63,9 +63,14 @@ class KeluargaController extends Controller
         ];
 
         if ($user->keterangan == 'ketua') {
-            $daftar_keluarga = Keluarga::select($select)
-                                ->where('status', '!=', 'Menunggu')
-                                ->get();
+            $query = Keluarga::select($select)
+                                ->where('status', '!=', 'Menunggu');
+                                
+            if (explode(" ", $request->scope_data)[1] ?? false) {
+                $query->where('RT', '=', (int)explode(" ", $request->scope_data)[1]);
+            }
+
+            $daftar_keluarga = $query->get();
         } else {
             $daftar_keluarga = Keluarga::select($select, 'user.keterangan')
                 ->join('user', 'keluarga.rt', '=', 'user.keterangan')

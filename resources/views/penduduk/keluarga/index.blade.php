@@ -42,7 +42,7 @@
                                 gap="tw-top-12"></x-input.select2>
                         </x-input.label>
                     @endif
-                    
+
                     <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
                         <x-input.leadicon type="text" name="searchBox" placeholder="Cari No KK, Kepala Keluarga">
                             <x-icons.actionable.search color="n1000" size="20"
@@ -67,53 +67,12 @@
                             </tr>
                         </thead>
                         <tbody class="tw-divide-y-2 tw-divide-n400">
-                            {{-- @foreach ($keluarga as $k)
-                                <tr class="tw-h-16 hover:tw-bg-n300">
-                                    <td></td>
-                                    <td>{{ $k->no_kk }}</td>
-                                    <td>{{ $k->kepala_keluarga }}</td>
-                                    <td>{{ $k->alamat }}</td>
-                                    <td>{{ $k->RT }}</td>
-                                    <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                                        <a href="{{ route('keluargaDetail', $k->no_kk) }}"
-                                            class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                            Detail
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach --}}
+                            {{-- DATA HERE --}}
                         </tbody>
                     </table>
-
-                    <div>
-
-                    </div>
-
                 </div>
                 {{-- End: Table HERE --}}
             </div>
-
-            {{-- <div class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
-                        alt="<">
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300 tw-bg-n400"
-                    href="">
-                    1
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    2
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    ...
-                </a>
-                <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                    <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
-                        alt="<">
-                </a>
-            </div> --}}
-
         </div>
     </div>
 @endsection
@@ -131,6 +90,9 @@
                     "url": "{{ route('keluarga.list') }}",
                     "dataType": "json",
                     "type": "POST",
+                    "data": function (d) {
+                        d.scope_data = $('input[name="scope_data"]').val();
+                    }
                 },
                 paging: true,
                 language: {
@@ -204,9 +166,9 @@
                     searchable: false
                 }]
             });
-            // $('#level_id').on('change', function () {
-            //     dataKeluarga.ajax.reload();
-            // });
+            $('input[name="scope_data"]').on('change', function () {
+                dataKeluarga.ajax.reload();
+            });
         });
         $('#searchBox').keyup(function() {
             dataKeluarga.search($(this).val()).draw();
