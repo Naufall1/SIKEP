@@ -14,9 +14,9 @@ class MERECController extends Controller
         $namaKriteria = $kriteriaModel->namaKriteria();
 
         $m = count($matriks); // jumlah alternatif
-        if ($m == 0) {
-            return view('test', ['bobot' => [], 'namaKriteria' => $namaKriteria]);
-        }
+        // if ($m == 0) {
+        //     return view('test', ['bobot' => [], 'namaKriteria' => $namaKriteria]);
+        // }
         $n = count($matriks[array_key_first($matriks)]); // jumlah kriteria
 
         // Step 1: Normalisasi Matriks Keputusan
@@ -47,9 +47,9 @@ class MERECController extends Controller
                 $minCol = min($col);
 
                 if ($j == 0 || $j == 1 || $j == 2 || $j == 3) { // cost
-                    $R[$no_kk][$j] = ($v != 0 && $minCol != 0) ? $minCol / $v : 0;
-                } else { // benefit
                     $R[$no_kk][$j] = ($v != 0 && $maxCol != 0) ? $v / $maxCol : 0;
+                } else { // benefit
+                    $R[$no_kk][$j] = ($v != 0 && $minCol != 0) ? $minCol / $v : 0;
                 }
             }
         }
@@ -60,44 +60,53 @@ class MERECController extends Controller
     {
         $S = [];
         foreach ($R as $no_kk => $nilai) {
-            $sumLog = 0;
+            $sumLn = 0;
             foreach ($nilai as $j => $r_ij) {
-                if ($r_ij > 0) {
-                    $sumLog += log($r_ij);
-                }
+                $sumLn += abs(log($r_ij));
             }
-            $S[$no_kk] = log(1 + ($sumLog / $n));
+            $S[$no_kk] = log(1 + (1 / $n) * $sumLn);
         }
         return $S;
     }
-
     private function hitungSij($R, $n)
     {
         $S0 = [];
         foreach ($R as $no_kk => $nilai) {
             foreach ($nilai as $j => $r_ij) {
-                $sumLog = 0;
+                $sumLogAbs = 0;
+                $count = 1;
                 foreach ($nilai as $k => $r_ik) {
-                    if ($j != $k && $r_ik > 0 && $r_ij > 0) {
-                        $sumLog += abs(log($r_ik) - log($r_ij));
+                    if ($k != $j && $r_ik > 0) {
+                        $sumLogAbs += abs(log($r_ik));
+                        $count++;
                     }
                 }
-                $S0[$no_kk][$j] = log(1 + ($sumLog / ($n - 1)));
+                if ($count > 0) {
+                    $S0[$no_kk][$j] = log(1 + ($sumLogAbs / $count));
+                } else {
+                    $S0[$no_kk][$j] = 0;
+                }
             }
         }
+        // dd($count);
         return $S0;
     }
 
     private function hitungEi($S0, $S, $n)
     {
         $E = array_fill(0, $n, 0);
+
         foreach ($S0 as $no_kk => $nilai) {
-            foreach ($nilai as $j => $s0_ij) {
-                $E[$j] += $s0_ij - $S[$no_kk];
+            for ($j = 0; $j < count($nilai); $j++) {
+                $E[$j] += (abs($S0[$no_kk][$j] - $S[$no_kk]));
+                // dd($S0[$no_kk][$j]);
+                // dd($S[$no_kk]);
             }
         }
+
         return $E;
     }
+
 
     private function hitungBobot($E)
     {
