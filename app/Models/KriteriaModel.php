@@ -173,7 +173,7 @@ class KriteriaModel extends Model
                 isset($totalPenghasilanPerKeluarga[$alternatif['no_kk']]) ? $this->kriteriaTotalPenghasilan($totalPenghasilanPerKeluarga[$alternatif['no_kk']]['K3']) : 0,
                 isset($jmlWargaBerpenghasilan[$alternatif['no_kk']]) ? $this->kriteriaJumlahWargaBerpenghasilan($jmlWargaBerpenghasilan[$alternatif['no_kk']]['K4']) : 0,
                 isset($tanggungan[$alternatif['no_kk']]) ? $this->kriteriaTanggungan($tanggungan[$alternatif['no_kk']]['K5']) : 0,
-                isset($jmlBersekolah[$key]) ? $this->kriteriaJumlahBersekolah($jmlBersekolah[$key]['K6']) : 0
+                isset($jmlBersekolah[$alternatif['no_kk']]) ? $this->kriteriaJumlahBersekolah($jmlBersekolah[$alternatif['no_kk']]['K6']) : 0
             ];
         }
         return $matriks;
