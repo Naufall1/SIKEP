@@ -143,7 +143,7 @@ class KriteriaModel extends Model
 
         $jmlWargaBerpenghasilan = Warga::select('keluarga.no_kk', DB::raw('COUNT(warga.penghasilan) as K4'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-            ->where('warga.penghasilan', '>=', 0)
+            ->where('warga.penghasilan', '>', 0)
             ->groupBy('keluarga.no_kk')
             ->get()
             ->keyBy('no_kk')
@@ -172,7 +172,7 @@ class KriteriaModel extends Model
                 $this->kriteriaTagihanListrik($alternatif['K1']),
                 $this->kriteriaLuasBangunan($alternatif['K2']),
                 isset($totalPenghasilanPerKeluarga[$alternatif['no_kk']]) ? $this->kriteriaTotalPenghasilan($totalPenghasilanPerKeluarga[$alternatif['no_kk']]['K3']) : 0,
-                isset($jmlWargaBerpenghasilan[$alternatif['no_kk']]) ? $this->kriteriaJumlahWargaBerpenghasilan($jmlWargaBerpenghasilan[$alternatif['no_kk']]['K4']) : 0,
+                isset($jmlWargaBerpenghasilan[$alternatif['no_kk']]) ? $this->kriteriaJumlahWargaBerpenghasilan($jmlWargaBerpenghasilan[$alternatif['no_kk']]['K4']) : 1,
                 isset($tanggungan[$alternatif['no_kk']]) ? $this->kriteriaTanggungan($tanggungan[$alternatif['no_kk']]['K5']) : 0,
                 isset($jmlBersekolah[$alternatif['no_kk']]) ? $this->kriteriaJumlahBersekolah($jmlBersekolah[$alternatif['no_kk']]['K6']) : 0
             ];
