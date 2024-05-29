@@ -22,51 +22,51 @@
 
                             <x-input.label for="judul" label="Judul">
                                 <x-input.input type="text" name="judul"
-                                    placeholder="Masukkan Judul"></x-input.input>
-                                {{-- @error('NIK')
+                                    placeholder="Masukkan Judul" value="{{old('judul')}}"></x-input.input>
+                                @error('judul')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="penulis" label="Nama Penulis">
                                 <x-input.input type="text" name="penulis"
                                     placeholder="{{$user->nama}}" disabled></x-input.input>
-                                {{-- @error('NIK')
+                                @error('penulis')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="gambar" label="Gambar">
                                 <x-input.file id="gambar" name="gambar"></x-input.file>
-                                {{-- @error('nama')
-                                <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @error('gambar')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="caption" label="Caption">
-                                <x-input.input type="text" name="caption"
+                                <x-input.input type="text" name="caption" value="{{old('caption')}}"
                                     placeholder="Masukkan Caption"></x-input.input>
 
-                                {{-- @error('NIK')
+                                @error('caption')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="content" label="Isi">
-                                <textarea name="isi" id="isi" class="form-control" required></textarea>
+                                <textarea name="isi" id="isi" class="form-control" required>{{old('isi')}}</textarea>
 
-                                {{-- @error('NIK')
+                                @error('isi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @enderror
                             </x-input.label>
 
                             <x-input.label class="tw-relative" for="kategori-list" label="Kategori">
                                 <x-input.select2 name="kategori"
-                                    placeholder="Pilih Kategori"></x-input.select2>
+                                    placeholder="Pilih Kategori" value="{{old('kategori')}}"></x-input.select2>
 
-                                {{-- @error('jenis_pekerjaan')
+                                @error('kategori')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror --}}
+                                @enderror
                             </x-input.label>
 
                         </div>

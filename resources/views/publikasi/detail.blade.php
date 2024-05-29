@@ -41,7 +41,7 @@
                                 'content' => $announcement->tanggal_dibuat,
                             ])
                             @include('components.form.textdetail', [
-                                'title' => 'Dibuat',
+                                'title' => 'Dipublish',
                                 'content' => $announcement->tanggal_publish,
                             ])
                             @include('components.form.textdetail', [

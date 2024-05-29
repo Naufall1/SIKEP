@@ -21,26 +21,50 @@
 
                             <x-input.label for="judul" label="Judul">
                                 <x-input.input type="text" name="judul" placeholder="Masukkan Judul" value="{{ old('judul', $announcement->judul) }}"></x-input.input>
+                                @error('judul')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="penulis" label="Nama Penulis">
                                 <x-input.input type="text" name="penulis" placeholder="" value="{{ old('penulis', $announcement->penulis) }}" disabled></x-input.input>
+                                @error('penulis')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="gambar" label="Gambar">
                                 <x-input.file id="gambar" name="gambar"></x-input.file>
+                                @error('gambar')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
                             <x-input.label for="caption" label="Caption">
                                 <x-input.input type="text" name="caption" placeholder="Masukkan Caption" value="{{ old('caption', $announcement->caption) }}"></x-input.input>
+                                @error('caption')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
-                            <x-input.label for="content" label="Isi">
-                                <textarea id="isi" name="content" placeholder="Masukkan Isi">{{ old('content', $announcement->isi) }}</textarea>
+                            <x-input.label for="isi" label="Isi">
+                                <textarea id="isi" name="isi" placeholder="Masukkan Isi">{{ old('isi', $announcement->isi) }}</textarea>
+                                @error('isi')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
                             <x-input.label class="tw-relative" for="kategori" label="Kategori">
                                 <x-input.input type="text" name="kategori" placeholder="" value="{{ old('kategori', $announcement->kategori) }}" disabled></x-input.input>
+                                @error('kategori')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+
+                                @enderror
                             </x-input.label>
 
                         </div>
