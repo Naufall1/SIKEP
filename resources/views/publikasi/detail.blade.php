@@ -1,6 +1,9 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
+@php
+    // dd($announcement);
+@endphp
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
 
         <p class="tw-breadcrumb tw-text-n500">Daftar Publikasi /
@@ -12,7 +15,7 @@
             <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Publikasi</h1>
-                <a href="{{ route('publikasi.ubah', ['id' => '1']) }}"
+                <a href="{{ route('publikasi.ubah', ['id' => $announcement->kode]) }}"
                     class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
                     <x-icons.actionable.edit class="" stroke="2" size="20"
                         color="n100"></x-icons.actionable.edit>
@@ -31,24 +34,24 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
                                 'title' => 'Penulis',
-                                'content' => '',
+                                'content' => $announcement->penulis,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Dibuat',
-                                'content' => '',
+                                'content' => $announcement->tanggal_dibuat,
                             ])
                             @include('components.form.textdetail', [
-                                'title' => 'Dibuat',
-                                'content' => '',
+                                'title' => 'Dipublish',
+                                'content' => $announcement->tanggal_publish,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Kategori',
-                                'content' => '',
+                                'content' => $announcement->kategori,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Status',
                                 'isLabel' => true,
-                                'content' => '',
+                                'content' => $announcement->status,
                             ])
                         </div>
                     </div>
@@ -56,8 +59,7 @@
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Preview Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-
-
+                            {!! $announcement->isi !!}
                         </div>
                     </div>
 

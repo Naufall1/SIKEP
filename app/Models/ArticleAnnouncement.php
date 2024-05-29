@@ -31,6 +31,25 @@ class ArticleAnnouncement extends Model
         'caption',
     ];
 
+    public function getIncrementing(): bool
+    {
+        return false;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            if ($model->kategori == 'Artikel') {
+                $prefix = 'AR';
+                $model->kode = $prefix . str_pad(($model::where('kategori', '=', 'Artikel')->count() + 1), 3, "0", STR_PAD_LEFT);
+            } else {
+                $prefix = 'AN';
+                $model->kode = $prefix . str_pad(($model::where('kategori', '=', 'Pengumuman')->count() + 1), 3, "0", STR_PAD_LEFT);
+            }
+        });
+    }
 
     public function user(): BelongsTo
     {
