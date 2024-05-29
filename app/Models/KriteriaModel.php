@@ -143,7 +143,7 @@ class KriteriaModel extends Model
 
         $jmlWargaBerpenghasilan = Warga::select('keluarga.no_kk', DB::raw('COUNT(warga.penghasilan) as K4'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
-            ->where('warga.penghasilan', '>', 0)
+            ->where('warga.penghasilan', '>=', 0)
             ->groupBy('keluarga.no_kk')
             ->get()
             ->keyBy('no_kk')
@@ -157,7 +157,7 @@ class KriteriaModel extends Model
             ->keyBy('no_kk')
             ->toArray();
 
-        $jmlBersekolah = Warga::select('keluarga.no_kk AS no_kk', DB::raw('COUNT(CASE WHEN warga.jenis_pekerjaan = "Pelajar/Mahasiswa" THEN warga.no_kk ELSE 0 END) AS K6'))
+        $jmlBersekolah = Warga::select('keluarga.no_kk', DB::raw('COUNT(CASE WHEN warga.jenis_pekerjaan = "Pelajar/Mahasiswa" THEN warga.no_kk ELSE 0 END) AS K6'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
             ->groupBy('keluarga.no_kk')
             ->get()
@@ -166,6 +166,7 @@ class KriteriaModel extends Model
         // dd($jmlBersekolah);
 
         $matriks = [];
+        // dd($jmlWargaBerpenghasilan);
         foreach ($keluarga as $key => $alternatif) {
             $matriks[$alternatif['no_kk']] = [
                 $this->kriteriaTagihanListrik($alternatif['K1']),
