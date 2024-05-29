@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 use App\Models\ArticleAnnouncement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArticleAnnouncementController extends Controller
 {
+    function __construct()
+    {
+        session()->put('image', null);
+    }
     // Display a listing of the resource.
     public function index_publikasi()
     {
@@ -84,24 +89,41 @@ class ArticleAnnouncementController extends Controller
     // Store a newly created resource in storage.
     public function store(Request $request)
     {
+        $filename = '';
+        if (!$this->hasImage()) {
+            $request->validate([
+                'gambar' => 'required|file|image|mimes:jpeg,jpg,png|max:5000'
+            ]);
+        }
+
+        if ($request->has('gambar')) {
+            session()->put('image', (object) [
+                'filename' => $request->file('gambar')->getClientOriginalName(),
+                'content' => $request->file('gambar')->getContent()
+            ]);
+        }
         $user = Auth::user();
 
-        // dd($request);
         $validatedData = $request->validate([
-            // 'kode' => 'required|unique:article_announcement',
             'kategori' => 'required|string|max:255',
-            // 'penulis' => 'required|string|max:255',
-            // 'tanggal_publish' => 'required|date',
-            // 'tanggal_dibuat' => 'required|date',
-            // 'tanggal_edit' => 'nullable|date',
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
-            // 'status' => 'required',
-            'image_url' => 'nullable|string|max:255',
-            'caption' => 'nullable|string|max:255'
+            'caption' => 'required|string|max:255'
         ]);
 
-        // ArticleAnnouncement::create($validatedData);
+        $filename = explode('.',session()->get('image')->filename)[0]
+                    . '_' .
+                    date('Y-m-d-H_i_s') .
+                    '.' .
+                    explode('.',session()->get('image')->filename)[1];
+
+        if(Storage::disk('public')->put(
+                'publikasi/'. $filename,
+            session()->get('image')->content)
+            ){
+            session()->forget('image');
+        };
+
         $publikasi = new ArticleAnnouncement();
 
         $publikasi->fill($validatedData);
@@ -111,12 +133,18 @@ class ArticleAnnouncementController extends Controller
         $publikasi->tanggal_publish = null;
         $publikasi->tanggal_dibuat = now();
         $publikasi->tanggal_edit = null;
-        $publikasi->image_url = "coba.jpg";
+        $publikasi->image_url = $filename;
         $publikasi->status = "Disembunyikan";
 
         $publikasi->save();
+        session()->save();
 
         return redirect()->route('publikasi')->with('success', 'Announcement created successfully.');
+    }
+
+    private function hasImage()
+    {
+        return is_null(session()->get('image')) ? false : true;
     }
 
     // Display the specified resource.
@@ -166,27 +194,55 @@ class ArticleAnnouncementController extends Controller
 
     public function update_draf(Request $request, $kode)
     {
-        // dd($request->content);
-        // dd($request);
+        $filename = '';
+        if ($request->has('gambar')) {
+
+            $request->validate([
+                'gambar' => 'file|image|mimes:jpeg,jpg,png|max:5000'
+            ]);
+
+            session()->put('image', (object) [
+                'filename' => $request->file('gambar')->getClientOriginalName(),
+                'content' => $request->file('gambar')->getContent()
+            ]);
+        }
+
+        $user = Auth::user();
+
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'isi' => 'required|string',
+            'caption' => 'required|string|max:255'
+        ]);
+
         $user = Auth::user();
 
         $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', $user->user_id)->firstOrFail();
 
-        // $validatedData = $request->validate([
-        //     'penulis' => 'required|string|max:255',
-        //     'judul' => 'required|string|max:255',
-        //     'caption' => 'nullable|string|max:255',
-        //     'image_url' => 'nullable|string|max:255',
-        // ]);
+        if ($this->hasImage()) {
+            $filename = explode('.',session()->get('image')->filename)[0]
+                        . '_' .
+                        date('Y-m-d-H_i_s') .
+                        '.' .
+                        explode('.',session()->get('image')->filename)[1];
+
+            if(Storage::disk('public')->put(
+                    'publikasi/'. $filename,
+                session()->get('image')->content)
+                ){
+                session()->forget('image');
+            };
+            $announcement->image_url = $filename;
+        }
 
         $announcement->judul = $request->judul;
-        $announcement->image_url = "coba.jpg";
         $announcement->caption = $request->caption;
-        $announcement->isi = $request->content;
+        $announcement->isi = $request->isi;
 
-        $announcement->tanggal_edit = now();
-
-        $announcement->save();
+        if ($announcement->isDirty()) {
+            $announcement->tanggal_edit = now();
+            $announcement->save();
+        }
 
         return redirect()->route('publikasi.draf')->with('success', 'Announcement updated successfully.');
     }
