@@ -10,8 +10,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\MERECController;
 use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SPKController;
 use App\Http\Controllers\WargaController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +28,25 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/testchart', [HomeController::class, 'chart']);
 
-Route::prefix('spk')->group(function () {
+Route::prefix('spk')->middleware(['auth', 'role:rw,rt'])->group(function () {
+    Route::prefix('merec')->group(function () {
+        Route::post('/keputusan', [SPKController::class, 'getMatriksKeputusan'])->name('spk.merec.keputusan');
+        Route::post('/normalisasi', [SPKController::class, 'getMERECMatriksTernormalisasi'])->name('spk.merec.normalisasi');
+        Route::post('/nilaiSi', [SPKController::class, 'getMERECNilaiSi'])->name('spk.merec.normalisasi');
+        Route::post('/nilaiSij', [SPKController::class, 'getMERECSij'])->name('spk.merec.nilaiSi');
+        Route::post('/nilaiEi', [SPKController::class, 'getMERECEi'])->name('spk.merec.nilaiSij');
+        Route::post('/bobot', [SPKController::class, 'getMERECBobot'])->name('spk.merec.bobot');
+    });
+
+    Route::prefix('aras')->group(function () {
+        Route::post('/keputusan', [SPKController::class, 'getARASMatriksKeputusan'])->name('spk.aras.matriksKeputusan');
+        Route::post('/normalisasi', [SPKController::class, 'getARASMatriksTernormalisasi'])->name('spk.aras.matriksTrnormalisasi');
+        Route::post('/terbobot', [SPKController::class, 'getARASMatriksTerbobot'])->name('spk.aras.matriksTerbobot');
+        Route::post('/nilaiFungsiOptimal', [SPKController::class, 'getARASNilaiFungsiOptimal'])->name('spk.aras.nilaiFungsiOptimal');
+        Route::post('/peringkatUtilitas', [SPKController::class, 'getARASPeringkatUtilitas'])->name('spk.aras.peringkatUtilitas');
+    });
+
+    Route::get('/', [SPKController::class, 'index'])->name('spk.merec');
     Route::get('/merec', [MERECController::class, 'MEREC'])->name('spk.merec');
     Route::get('/aras', [ARASController::class, 'rankingBansos'])->name('spk.aras');
 });
