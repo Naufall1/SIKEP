@@ -56,7 +56,9 @@
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Preview Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-                            {!! $announcement->isi !!}
+                            <x-publikasi.index title="{{$announcement->judul}}" created_at="{{$announcement->tanggal_dibuat}}" writer="{{$announcement->penulis}}">
+                                {!!$announcement->isi!!}
+                            </x-publikasi.index>
                         </div>
                     </div>
 

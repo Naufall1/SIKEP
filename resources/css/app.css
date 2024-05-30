@@ -110,6 +110,10 @@
 
     /* Typography */
 
+    .tw-display {
+        @apply tw-font-sans tw-font-bold tw-text-3xl;
+    }
+
     .tw-h1 {
         @apply tw-font-sans tw-font-bold tw-text-2xl;
     }

@@ -164,7 +164,7 @@
                     @include('layout.menu.admin')
                 @endif
 
-                @if (Auth::user()->hasLevel['level_kode'] == 'Admin')
+                @if (Auth::user()->hasLevel['level_kode'] == 'ADM')
                     @include('layout.menu.publikasi')
                 @endif
 

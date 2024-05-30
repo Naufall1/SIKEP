@@ -121,22 +121,22 @@
                     Publikasi Artikel dan Pengumuman</h1>
             </div>
             <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-w-full">
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="pengumuman"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="pengumuman"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
 
