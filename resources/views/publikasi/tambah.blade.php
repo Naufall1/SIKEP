@@ -51,9 +51,9 @@
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
-
+                            {{-- Jangan di kasih required isi nya... bikin bug error --}}
                             <x-input.label for="content" label="Isi">
-                                <textarea name="isi" id="isi" class="form-control" required>{{old('isi')}}</textarea>
+                                <textarea name="isi" id="isi" class="form-control">{{old('isi')}}</textarea>
 
                                 @error('isi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>

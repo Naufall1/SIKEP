@@ -27,14 +27,14 @@
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
                             </x-input.label>
-                            
+
                             <x-input.label for="gambar" label="Gambar">
                                 <x-input.file id="gambar" name="gambar"></x-input.file>
                                 {{-- @error('nama')
                                 <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror --}}
                             </x-input.label>
-                            
+
                             <x-input.label for="caption" label="Caption">
                                 <x-input.input type="text" name="caption"
                                     placeholder="Masukkan Caption"></x-input.input>
@@ -69,7 +69,7 @@
                             </x-input.label>
 
                         </div>
-                    </div>  
+                    </div>
                 </div>
 
 
@@ -85,6 +85,9 @@
                     <button type="submit"
                         class="tw-h-11 tw-flex tw-px-6 tw-bg-b500 tw-text-n100 tw-items-center tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-b600 active:tw-bg-b700"
                         type="submit">Simpan</button>
+                    <button type="submit"
+                        class="tw-h-11 tw-flex tw-px-6 tw-bg-green-500 tw-text-white tw-items-center tw-font-sans tw-font-bold tw-text-base tw-rounded-full hover:tw-bg-green-600 active:tw-bg-green-700"
+                        type="submit">Posting</button>
                 </div>
             </form>
 
