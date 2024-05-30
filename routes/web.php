@@ -162,8 +162,12 @@ Route::prefix('publikasi')->middleware(['auth','role:adm'])->group(function () {
     Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
     Route::get('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'edit_draf'])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
     Route::put('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'update_draf'])->name('publikasi.draf.update'); // menyimpan data
-
+    
 });
+
+Route::get('/baca', function(){
+    return view('landing.bacaan');
+})->name('publikasi.baca'); // menampilkan halaman bacaan publikasi
 
 Route::prefix('api')->group(function () {
     Route::get('/warga', [WargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data warga (TODO data warga berdasarkan RT)
