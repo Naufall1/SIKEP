@@ -11,15 +11,15 @@
 @layer components {
 
     /* Filter */
-    .tw-filter-default{
+    .tw-filter-default {
         @apply tw-bg-n100 hover:tw-bg-b50 hover:tw-border-b50;
     }
 
-    .tw-filter-active{
+    .tw-filter-active {
         @apply tw-border-b500 tw-bg-b50 hover:tw-bg-n200;
     }
 
-    .tw-filter-w-sm{
+    .tw-filter-w-sm {
         width: calc(100vw - 200px);
         /* width: 2px; */
     }
@@ -110,6 +110,10 @@
 
     /* Typography */
 
+    .tw-display {
+        @apply tw-font-sans tw-font-bold tw-text-3xl;
+    }
+
     .tw-h1 {
         @apply tw-font-sans tw-font-bold tw-text-2xl;
     }
@@ -158,6 +162,11 @@
         @apply tw-font-sans tw-font-semibold tw-text-[14px];
     }
 
+    .required-label::after{
+        content: ' *';
+        @apply tw-text-r500;
+    }
+
     /* Table */
     thead {
         @apply tw-rounded-lg tw-overflow-hidden;
@@ -172,7 +181,7 @@
     }
 
     tbody>tr {
-        @apply tw-h-11;
+        @apply tw-h-11 tw-border-b-[1.5px];
     }
 
     thead>tr> :first-child {
@@ -223,7 +232,7 @@
         content: url('../views/components/icons/actionable/sort_desc.svg') !important;
     }
 
-    .dataTables_empty{
+    .dataTables_empty {
         /* background-image: url('../views/components/icons/empty.svg') !important; */
         @apply tw-h-40 tw-py-4 tw-flex tw-items-center tw-justify-center tw-flex-col tw-gap-2
     }
@@ -236,6 +245,42 @@
     .tw-divider-vr {
         @apply tw-w-[1.5px] tw-h-full tw-bg-n300;
     }
+
+    /* Loader */
+    .loader{
+        display: block;
+        position: relative;
+        height: 32px;
+        width: 100px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .loader:before{
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        width: 24px;
+        height: 24px;
+        animation: ballbns 2s ease-in infinite;
+      }
+      
+      @keyframes ballbns {
+        0% {  
+          left: 0; 
+          transform: translateX(-100%) rotate(0deg);
+          border-radius: 0; 
+          background: #0284FF;
+        }
+        100% {  
+          left: 100%; 
+          transform: translateX(0%) rotate(360deg); 
+          border-radius: 50%;
+          background: #0284FF; 
+        }
+      } 
+      
+
 
 }
 

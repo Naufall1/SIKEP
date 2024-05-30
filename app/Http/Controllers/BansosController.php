@@ -187,4 +187,8 @@ class BansosController extends Controller
     public function tambah(){
 
     }
+
+    public function detailPerhitungan(){
+        return view('bansos.perhitungan.perhitungan');
+    }
 }

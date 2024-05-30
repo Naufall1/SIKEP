@@ -18,6 +18,9 @@
                 Daftar Admin
             </h1>
 
+            <a href="{{route('admin.create')}}" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
+                Tambah Data
+            </a>
         </div>
 
         <div class="tw-flex tw-flex-col tw-gap-4">
@@ -31,7 +34,7 @@
                     Keluarga
                 </a> --}}
                 <div
-                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
+                    class="tw-flex tw-justify-center tw-items-center tw-h-1 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
                 </div>
             </div>
 
@@ -44,9 +47,6 @@
                                 stroke="2"></x-icons.actionable.search>
                         </x-input.leadicon>
                     </div>
-                    <a href="{{route('admin.create')}}" class="tw-btn tw-btn-primary tw-btn-md tw-btn-round md:tw-btn-lg">
-                        Tambah Data
-                    </a>
                 </div>
                 {{-- End: Tool Bar --}}
 

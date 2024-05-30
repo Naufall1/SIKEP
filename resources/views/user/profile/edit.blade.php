@@ -65,9 +65,9 @@
                                 @endif
                             </x-input.label>
 
-                            <x-input.label class="tw-w-full" for="password" label="Ulangi Kata Sandi Baru">
-                                <x-input.password placeholder="Masukkan Kata Sandi" id="password"
-                                    name="password"></x-input.password>
+                            <x-input.label class="tw-w-full" for="password_ulangi" label="Ulangi Kata Sandi Baru">
+                                <x-input.password placeholder="Masukkan Kata Sandi" id="password_ulangi"
+                                    name="password_ulangi"></x-input.password>
                                 @if (session('error'))
                                     <span class="tw-pl-1 tw-text-r500 tw-caption tw-h-fit">
                                         {{ session('error') }}

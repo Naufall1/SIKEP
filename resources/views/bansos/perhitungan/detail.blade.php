@@ -45,15 +45,15 @@
     </div>
 
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
-        <p class="tw-breadcrumb tw-text-n500">Kriteria /
-            <span class="tw-font-bold tw-text-b500">Data Kriteria</span>
+        <p class="tw-breadcrumb tw-text-n500">Perhitungan /
+            <span class="tw-font-bold tw-text-b500">Data Alternatif</span>
         </p>
 
         <div class="md:tw-w-full">
 
             <div class="tw-flex tw-w-full tw-items-center tw-pb-2 md:tw-items-start">
 
-                <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Kriteria</h1>
+                <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Alternatif</h1>
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-7">

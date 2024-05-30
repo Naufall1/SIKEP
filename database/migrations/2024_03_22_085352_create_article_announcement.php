@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('article_announcement', function (Blueprint $table) {
             $table->char('kode', 10)->primary();
             $table->unsignedBigInteger('user_id');
-            $table->string('kategori', 25);
+            $table->enum('kategori', ['Artikel', 'Pengumuman']);
             $table->string('penulis', 100);
-            $table->date('tanggal_publish');
+            $table->date('tanggal_publish')->nullable();
             $table->date('tanggal_dibuat');
             $table->date('tanggal_edit')->nullable();
             $table->string('judul', 255);

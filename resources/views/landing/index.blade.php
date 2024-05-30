@@ -63,7 +63,8 @@
                     class="tw-col-span-2 md:tw-col-span-1 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-p-4 tw-rounded-xl tw-flex tw-flex-col tw-gap-5">
                     <div class="tw-flex tw-items-center tw-gap-3">
                         <div class="tw-flex tw-items-center tw-justify-center tw-h-11 tw-w-11 tw-bg-b50 tw-rounded-md">
-                            <x-icons.actionable.people-1 class="tw-stroke-b500" color="b500" size="24" stroke="1.5"></x-icons.actionable.people-1>
+                            <x-icons.actionable.people-1 class="tw-stroke-b500" color="b500" size="24"
+                                stroke="1.5"></x-icons.actionable.people-1>
                         </div>
                         <h2 class="tw-text-xl">Penduduk</h2>
                     </div>
@@ -75,7 +76,8 @@
                     class="tw-col-span-2 md:tw-col-span-1 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-p-4 tw-rounded-xl tw-flex tw-flex-col tw-gap-5">
                     <div class="tw-flex tw-items-center tw-gap-3">
                         <div class="tw-flex tw-items-center tw-justify-center tw-h-11 tw-w-11 tw-bg-b50 tw-rounded-md">
-                            <x-icons.actionable.tag-user class="tw-stroke-b500" color="b500" size="24" stroke="1.5"></x-icons.actionable.tag-user>
+                            <x-icons.actionable.tag-user class="tw-stroke-b500" color="b500" size="24"
+                                stroke="1.5"></x-icons.actionable.tag-user>
                         </div>
                         <h2 class="tw-text-xl">Program</h2>
                     </div>
@@ -94,27 +96,19 @@
             <div class="tw-flex tw-flex-col tw-items-center sm:tw-w-11/12 md:tw-w-full tw-gap-2">
                 <h1 class="tw-font-sans tw-font-semibold tw-text-[32px] md:tw-text-[44px] tw-text-center tw-leading-snug">
                     Informasi Grafik</h1>
-                    <p class="tw-font-sans tw-font-medium tw-text-base md:tw-text-xl tw-text-n700 tw-text-center">Menyajikan
-                        informasi yang terupdate tentang RW 02 tiap bulannya</p>
-                    </div>
-                    <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-h-full tw-w-full">
-                        <div
-                        class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                        {{-- @include('dashboard.chart.pekerjaan') --}}
-                </div>
-                <div
-                    class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
-                </div>
-                <div
-                class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
-                </div>
-                <div
-                    class="tw-p-4 tw-col-span-2 md:tw-col-span-1 tw-flex tw-flex-col tw-gap-4 tw-h-80 tw-bg-n100 tw-border-[1.5px] tw-rounded-md">
-                    {{-- @include('dashboard.chart.pekerjaan') --}}
-                </div>
-                {{-- @include('dashboard.chart.jenisKelamin') --}}
+                <p class="tw-font-sans tw-font-medium tw-text-base md:tw-text-xl tw-text-n700 tw-text-center">Menyajikan
+                    informasi yang terupdate tentang RW 02 tiap bulannya</p>
+            </div>
+            <div class="tw-grid tw-grid-cols-6 tw-justify-center tw-gap-4 tw-h-full tw-w-full">
+                <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-span-3">
+                    {{-- @include('dashboard.chart.lineChart') --}}
+                </x-cards.chart>
+                <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-span-3">
+                    {{-- @include('dashboard.chart.lineChart') --}}
+                </x-cards.chart>
+                <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-start-3 md:tw-col-span-2">
+                    {{-- @include('dashboard.chart.pieChart') --}}
+                </x-cards.chart>                
             </div>
         </div>
         {{-- / Informasi Grafik --}}
@@ -127,25 +121,25 @@
                     Publikasi Artikel dan Pengumuman</h1>
             </div>
             <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-w-full">
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="pengumuman"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="pengumuman"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-                <x-cards.publication url="#" image="dummy" type="artikel"
+                <x-cards.publication url="{{route('publikasi.baca')}}" image="dummy" type="artikel"
                     title="Tante Kumat dan Taman Sale Bikin RW 2 Gadingkasri Jadi Asri" writer="Shuvia Rahma"
                     date="Jumat, 16 Oktober 2020"></x-cards.publication>
-    
+
             </div>
         </div>
         {{-- / Publikasi Artikel dan Pengumuman --}}
