@@ -25,29 +25,33 @@ class ProfilController extends Controller
         if ($request->has('keterangan')) {
             $request->validate([
                 'keterangan' => 'max:100', // iki mosok salah yoo(ga work)
+                'old_password' => 'required_with:password',
+                'password' => 'nullable',
+                'password_ulangi' => 'nullable'
             ]);
         }
 
         $user = User::where('user_id', $user_id)->firstOrFail();
-        // cek lek password lama ga pdo maka di return
-        if (!Hash::check($request->old_password, $user->password)) {
-            return redirect()->back()->with('error', 'Password lama salah.');
+        if ($request->filled('password') || $request->filled('password_ulangi')) {
+            if (!isset($request->old_password)) {
+                return redirect()->back()->with('error', 'Jika rubah Kata Sandi, Maka Isi Kata Sandi Lama');
+            }
+            if (!Hash::check($request->old_password, $user->password)) {
+                return redirect()->back()->with('error', 'Kata Sandi lama salah.');
+            }
+            if ($request->password !== $request->password_ulangi) {
+                return redirect()->back()->with('error', 'Kata Sandi Baru Tidak Sesuai.');
+            }
+
+            $user->password = Hash::make($request->password);
         }
-        else {
-        // gawe update e user ngkok
-        $user->update([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'keterangan' => $user->keterangan,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password, // soale lek dikosongi tetep berubah
-        ]);
+
+        $user->username = $request->username;
+        $user->nama = $request->nama;
+        $user->save();
 
         // nyoba flask message (blom di fix bisa karena blom nyoba)
         return redirect()->route('profil')->with('success', 'Data pengguna berhasil diperbarui.');
 
         }
     }
-
-}
-
-
