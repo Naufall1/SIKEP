@@ -162,6 +162,11 @@
         @apply tw-font-sans tw-font-semibold tw-text-[14px];
     }
 
+    .required-label::after{
+        content: ' *';
+        @apply tw-text-r500;
+    }
+
     /* Table */
     thead {
         @apply tw-rounded-lg tw-overflow-hidden;
@@ -176,7 +181,7 @@
     }
 
     tbody>tr {
-        @apply tw-h-11;
+        @apply tw-h-11 tw-border-b-[1.5px];
     }
 
     thead>tr> :first-child {

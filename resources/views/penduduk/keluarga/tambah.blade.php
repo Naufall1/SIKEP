@@ -30,7 +30,7 @@
                                     placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="no_kk" label="No KK">
+                            <x-input.label required class="tw-relative" for="no_kk" label="No KK">
                                 <x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
                                     value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>
                                 {{-- <x-input.select class="tw-hidden" name="no_kk" id="no_kk-list">
@@ -53,7 +53,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="alamat" label="Alamat">
+                            <x-input.label required for="alamat" label="Alamat">
                                 <x-input.textarea name="alamat" placeholder="Masukkan Alamat"
                                     value="{{ old('alamat', isset($formState['alamat']) ? $formState['alamat'] : '') }}">
                                 </x-input.textarea>
@@ -97,7 +97,7 @@
                                     value="{{ $default['provinsi'] }}"></x-input.input>
                             </x-input.label>
 
-                            <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
+                            <x-input.label required for="kartu_keluarga" label="Kartu Keluarga">
                                 <x-input.file name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
@@ -112,7 +112,7 @@
                                     'title' => '',
                                     'isImage' => true,
                                     'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
-                                    ])
+                                ])
                             @endif
 
                         </div>
@@ -144,25 +144,18 @@
                     </div>
 
 
-                    <div id="anggota_keluarga"
-                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+                    <div id="anggota_keluarga" class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden">
                         <h2 class="">Anggota Keluarga</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
-
+                        <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-x-auto">
 
                             <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
-                                <div class="tw-border-b-[1.5px] tw-border-n400">
-                                    <button type="submit" name="action" value="tambah"
-                                    class="  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                    Tambah</button>
-                                </div>
                                 <thead class="tw-rounded-lg">
                                     <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                        <th>No</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Status Keluarga</th>
-                                        <th class="tw-w-[108px]"></th>
+                                        <th class="">No</th>
+                                        <th class="">NIK</th>
+                                        <th class="">Nama</th>
+                                        <th class="">Status Keluarga</th>
+                                        <th class=""></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -187,18 +180,13 @@
                                             </td>
                                         </tr>
                                     @endforeach --}}
-                                    <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
+                                    {{-- <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
-                                            {{-- <a href="#"
-                                            class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center"
-                                            onclick="tambahAnggotaKeluarga()">
-                                            Tambah
-                                        </a> --}}
-                                            {{-- <button type="submit" name="action" value="tambah"
-                                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                Tambah</button> --}}
+                                            <button type="submit" name="action" value="tambah"
+                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                                Tambah</button>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
 
                                 </tbody>
                             </table>
@@ -265,6 +253,8 @@
                 },
                 drawCallback: function() {
                     $('.table.dataTable').css('border-collapse', 'collapse');
+                    $('.dataTables_empty').html(`<p>Tidak Ada Data</p>`);
+                    $('.dataTables_empty').addClass('tw-h-0');
                 },
                 paging: false,
                 info: false,
@@ -274,7 +264,7 @@
                 // ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    className: "tw-w-[80px]",
                     orderable: false,
                     searchable: false
                 }, {
@@ -289,7 +279,7 @@
                     searchable: false
                 }, {
                     data: "status_keluarga",
-                    className: "tw-w-[180px]",
+                    className: "tw-w-[220px]",
                     orderable: false,
                     searchable: false
                 }, {
@@ -299,7 +289,18 @@
                     searchable: false
                 }]
             });
-            $('#no_kk-list').on('change', function () {
+
+
+            
+            
+            var buttonRow =
+            `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
+            
+            // dataWarga.row.add($(buttonRow)[0]).draw();
+            $('table tbody').after($(buttonRow));
+
+
+            $('#no_kk-list').on('change', function() {
                 dataWarga.ajax.reload();
             });
         });
@@ -340,7 +341,7 @@
             $('#formData').attr('action', '{{ route('pindahKK') }}');
 
             $("label[for='no_kk']").attr('for', 'no_kk-list');
-            $("label[for='no_kk-list']").children().remove();
+            $("label[for='no_kk-list']").children().next().remove();
             $("label[for='no_kk-list']").append(`<x-input.select2 name="no_kk" searchable
                                     placeholder="Pilih No KK"></x-input.select2>`);
 
@@ -371,7 +372,7 @@
             $('#tagihan_listrik').addClass('tw-input-disabled');
             $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
             $('#tagihan_listrik').prop('disabled', true);
-            
+
             // $('#luas_bangunan').val('');
             $('#luas_bangunan').removeClass('tw-input-enabled');
             $('#luas_bangunan').addClass('tw-input-disabled');
@@ -413,17 +414,17 @@
             // $('#no_kk').prop('disabled', false);
 
             $("label[for='no_kk-list']").attr('for', 'no_kk');
-            $("label[for='no_kk']").children().remove();
+            $("label[for='no_kk']").children().next().remove();
             $("label[for='no_kk']").append(
                 `<x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
                                     value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>`
             );
 
-            $('#kepala_keluarga').val('');
-            $('#kepala_keluarga').addClass('tw-input-enabled');
-            $('#kepala_keluarga').removeClass('tw-input-disabled');
-            $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
-            $('#kepala_keluarga').prop('readonly', false);
+            // $('#kepala_keluarga').val('');
+            // $('#kepala_keluarga').addClass('tw-input-enabled');
+            // $('#kepala_keluarga').removeClass('tw-input-disabled');
+            // $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
+            // $('#kepala_keluarga').prop('readonly', false);
 
             $('#alamat').val('');
             $('#alamat').addClass('tw-input-enabled');
@@ -442,7 +443,7 @@
             $('#tagihan_listrik').removeClass('tw-input-disabled');
             $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
             $('#tagihan_listrik').prop('disabled', false);
-            
+
             $('#luas_bangunan').val('');
             $('#luas_bangunan').addClass('tw-input-enabled');
             $('#luas_bangunan').removeClass('tw-input-disabled');
@@ -454,12 +455,16 @@
             // $('#no_kk-list').prop('disabled', true);
         }
 
-        function changeJenisData(jenisData) {  
+        function changeJenisData(jenisData) {
             if (jenisData == 'Data Lama') {
                 data_lama();
                 let button = $('label[for="no_kk-list"]').children();
-                let selected = '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}' + ' - ' + '{{ empty(session()->get('formState')['kepala_keluarga']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['kepala_keluarga']) }}'
+                let selected =
+                    '{{ empty(session()->get('formState')['no_kk']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['no_kk']) }}' +
+                    ' - ' +
+                    '{{ empty(session()->get('formState')['kepala_keluarga']) ? 'no' : (session()->get('formState')['jenis_data'] == 'data_baru' ? 'no' : session()->get('formState')['kepala_keluarga']) }}'
                 // console.log($('#no_kk').parents().html());
+                console.log(selected);
                 $(button).children().first().text(selected);
             }
         }
@@ -521,9 +526,6 @@
             }
 
         });
-
-
-    
     </script>
 @endsection
 

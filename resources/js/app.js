@@ -59,14 +59,11 @@ $(document).ready(function () {
         $(button).text(selected);
         // console.log('DEFAULT VALUE = '+$(input).val());
         $(input).val(selected).trigger('change');
-        console.log(!$('.dropContent').hasClass('tw-hidden'));
+        // console.log($('.dropContent').hasClass('tw-hidden'));
         if (!($('.dropContent').hasClass('tw-hidden'))) {
-            console.log($('.dropContent').html());
-            // $('.dropContent').addClass('tw-hidden');
+            // console.log($('.dropContent').html());
+            $('.dropContent').addClass('tw-hidden');
         }
-        // console.log($(this).parents().parents().parents().html());
-        // console.log('NEW VALUE = '+$(input).val());
-        // rotateArrow($(button).siblings().last())
     });
 
 
@@ -86,16 +83,16 @@ $(document).ready(function () {
 
             $.each(items, function (indexInArray, item) { 
                 content += `<li class="dropdownItem tw-flex tw-items-center tw-h-10 hover:tw-bg-n300 tw-p-2 tw-placeholder">${item}</li>`;
-                //  console.log(dropdownItem);
             });
             console.log(items);
-            if(items == [''] || items == undefined){
+            if(items.length == 0 || items == undefined){
                 content += `<li class="">Tidak Ada Data</li>`
             }
             $(dropItems).append(content);
             $(this).siblings().children().focus();
         } else {
-            $(this).siblings().addClass('tw-hidden');
+            // console.log($(this).siblings().find('.dropContent'));
+            $(this).next().next().addClass('tw-hidden');
 
             // rotateArrow($(this).children().last())
         }
