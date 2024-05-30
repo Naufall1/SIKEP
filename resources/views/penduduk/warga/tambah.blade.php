@@ -27,7 +27,7 @@
                                     placeholder="Pilih Jenis Data"></x-input.select2>
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="NIK" label="NIK">
+                            <x-input.label required class="tw-relative" for="NIK" label="NIK">
                                 <x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
                                 @error('NIK')
@@ -35,7 +35,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="nama" label="Nama">
+                            <x-input.label required for="nama" label="Nama">
                                 <x-input.input value="{{ old('nama') }}" type="text" name="nama" id="nama"
                                     placeholder="Masukkan Nama"></x-input.input>
                                 @error('nama')
@@ -43,7 +43,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="tempat_lahir" label="Tempat Lahir">
+                            <x-input.label required for="tempat_lahir" label="Tempat Lahir">
                                 <x-input.input value="{{ old('tempat_lahir') }}" type="text"
                                     placeholder="Masukkan Tempat Lahir" id="tempat_lahir"
                                     name="tempat_lahir"></x-input.input>
@@ -52,7 +52,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="tanggal_lahir" label="Tanggal Lahir">
+                            <x-input.label required for="tanggal_lahir" label="Tanggal Lahir">
                                 <x-input.input value="{{ old('tanggal_lahir') }}" placeholder="Masukkan Tempat Lahir"
                                     type="date" id="tanggal_lahir" name="tanggal_lahir"></x-input.input>
                                 @error('tanggal_lahir')
@@ -60,7 +60,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="jenis_kelamin-list" label="Jenis Kelamin">
+                            <x-input.label required class="tw-relative" for="jenis_kelamin-list" label="Jenis Kelamin">
                                 <x-input.select2 name="jenis_kelamin"
                                     default="{{ old('jenis_kelamin') == 'L' ? 'Laki-laki' : (old('jenis_kelamin') == 'P' ? 'Perempuan' : 'Pilih Jenis Kelamin') }}"
                                     placeholder="Pilih Jenis Kelamin"></x-input.select2>
@@ -69,7 +69,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="pendidikan-list" label="Pendidikan">
+                            <x-input.label required required class="tw-relative" for="pendidikan-list" label="Pendidikan">
                                 <x-input.select2 searchable name="pendidikan"
                                     default="{{ old('pendidikan') ? old('pendidikan') : 'Pilih Pendidikan' }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>
@@ -78,7 +78,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="agama-list" label="Agama">
+                            <x-input.label required class="tw-relative" for="agama-list" label="Agama">
                                 <x-input.select2 name="agama" default="{{ old('agama') ? old('agama') : 'Pilih Agama' }}"
                                     placeholder="Pilih Agama"></x-input.select2>
                                 @error('agama')
@@ -86,7 +86,8 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="status_perkawinan-list" label="Status Perkawinan">
+                            <x-input.label required class="tw-relative" for="status_perkawinan-list"
+                                label="Status Perkawinan">
                                 <x-input.select2 name="status_perkawinan"
                                     default="{{ old('status_perkawinan') ? old('status_perkawinan') : 'Pilih Status Perkawinan' }}"
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>
@@ -96,7 +97,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="jenis_pekerjaan-list" label="Jenis Pekerjaan">
+                            <x-input.label required class="tw-relative" for="jenis_pekerjaan-list" label="Jenis Pekerjaan">
                                 <x-input.select2 name="jenis_pekerjaan" searchable
                                     default="{{ old('jenis_pekerjaan') ? old('jenis_pekerjaan') : 'Pilih Jenis Pekerjaan' }}"
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>
@@ -106,7 +107,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label class="tw-relative" for="kewarganegaraan-list" label="Kewarganegaraan">
+                            <x-input.label required class="tw-relative" for="kewarganegaraan-list" label="Kewarganegaraan">
                                 <x-input.select2 name="kewarganegaraan"
                                     default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>
@@ -123,7 +124,8 @@
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label class="tw-relative" for="status_keluarga-list" label="Status Keluarga">
+                            <x-input.label required class="tw-relative" for="status_keluarga-list"
+                                label="Status Keluarga">
                                 <x-input.select2 name="status_keluarga"
                                     default="{{ old('status_keluarga') ? old('status_keluarga') : 'Pilih Status' }}"
                                     placeholder="Pilih Status"></x-input.select2>
@@ -133,7 +135,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="nama_ayah" label="Nama Ayah">
+                            <x-input.label required for="nama_ayah" label="Nama Ayah">
                                 <x-input.input value="{{ old('nama_ayah') }}" placeholder="Masukkan Nama Ayah"
                                     type="text" id="nama_ayah" name="nama_ayah"></x-input.input>
                                 @error('nama_ayah')
@@ -141,7 +143,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="nama_ibu" label="Nama Ibu">
+                            <x-input.label required for="nama_ibu" label="Nama Ibu">
                                 <x-input.input value="{{ old('nama_ibu') }}" placeholder="Masukkan Nama Ibu"
                                     type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
                                 @error('nama_ibu')
@@ -182,7 +184,7 @@
                         <h2 class="">Demografi Masuk</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label class="tw-relative" for="jenis_demografi-list" label="Jenis">
+                            <x-input.label required class="tw-relative" for="jenis_demografi-list" label="Jenis">
                                 <x-input.select2 name="jenis_demografi"
                                     default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
                                     placeholder="Pilih Jenis Demografi"></x-input.select2>
@@ -191,7 +193,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
+                            <x-input.label required for="tanggal_kejadian" label="Tanggal Kejadian">
                                 <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder="" type="date"
                                     id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
                                 @error('tanggal_kejadian')
@@ -199,7 +201,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                            <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
                                 <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                 @error('berkas_demografi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
@@ -273,7 +275,7 @@
 
                 console.log("data_lama()");
                 $("label[for='NIK']").attr('for', 'NIK-list');
-                $("label[for='NIK-list']").children().remove();
+                $("label[for='NIK-list']").children().next().remove();
                 $("label[for='NIK-list']").append(`<x-input.select2 name="NIK" searchable
                                     placeholder="Pilih NIK"></x-input.select2>`);
 
@@ -298,10 +300,10 @@
                 $('#tanggal_lahir').prop('disabled', true);
 
                 $("label[for='jenis_kelamin-list']").attr('for', 'jenis_kelamin');
-                $("label[for='jenis_kelamin']").children().remove();
+                $("label[for='jenis_kelamin']").children().next().remove();
                 $("label[for='jenis_kelamin']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_kelamin" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
 
                 // $('#jenis_kelamin').val('');
                 // $('#jenis_kelamin').removeClass('tw-input-enabled');
@@ -309,10 +311,10 @@
                 // $('#jenis_kelamin').prop('disabled', true);
 
                 $("label[for='pendidikan-list']").attr('for', 'pendidikan');
-                $("label[for='pendidikan']").children().remove();
+                $("label[for='pendidikan']").children().next().remove();
                 $("label[for='pendidikan']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="pendidikan" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
 
                 // $('#pendidikan').val('');
                 // $('#pendidikan').removeClass('tw-input-enabled');
@@ -320,30 +322,30 @@
                 // $('#pendidikan').prop('disabled', true);
 
                 $("label[for='agama-list']").attr('for', 'agama');
-                $("label[for='agama']").children().remove();
+                $("label[for='agama']").children().next().remove();
                 $("label[for='agama']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="agama" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
                 // $('#agama').val('');
                 // $('#agama').removeClass('tw-input-enabled');
                 // $('#agama').addClass('tw-input-disabled');
                 // $('#agama').prop('disabled', true);
 
                 $("label[for='status_perkawinan-list']").attr('for', 'status_perkawinan');
-                $("label[for='status_perkawinan']").children().remove();
+                $("label[for='status_perkawinan']").children().next().remove();
                 $("label[for='status_perkawinan']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="status_perkawinan" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
                 // $('#status_perkawinan').val('');
                 // $('#status_perkawinan').removeClass('tw-input-enabled');
                 // $('#status_perkawinan').addClass('tw-input-disabled');
                 // $('#status_perkawinan').prop('disabled', true);
 
                 $("label[for='jenis_pekerjaan-list']").attr('for', 'jenis_pekerjaan');
-                $("label[for='jenis_pekerjaan']").children().remove();
+                $("label[for='jenis_pekerjaan']").children().next().remove();
                 $("label[for='jenis_pekerjaan']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_pekerjaan" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
                 // $('#jenis_pekerjaan-list').addClass('tw-hidden');
                 // $('#jenis_pekerjaan').val('');
                 // $('#jenis_pekerjaan').attr('type', 'text');
@@ -352,10 +354,10 @@
                 // $('#jenis_pekerjaan').prop('disabled', true);
 
                 $("label[for='kewarganegaraan-list']").attr('for', 'kewarganegaraan');
-                $("label[for='kewarganegaraan']").children().remove();
+                $("label[for='kewarganegaraan']").children().next().remove();
                 $("label[for='kewarganegaraan']").append(
                     `<x-input.input disabled value="Pilih NIK" type="text" name="kewarganegaraan" placeholder="Masukkan NIK"></x-input.input>`
-                    );
+                );
                 // $('#kewarganegaraan').val('');
                 // $('#kewarganegaraan').removeClass('tw-input-enabled');
                 // $('#kewarganegaraan').addClass('tw-input-disabled');
@@ -424,54 +426,58 @@
 
                 console.log("data_baru()");
                 $("label[for='NIK-list']").attr('for', 'NIK');
-                $("label[for='NIK']").children().remove();
+                $("label[for='NIK']").children().next().remove();
                 $("label[for='NIK']").append(`<x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>`);
 
 
-                $('#formInput').append(
-                    `<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
-                        <h2 class="">Demografi Masuk</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                // console.log('length = ' + $('#demografiMasuk').length);
+                if ($('#demografiMasuk').length == 0) {
+                    $('#formInput').append(
+                        `<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                            <h2 class="">Demografi Masuk</h2>
+                            <div class="tw-flex tw-flex-col tw-gap-3">
+    
+                                <x-input.label required class="tw-relative" for="jenis_demografi-list" label="Jenis">
+                                    <x-input.select2 name="jenis_demografi"
+                                        default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
+                                        placeholder="Pilih Jenis Demografi"></x-input.select2>
+                                    @error('jenis_demografi')
+                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    @enderror
+                                </x-input.label>
+    
+                                <x-input.label required for="tanggal_kejadian" label="Tanggal Kejadian">
+                                    <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder="" type="date"
+                                        id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
+                                    @error('tanggal_kejadian')
+                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    @enderror
+                                </x-input.label>
+    
+                                <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
+                                    <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
+                                    @error('berkas_demografi')
+                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    @enderror
+                                </x-input.label>
+    
+                                @if (session()->has('berkas_demografi'))
+                                    @php
+                                        $img = session()->get('berkas_demografi');
+                                    @endphp
+                                    @include('components.form.textdetail', [
+                                        'title' => '',
+                                        'isImage' => true,
+                                        'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
+                                    ])
+                                @endif
+    
+                            </div>
+                        </div>`
+                    );
+                }
 
-                            <x-input.label class="tw-relative" for="jenis_demografi-list" label="Jenis">
-                                <x-input.select2 name="jenis_demografi"
-                                    default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
-                                    placeholder="Pilih Jenis Demografi"></x-input.select2>
-                                @error('jenis_demografi')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror
-                            </x-input.label>
-
-                            <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
-                                <x-input.input value="{{ old('tanggal_kejadian') }}" placeholder="" type="date"
-                                    id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
-                                @error('tanggal_kejadian')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror
-                            </x-input.label>
-
-                            <x-input.label for="berkas_demografi" label="Berkas Pendukung">
-                                <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
-                                @error('berkas_demografi')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror
-                            </x-input.label>
-
-                            @if (session()->has('berkas_demografi'))
-                                @php
-                                    $img = session()->get('berkas_demografi');
-                                @endphp
-                                @include('components.form.textdetail', [
-                                    'title' => '',
-                                    'isImage' => true,
-                                    'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
-                                ])
-                            @endif
-
-                        </div>
-                    </div>`
-                );
 
                 $('#nama').val('');
                 // $('#nama').addClass('tw-input-enabled');
@@ -492,7 +498,7 @@
                 $('#tanggal_lahir').prop('disabled', false);
 
                 $("label[for='jenis_kelamin']").attr('for', 'jenis_kelamin-list');
-                $("label[for='jenis_kelamin-list']").children().remove();
+                $("label[for='jenis_kelamin-list']").children().next().remove();
                 $("label[for='jenis_kelamin-list']").append(`<x-input.select2 name="jenis_kelamin"
                                     default="{{ old('jenis_kelamin') == 'L' ? 'Laki-laki' : (old('jenis_kelamin') == 'P' ? 'Perempuan' : 'Pilih Jenis Kelamin') }}"
                                     placeholder="Pilih Jenis Kelamin"></x-input.select2>`);
@@ -502,7 +508,7 @@
                 // $('#jenis_kelamin').prop('disabled', false);
 
                 $("label[for='pendidikan']").attr('for', 'pendidikan-list');
-                $("label[for='pendidikan-list']").children().remove();
+                $("label[for='pendidikan-list']").children().next().remove();
                 $("label[for='pendidikan-list']").append(`<x-input.select2 searchable name="pendidikan"
                                     default="{{ old('pendidikan') ? old('pendidikan') : 'Pilih Pendidikan' }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>`);
@@ -512,7 +518,7 @@
                 // $('#pendidikan').prop('disabled', false);
 
                 $("label[for='agama']").attr('for', 'agama-list');
-                $("label[for='agama-list']").children().remove();
+                $("label[for='agama-list']").children().next().remove();
                 $("label[for='agama-list']").append(`<x-input.select2 name="agama" default="{{ old('agama') ? old('agama') : 'Pilih Agama' }}"
                                     placeholder="Pilih Agama"></x-input.select2>`);
 
@@ -521,7 +527,7 @@
                 // $('#agama').prop('disabled', false);
 
                 $("label[for='status_perkawinan']").attr('for', 'status_perkawinan-list');
-                $("label[for='status_perkawinan-list']").children().remove();
+                $("label[for='status_perkawinan-list']").children().next().remove();
                 $("label[for='status_perkawinan-list']").append(`<x-input.select2 name="status_perkawinan"
                                     default="{{ old('status_perkawinan') ? old('status_perkawinan') : 'Pilih Status Perkawinan' }}"
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>`);
@@ -531,7 +537,7 @@
                 // $('#status_perkawinan').prop('disabled', false);
 
                 $("label[for='jenis_pekerjaan']").attr('for', 'jenis_pekerjaan-list');
-                $("label[for='jenis_pekerjaan-list']").children().remove();
+                $("label[for='jenis_pekerjaan-list']").children().next().remove();
                 $("label[for='jenis_pekerjaan-list']").append(`<x-input.select2 name="jenis_pekerjaan" searchable
                                     default="{{ old('jenis_pekerjaan') ? old('jenis_pekerjaan') : 'Pilih Jenis Pekerjaan' }}"
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>`);
@@ -543,7 +549,7 @@
                 // $('#jenis_pekerjaan').prop('disabled', false);
 
                 $("label[for='kewarganegaraan']").attr('for', 'kewarganegaraan-list');
-                $("label[for='kewarganegaraan-list']").children().remove();
+                $("label[for='kewarganegaraan-list']").children().next().remove();
                 $("label[for='kewarganegaraan-list']").append(`<x-input.select2 name="kewarganegaraan"
                                     default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>`);
