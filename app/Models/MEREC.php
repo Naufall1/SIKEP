@@ -1,40 +1,45 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use App\Models\KriteriaModel;
-use Illuminate\Http\Request;
-
-class MERECController extends Controller
+class MEREC
 {
-    public function MEREC()
-    {
-        $kriteriaModel = new KriteriaModel();
-        $matriks = $kriteriaModel->kriteria();
-        $namaKriteria = $kriteriaModel->namaKriteria();
+    private KriteriaModel $kriteria;
+    private array $R;
+    private array $S;
+    private array $S0;
+    private array $E;
+    private array $bobot;
 
-        $m = count($matriks); // jumlah alternatif
-        // if ($m == 0) {
-        //     return view('test', ['bobot' => [], 'namaKriteria' => $namaKriteria]);
-        // }
+    public function __construct(KriteriaModel $kriteria) {
+        $this->kriteria = $kriteria;
+    }
+    public function getBobot(): array
+    {
+        return $this->bobot;
+    }
+    public function calculate()
+    {
+        $matriks = $this->kriteria->kriteria();
+
+
         $n = count($matriks[array_key_first($matriks)]); // jumlah kriteria
 
         // Step 1: Normalisasi Matriks Keputusan
-        $R = $this->normalisasiMatriks($matriks, $n);
+        $this->R = $this->normalisasiMatriks($matriks, $n);
 
         // Step 2: Hitung Si
-        $S = $this->hitungSi($R, $n);
+        $this->S = $this->hitungSi($this->R, $n);
 
         // Step 3: Hitung Sij
-        $S0 = $this->hitungSij($R, $n);
+        $this->S0 = $this->hitungSij($this->R, $n);
 
         // Step 4: Hitung Ei
-        $E = $this->hitungEi($S0, $S, $n);
+        $this->E = $this->hitungEi($this->S0, $this->S, $n);
 
         // Step 5: Hitung Bobot
-        $bobot = $this->hitungBobot($E);
+        $this->bobot = $this->hitungBobot($this->E);
 
-        return view('bansos.perhitungan.bobot', compact('matriks', 'R', 'S', 'S0', 'E', 'bobot', 'namaKriteria'));
     }
 
     private function normalisasiMatriks($matriks, $n)
@@ -99,8 +104,6 @@ class MERECController extends Controller
         foreach ($S0 as $no_kk => $nilai) {
             for ($j = 0; $j < count($nilai); $j++) {
                 $E[$j] += (abs($S0[$no_kk][$j] - $S[$no_kk]));
-                // dd($S0[$no_kk][$j]);
-                // dd($S[$no_kk]);
             }
         }
 
@@ -118,4 +121,22 @@ class MERECController extends Controller
         arsort($bobot);
         return $bobot;
     }
+
+    public function getMatriksTernormalisasi(): array
+    {
+        return $this->R;
+    }
+    public function getNilaiSi(): array
+    {
+        return $this->S;
+    }
+    public function getNilaiSij(): array
+    {
+        return $this->S0;
+    }
+    public function getNilaiEi(): array
+    {
+        return $this->E;
+    }
+
 }
