@@ -291,11 +291,11 @@
             });
 
 
-            
-            
+
+
             var buttonRow =
-            `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
-            
+                `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
+
             // dataWarga.row.add($(buttonRow)[0]).draw();
             $('table tbody').after($(buttonRow));
 
@@ -338,7 +338,9 @@
         // }
 
         function data_lama() {
+
             $('#formData').attr('action', '{{ route('pindahKK') }}');
+
 
             $("label[for='no_kk']").attr('for', 'no_kk-list');
             $("label[for='no_kk-list']").children().next().remove();
@@ -349,14 +351,15 @@
             // $('#no_kk').attr('type', 'hidden');
             // $('#no_kk').prop('disabled', true);
 
-            // $('#kepala_keluarga').val('');
+            $('#kepala_keluarga').val('');
             $('#kepala_keluarga').removeClass('tw-input-enabled');
             $('#kepala_keluarga').addClass('tw-input-disabled');
             // $('#kepala_keluarga').addClass('tw-input-disabled placeholder:tw-text-n600');
             $('#kepala_keluarga').attr('placeholder', 'Pilih No KK');
             $('#kepala_keluarga').prop('readonly', true);
 
-            // $('#alamat').val('');
+            $('#alamat').val('');
+            $("label[for='alamat']").children().removeClass('required-label');
             $('#alamat').removeClass('tw-input-enabled');
             $('#alamat').addClass('tw-input-disabled');
             $('#alamat').attr('placeholder', 'Pilih No KK');
@@ -367,13 +370,13 @@
             // $('#RT').attr('placeholder', 'Pilih No KK');
             // $('#RT').prop('disabled', true);
 
-            // $('#tagihan_listrik').val('');
+            $('#tagihan_listrik').val('');
             $('#tagihan_listrik').removeClass('tw-input-enabled');
             $('#tagihan_listrik').addClass('tw-input-disabled');
             $('#tagihan_listrik').attr('placeholder', 'Pilih No KK');
             $('#tagihan_listrik').prop('disabled', true);
 
-            // $('#luas_bangunan').val('');
+            $('#luas_bangunan').val('');
             $('#luas_bangunan').removeClass('tw-input-enabled');
             $('#luas_bangunan').addClass('tw-input-disabled');
             $('#luas_bangunan').attr('placeholder', 'Pilih No KK');
@@ -408,51 +411,54 @@
         }
 
         function data_baru() {
-            $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
-            // $('#no_kk').addClass('tw-input-enabled');
-            // $('#no_kk').attr('type', 'text');
-            // $('#no_kk').prop('disabled', false);
+            if ($('input#jenis_data').val() == 'Data Lama') {
+                $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
+                // $('#no_kk').addClass('tw-input-enabled');
+                // $('#no_kk').attr('type', 'text');
+                // $('#no_kk').prop('disabled', false);
 
-            $("label[for='no_kk-list']").attr('for', 'no_kk');
-            $("label[for='no_kk']").children().next().remove();
-            $("label[for='no_kk']").append(
-                `<x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
+                $("label[for='no_kk-list']").attr('for', 'no_kk');
+                $("label[for='no_kk']").children().next().remove();
+                $("label[for='no_kk']").append(
+                    `<x-input.input maxlength=16 type="text" name="no_kk" placeholder="Masukkan No KK"
                                     value="{{ old('no_kk', isset($formState['no_kk']) ? $formState['no_kk'] : '') }}"></x-input.input>`
-            );
+                );
 
-            // $('#kepala_keluarga').val('');
-            // $('#kepala_keluarga').addClass('tw-input-enabled');
-            // $('#kepala_keluarga').removeClass('tw-input-disabled');
-            // $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
-            // $('#kepala_keluarga').prop('readonly', false);
+                // $('#kepala_keluarga').val('');
+                // $('#kepala_keluarga').addClass('tw-input-enabled');
+                // $('#kepala_keluarga').removeClass('tw-input-disabled');
+                // $('#kepala_keluarga').attr('placeholder', 'Masukkan Kepala Keluarga');
+                // $('#kepala_keluarga').prop('readonly', false);
 
-            $('#alamat').val('');
-            $('#alamat').addClass('tw-input-enabled');
-            $('#alamat').removeClass('tw-input-disabled');
-            $('#alamat').attr('placeholder', 'Masukkan Alamat');
-            $('#alamat').prop('disabled', false);
+                $('#alamat').val('');
+                $("label[for='alamat']").children().addClass('required-label');
+                $('#alamat').addClass('tw-input-enabled');
+                $('#alamat').removeClass('tw-input-disabled');
+                $('#alamat').attr('placeholder', 'Masukkan Alamat');
+                $('#alamat').prop('disabled', false);
 
-            // $('#RT').val('001');
-            // $('#RT').addClass('tw-input-enabled');
-            // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
-            // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
-            // $('#RT').prop('disabled', false);
+                // $('#RT').val('001');
+                // $('#RT').addClass('tw-input-enabled');
+                // $('#RT').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                // $('#RT').attr('placeholder', 'Masukkan Tempat Lahir');
+                // $('#RT').prop('disabled', false);
 
-            $('#tagihan_listrik').val('');
-            $('#tagihan_listrik').addClass('tw-input-enabled');
-            $('#tagihan_listrik').removeClass('tw-input-disabled');
-            $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
-            $('#tagihan_listrik').prop('disabled', false);
+                $('#tagihan_listrik').val('');
+                $('#tagihan_listrik').addClass('tw-input-enabled');
+                $('#tagihan_listrik').removeClass('tw-input-disabled');
+                $('#tagihan_listrik').attr('placeholder', 'Misal: 100000');
+                $('#tagihan_listrik').prop('disabled', false);
 
-            $('#luas_bangunan').val('');
-            $('#luas_bangunan').addClass('tw-input-enabled');
-            $('#luas_bangunan').removeClass('tw-input-disabled');
-            $('#luas_bangunan').attr('placeholder', 'Misal: 100');
-            $('#luas_bangunan').prop('disabled', false);
+                $('#luas_bangunan').val('');
+                $('#luas_bangunan').addClass('tw-input-enabled');
+                $('#luas_bangunan').removeClass('tw-input-disabled');
+                $('#luas_bangunan').attr('placeholder', 'Misal: 100');
+                $('#luas_bangunan').prop('disabled', false);
 
-            // $('#no_kk-list').removeClass('tw-input-enabled');
-            // $('#no_kk-list').parent().addClass('tw-hidden');
-            // $('#no_kk-list').prop('disabled', true);
+                // $('#no_kk-list').removeClass('tw-input-enabled');
+                // $('#no_kk-list').parent().addClass('tw-hidden');
+                // $('#no_kk-list').prop('disabled', true);
+            }
         }
 
         function changeJenisData(jenisData) {
