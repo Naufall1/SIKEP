@@ -4,7 +4,7 @@
 
 
     @if (isset($isImage) && $isImage == true)
-        <img src="{{ $content }}" alt="" class="tw-w-80 tw-h-fit tw-min-h-56 tw-bg-b200">
+        <img src="{{ $content }}" alt="" class="tw-w-full tw-h-fit tw-bg-b200">
     @elseif (isset($isLabel) && $isLabel == true)
         @include('components.form.label', ['content' => $content])
     @else
