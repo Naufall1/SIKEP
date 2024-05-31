@@ -1,5 +1,10 @@
 @extends('layout.layout', ['isForm' => false])
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/1.10.25/css/dataTables.bootstrap.min.css') }}">
+@endpush
+
+
 @section('content')
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[768px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
 
@@ -20,7 +25,7 @@
                 </a>
             </div>
         </div>
-        
+
     </div>
     @if (Session::has('message'))
         <script>
@@ -28,3 +33,10 @@
         </script>
     @endif
 @endsection
+
+
+@push('js')
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
+@endpush

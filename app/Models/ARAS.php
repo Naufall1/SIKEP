@@ -5,8 +5,10 @@ namespace App\Models;
 class ARAS
 {
     private array $matriks;
+    private array $matriksKeputusan;
     private array $namaKriteria = [];
     private array $bobot;
+    private array $normalisasiCost = [];
     private array $normalizedMatrix = [];
     private array $matriksTerbobot = [];
     private array $nilaiFungsiOptimum_S = [];
@@ -48,6 +50,12 @@ class ARAS
             }
         }
 
+        $this->matriksKeputusan['A0'] = $a0Array;
+
+        foreach ($this->matriks as $key => $value) {
+            $this->matriksKeputusan[$key] = $value;
+        }
+
         // Langkah 2: Menghitung normalisasi step 1 untuk cost
         foreach ($this->matriks as $no_kk => $nilai) {
             for ($i=0; $i <=3 ; $i++) {
@@ -57,6 +65,8 @@ class ARAS
                 $cost[$no_kk][$j] = $nilai[$j] != 0 ? 1 / $nilai[$j] : 0;
             }
         }
+
+        $this->normalisasiCost = $cost;
 
         // Menjumlah nilai setiap kriteria
         for ($i=0; $i < $n; $i++) {
@@ -152,6 +162,12 @@ class ARAS
         arsort($this->peringkatUtilitas_K);
 
         return $this->peringkatUtilitas_K;
+    }
+    public function getMatriksKeputusan() : array {
+        return $this->matriksKeputusan;
+    }
+    public function getNormalisasiTahap_1() : array {
+        return $this->normalisasiCost;
     }
     public function getMatriksTernormalisasi_R() : array {
         return $this->normalizedMatrix;

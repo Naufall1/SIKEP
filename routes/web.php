@@ -32,15 +32,16 @@ Route::prefix('spk')->middleware(['auth', 'role:rw,rt'])->group(function () {
     Route::prefix('merec')->group(function () {
         Route::post('/keputusan', [SPKController::class, 'getMatriksKeputusan'])->name('spk.merec.keputusan');
         Route::post('/normalisasi', [SPKController::class, 'getMERECMatriksTernormalisasi'])->name('spk.merec.normalisasi');
-        Route::post('/nilaiSi', [SPKController::class, 'getMERECNilaiSi'])->name('spk.merec.normalisasi');
-        Route::post('/nilaiSij', [SPKController::class, 'getMERECSij'])->name('spk.merec.nilaiSi');
-        Route::post('/nilaiEi', [SPKController::class, 'getMERECEi'])->name('spk.merec.nilaiSij');
+        Route::post('/nilaiSi', [SPKController::class, 'getMERECNilaiSi'])->name('spk.merec.nilaiSi');
+        Route::post('/nilaiSij', [SPKController::class, 'getMERECSij'])->name('spk.merec.nilaiSij');
+        Route::post('/nilaiEi', [SPKController::class, 'getMERECEi'])->name('spk.merec.nilaiEi');
         Route::post('/bobot', [SPKController::class, 'getMERECBobot'])->name('spk.merec.bobot');
     });
 
     Route::prefix('aras')->group(function () {
         Route::post('/keputusan', [SPKController::class, 'getARASMatriksKeputusan'])->name('spk.aras.matriksKeputusan');
-        Route::post('/normalisasi', [SPKController::class, 'getARASMatriksTernormalisasi'])->name('spk.aras.matriksTrnormalisasi');
+        Route::post('/normalisasi_1', [SPKController::class, 'getARASNormalisasi_1'])->name('spk.aras.matriksTrnormalisasi_1');
+        Route::post('/normalisasi_2', [SPKController::class, 'getARASMatriksTernormalisasi'])->name('spk.aras.matriksTrnormalisasi_2');
         Route::post('/terbobot', [SPKController::class, 'getARASMatriksTerbobot'])->name('spk.aras.matriksTerbobot');
         Route::post('/nilaiFungsiOptimal', [SPKController::class, 'getARASNilaiFungsiOptimal'])->name('spk.aras.nilaiFungsiOptimal');
         Route::post('/peringkatUtilitas', [SPKController::class, 'getARASPeringkatUtilitas'])->name('spk.aras.peringkatUtilitas');
@@ -182,7 +183,7 @@ Route::prefix('publikasi')->middleware(['auth','role:adm'])->group(function () {
     Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
     Route::get('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'edit_draf'])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
     Route::put('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'update_draf'])->name('publikasi.draf.update'); // menyimpan data
-    
+
 });
 
 Route::get('/baca', function(){

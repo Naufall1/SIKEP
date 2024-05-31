@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ARAS;
+use App\Models\Keluarga;
 use App\Models\KriteriaModel;
 use App\Models\MEREC;
 use Illuminate\Http\JsonResponse;
@@ -15,9 +16,12 @@ class SPKController extends Controller
     private MEREC $MEREC;
     private ARAS $ARAS;
     private KriteriaModel $kriteria;
+    private $daftarKeluarga;
     public function __construct()
     {
         $this->kriteria = new KriteriaModel();
+
+        $this->daftarKeluarga = Keluarga::select(['no_kk', 'kepala_keluarga'])->get();
 
         $this->MEREC = new MEREC($this->kriteria);
         $this->MEREC->calculate();
@@ -32,68 +36,178 @@ class SPKController extends Controller
     }
     public function getMatriksKeputusan() : JsonResponse
     {
-        return DataTables::of(collect($this->kriteria->kriteria()))
+        $data = [];
+
+        foreach ($this->kriteria->kriteria() as $key => $value) {
+            $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getMERECMatriksTernormalisasi(): JsonResponse
     {
-        return DataTables::of(collect($this->MEREC->getMatriksTernormalisasi()))
+        $data = [];
+
+        foreach ($this->MEREC->getMatriksTernormalisasi() as $key => $value) {
+            $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getMERECNilaiSi() : JsonResponse
     {
-        return DataTables::of(collect($this->MEREC->getNilaiSi()))
+        $data = [];
+
+        foreach ($this->MEREC->getNilaiSi() as $key => $value) {
+            $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            $data[$key][0] = $value;
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getMERECSij() : JsonResponse
     {
-        return DataTables::of(collect($this->MEREC->getNilaiSij()))
+        $data = [];
+
+        foreach ($this->MEREC->getNilaiSij() as $key => $value) {
+            $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getMERECEi() : JsonResponse
     {
-        return DataTables::of(collect($this->MEREC->getNilaiEi()))
-                ->addIndexColumn()
+        $data = [];
+
+        $data[] = $this->MEREC->getNilaiEi();
+        $data[0]['title'] = 'Nilai E';
+        $data[0]['total'] = array_sum($this->MEREC->getNilaiEi());
+
+        return DataTables::of(collect($data))
                 ->make();
     }
     public function getMERECBobot() : JsonResponse
     {
-        return DataTables::of(collect($this->MEREC->getBobot()))
-                ->addIndexColumn()
+        $data = [];
+
+        $data[] = $this->MEREC->getBobot();
+        $data[0]['title'] = 'Bobot';
+        $data[0]['total'] = array_sum($this->MEREC->getNilaiEi());
+
+        return DataTables::of(collect($data))
                 ->make();
     }
     public function getARASMatriksKeputusan() : JsonResponse
     {
-        return DataTables::of(collect($this->ARAS->getMatriksTernormalisasi_R()))
+        $data = [];
+
+        foreach ($this->ARAS->getMatriksKeputusan() as $key => $value) {
+            if (!is_null($this->daftarKeluarga->find($key))) {
+                $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            } else {
+                $data[$key]['kepala_keluarga'] = 'A0';
+            }
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
+                ->addIndexColumn()
+                ->make();
+    }
+    public function getARASNormalisasi_1() : JsonResponse {
+        $data = [];
+
+        foreach ($this->ARAS->getNormalisasiTahap_1() as $key => $value) {
+            if (!is_null($this->daftarKeluarga->find($key))) {
+                $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            } else {
+                $data[$key]['kepala_keluarga'] = 'A0';
+            }
+            $data[$key] = array_merge($data[$key], $value);
+            $data[$key]['4'] = '-';
+            $data[$key]['5'] = '-';
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getARASMatriksTernormalisasi() : JsonResponse
     {
-        return DataTables::of(collect($this->ARAS->getMatriksTernormalisasi_R()))
+        $data = [];
+
+        foreach ($this->ARAS->getMatriksTernormalisasi_R() as $key => $value) {
+            if (!is_null($this->daftarKeluarga->find($key))) {
+                $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            } else {
+                $data[$key]['kepala_keluarga'] = 'A0';
+            }
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getARASMatriksTerbobot() : JsonResponse
     {
-        return DataTables::of(collect($this->ARAS->getMatriksTerbobot_D()))
+        $data = [];
+
+        foreach ($this->ARAS->getMatriksTerbobot_D() as $key => $value) {
+            if (!is_null($this->daftarKeluarga->find($key))) {
+                $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            } else {
+                $data[$key]['kepala_keluarga'] = 'A0';
+            }
+            $data[$key] = array_merge($data[$key], $value);
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getARASNilaiFungsiOptimal() : JsonResponse
     {
-        return DataTables::of(collect($this->ARAS->getNilaiFungsiOptimum_S()))
+        $data = [];
+
+        foreach ($this->ARAS->getNilaiFungsiOptimum_S() as $key => $value) {
+            if (!is_null($this->daftarKeluarga->find($key))) {
+                $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            } else {
+                $data[$key]['kepala_keluarga'] = 'A0';
+            }
+            $data[$key][0] = $value;
+        }
+
+        return DataTables::of(collect($data))
                 ->addIndexColumn()
                 ->make();
     }
     public function getARASPeringkatUtilitas() : JsonResponse
     {
-        return DataTables::of(collect($this->ARAS->getPeringkatUtilitas_K()))
-                ->addIndexColumn()
+        $data = [];
+
+        $rank = 1;
+        foreach ($this->ARAS->getPeringkatUtilitas_K() as $key => $value) {
+            $data[$key]['kepala_keluarga'] = $this->daftarKeluarga->find($key)->kepala_keluarga;
+            $data[$key][0] = $value;
+            $data[$key]['rank'] = $rank;
+            $rank += 1;
+        }
+
+        return DataTables::of(collect($data))
+                // ->addIndexColumn()
                 ->make();
     }
 
