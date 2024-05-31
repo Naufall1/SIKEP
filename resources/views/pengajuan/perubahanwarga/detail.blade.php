@@ -75,7 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                    <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                         <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Warga Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
@@ -171,7 +171,7 @@
                     </div>
 
                     @if (($modifiedWarga->status_keluarga != $currentWarga->status_keluarga) || ($modifiedWarga->penghasilan != $currentWarga->penghasilan) || ($modifiedWarga->no_paspor != $currentWarga->no_paspor) || ($modifiedWarga->no_kitas != $currentWarga->no_kitas))
-                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                        <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                             <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                                 <h2 class="">Detail Tambahan Baru</h2>
                                 <div class="tw-flex tw-flex-col tw-gap-3">
@@ -236,7 +236,7 @@
                     @endif
 
                     @if ($demografiMasukNew)
-                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                        <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                             <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                                 @if ($demografiMasukNew)
                                     <h2 class="">Demografi Masuk Baru</h2>
@@ -292,7 +292,7 @@
                     @endif
 
                     @if ($demografiKeluarNew)
-                        <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                        <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                             <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                                 @if ($demografiKeluarNew)
                                     <h2 class="">Demografi Keluar Baru</h2>

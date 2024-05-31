@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-justify-between">
+                    <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                         <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                             <h2 class="">Detail Keluarga Baru</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
