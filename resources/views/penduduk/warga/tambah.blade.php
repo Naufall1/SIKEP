@@ -151,7 +151,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="penghasilan" label="Penghasilan">
+                            <x-input.label required for="penghasilan" label="Penghasilan">
                                 <x-input.leadingicon value="{{ old('penghasilan') }}" type="number" min="0"
                                     id="penghasilan" name="penghasilan" placeholder="Misal: 1000000" icon="rupiah"
                                     alt="Rp">
@@ -268,173 +268,188 @@
     @push('js')
         <script>
             function data_lama() {
-                $('#formData').attr('action', '{{ route('pindahKK') }}');
-                // $('#NIK').removeClass('tw-input-enabled');
-                // $('#NIK').attr('type', 'hidden');
-                // $('#NIK').prop('disabled', true);
+                    $('#formData').attr('action', '{{ route('pindahKK') }}');
+                    // $('#NIK').removeClass('tw-input-enabled');
+                    // $('#NIK').attr('type', 'hidden');
+                    // $('#NIK').prop('disabled', true);
 
-                console.log("data_lama()");
-                $("label[for='NIK']").attr('for', 'NIK-list');
-                $("label[for='NIK-list']").children().next().remove();
-                $("label[for='NIK-list']").append(`<x-input.select2 name="NIK" searchable
+                    console.log("data_lama()");
+                    $("label[for='NIK']").attr('for', 'NIK-list');
+                    $("label[for='NIK-list']").children().next().remove();
+                    $("label[for='NIK-list']").append(`<x-input.select2 name="NIK" searchable
                                     placeholder="Pilih NIK"></x-input.select2>`);
 
-                $('#demografiMasuk').remove();
+                    $('#demografiMasuk').remove();
 
-                $('#nama').val('');
-                // $('#nama').removeClass('tw-input-enabled');
-                // $('#nama').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama').attr('placeholder', 'Pilih NIK');
-                $('#nama').prop('disabled', true);
+                    $('#nama').val('');
+                    // $('#nama').removeClass('tw-input-enabled');
+                    // $('#nama').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    // console.log($("label[for='nama']"));
+                    $("label[for='nama']").children().removeClass('required-label');
+                    $('#nama').attr('placeholder', 'Pilih NIK');
+                    $('#nama').prop('disabled', true);
 
-                $('#tempat_lahir').val('');
-                // $('#tempat_lahir').removeClass('tw-input-enabled');
-                // $('#tempat_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tempat_lahir').attr('placeholder', 'Pilih NIK');
-                $('#tempat_lahir').prop('disabled', true);
+                    $('#tempat_lahir').val('');
+                    // $('#tempat_lahir').removeClass('tw-input-enabled');
+                    // $('#tempat_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='tempat_lahir']").children().removeClass('required-label');
+                    $('#tempat_lahir').attr('placeholder', 'Pilih NIK');
+                    $('#tempat_lahir').prop('disabled', true);
 
-                $('#tanggal_lahir').val('');
-                // $('#tanggal_lahir').removeClass('tw-input-enabled');
-                // $('#tanggal_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tanggal_lahir').attr('placeholder', 'Pilih NIK');
-                $('#tanggal_lahir').prop('disabled', true);
+                    $('#tanggal_lahir').val('');
+                    // $('#tanggal_lahir').removeClass('tw-input-enabled');
+                    // $('#tanggal_lahir').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='tanggal_lahir']").children().removeClass('required-label');
+                    $('#tanggal_lahir').attr('placeholder', 'Pilih NIK');
+                    $('#tanggal_lahir').prop('disabled', true);
 
-                $("label[for='jenis_kelamin-list']").attr('for', 'jenis_kelamin');
-                $("label[for='jenis_kelamin']").children().next().remove();
-                $("label[for='jenis_kelamin']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_kelamin" placeholder="Masukkan NIK"></x-input.input>`
-                );
+                    $("label[for='jenis_kelamin-list']").attr('for', 'jenis_kelamin');
+                    $("label[for='jenis_kelamin']").children().next().remove();
+                    $("label[for='jenis_kelamin']").children().removeClass('required-label');
+                    $("label[for='jenis_kelamin']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_kelamin" placeholder="Masukkan NIK"></x-input.input>`
+                    );
 
-                // $('#jenis_kelamin').val('');
-                // $('#jenis_kelamin').removeClass('tw-input-enabled');
-                // $('#jenis_kelamin').addClass('tw-input-disabled');
-                // $('#jenis_kelamin').prop('disabled', true);
+                    // $('#jenis_kelamin').val('');
+                    // $('#jenis_kelamin').removeClass('tw-input-enabled');
+                    // $('#jenis_kelamin').addClass('tw-input-disabled');
+                    // $('#jenis_kelamin').prop('disabled', true);
 
-                $("label[for='pendidikan-list']").attr('for', 'pendidikan');
-                $("label[for='pendidikan']").children().next().remove();
-                $("label[for='pendidikan']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="pendidikan" placeholder="Masukkan NIK"></x-input.input>`
-                );
+                    $("label[for='pendidikan-list']").attr('for', 'pendidikan');
+                    $("label[for='pendidikan']").children().next().remove();
+                    $("label[for='pendidikan']").children().removeClass('required-label');
+                    $("label[for='pendidikan']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="pendidikan" placeholder="Masukkan NIK"></x-input.input>`
+                    );
 
-                // $('#pendidikan').val('');
-                // $('#pendidikan').removeClass('tw-input-enabled');
-                // $('#pendidikan').addClass('tw-input-disabled');
-                // $('#pendidikan').prop('disabled', true);
+                    // $('#pendidikan').val('');
+                    // $('#pendidikan').removeClass('tw-input-enabled');
+                    // $('#pendidikan').addClass('tw-input-disabled');
+                    // $('#pendidikan').prop('disabled', true);
 
-                $("label[for='agama-list']").attr('for', 'agama');
-                $("label[for='agama']").children().next().remove();
-                $("label[for='agama']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="agama" placeholder="Masukkan NIK"></x-input.input>`
-                );
-                // $('#agama').val('');
-                // $('#agama').removeClass('tw-input-enabled');
-                // $('#agama').addClass('tw-input-disabled');
-                // $('#agama').prop('disabled', true);
+                    $("label[for='agama-list']").attr('for', 'agama');
+                    $("label[for='agama']").children().next().remove();
+                    $("label[for='agama']").children().removeClass('required-label');
+                    $("label[for='agama']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="agama" placeholder="Masukkan NIK"></x-input.input>`
+                    );
+                    // $('#agama').val('');
+                    // $('#agama').removeClass('tw-input-enabled');
+                    // $('#agama').addClass('tw-input-disabled');
+                    // $('#agama').prop('disabled', true);
 
-                $("label[for='status_perkawinan-list']").attr('for', 'status_perkawinan');
-                $("label[for='status_perkawinan']").children().next().remove();
-                $("label[for='status_perkawinan']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="status_perkawinan" placeholder="Masukkan NIK"></x-input.input>`
-                );
-                // $('#status_perkawinan').val('');
-                // $('#status_perkawinan').removeClass('tw-input-enabled');
-                // $('#status_perkawinan').addClass('tw-input-disabled');
-                // $('#status_perkawinan').prop('disabled', true);
+                    $("label[for='status_perkawinan-list']").attr('for', 'status_perkawinan');
+                    $("label[for='status_perkawinan']").children().next().remove();
+                    $("label[for='status_perkawinan']").children().removeClass('required-label');
+                    $("label[for='status_perkawinan']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="status_perkawinan" placeholder="Masukkan NIK"></x-input.input>`
+                    );
+                    // $('#status_perkawinan').val('');
+                    // $('#status_perkawinan').removeClass('tw-input-enabled');
+                    // $('#status_perkawinan').addClass('tw-input-disabled');
+                    // $('#status_perkawinan').prop('disabled', true);
 
-                $("label[for='jenis_pekerjaan-list']").attr('for', 'jenis_pekerjaan');
-                $("label[for='jenis_pekerjaan']").children().next().remove();
-                $("label[for='jenis_pekerjaan']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_pekerjaan" placeholder="Masukkan NIK"></x-input.input>`
-                );
-                // $('#jenis_pekerjaan-list').addClass('tw-hidden');
-                // $('#jenis_pekerjaan').val('');
-                // $('#jenis_pekerjaan').attr('type', 'text');
-                // $('#jenis_pekerjaan').removeClass('tw-input-enabled');
-                // $('#jenis_pekerjaan').addClass('tw-input-disabled');
-                // $('#jenis_pekerjaan').prop('disabled', true);
+                    $("label[for='jenis_pekerjaan-list']").attr('for', 'jenis_pekerjaan');
+                    $("label[for='jenis_pekerjaan']").children().next().remove();
+                    $("label[for='jenis_pekerjaan']").children().removeClass('required-label');
+                    $("label[for='jenis_pekerjaan']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="jenis_pekerjaan" placeholder="Masukkan NIK"></x-input.input>`
+                    );
+                    // $('#jenis_pekerjaan-list').addClass('tw-hidden');
+                    // $('#jenis_pekerjaan').val('');
+                    // $('#jenis_pekerjaan').attr('type', 'text');
+                    // $('#jenis_pekerjaan').removeClass('tw-input-enabled');
+                    // $('#jenis_pekerjaan').addClass('tw-input-disabled');
+                    // $('#jenis_pekerjaan').prop('disabled', true);
 
-                $("label[for='kewarganegaraan-list']").attr('for', 'kewarganegaraan');
-                $("label[for='kewarganegaraan']").children().next().remove();
-                $("label[for='kewarganegaraan']").append(
-                    `<x-input.input disabled value="Pilih NIK" type="text" name="kewarganegaraan" placeholder="Masukkan NIK"></x-input.input>`
-                );
-                // $('#kewarganegaraan').val('');
-                // $('#kewarganegaraan').removeClass('tw-input-enabled');
-                // $('#kewarganegaraan').addClass('tw-input-disabled');
-                // $('#kewarganegaraan').prop('disabled', true);
+                    $("label[for='kewarganegaraan-list']").attr('for', 'kewarganegaraan');
+                    $("label[for='kewarganegaraan']").children().next().remove();
+                    $("label[for='kewarganegaraan']").children().removeClass('required-label');
+                    $("label[for='kewarganegaraan']").append(
+                        `<x-input.input disabled value="Pilih NIK" type="text" name="kewarganegaraan" placeholder="Masukkan NIK"></x-input.input>`
+                    );
+                    // $('#kewarganegaraan').val('');
+                    // $('#kewarganegaraan').removeClass('tw-input-enabled');
+                    // $('#kewarganegaraan').addClass('tw-input-disabled');
+                    // $('#kewarganegaraan').prop('disabled', true);
 
-                // $('#status_ekluarga').val('');
-                // $('#status_ekluarga').removeClass('tw-input-enabled');
-                // $('#status_ekluarga').addClass('tw-input-disabled halo');
+                    // $('#status_ekluarga').val('');
+                    // $('#status_ekluarga').removeClass('tw-input-enabled');
+                    // $('#status_ekluarga').addClass('tw-input-disabled halo');
 
-                $('#nama_ayah').val('');
-                // $('#nama_ayah').removeClass('tw-input-enabled');
-                // $('#nama_ayah').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ayah').attr('placeholder', 'Pilih NIK');
-                $('#nama_ayah').prop('disabled', true);
+                    $('#nama_ayah').val('');
+                    // $('#nama_ayah').removeClass('tw-input-enabled');
+                    // $('#nama_ayah').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='nama_ayah']").children().removeClass('required-label');
+                    $('#nama_ayah').attr('placeholder', 'Pilih NIK');
+                    $('#nama_ayah').prop('disabled', true);
 
-                $('#nama_ibu').val('');
-                // $('#nama_ibu').removeClass('tw-input-enabled');
-                // $('#nama_ibu').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ibu').attr('placeholder', 'Pilih NIK');
-                $('#nama_ibu').prop('disabled', true);
+                    $('#nama_ibu').val('');
+                    // $('#nama_ibu').removeClass('tw-input-enabled');
+                    // $('#nama_ibu').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='nama_ibu']").children().removeClass('required-label');
+                    $('#nama_ibu').attr('placeholder', 'Pilih NIK');
+                    $('#nama_ibu').prop('disabled', true);
 
-                $('#penghasilan').val('');
-                // $('#penghasilan').removeClass('tw-input-enabled');
-                // $('#penghasilan').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#penghasilan').attr('placeholder', 'Pilih NIK');
-                $('#penghasilan').prop('disabled', true);
+                    $('#penghasilan').val('');
+                    // $('#penghasilan').removeClass('tw-input-enabled');
+                    // $('#penghasilan').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='penghasilan']").children().removeClass('required-label');
+                    $('#penghasilan').attr('placeholder', 'Pilih NIK');
+                    $('#penghasilan').prop('disabled', true);
 
-                $('#no_paspor').val('');
-                // $('#no_paspor').removeClass('tw-input-enabled');
-                // $('#no_paspor').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_paspor').attr('placeholder', 'Pilih NIK');
-                $('#no_paspor').prop('disabled', true);
+                    $('#no_paspor').val('');
+                    // $('#no_paspor').removeClass('tw-input-enabled');
+                    // $('#no_paspor').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $('#no_paspor').attr('placeholder', 'Pilih NIK');
+                    $('#no_paspor').prop('disabled', true);
 
-                $('#no_kitas').val('');
-                // $('#no_kitas').removeClass('tw-input-enabled');
-                // $('#no_kitas').addClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_kitas').attr('placeholder', 'Pilih NIK');
-                $('#no_kitas').prop('disabled', true);
-
-
-
-                // $('#nik-list').addClass('tw-input-enabled');
-                // $('#nik-list').parent().removeClass('tw-hidden');
-                // $('#nik-list').prop('disabled', false);
+                    $('#no_kitas').val('');
+                    // $('#no_kitas').removeClass('tw-input-enabled');
+                    // $('#no_kitas').addClass('tw-input-disabled placeholder:tw-text-n600');
+                    $('#no_kitas').attr('placeholder', 'Pilih NIK');
+                    $('#no_kitas').prop('disabled', true);
 
 
-                // $.ajax({
-                //     type: "GET",
-                //     url: "/api/warga",
-                //     success: function(response) {
-                //         response.forEach(warga => {
-                //             let optionHTML =
-                //                 `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
-                //             $('#nik-list').append(optionHTML);
-                //         });
-                //     }
-                // });
+
+                    // $('#nik-list').addClass('tw-input-enabled');
+                    // $('#nik-list').parent().removeClass('tw-hidden');
+                    // $('#nik-list').prop('disabled', false);
+
+
+                    // $.ajax({
+                    //     type: "GET",
+                    //     url: "/api/warga",
+                    //     success: function(response) {
+                    //         response.forEach(warga => {
+                    //             let optionHTML =
+                    //                 `<option value="${warga.nik}">${warga.nik} - ${warga.nama}</option>`;
+                    //             $('#nik-list').append(optionHTML);
+                    //         });
+                    //     }
+                    // });
             }
 
             function data_baru() {
-                $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
-                $('#formData')[0].reset();
-                // $('#NIK').addClass('tw-input-enabled');
-                // $('#NIK').attr('type', 'text');
-                // $('#NIK').prop('disabled', false);
+                console.log($('input#jenis_data').val());
+                if ($('input#jenis_data').val() == 'Data Lama') {
+                    $('#formData').attr('action', '{{ route('tambah-warga-post') }}');
+                    $('#formData')[0].reset();
+                    // $('#NIK').addClass('tw-input-enabled');
+                    // $('#NIK').attr('type', 'text');
+                    // $('#NIK').prop('disabled', false);
 
-                console.log("data_baru()");
-                $("label[for='NIK-list']").attr('for', 'NIK');
-                $("label[for='NIK']").children().next().remove();
-                $("label[for='NIK']").append(`<x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
+                    console.log("data_baru()");
+                    $("label[for='NIK-list']").attr('for', 'NIK');
+                    $("label[for='NIK']").children().next().remove();
+                    $("label[for='NIK']").append(`<x-input.input maxlength=16 value="{{ old('NIK') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>`);
 
 
-                // console.log('length = ' + $('#demografiMasuk').length);
-                if ($('#demografiMasuk').length == 0) {
-                    $('#formInput').append(
-                        `<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                    // console.log('length = ' + $('#demografiMasuk').length);
+                    if ($('#demografiMasuk').length == 0) {
+                        $('#formInput').append(
+                            `<div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
                             <h2 class="">Demografi Masuk</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
     
@@ -475,127 +490,141 @@
     
                             </div>
                         </div>`
-                    );
-                }
+                        );
+                    }
 
 
-                $('#nama').val('');
-                // $('#nama').addClass('tw-input-enabled');
-                // $('#nama').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama').attr('placeholder', 'Masukkan Nama');
-                $('#nama').prop('disabled', false);
+                    $('#nama').val('');
+                    // $('#nama').addClass('tw-input-enabled');
+                    // $('#nama').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='nama']").children().addClass('required-label');
+                    $('#nama').attr('placeholder', 'Masukkan Nama');
+                    $('#nama').prop('disabled', false);
 
-                $('#tempat_lahir').val('');
-                // $('#tempat_lahir').addClass('tw-input-enabled');
-                // $('#tempat_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tempat_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#tempat_lahir').prop('disabled', false);
+                    $('#tempat_lahir').val('');
+                    // $('#tempat_lahir').addClass('tw-input-enabled');
+                    // $('#tempat_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='tempat_lahir']").children().addClass('required-label');
+                    $('#tempat_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
+                    $('#tempat_lahir').prop('disabled', false);
 
-                $('#tanggal_lahir').val('');
-                // $('#tanggal_lahir').addClass('tw-input-enabled');
-                // $('#tanggal_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#tanggal_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
-                $('#tanggal_lahir').prop('disabled', false);
+                    $('#tanggal_lahir').val('');
+                    // $("label[for='tanggal_lahir']").children().addClass('required-label');
+                    // $('#tanggal_lahir').addClass('tw-input-enabled');
+                    // $('#tanggal_lahir').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='tanggal_lahir']").children().first().addClass('required-label');
+                    $('#tanggal_lahir').attr('placeholder', 'Masukkan Tempat Lahir');
+                    $('#tanggal_lahir').prop('disabled', false);
 
-                $("label[for='jenis_kelamin']").attr('for', 'jenis_kelamin-list');
-                $("label[for='jenis_kelamin-list']").children().next().remove();
-                $("label[for='jenis_kelamin-list']").append(`<x-input.select2 name="jenis_kelamin"
+                    $("label[for='jenis_kelamin']").children().addClass('required-label');
+                    $("label[for='jenis_kelamin']").attr('for', 'jenis_kelamin-list');
+                    $("label[for='jenis_kelamin-list']").children().next().remove();
+                    $("label[for='jenis_kelamin-list']").append(`<x-input.select2 name="jenis_kelamin"
                                     default="{{ old('jenis_kelamin') == 'L' ? 'Laki-laki' : (old('jenis_kelamin') == 'P' ? 'Perempuan' : 'Pilih Jenis Kelamin') }}"
                                     placeholder="Pilih Jenis Kelamin"></x-input.select2>`);
 
-                // $('#jenis_kelamin').addClass('tw-input-enabled');
-                // $('#jenis_kelamin').removeClass('tw-input-disabled');
-                // $('#jenis_kelamin').prop('disabled', false);
+                    // $('#jenis_kelamin').addClass('tw-input-enabled');
+                    // $('#jenis_kelamin').removeClass('tw-input-disabled');
+                    // $('#jenis_kelamin').prop('disabled', false);
 
-                $("label[for='pendidikan']").attr('for', 'pendidikan-list');
-                $("label[for='pendidikan-list']").children().next().remove();
-                $("label[for='pendidikan-list']").append(`<x-input.select2 searchable name="pendidikan"
+                    $("label[for='pendidikan']").children().addClass('required-label');
+                    $("label[for='pendidikan']").attr('for', 'pendidikan-list');
+                    $("label[for='pendidikan-list']").children().next().remove();
+                    $("label[for='pendidikan-list']").append(`<x-input.select2 searchable name="pendidikan"
                                     default="{{ old('pendidikan') ? old('pendidikan') : 'Pilih Pendidikan' }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>`);
 
-                // $('#pendidikan').addClass('tw-input-enabled');
-                // $('#pendidikan').removeClass('tw-input-disabled');
-                // $('#pendidikan').prop('disabled', false);
+                    // $('#pendidikan').addClass('tw-input-enabled');
+                    // $('#pendidikan').removeClass('tw-input-disabled');
+                    // $('#pendidikan').prop('disabled', false);
 
-                $("label[for='agama']").attr('for', 'agama-list');
-                $("label[for='agama-list']").children().next().remove();
-                $("label[for='agama-list']").append(`<x-input.select2 name="agama" default="{{ old('agama') ? old('agama') : 'Pilih Agama' }}"
+                    $("label[for='agama']").children().addClass('required-label');
+                    $("label[for='agama']").attr('for', 'agama-list');
+                    $("label[for='agama-list']").children().next().remove();
+                    $("label[for='agama-list']").append(`<x-input.select2 name="agama" default="{{ old('agama') ? old('agama') : 'Pilih Agama' }}"
                                     placeholder="Pilih Agama"></x-input.select2>`);
 
-                // $('#agama').addClass('tw-input-enabled');
-                // $('#agama').removeClass('tw-input-disabled');
-                // $('#agama').prop('disabled', false);
+                    // $('#agama').addClass('tw-input-enabled');
+                    // $('#agama').removeClass('tw-input-disabled');
+                    // $('#agama').prop('disabled', false);
 
-                $("label[for='status_perkawinan']").attr('for', 'status_perkawinan-list');
-                $("label[for='status_perkawinan-list']").children().next().remove();
-                $("label[for='status_perkawinan-list']").append(`<x-input.select2 name="status_perkawinan"
+                    $("label[for='status_perkawinan']").children().addClass('required-label');
+                    $("label[for='status_perkawinan']").attr('for', 'status_perkawinan-list');
+                    $("label[for='status_perkawinan-list']").children().next().remove();
+                    $("label[for='status_perkawinan-list']").append(`<x-input.select2 name="status_perkawinan"
                                     default="{{ old('status_perkawinan') ? old('status_perkawinan') : 'Pilih Status Perkawinan' }}"
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>`);
 
-                // $('#status_perkawinan').addClass('tw-input-enabled');
-                // $('#status_perkawinan').removeClass('tw-input-disabled');
-                // $('#status_perkawinan').prop('disabled', false);
+                    // $('#status_perkawinan').addClass('tw-input-enabled');
+                    // $('#status_perkawinan').removeClass('tw-input-disabled');
+                    // $('#status_perkawinan').prop('disabled', false);
 
-                $("label[for='jenis_pekerjaan']").attr('for', 'jenis_pekerjaan-list');
-                $("label[for='jenis_pekerjaan-list']").children().next().remove();
-                $("label[for='jenis_pekerjaan-list']").append(`<x-input.select2 name="jenis_pekerjaan" searchable
+                    $("label[for='jenis_pekerjaan']").children().addClass('required-label');
+                    $("label[for='jenis_pekerjaan']").attr('for', 'jenis_pekerjaan-list');
+                    $("label[for='jenis_pekerjaan-list']").children().next().remove();
+                    $("label[for='jenis_pekerjaan-list']").append(`<x-input.select2 name="jenis_pekerjaan" searchable
                                     default="{{ old('jenis_pekerjaan') ? old('jenis_pekerjaan') : 'Pilih Jenis Pekerjaan' }}"
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>`);
 
-                // $('#jenis_pekerjaan-list').removeClass('tw-hidden');
-                // $('#jenis_pekerjaan').attr('type', 'hidden');
-                // $('#jenis_pekerjaan').addClass('tw-input-enabled');
-                // $('#jenis_pekerjaan').removeClass('tw-input-disabled');
-                // $('#jenis_pekerjaan').prop('disabled', false);
+                    // $('#jenis_pekerjaan-list').removeClass('tw-hidden');
+                    // $('#jenis_pekerjaan').attr('type', 'hidden');
+                    // $('#jenis_pekerjaan').addClass('tw-input-enabled');
+                    // $('#jenis_pekerjaan').removeClass('tw-input-disabled');
+                    // $('#jenis_pekerjaan').prop('disabled', false);
 
-                $("label[for='kewarganegaraan']").attr('for', 'kewarganegaraan-list');
-                $("label[for='kewarganegaraan-list']").children().next().remove();
-                $("label[for='kewarganegaraan-list']").append(`<x-input.select2 name="kewarganegaraan"
+                    $("label[for='kewarganegaraan']").children().addClass('required-label');
+                    $("label[for='kewarganegaraan']").attr('for', 'kewarganegaraan-list');
+                    $("label[for='kewarganegaraan-list']").children().next().remove();
+                    $("label[for='kewarganegaraan-list']").append(`<x-input.select2 name="kewarganegaraan"
                                     default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>`);
 
-                // $('#kewarganegaraan').addClass('tw-input-enabled');
-                // $('#kewarganegaraan').removeClass('tw-input-disabled');
-                // $('#kewarganegaraan').prop('disabled', false);
+                    // $('#kewarganegaraan').addClass('tw-input-enabled');
+                    // $('#kewarganegaraan').removeClass('tw-input-disabled');
+                    // $('#kewarganegaraan').prop('disabled', false);
 
-                // $('#status_keluarga').addClass('tw-input-enabled');
-                // $('#status_keluarga').removeClass('tw-input-disabled');
+                    // $('#status_keluarga').addClass('tw-input-enabled');
+                    // $('#status_keluarga').removeClass('tw-input-disabled');
 
-                $('#nama_ayah').val();
-                // $('#nama_ayah').addClass('tw-input-enabled');
-                // $('#nama_ayah').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ayah').attr('placeholder', 'Masukkan Nama Ayah');
-                $('#nama_ayah').prop('disabled', false);
+                    $('#nama_ayah').val();
+                    // $('#nama_ayah').addClass('tw-input-enabled');
+                    // $('#nama_ayah').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='nama_ayah']").children().addClass('required-label');
+                    $('#nama_ayah').attr('placeholder', 'Masukkan Nama Ayah');
+                    $('#nama_ayah').prop('disabled', false);
 
-                $('#nama_ibu').val();
-                // $('#nama_ibu').addClass('tw-input-enabled');
-                // $('#nama_ibu').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#nama_ibu').attr('placeholder', 'Masukkan Nama Ibu');
-                $('#nama_ibu').prop('disabled', false);
+                    $('#nama_ibu').val();
+                    // $('#nama_ibu').addClass('tw-input-enabled');
+                    // $('#nama_ibu').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='nama_ibu']").children().addClass('required-label');
+                    $('#nama_ibu').attr('placeholder', 'Masukkan Nama Ibu');
+                    $('#nama_ibu').prop('disabled', false);
 
-                $('#penghasilan').val();
-                // $('#penghasilan').addClass('tw-input-enabled');
-                // $('#penghasilan').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#penghasilan').attr('placeholder', 'Misal: 1000000');
-                $('#penghasilan').prop('disabled', false);
+                    $('#penghasilan').val();
+                    // $('#penghasilan').addClass('tw-input-enabled');
+                    // $('#penghasilan').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $("label[for='penghasilan']").children().first().addClass('required-label');
+                    $('#penghasilan').attr('placeholder', 'Misal: 1000000');
+                    $('#penghasilan').prop('disabled', false);
 
-                $('#penghasilan').val();
-                // $('#no_paspor').addClass('tw-input-enabled');
-                // $('#no_paspor').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_paspor').attr('placeholder', 'Masukkan Nomor Paspor');
-                $('#no_paspor').prop('disabled', false);
+                    $('#no_paspor').val();
+                    // $('#no_paspor').addClass('tw-input-enabled');
+                    // $('#no_paspor').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $('#no_paspor').attr('placeholder', 'Masukkan Nomor Paspor');
+                    $('#no_paspor').prop('disabled', false);
 
-                $('#no_kitas').val();
-                // $('#no_kitas').addClass('tw-input-enabled');
-                // $('#no_kitas').removeClass('tw-input-disabled placeholder:tw-text-n600');
-                $('#no_kitas').attr('placeholder', 'Masukkan Nomor Kitas');
-                $('#no_kitas').prop('disabled', false);
+                    $('#no_kitas').val();
+                    // $('#no_kitas').addClass('tw-input-enabled');
+                    // $('#no_kitas').removeClass('tw-input-disabled placeholder:tw-text-n600');
+                    $('#no_kitas').attr('placeholder', 'Masukkan Nomor Kitas');
+                    $('#no_kitas').prop('disabled', false);
 
 
 
-                // $('#nik-list').removeClass('tw-input-enabled');
-                // $('#nik-list').parent().addClass('tw-hidden');
-                // $('#nik-list').prop('disabled', true);
+                    // $('#nik-list').removeClass('tw-input-enabled');
+                    // $('#nik-list').parent().addClass('tw-hidden');
+                    // $('#nik-list').prop('disabled', true);
+                }
             }
 
             function demografi_birth_date() {
