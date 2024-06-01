@@ -111,13 +111,13 @@ class ArticleAnnouncementController extends Controller
             'caption' => 'required|string|max:255'
         ]);
 
-        $filename = explode('.',session()->get('image')->filename)[0]
+        $filename = explode('.', session()->get('image')->filename)[0]
                     . '_' .
                     date('Y-m-d-H_i_s') .
                     '.' .
-                    explode('.',session()->get('image')->filename)[1];
+                    explode('.', session()->get('image')->filename)[1];
 
-        if(Storage::disk('public')->put(
+        if (Storage::disk('public')->put(
                 'publikasi/'. $filename,
             session()->get('image')->content)
             ){
@@ -125,16 +125,20 @@ class ArticleAnnouncementController extends Controller
         };
 
         $publikasi = new ArticleAnnouncement();
-
         $publikasi->fill($validatedData);
-
         $publikasi->user_id = $user->user_id;
         $publikasi->penulis = $user->nama;
-        $publikasi->tanggal_publish = null;
         $publikasi->tanggal_dibuat = now();
         $publikasi->tanggal_edit = null;
         $publikasi->image_url = $filename;
-        $publikasi->status = "Disembunyikan";
+
+        if ($request->has('status') && $request->status === 'Ditampilkan') {
+            $publikasi->status = 'Ditampilkan';
+            $publikasi->tanggal_publish = now();
+        } else {
+            $publikasi->status = 'Disembunyikan';
+            $publikasi->tanggal_publish = null;
+        }
 
         $publikasi->save();
         session()->save();
@@ -196,7 +200,6 @@ class ArticleAnnouncementController extends Controller
     {
         $filename = '';
         if ($request->has('gambar')) {
-
             $request->validate([
                 'gambar' => 'file|image|mimes:jpeg,jpg,png|max:5000'
             ]);
@@ -215,16 +218,14 @@ class ArticleAnnouncementController extends Controller
             'caption' => 'required|string|max:255'
         ]);
 
-        $user = Auth::user();
-
         $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', $user->user_id)->firstOrFail();
 
         if ($this->hasImage()) {
-            $filename = explode('.',session()->get('image')->filename)[0]
+            $filename = explode('.', session()->get('image')->filename)[0]
                         . '_' .
                         date('Y-m-d-H_i_s') .
                         '.' .
-                        explode('.',session()->get('image')->filename)[1];
+                        explode('.', session()->get('image')->filename)[1];
 
             if(Storage::disk('public')->put(
                     'publikasi/'. $filename,
@@ -246,8 +247,6 @@ class ArticleAnnouncementController extends Controller
 
         return redirect()->route('publikasi.draf')->with('success', 'Announcement updated successfully.');
     }
-
-
 
     // Remove the specified resource from storage.
     public function destroy($kode)

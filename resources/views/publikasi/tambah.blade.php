@@ -62,17 +62,28 @@
 
                             <x-input.label class="tw-relative" for="kategori-list" label="Kategori">
                                 <x-input.select2 name="kategori"
-                                    placeholder="Pilih Kategori" value="{{old('kategori')}}"></x-input.select2>
+                                    placeholder="Pilih Kategori" selected="{{old('kategori')}}"></x-input.select2>
 
                                 @error('kategori')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
+                            <br>
+                            <x-input.label for="status" label="Apakah anda akan langsung posting publikasi ini?">
+                                <div class="tw-flex items-center">
+                                    <input type="checkbox" name="status" id="status" value="Ditampilkan" class="tw-form-checkbox">
+                                    <label for="status" class="tw-ml-2">Ya, Langsung Posting</label>
+                                </div>
+
+                                @error('status')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
+                            </x-input.label>
+
 
                         </div>
                     </div>
                 </div>
-
 
                 <div class="tw-flex tw-justify-between tw-w-full">
                     <a href="{{ route('publikasi') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
@@ -92,6 +103,7 @@
         </div>
     </div>
 @endsection
+
 @push('js')
 <script src="https://cdn.tiny.cloud/1/z0hhm5m2sapddlcptxbuiww7jy2drthhz0q3sk33ev5imf3n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
@@ -106,12 +118,15 @@
             plugins: 'autolink lists link image charmap print preview hr anchor pagebreak',
             toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
         });
-
-        $('#edit_form').submit(function(){
-            var currentDate = new Date().toISOString().slice(0,10);
-            $('#tanggal_edit').val(currentDate);
-            $('#tanggal_publish').val(currentDate);
-        });
     });
+
+    function updatePublishDate() {
+        var currentDate = new Date().toISOString().slice(0, 10);
+        document.getElementById('tanggal_publish').value = currentDate;
+    }
+
+    function clearPublishDate() {
+        document.getElementById('tanggal_publish').value = '';
+    }
 </script>
 @endpush
