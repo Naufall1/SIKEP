@@ -42,17 +42,18 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => $dataKeluarga->tagihan_listrik,
+                                'content' => 'Rp ' . number_format($dataKeluarga->tagihan_listrik, 0, ',', '.'),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                'content' => $dataKeluarga->luas_bangunan,
+                                'content' => $dataKeluarga->luas_bangunan . ' m²',
+
                             ])
                         </div>
                     </div>
 
                     @foreach ($dataWarga as $anggota)
-                        
+
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Kriteria Anggota</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
@@ -67,7 +68,7 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp' . $anggota->penghasilan,
+                                'content' => 'Rp ' . number_format($anggota->penghasilan, 0, ',', '.'),
                             ])
 
                         </div>

@@ -138,17 +138,31 @@
                     data: "tagihan_listrik",
                     className: "tw-grow",
                     orderable: true,
-                    searchable: true
+                    searchable: true,
+                    render: function(data, type, row) {
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        formattedValue = formattedValue.replace(/,00$/, '');
+                        return formattedValue;
+                    }
                 }, {
                     data: "luas_bangunan",
                     className: "tw-w-[150px]",
                     orderable: true,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row) {
+                    var formattedValue = data + " m²";
+                    return formattedValue;
+                }
                 }, {
                     data: "total_penghasilan",
-                    className: "tw-w-[172px]",
+                    className: "tw-w-[172px] tw-currency",
                     orderable: true,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row) {
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        formattedValue = formattedValue.replace(/,00$/, '');
+                        return formattedValue;
+                    }
                 }, {
                     data: "jumlah_warga_berpenghasilan",
                     className: "tw-w-[92px]",
@@ -178,5 +192,18 @@
         $('#searchBox').keyup(function () {
             dataBansos.search($(this).val()).draw();
         });
+
+        function formatCurrency() {
+                $('.tw-currency').each(function() {
+                    var value = $(this).text();
+                    var parts = value.toString().split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    $(this).text(parts.join(','));
+                });
+            }
+
+            dataBansos.on('draw', function () {
+                formatCurrency();
+            });
         </script>
 @endpush
