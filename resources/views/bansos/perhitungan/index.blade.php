@@ -7,7 +7,7 @@
             Penerimaan Bansos
         </h1>
 
-        <a href="{{route('bansos.perhitungan.detailPerhitungan')}}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail Perhitungan</a>  
+        <a href="{{route('bansos.perhitungan.detailPerhitungan')}}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail Perhitungan</a>
     </div>
     <div class="tw-flex tw-flex-col tw-gap-4">
         <div class="tw-flex">
@@ -24,7 +24,7 @@
         <div class="tw-flex tw-flex-col tw-gap-3">
             {{-- Start: Tool Bar --}}
             <div class="tw-flex tw-gap-2 tw-w-full">
-                
+
                 <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
                     <input type="text" placeholder="Cari" class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]" type="button" id="searchBox">
                     </input>
@@ -128,58 +128,85 @@
                 [2, 'asc']
             ],
             columns: [{
-                data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                className: "tw-w-[100px]",
-                orderable: false,
-                // searchable: false
-            }, {
-                data: "kepala_keluarga",
-                className: "tw-w-[240px]",
-                orderable: true,
-                searchable: true
-            }, {
-                data: "tagihan_listrik",
-                className: "tw-grow",
-                orderable: true,
-                searchable: true
-            }, {
-                data: "luas_bangunan",
-                className: "tw-w-[150px]",
-                orderable: true,
-                searchable: false
-            }, {
-                data: "total_penghasilan",
-                className: "tw-w-[172px]",
-                orderable: true,
-                searchable: false
-            }, {
-                data: "jumlah_warga_berpenghasilan",
-                className: "tw-w-[92px]",
-                orderable: true,
-                searchable: false
-            }, {
-                data: "tanggungan",
-                className: "tw-w-[150px]",
-                orderable: true,
-                searchable: false
-            }, {
-                data: "jumlah_warga_bersekolah",
-                className: "tw-w-[150px]",
-                orderable: true,
-                searchable: false
-            }, {
-                data: "action",
-                className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
-                orderable: false,
-                searchable: false
-            }]
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "tw-w-[48px]",
+                    orderable: false,
+                    // searchable: false
+                }, {
+                    data: "kepala_keluarga",
+                    className: "tw-w-[240px]",
+                    orderable: true,
+                    searchable: true
+                }, {
+                    data: "tagihan_listrik",
+                    className: "tw-grow",
+                    orderable: true,
+                    searchable: true,
+                    render: function(data, type, row) {
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        formattedValue = formattedValue.replace(/,00$/, '');
+                        return formattedValue;
+                    }
+                }, {
+                    data: "luas_bangunan",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false,
+                    render: function(data, type, row) {
+                    var formattedValue = data + " m²";
+                    return formattedValue;
+                }
+                }, {
+                    data: "total_penghasilan",
+                    className: "tw-w-[172px] tw-currency",
+                    orderable: true,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        formattedValue = formattedValue.replace(/,00$/, '');
+                        return formattedValue;
+                    }
+                }, {
+                    data: "jumlah_warga_berpenghasilan",
+                    className: "tw-w-[92px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "tanggungan",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "jumlah_warga_bersekolah",
+                    className: "tw-w-[150px]",
+                    orderable: true,
+                    searchable: false
+                }, {
+                    data: "action",
+                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+            // $('#level_id').on('change', function () {
+            //     dataBansos.ajax.reload();
+            // });
         });
-        // $('#level_id').on('change', function () {
-        //     dataBansos.ajax.reload();
-        // });
-    });
-    $('#searchBox').keyup(function() {
-        dataBansos.search($(this).val()).draw();
-    });
-</script>
+        $('#searchBox').keyup(function () {
+            dataBansos.search($(this).val()).draw();
+        });
+
+        function formatCurrency() {
+                $('.tw-currency').each(function() {
+                    var value = $(this).text();
+                    var parts = value.toString().split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    $(this).text(parts.join(','));
+                });
+            }
+
+            dataBansos.on('draw', function () {
+                formatCurrency();
+            });
+        </script>
 @endpush
