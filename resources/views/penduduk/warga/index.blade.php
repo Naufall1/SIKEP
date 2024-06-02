@@ -13,7 +13,8 @@
         ['title' => 'Keluarga', 'url' => '#'],
     ], ] ) --}}
 
-    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <div
             class="tw-flex tw-items-center md:tw-items-start {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start' }}">
             <h1 class="tw-h1 tw-w-1/2">
@@ -101,22 +102,23 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div
+                    class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-gap-3 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataWarga">
+                    <table class="tw-table-fixed tw-min-w-fit tw-w-full" id="dataWarga">
                         <thead>
                             <tr class="">
-                                <th class="tw-w-[48px]">No</th>
-                                <th class="tw-w-[240px]">NIK</th>
-                                <th class="md:tw-grow tw-min-w-fit">Nama</th>
-                                <th class="tw-w-[150px]">Jenis Kelamin</th>
-                                <th class="tw-w-[172px]">Tanggal Lahir</th>
-                                <th class="tw-w-[92px]">Agama</th>
-                                <th class="tw-w-[150px]">Status Warga</th>
-                                <th class="tw-h-11"></th>
+                                <th class="">No</th>
+                                <th class="">NIK</th>
+                                <th class="">Nama</th>
+                                <th class="">Jenis Kelamin</th>
+                                <th class="">Tanggal Lahir</th>
+                                <th class="">Agama</th>
+                                <th class="">Status Warga</th>
+                                <th class=""></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class="tw-divide-n400">
                             {{-- @foreach ($warga as $w) --}}
                             {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td></td>
@@ -136,11 +138,6 @@
                             {{-- @endforeach --}}
                         </tbody>
                     </table>
-
-                    <div>
-
-                    </div>
-
                 </div>
                 {{-- End: Table HERE --}}
             </div>
@@ -199,15 +196,17 @@
                         d.status_warga = filter_statusWarga;
                     }
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -241,44 +240,53 @@
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "NIK",
-                    className: "tw-w-[240px]",
+                    className: "tw-min-w-[220px] tw-max-w-[220px]",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "nama",
-                    className: "tw-grow",
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "jenis_kelamin",
-                    className: "tw-w-[150px]",
+                    className: "tw-min-w-[145px] tw-max-w-[145px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_lahir",
-                    className: "tw-w-[172px]",
+                    className: "tw-min-w-[172px] tw-max-w-[172px] tw-table-right-align",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "agama",
-                    className: "tw-w-[92px]",
+                    className: "tw-min-w-[76px] tw-max-w-[76px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "status_warga",
-                    className: "tw-w-[150px]",
+                    className: "tw-min-w-[154px] tw-max-w-[154px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1, 2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
             $('input[name="scope_data"]').on('change', function() {
@@ -288,15 +296,15 @@
         $('#searchBox').keyup(function() {
             dataUser.search($(this).val()).draw();
         });
-        
-        $('button#reset-filter').on('click', function () {
+
+        $('button#reset-filter').on('click', function() {
             filter_agama = [];
             filter_statusWarga = [];
             var filterItem = filter_agama.concat(filter_statusWarga);
             reload_filter(filterItem);
             dataUser.ajax.reload();
         });
-        
+
         $('button#filter').click(function() {
             var filterItem = filter_agama.concat(filter_statusWarga);
             reload_filter(filterItem);

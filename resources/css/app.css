@@ -201,8 +201,14 @@
     }
 
     td {
-        @apply tw-whitespace-nowrap tw-px-4 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-semibold tw-text-base tw-text-n1000 tw-line-clamp-1;
+        @apply tw-w-auto tw-whitespace-nowrap  tw-overflow-ellipsis tw-px-4 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-semibold tw-text-base tw-text-n1000 tw-line-clamp-1;
     }
+
+    .tw-table-right-align{
+        @apply tw-flex tw-items-center tw-justify-end;
+    }
+
+    /* DataTable */
 
     table.dataTable thead .sorting:after,
     table.dataTable thead .sorting_asc:after,
@@ -235,6 +241,12 @@
     .dataTables_empty {
         /* background-image: url('../views/components/icons/empty.svg') !important; */
         @apply tw-h-40 tw-py-4 tw-flex tw-items-center tw-justify-center tw-flex-col tw-gap-2
+    }
+
+    table[style]{
+        /* width: 100% !important; */
+        margin-top: 0 !important;
+        margin-bottom: 12px !important;
     }
 
     /* Divider */

@@ -1,113 +1,126 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-<div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
-    <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
-        <h1 class="tw-h1 tw-w-1/2">
-            Penerimaan Bansos
-        </h1>
+    <div
+        class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+        <div class="tw-flex tw-items-center md:tw-items-start tw-justify-between">
+            <h1 class="tw-h1 tw-w-1/2">
+                Penerimaan Bansos
+            </h1>
 
-        <a href="{{route('bansos.perhitungan.detailPerhitungan')}}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail Perhitungan</a>
-    </div>
-    <div class="tw-flex tw-flex-col tw-gap-4">
-        <div class="tw-flex">
-            <a href="{{route('bansos.kriteria')}}" class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
-                Kriteria
-            </a>
-            <a href="" class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
-                Perhitungan
-            </a>
-            <div class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
-            </div>
+            <a
+                href="{{ route('bansos.perhitungan.detailPerhitungan') }}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail
+                Perhitungan</a>
         </div>
-
-        <div class="tw-flex tw-flex-col tw-gap-3">
-            {{-- Start: Tool Bar --}}
-            <div class="tw-flex tw-gap-2 tw-w-full">
-
-                <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                    <input type="text" placeholder="Cari" class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]" type="button" id="searchBox">
-                    </input>
-                    <span class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
-                        <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}" alt="back">
-                    </span>
+        <div class="tw-flex tw-flex-col tw-gap-4">
+            <div class="tw-flex">
+                <a href="{{ route('bansos.kriteria') }}"
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600 hover:tw-text-n700">
+                    Kriteria
+                </a>
+                <a href=""
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-px-2 tw-border-b-[2px] tw-border-b500 tw-top-menu-text">
+                    Perhitungan
+                </a>
+                <div
+                    class="tw-flex tw-justify-center tw-items-center tw-h-8 tw-w-full tw-border-b-[1px] tw-border-n400 tw-top-menu-text tw-text-n600">
                 </div>
             </div>
-            {{-- End: Tool Bar --}}
 
-            {{-- Start: Table HERE --}}
-            <div class="tw-w-vw tw-overflow-x-scroll tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+            <div class="tw-flex tw-flex-col tw-gap-3">
+                {{-- Start: Tool Bar --}}
+                <div class="tw-flex tw-gap-2 tw-w-full">
 
-                <table class="tw-min-w-[1400px] md:tw-w-full" id="dataBansos">
-                    <thead>
-                        <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                            <th>Rank</th>
-                            <th>Kepala Keluarga</th>
-                            <th>Tagihan Listrik</th>
-                            <th>Luas Bangunan</th>
-                            <th>Total Penghasilan Keluarga</th>
-                            <th>Jumlah Warga dengan Penghasilan</th>
-                            <th>Tanggungan</th>
-                            <th>Jumlah Bersekolah</th>
-                            <th class="tw-w-[108px]"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="tw-divide-y-2 tw-divide-n400">
+                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
+                        <input type="text" placeholder="Cari"
+                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
+                            type="button" id="searchBox">
+                        </input>
+                        <span
+                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
+                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}"
+                                alt="back">
+                        </span>
+                    </div>
+                </div>
+                {{-- End: Tool Bar --}}
 
-                        {{-- DATA HERE --}}
+                {{-- Start: Table HERE --}}
+                <div
+                    class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    </tbody>
-                </table>
+                    <table class="tw-table-fixed tw-min-w-fit tw-w-full" id="dataBansos">
+                        <thead>
+                            <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                <th>No</th>
+                                <th>Kepala Keluarga</th>
+                                <th>Tagihan Listrik</th>
+                                <th>Luas Bangunan</th>
+                                <th>Total Penghasilan</th>
+                                <th>Jumlah Bekerja</th>
+                                <th>Tanggungan</th>
+                                <th>Jumlah Bersekolah</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class=" tw-divide-n400">
 
-                <div>
+                            {{-- DATA HERE --}}
+
+                        </tbody>
+                    </table>
+
+                    <div>
+
+                    </div>
 
                 </div>
-
+                {{-- End: Table HERE --}}
             </div>
-            {{-- End: Table HERE --}}
         </div>
     </div>
-</div>
 @endsection
 @push('js')
-@if (session()->has('flash'))
-<script>
-    alert('{{ session()->get("flash")->message }}');
-</script>
-@endif
-<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        dataBansos = $('#dataBansos').DataTable({
-            serverSide: true,
-            ajax: {
-                "url": "{{ route('perhitungan.gdss') }}",
-                "dataType": "json",
-                "type": "POST",
-            },
-            paging: true,
-            language: {
-                paginate: {
-                    previous: '<',
-                    next: '>',
-                }
-            },
-            createdRow: function(row, data, dataIndex) {
-                $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
-            },
-            drawCallback: function() {
-                $('.pagination').addClass(
-                    'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
-                );
-                $('.paginate_button').addClass(
-                    'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
-                $('.paginate_button.active').addClass(
-                    'tw-bg-n400');
-                $('.dataTables_filter').css('display', 'none');
-                $('.table.dataTable').css('border-collapse', 'collapse');
-                $('.dataTables_empty').html(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none" viewBox="0 0 150 151">
+    @if (session()->has('flash'))
+        <script>
+            alert('{{ session()->get('flash')->message }}');
+        </script>
+    @endif
+    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            dataBansos = $('#dataBansos').DataTable({
+                serverSide: true,
+                ajax: {
+                    "url": "{{ route('perhitungan.gdss') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                },
+                dom: 'tp',
+                lengthMenu: [25],
+                paging: true,
+                language: {
+                    paginate: {
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
+                    }
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
+                },
+                drawCallback: function() {
+                    $('.pagination').addClass(
+                        'tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg'
+                    );
+                    $('.paginate_button').addClass(
+                        'tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300');
+                    $('.paginate_button.active').addClass(
+                        'tw-bg-n400');
+                    $('.dataTables_filter').css('display', 'none');
+                    $('.table.dataTable').css('border-collapse', 'collapse');
+                    $('.dataTables_empty').html(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none" viewBox="0 0 150 151">
                         <g clip-path="url(#a)">
                             <path fill="#E3E3E3" d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z"/>
                             <path fill="#fff" d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z"/>
@@ -123,90 +136,106 @@
                         </svg>
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
-            },
-            order: [
-                [2, 'asc']
-            ],
-            columns: [{
+                },
+                order: [
+                    [0, 'asc']
+                ],
+                columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
+                    className: "tw-min-w-[60px] tw-max-w-[60px]",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-w-[240px]",
-                    orderable: true,
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
+                    orderable: false,
                     searchable: true
                 }, {
                     data: "tagihan_listrik",
-                    className: "tw-grow",
-                    orderable: true,
-                    searchable: true,
+                    className: "tw-min-w-[166px] tw-max-w-[166px] tw-table-right-align",
+                    orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
-                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        });
                         formattedValue = formattedValue.replace(/,00$/, '');
                         return formattedValue;
                     }
                 }, {
                     data: "luas_bangunan",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[170px] tw-max-w-[170px] tw-table-right-align",
+                    orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                    var formattedValue = data + " m²";
-                    return formattedValue;
-                }
+                        var formattedValue = data + " m²";
+                        return formattedValue;
+                    }
                 }, {
                     data: "total_penghasilan",
-                    className: "tw-w-[172px] tw-currency",
-                    orderable: true,
+                    className: "tw-min-w-[200px] tw-max-w-[200px] tw-currency tw-table-right-align",
+                    orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                        var formattedValue = parseFloat(data).toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        });
                         formattedValue = formattedValue.replace(/,00$/, '');
                         return formattedValue;
                     }
                 }, {
                     data: "jumlah_warga_berpenghasilan",
-                    className: "tw-w-[92px]",
-                    orderable: true,
+                    className: "tw-min-w-[168px] tw-max-w-[168px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "tanggungan",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[150px] tw-max-w-[150px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "jumlah_warga_bersekolah",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[206px] tw-max-w-[206px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[100px] tw-max-w-[100px] tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
             // $('#level_id').on('change', function () {
             //     dataBansos.ajax.reload();
             // });
         });
-        $('#searchBox').keyup(function () {
+        $('#searchBox').keyup(function() {
             dataBansos.search($(this).val()).draw();
         });
 
         function formatCurrency() {
-                $('.tw-currency').each(function() {
-                    var value = $(this).text();
-                    var parts = value.toString().split('.');
-                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                    $(this).text(parts.join(','));
-                });
-            }
-
-            dataBansos.on('draw', function () {
-                formatCurrency();
+            $('.tw-currency').each(function() {
+                var value = $(this).text();
+                var parts = value.toString().split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $(this).text(parts.join(','));
             });
-        </script>
+        }
+
+        dataBansos.on('draw', function() {
+            formatCurrency();
+        });
+    </script>
 @endpush

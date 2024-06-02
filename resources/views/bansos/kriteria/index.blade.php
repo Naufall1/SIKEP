@@ -37,33 +37,28 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-scroll tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-gap-3 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-min-w-[1400px] md:tw-w-full" id="dataBansos">
+                    <table class="tw-table-fixed tw-min-w-fit tw-w-full" id="dataBansos">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
                                 <th>Kepala Keluarga</th>
                                 <th>Tagihan Listrik</th>
                                 <th>Luas Bangunan</th>
-                                <th>Total Penghasilan Keluarga</th>
-                                <th>Jumlah Warga dengan Penghasilan</th>
+                                <th>Total Penghasilan</th>
+                                <th>Jumlah Bekerja</th>
                                 <th>Tanggungan</th>
                                 <th>Jumlah Bersekolah</th>
-                                <th class="tw-w-[108px]"></th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class=" tw-divide-n400">
 
                             {{-- DATA HERE --}}
 
                         </tbody>
                     </table>
-
-                    <div>
-
-                    </div>
-
                 </div>
                 {{-- End: Table HERE --}}
             </div>
@@ -86,15 +81,17 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -123,22 +120,22 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                order: [[2, 'asc']],
+                order: [[1, 'asc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
+                    className: "tw-min-w-[60px] tw-max-w-[60px]",
                     orderable: false,
-                    // searchable: false
+                    searchable: false
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-w-[240px]",
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "tagihan_listrik",
-                    className: "tw-grow",
-                    orderable: true,
-                    searchable: true,
+                    className: "tw-min-w-[166px] tw-max-w-[166px] tw-table-right-align",
+                    orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
                         var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                         formattedValue = formattedValue.replace(/,00$/, '');
@@ -146,8 +143,8 @@
                     }
                 }, {
                     data: "luas_bangunan",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[170px] tw-max-w-[170px] tw-table-right-align",
+                    orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
                     var formattedValue = data + " m²";
@@ -155,8 +152,8 @@
                 }
                 }, {
                     data: "total_penghasilan",
-                    className: "tw-w-[172px] tw-currency",
-                    orderable: true,
+                    className: "tw-min-w-[200px] tw-max-w-[200px] tw-currency tw-table-right-align",
+                    orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
                         var formattedValue = parseFloat(data).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
@@ -165,24 +162,33 @@
                     }
                 }, {
                     data: "jumlah_warga_berpenghasilan",
-                    className: "tw-w-[92px]",
-                    orderable: true,
+                    className: "tw-min-w-[168px] tw-max-w-[168px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "tanggungan",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[150px] tw-max-w-[150px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "jumlah_warga_bersekolah",
-                    className: "tw-w-[150px]",
-                    orderable: true,
+                    className: "tw-min-w-[206px] tw-max-w-[206px] tw-table-right-align",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[100px] tw-max-w-[100px] tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
             // $('#level_id').on('change', function () {

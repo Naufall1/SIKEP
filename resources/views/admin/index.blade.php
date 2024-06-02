@@ -42,7 +42,7 @@
                 {{-- Start: Tool Bar --}}
                 <div class="tw-flex tw-gap-2 tw-w-full tw-justify-between">
                     <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
-                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari Nama, Nama Pengguna, Keterangan">
                             <x-icons.actionable.search color="n1000" size="20"
                                 stroke="2"></x-icons.actionable.search>
                         </x-input.leadicon>
@@ -51,20 +51,19 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataWarga">
+                    <table class="tw-table-fixed tw-min-w-fit tw-w-full" id="dataAdmin">
                         <thead>
-                            <tr class="">
-                                <th class="tw-w-[48px]">No</th>
-                                <th class="md:tw-grow tw-min-w-fit">Nama</th>
-                                <th class="tw-w-[150px]">Username</th>
-                                <th class="tw-w-[172px]">Keterangan</th>
-                                <th class="tw-h-11"></th>
-
+                            <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Nama Pengguna</th>
+                                <th>Keterangan</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class="tw-divide-n400">
                             {{-- DATA HERE --}}
                         </tbody>
                     </table>
@@ -82,18 +81,20 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            dataAdmin = $('#dataWarga').DataTable({
+            dataAdmin = $('#dataAdmin').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
                     "url": "{{ route('admin.list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -126,35 +127,35 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                // order: [
-                //     [2, 'asc']
-                // ],
+                order: [
+                    [1, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
-                    orderable: true,
+                    className: "tw-min-w-[60px] tw-max-w-[60px]",
+                    orderable: false,
                 },
                 {
                     data: "nama",
-                    className: "tw-grow",
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: true
                 },
                 {
                     data: "username",
-                    className: "tw-w-[150px]",
+                    className: "tw-min-w-[200px] tw-max-w-[200px]",
                     orderable: true,
                     searchable: true
                 },
                 {
                     data: "keterangan",
-                    className: "tw-w-[172px]",
+                    className: "tw-min-w-[172px] tw-max-w-[172px]",
                     orderable: false,
                     searchable: true
                 },
                 {
                     data: "action",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[100px] tw-max-w-[100px] tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
                 }
