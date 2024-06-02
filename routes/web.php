@@ -96,7 +96,8 @@ Route::prefix('penduduk')->group(function () {
         Route::get('/keluarga/tambah/', [KeluargaController::class, 'create'])->name('keluarga-tambah'); // menampilkan halaman form penambahan data keluarga
         Route::get('/keluarga/tambah/back', [KeluargaController::class, 'back'])->name('penduduk.keluarga.tambah.back'); // menampilkan halaman form penambahan data keluarga
         Route::post('/keluarga/tambah/', [KeluargaController::class, 'store']); // untuk menangani penambahan data keluarga/KK
-        Route::get('/keluarga/tambah/removeWarga/{nik}', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
+        Route::get('/keluarga/tambah/{nik}/remove', [KeluargaController::class, 'removeAnggotaKeluarga'])->name('removeAnggotaKeluarga'); // menghapus warga pada anggota keluarga
+        Route::get('/keluarga/tambah/{nik}/detail', [KeluargaController::class, 'detailAnggotaKeluarga_temp'])->name('detailAnggotaKeluarga'); // menghapus warga pada anggota keluarga
         Route::post('/keluarga/listWarga', [KeluargaController::class, 'listWargaCreate'])->name('penduduk.keluarga.tambah.listwarga'); // menghapus warga pada anggota keluarga
     });
 

@@ -1,6 +1,7 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
+{{-- {{dd(Storage::disk('public')->get('Dokumen-Pendukung/'.'1f5cc54a0573476d9587bb0ab3fc263e.png'))}} --}}
     <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
         <p class="tw-breadcrumb tw-text-n500">Daftar Data Baru / Detail Pengajuan /
             <span class="tw-font-bold tw-text-b500">Detail Anggota</span>
@@ -108,7 +109,7 @@
                             <div class="tw-flex tw-flex-col tw-gap-3">
                                 @include('components.form.textdetail', [
                                     'title' => 'Jenis',
-                                    'content' => $haveDemografi->demografi->jenis,
+                                    'content' => $haveDemografi->demografi->jenis ?? $demografi->jenis,
                                 ])
                                 @include('components.form.textdetail', [
                                     'title' => 'Tanggal',
@@ -118,7 +119,8 @@
                                     'isImage' => true,
                                     'title' => 'Berkas Pendukung',
                                     'content' =>
-                                            asset(Storage::disk('public')->url('Dokumen-Pendukung/' . $haveDemografi->dokumen_pendukung)) ??
+                                            !is_null(Storage::disk('public')->get('Dokumen-Pendukung/'. $haveDemografi->dokumen_pendukung)) ?
+                                            asset(Storage::disk('public')->url('Dokumen-Pendukung/' . $haveDemografi->dokumen_pendukung)) :
                                             'data:image/' .
                                                 explode('.', $haveDemografi->dokumen_pendukung)[1] .
                                                 ';base64, ' .
@@ -133,7 +135,7 @@
 
 
                 <div class="tw-flex">
-                    <a href="{{route('pengajuan.pembaharuan',['id'=>$id])}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round" type="button">
+                    <a href="{{isset($id) ? route('pengajuan.pembaharuan',['id'=>$id]) : route('keluarga-tambah')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round" type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
