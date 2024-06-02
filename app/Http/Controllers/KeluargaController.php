@@ -65,7 +65,7 @@ class KeluargaController extends Controller
         if ($user->keterangan == 'ketua') {
             $query = Keluarga::select($select)
                                 ->where('status', '!=', 'Menunggu');
-                                
+
             if (explode(" ", $request->scope_data)[1] ?? false) {
                 $query->where('RT', '=', (int)explode(" ", $request->scope_data)[1]);
             }
@@ -195,7 +195,7 @@ class KeluargaController extends Controller
 </span>
                     </a>';
                 $show = '
-                    <a href=""
+                    <a href="'. route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) .'"
                         class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                         Lihat
                     </a>';
@@ -504,6 +504,21 @@ class KeluargaController extends Controller
         $pengajuan = new Pengajuan();
         $pengajuan->removeWarga($nik);
         return redirect(route('keluarga-tambah') . '#anggota_keluarga');
+    }
+
+    function detailAnggotaKeluarga_temp($nik)
+    {
+        $pengajuan = new Pengajuan();
+        $data_warga = $pengajuan->getWarga($nik);
+
+        if (!$data_warga) {
+            return redirect()->back()->with('flash', (object) ['type' => 'error', 'message'=> 'Data tidak tersedia.']);
+        }
+
+        $warga = $data_warga['warga'];
+        $haveDemografi = $data_warga['haveDemografi'];
+        $demografi = $data_warga['demografi'];
+        return view('pengajuan.pembaharuan.detailwarga', compact(['warga', 'haveDemografi', 'demografi']));
     }
 
     /**

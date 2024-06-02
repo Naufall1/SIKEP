@@ -238,6 +238,19 @@
             );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
 
+            var buttonRow =
+                `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
+
+            // dataWarga.row.add($(buttonRow)[0]).draw();
+            $('table tbody').after($(buttonRow));
+
+
+            $('#no_kk-list').on('change', function() {
+                dataWarga.ajax.reload();
+            });
+        });
+
+        function fetchWarga(no_kk) {
             dataWarga = $('#daftarWarga').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
@@ -245,7 +258,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.no_kk = $('#no_kk-list').val();
+                        d.no_kk = no_kk;
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -289,53 +302,8 @@
                     searchable: false
                 }]
             });
+        }
 
-
-
-
-            var buttonRow =
-                `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
-
-            // dataWarga.row.add($(buttonRow)[0]).draw();
-            $('table tbody').after($(buttonRow));
-
-
-            $('#no_kk-list').on('change', function() {
-                dataWarga.ajax.reload();
-            });
-        });
-
-        // function getFormData($form) {
-        //     var unindexed_array = $form.serializeArray();
-        //     var indexed_array = {};
-        //     $.map(unindexed_array, function(n, i) {
-        //         indexed_array[n['name']] = n['value'];
-        //     });
-        //     return indexed_array;
-        // }
-
-        // function tambahAnggotaKeluarga() {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-
-        //     var kk = document.getElementById("no_kk");
-        //     var url = "/penduduk/warga/tambah/" + kk.value;
-
-        //     data = $('#formdata');
-        //     data = getFormData(data);
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/penduduk/keluarga/tambah/save-state",
-        //         data: JSON.stringify(data),
-        //         dataType: "json",
-        //         success: function(response) {
-        //             window.location.href = url;
-        //         }
-        //     });
-        // }
 
         function data_lama() {
 
@@ -505,6 +473,7 @@
                                 $('#' + key).val(val);
                             });
                             selectRT(response.RT);
+                            fetchWarga($('#no_kk').val());
                         }
                     });
                 }

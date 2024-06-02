@@ -101,6 +101,15 @@ class Pengajuan
         // dd($this->daftarWarga);
         $this->save();
     }
+    public function getWarga(string $nik): array|null
+    {
+        foreach ($this->daftarWarga as $idx => $value) {
+            if ($value['warga']->NIK == $nik) {
+                return $value;
+            }
+        }
+        return null;
+    }
     public function pindahKK(Warga $warga)
     {
         $warga->no_kk = $this->keluarga->no_kk;
