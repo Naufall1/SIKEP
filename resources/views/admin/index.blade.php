@@ -12,7 +12,7 @@
         ['title' => 'Keluarga', 'url' => '#'],
     ], ] ) --}}
 
-    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <div class="tw-flex tw-items-center md:tw-items-start">
             <h1 class="tw-h1 tw-w-1/2 tw-flex-grow">
                 Daftar Admin
@@ -51,7 +51,7 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto">
+                <div class="tw-w-vw tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
                     <table class="tw-w-[780px] md:tw-w-full" id="dataWarga">
                         <thead>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="modalReject"
-        class="tw-hidden modal-menu tw-z-20 tw-animate-disolve tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        class="tw-hidden modal-menu tw-z-20 tw-animate-fade tw-animate-duration-300 tw-animate-ease-in-out tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
         <div
             class="tw-w-96 md:tw-w-96 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
             <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         @if (session()->has('flash'))
             <x-flash-message.information message="{{session()->get('flash')->message}}"></x-flash-message.information>
         @else

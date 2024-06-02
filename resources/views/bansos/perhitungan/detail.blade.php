@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <p class="tw-breadcrumb tw-text-n500">Perhitungan /
             <span class="tw-font-bold tw-text-b500">Data Alternatif</span>
         </p>
@@ -60,7 +60,7 @@
 
                 <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-                    <div class="tw-flex tw-flex-col tw-gap-2">
+                    <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
                         <h2 class="">Data Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -79,21 +79,21 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Data Kriteria</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => 'Rp.' . number_format($dataKriteria->tagihan_listrik, 0, ",", "."),
+                                'content' => 'Rp ' . number_format($dataKriteria->tagihan_listrik, 0, ",", "."),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                'content' => $dataKriteria->luas_bangunan,
+                                'content' => $dataKriteria->luas_bangunan . ' m²',
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Total Penghasilan',
-                                'content' => 'Rp. ' . number_format( $dataKriteria->total_penghasilan, 0, ",", "."),
+                                'content' => 'Rp ' . number_format( $dataKriteria->total_penghasilan, 0, ",", "."),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Jumlah Bekerja',
@@ -109,55 +109,55 @@
                             ])
 
                         </div>
-                        <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto">
-                            <h2 class="">Daftar Bansos</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
+                    </div>
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
+                        <h2 class="">Daftar Bansos</h2>
+                        <div class="tw-flex tw-flex-col tw-gap-3">
 
 
-                                <table class="tw-w-[702px] md:tw-w-full" id="daftarBansos">
-                                    <button id="buttonAddBansos"
-                                                    class="tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                    Tambah
-                                                </button>
-                                    <thead class="">
-                                        <tr class="">
-                                            <th>No</th>
-                                            <th>Nama Bansos</th>
-                                            <th>Tanggal Menerima</th>
-                                            <th>Keterangan</th>
+                            <table class="tw-w-[702px] md:tw-w-full" id="daftarBansos">
+                                <button id="buttonAddBansos"
+                                                class="tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                Tambah
+                                            </button>
+                                <thead class="">
+                                    <tr class="">
+                                        <th>No</th>
+                                        <th>Nama Bansos</th>
+                                        <th>Tanggal Menerima</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- @for ($i = 0; $i < count($keluarga->bansos); $i++)
+                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>{{ $keluarga->bansos[$i]->bansos_nama }}</td>
+                                            <td>{{ $keluarga->detailBansos[$i]->tanggal_menerima }}</td>
+                                            <td>{{$keluarga->bansos[$i]->keterangan}}</td>
+                                            <td>-</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- @for ($i = 0; $i < count($keluarga->bansos); $i++)
-                                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>{{ $keluarga->bansos[$i]->bansos_nama }}</td>
-                                                <td>{{ $keluarga->detailBansos[$i]->tanggal_menerima }}</td>
-                                                <td>{{$keluarga->bansos[$i]->keterangan}}</td>
-                                                <td>-</td>
-                                            </tr>
-                                        @endfor --}}
-                                        <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
-                                            <td class="tw-h-16 tw-relative" colspan="5">
-                                                <button id="buttonAddBansos"
-                                                    class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                    Tambah
-                                                </button>
-                                                {{-- <button type="submit" name="action" value="tambah"
-                                                    class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
-                                                    Tambah</button> --}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    @endfor --}}
+                                    <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
+                                        <td class="tw-h-16 tw-relative" colspan="5">
+                                            <button id="buttonAddBansos"
+                                                class=" tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                Tambah
+                                            </button>
+                                            {{-- <button type="submit" name="action" value="tambah"
+                                                class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-right-1/2 tw-translate-x-1/2  tw-h-10 tw-w-fit tw-px-4 tw-bg-b500 tw-text-n100 tw-font-sans tw-font-bold tw-text-[14px] tw-rounded-md hover:tw-bg-b600 active:tw-bg-b700 tw-flex tw-items-center">
+                                                Tambah</button> --}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                            </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="tw-flex">
+                <div class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                     <a href="{{ route('bansos.perhitungan') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"

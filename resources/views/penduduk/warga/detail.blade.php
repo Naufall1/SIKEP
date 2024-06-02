@@ -1,7 +1,8 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
 
         <x-flash-message.information message='halo'></x-flash-message.information>
 
@@ -41,7 +42,8 @@
 
                 <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-                    <div class="tw-flex tw-flex-col tw-gap-2">
+                    <div
+                        class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
                         <h2 class="">Detail Warga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
                             @include('components.form.textdetail', [
@@ -93,7 +95,8 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                    <div
+                        class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -111,7 +114,7 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp. ' . $warga->penghasilan,
+                                'content' => 'Rp ' . $warga->penghasilan,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Paspor',
@@ -125,92 +128,100 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between">
+                    @if ($demografiMasuk || $demografiKeluar)
+                        <div
+                            class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
 
-                        @if ($demografiMasuk)
-                            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
-                                <h2 class="">Demografi Masuk</h2>
-                                <div class="tw-flex tw-flex-col tw-gap-3">
-                                    @include('components.form.textdetail', [
-                                        'title' => 'Jenis',
-                                        'content' => !isset($warga->haveDemografi[0]->demografi)
-                                            ? '-'
-                                            : $warga->haveDemografi[0]->demografi->jenis,
-                                    ])
-                                    @include('components.form.textdetail', [
-                                        'title' => 'Tanggal',
-                                        'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian)
-                                            ? '-'
-                                            : $warga->haveDemografi[0]->tanggal_kejadian,
-                                    ])
-                                    @include('components.form.textdetail', [
-                                        'isImage' => true,
-                                        'title' => 'Berkas Pendukung',
-                                        'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung)
-                                            ? ''
-                                            : asset(Storage::disk('public')->url(
-                                                    'Dokumen-Pendukung/' .
-                                                        $warga->haveDemografi[0]->dokumen_pendukung)),
-                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                            @if ($demografiMasuk)
+                                <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                                    <h2 class="">Demografi Masuk</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => !isset($warga->haveDemografi[0]->demografi)
+                                                ? '-'
+                                                : $warga->haveDemografi[0]->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal',
+                                            'content' => !isset($warga->haveDemografi[0]->tanggal_kejadian)
+                                                ? '-'
+                                                : $warga->haveDemografi[0]->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' => !isset($warga->haveDemografi[0]->dokumen_pendukung)
+                                                ? ''
+                                                : asset(Storage::disk('public')->url(
+                                                        'Dokumen-Pendukung/' .
+                                                            $warga->haveDemografi[0]->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
 
 
-                        {{-- if user status user migrasi/meninggal --}}
+                            {{-- if user status user migrasi/meninggal --}}
 
-                        @if ($demografiKeluar)
-                            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
-                                <h2 class="">Demografi Keluar</h2>
-                                <div class="tw-flex tw-flex-col tw-gap-3">
-                                    @include('components.form.textdetail', [
-                                        'title' => 'Jenis',
-                                        'content' => !isset($demografiKeluar->demografi)
-                                            ? '-'
-                                            : $demografiKeluar->demografi->jenis,
-                                    ])
-                                    @include('components.form.textdetail', [
-                                        'title' => 'Tanggal',
-                                        'content' => !isset($demografiKeluar->tanggal_kejadian)
-                                            ? '-'
-                                            : $demografiKeluar->tanggal_kejadian,
-                                    ])
-                                    @include('components.form.textdetail', [
-                                        'isImage' => true,
-                                        'title' => 'Berkas Pendukung',
-                                        'content' => !isset($demografiKeluar->dokumen_pendukung)
-                                            ? ''
-                                            : asset(Storage::disk('public')->url(
-                                                    'Dokumen-Pendukung/' . $demografiKeluar->dokumen_pendukung)),
-                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                            @if ($demografiKeluar)
+                                <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                                    <h2 class="">Demografi Keluar</h2>
+                                    <div class="tw-flex tw-flex-col tw-gap-3">
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Jenis',
+                                            'content' => !isset($demografiKeluar->demografi)
+                                                ? '-'
+                                                : $demografiKeluar->demografi->jenis,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Tanggal',
+                                            'content' => !isset($demografiKeluar->tanggal_kejadian)
+                                                ? '-'
+                                                : $demografiKeluar->tanggal_kejadian,
+                                        ])
+                                        @include('components.form.textdetail', [
+                                            'isImage' => true,
+                                            'title' => 'Berkas Pendukung',
+                                            'content' => !isset($demografiKeluar->dokumen_pendukung)
+                                                ? ''
+                                                : asset(Storage::disk('public')->url(
+                                                        'Dokumen-Pendukung/' .
+                                                            $demografiKeluar->dokumen_pendukung)),
+                                        ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
 
-                    </div>
+                        </div>
+                    @endif
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+
+                    <div
+                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                         <h2 class="">Keluarga</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                        <div class="tw-flex tw-flex-col tw-gap-3 tw-w-[702px] md:tw-w-full">
 
-                            <table class="tw-w-[702px] md:tw-w-full">
+                            <table class="tw-w-full tw-table-fixed">
                                 {{-- <thead class="tw-rounded-lg"> --}}
-                                <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                    <th>No</th>
-                                    <th>No KK</th>
-                                    <th>Kepala Keluarga</th>
-                                    <th>RT</th>
-                                    <th class="tw-w-[108px]"></th>
-                                </tr>
+                                <thead>
+                                    <tr class="tw-h-11 tw-w-full tw-flex tw-bg-n300 tw-rounded-lg">
+                                        {{-- <th class="">No</th> --}}
+                                        <th class="">No KK</th>
+                                        <th class="">Kepala Keluarga</th>
+                                        <th class="tw-w-[76px]">RT</th>
+                                        <th class="tw-w-[108px]"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                        <td></td>
-                                        <td>{{ $warga->keluarga->no_kk }}</td>
-                                        <td>{{ $warga->keluarga->kepala_keluarga }}</td>
-                                        <td>{{ $warga->keluarga->RT }}</td>
-                                        <td class="tw-w-[140px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
-                                            <a href="" class="tw-btn tw-btn-md tw-btn-round-md tw-btn-primary">
+                                    <tr class="tw-h-16 tw-w-full tw-flex hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                        {{-- <td></td> --}}
+                                        <td class="">{{ $warga->keluarga->no_kk }}</td>
+                                        <td class="">{{ $warga->keluarga->kepala_keluarga }}</td>
+                                        <td class="tw-w-[76px]">RT {{ $warga->keluarga->RT > 10 ? '0' . $warga->keluarga->RT : '00' . $warga->keluarga->RT}}</td>
+                                        <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
+                                            <a href="{{ route('penduduk.keluarga.detail', ['no_kk' => $warga->keluarga->no_kk]) }}"
+                                                class="tw-btn tw-btn-md tw-btn-round-md tw-btn-primary">
                                                 Detail
                                             </a>
                                         </td>
@@ -218,14 +229,14 @@
 
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
 
                 </div>
 
 
-                <div class="tw-flex">
+                <div
+                    class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
                     <a href="{{ route('penduduk.warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"

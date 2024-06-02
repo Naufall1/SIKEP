@@ -1,4 +1,4 @@
-<div class="md:tw-w-full">
+<div class="md:tw-w-full tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
     <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
         <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">MEREC - Pembobotan</h1>
@@ -8,7 +8,7 @@
 
         <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-            <div class="tw-flex tw-flex-col tw-gap-2">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
                 <h2 class="">Tahap 1 - Matriks Keputusan</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                 <h2 class="">Tahap 2 - Normalisasi Matriks Keputusan</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
                 <h2 class="">Tahap 3 - Overall Performance by Removing Each Criterion</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                 <h2 class="">Tahap 4 - Gatau namanya apa (Sij)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
                 <h2 class="">Tahap 5 - Gatau namanya apa</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1200ms]">
                 <h2 class="">Tahap 6 - Pembobotan</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}

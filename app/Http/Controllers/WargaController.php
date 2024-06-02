@@ -104,6 +104,10 @@ class WargaController extends Controller
                     return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-r50 tw-w-fit tw-h-fit">
                                 <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-r500">' . $warga->status_warga . '</p>
                             </div>';
+                } elseif (strtolower($warga->status_warga) == 'menunggu') {
+                    return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-y50 tw-w-fit tw-h-fit">
+                                <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-y500">' . $warga->status_warga . '</p>
+                            </div>';
                 } else {
                     return '<div class="tw-flex tw-py-1 tw-px-2 tw-rounded-sm tw-bg-n300 tw-w-fit tw-h-fit">
                                 <p class="tw-font-sans tw-font-bold tw-text-sm tw-text-n700">' . $warga->status_warga . '</p>
