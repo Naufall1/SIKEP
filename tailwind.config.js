@@ -64,16 +64,18 @@ export default {
         'g400': '#2BB76E',
         'g500': '#00A951',
         
-        'y50': '#FFFBF0',
-        'y100': '#FFF5D4',
-        'y200': '#FFEEB7',
-        'y300': '#FFE593',
-        'y400': '#FFDC6F',
-        'y500': '#FFCB27',
+        'y50': '#FFF7E6',
+        'y100': '#FFE7BA',
+        'y200': '#FFD591',
+        'y300': '#FFC069',
+        'y400': '#FFA940',
+        'y500': '#FA8C16',
         
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 }
 
