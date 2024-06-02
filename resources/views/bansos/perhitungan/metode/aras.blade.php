@@ -1,4 +1,4 @@
-<div class="md:tw-w-full">
+<div class="md:tw-w-full tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1400ms]">
 
     <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
         <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">ARAS - Pemeringkatan</h1>
@@ -8,7 +8,7 @@
 
         <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-            <div class="tw-flex tw-flex-col tw-gap-2">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1600ms]">
                 <h2 class="">Tahap 1 - Matriks Keputusan</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1800ms]">
                 <h2 class="">Tahap 2 - Normalisasi Langkah Pertama</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[2000ms]">
                 <h2 class="">Tahap 2 - Normalisasi Langkah Kedua</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[2200ms]">
                 <h2 class="">Tahap 3 - Menentukan Bobot Matriks</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -133,7 +133,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[2400ms]">
                 <h2 class="">Tahap 5 - Nilai Fungsi Optimalisasi</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
@@ -159,7 +159,7 @@
                 </div>
             </div>
 
-            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[2600ms]">
                 <h2 class="">Tahap 6 - Menentukan Peringkat</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}

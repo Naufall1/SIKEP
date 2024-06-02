@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <p class="tw-breadcrumb tw-text-n500">Daftar Keluarga /
             <span class="tw-font-bold tw-text-b500">Detail Keluarga</span>
         </p>
@@ -42,7 +42,7 @@
 
                 <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-                    <div class="tw-flex tw-flex-col tw-gap-2">
+                    <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
                         <h2 class="">Detail Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -98,22 +98,23 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => $keluarga->tagihan_listrik,
+                                'content' => 'Rp ' . $keluarga->tagihan_listrik,
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
-                                'content' => $keluarga->luas_bangunan,
+                                'content' => $keluarga->luas_bangunan . ' m²',
                             ])
 
                         </div>
                     </div>
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto">
+                    
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -150,7 +151,7 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                         <h2 class="">Daftar Bansos</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -182,7 +183,7 @@
                 </div>
 
 
-                <div class="tw-flex">
+                <div class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
                     <a href="{{ route('keluarga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"

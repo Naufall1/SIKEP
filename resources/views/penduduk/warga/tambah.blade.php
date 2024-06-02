@@ -1,7 +1,7 @@
 @extends('layout.layout', ['isForm' => true])
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <p class="tw-breadcrumb tw-text-n500">Daftar Penduduk / Tambah Keluarga /
             <span class="tw-font-bold tw-text-b500">Tambah Anggota</span>
         </p>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -180,7 +180,7 @@
                         </div>
                     </div>
 
-                    <div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2  tw-pt-6">
+                    <div id="demografiMasuk" class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
                         <h2 class="">Demografi Masuk</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -224,7 +224,7 @@
                 </div>
 
 
-                <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
+                <div class="tw-flex tw-justify-between tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
                     <a href="{{ route('keluarga-tambah') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"

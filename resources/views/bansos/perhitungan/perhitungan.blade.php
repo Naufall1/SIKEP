@@ -6,7 +6,7 @@
 
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[768px] tw-flex tw-flex-col tw-gap-2 tw-pb-10">
+    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[768px] tw-flex tw-flex-col tw-gap-2 tw-pb-10  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
 
         <p class="tw-breadcrumb tw-text-n500">Perhitungan /
             <span class="tw-font-bold tw-text-b500">Detail Perhitungan</span>

@@ -16,7 +16,7 @@
 <x-input.input value="{{isset($default) ? ($default != $placeholder ? $default : '' ) : ''}}" type="hidden" placeholder="{{$placeholder}}" name="{{ $name }}"
     id="{{ $name }}"></x-input.input>
 <div
-    class="dropContent tw-hidden tw-absolute tw-flex tw-flex-col tw-gap-3 {{$gap}} tw-z-10 tw-p-3 tw-w-full tw-bg-n100 tw-rounded-lg tw-border-[1.5px] tw-border-n400">
+    class="dropContent tw-hidden tw-absolute tw-flex tw-flex-col tw-gap-3 {{$gap}} tw-z-[100] tw-p-3 tw-w-full tw-bg-n100 tw-rounded-lg tw-border-[1.5px] tw-border-n400">
     @if ($searchable)
         <x-input.leadicon type="text" name="searchDropItem">
             <x-icons.actionable.search color="n1000" size="20" stroke="2"></x-icons.actionable.search>
