@@ -22,6 +22,12 @@
         <span class="loader"></span>
     </div>
 
+    <div id="floatingFlash"
+        class="tw-fixed tw-flex tw-flex-col tw-gap-3 tw-z-50 tw-w-full-mobile-w md:tw-w-[420px] lg:tw-w-[500px] tw-h-fit tw-top-5 tw-left-1/2 -tw-translate-x-1/2">
+        <x-flash-message.information message='halo'></x-flash-message.information>
+        {{-- <x-flash-message.information message='halo'></x-flash-message.information> --}}
+    </div>
+
     @include('layout.nav')
 
 
@@ -51,6 +57,14 @@
                 document.querySelector("body").style.overflow = "auto";
             }
         };
+
+        $(document).ready(function() {
+            if ($('#floatingFlash').length) {
+                setTimeout(function() {                    
+                    $('#floatingFlash').remove();
+                }, 5000);
+            };
+        });
     </script>
 
 </body>
