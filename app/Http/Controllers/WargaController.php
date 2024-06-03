@@ -278,7 +278,7 @@ class WargaController extends Controller
 
         // Jika data tidak ditemukan, maka akan dikembalikan ke halaman warga
         if (!Warga::find($nik)) {
-            return redirect()->route('warga')->with('danger', 'Data tidak ditemukan');
+            return redirect()->route('warga')->with('flash',(object) ['type' => 'error', 'message' => 'Data tidak ditemukan!']);
         }
 
         // Ambil data warga
@@ -390,6 +390,7 @@ class WargaController extends Controller
         try {
             $message = [];
             $message['message'] = 'Tidak ada data yang diubah';
+            $messageType = 'information';
             DB::beginTransaction();
             // passing data dari request kedalam object warga
             $warga->agama = $request->agama;
@@ -432,6 +433,7 @@ class WargaController extends Controller
                     'tipe' => 'Perubahan Warga'
                 ]);
                 $message['message'] = 'Edit Warga Berhasil!';
+                $messageType = 'success';
                 $warga = null;
             }
 
@@ -469,14 +471,15 @@ class WargaController extends Controller
                     'tipe' => 'Perubahan Warga'
                 ]);
                 $message['message'] = 'Edit Warga Berhasil!';
+                $messageType = 'success';
             }
 
             DB::commit();
-            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', $message['message']);
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('flash', (object) ['type' => $messageType, 'message'=>$message['message']]);
         } catch (Exception $e) {
             dd($e);
             DB::rollBack();
-            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', 'Edit warga gagal');
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', (object) ['type' => 'warning', 'message'=>'Gagal ubah data warga!']);
         }
     }
     /**

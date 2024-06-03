@@ -143,7 +143,10 @@ class ArticleAnnouncementController extends Controller
         $publikasi->save();
         session()->save();
 
-        return redirect()->route('publikasi')->with('success', 'Announcement created successfully.');
+        return redirect()->route('publikasi')->with('flash', (object)[
+            'type'=>'success',
+            'message' => 'Pengumuman berhasil dibuat.'
+        ]);
     }
 
     private function hasImage()
@@ -172,7 +175,6 @@ class ArticleAnnouncementController extends Controller
     }
     public function edit_publikasi($kode)
     {
-        // dd($kode);
         $announcement = ArticleAnnouncement::where('kode', $kode)->firstOrFail();
         return view('publikasi.edit', compact('announcement'));
     }
@@ -193,7 +195,10 @@ class ArticleAnnouncementController extends Controller
             $announcement->save();
         }
 
-        return redirect()->route('publikasi')->with('success', 'Pengumuman berhasil diperbarui.');
+        return redirect()->route('publikasi')->with('flash', (object)[
+            'type' => 'success',
+            'message' => 'Pengumuman berhasil diperbarui.'
+        ]);
     }
 
     public function update_draf(Request $request, $kode)
@@ -245,15 +250,9 @@ class ArticleAnnouncementController extends Controller
             $announcement->save();
         }
 
-        return redirect()->route('publikasi.draf')->with('success', 'Announcement updated successfully.');
-    }
-
-    // Remove the specified resource from storage.
-    public function destroy($kode)
-    {
-        $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
-        $announcement->delete();
-
-        return redirect()->route('article_announcements.index')->with('success', 'Announcement deleted successfully.');
+        return redirect()->route('publikasi.draf')->with('flash', (object)[
+            'type' => 'success',
+            'message' => 'Announcement updated successfully.'
+        ]);
     }
 }

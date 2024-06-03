@@ -88,14 +88,14 @@
                             </x-input.label>
 
                             <x-input.label class="tw-relative" for="jenis_demografi_keluar-list" label="Status Warga">
-                                @if ($demografi && $demografi->demografi->jenis == 'Meninggal' || $demografi->demografi->jenis == 'Migrasi Keluar')
+                                @if ($demografi && ($demografi->demografi->jenis == 'Meninggal' || $demografi->demografi->jenis == 'Migrasi Keluar'))
                                     <x-input.input name="jenis_demografi_keluar" id="jenis_demografi_keluar" disabled
                                         value="{{$demografi->demografi->jenis}}">
                                     </x-input.input>
                                 @else
                                     <x-input.select2 name="jenis_demografi_keluar"
                                         {{-- default="{{ old('jenis_demografi_keluar', $demografi ? $demografi->demografi->jenis : 'Aktif') }}" --}}
-                                        default="{{ old('jenis_demografi_keluar', ($demografi ? ($demografi->demografi->jenis == 'Lahir' ? 'Aktif' : ($demografi->demografi->jenis == 'Migrasi Masuk' ? 'Aktif' : '' )) : '')) }}"
+                                        default="{{ old('jenis_demografi_keluar', ($demografi ? ($demografi->demografi->jenis != 'Lahir' ? $demografi->demografi->jenis : ($demografi->demografi->jenis != 'Migrasi Masuk' ? $demografi->demografi->jenis : 'Aktif' )) : 'Aktif')) }}"
                                         placeholder="Pilih Status Warga"></x-input.select2>
                                 @endif
                             </x-input.label>
