@@ -85,9 +85,9 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-scroll tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div class="tw-w-vw tw-overflow-x-scroll tw-pb-3 tw-flex tw-flex-col tw-gap-3 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="tablePengajuan">
+                    <table class="tw-table-fixed tw-w-fit md:tw-w-full" id="tablePengajuan">
                         <thead>
                             <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
                                 <th>No</th>
@@ -95,12 +95,12 @@
                                 <th>No KK</th>
                                 <th>Kepala Keluarga</th>
                                 <th>Jenis</th>
-                                <th class="">Tanggal</th>
+                                <th>Tanggal</th>
                                 <th>Status Pengajuan</th>
-                                <th class="tw-w-[108px]"></th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class=" tw-divide-n400">
                             {{-- @foreach ($dataBaru as $data) --}}
                                 {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td>1</td>
@@ -122,35 +122,8 @@
                             {{-- @endforeach --}}
                         </tbody>
                     </table>
-
-                    <div>
-
-                    </div>
-
                 </div>
                 {{-- End: Table HERE --}}
-                {{-- <div
-                    class="tw-flex tw-border-[1.5px] tw-divide-x-[1.5px] tw-border-n400 tw-divide-n400 tw-w-fit tw-rounded-lg">
-                    <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                        <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-left-1.svg') }}"
-                            alt="<">
-                    </a>
-                    <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300 tw-bg-n400"
-                        href="">
-                        1
-                    </a>
-                    <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                        2
-                    </a>
-                    <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                        ...
-                    </a>
-                    <a class="tw-h-7 tw-w-7 tw-flex tw-items-center tw-justify-center hover:tw-bg-n300" href="">
-                        <img class="tw-h-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/arrow-right-1.svg') }}"
-                            alt="<">
-                    </a>
-                </div> --}}
-
             </div>
         </div>
     </div>
@@ -207,11 +180,13 @@
                         d.status_pengajuan = filter_statusPengajuan;
                     }
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -244,35 +219,35 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
-                // order: [[1, 'desc']],
+                order: [[5, 'desc']],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
-                    // searchable: false
+                    searchable: false
                 }, {
                     data: "user.nama",
-                    className: "tw-w-[112px]",
+                    className: "tw-min-w-[112px] tw-max-w-[112px]",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "no_kk",
-                    className: "tw-w-[200px]",
+                    className: "tw-min-w-[220px] tw-max-w-[220px]",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "keluarga.kepala_keluarga",
-                    className: "tw-grow",
+                    className: "tw-grow tw-shrink tw-min-w-[220px]",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "tipe",
-                    className: "tw-w-[170px]",
+                    className: "tw-min-w-[170px] tw-max-w-[170px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_request",
-                    className: "tw-w-[140px]",
+                    className: "tw-min-w-[140px] tw-max-w-[140px] tw-table-right-align",
                     render: function(data, type, row){
                         if(type === "sort" || type === "type"){
                             return data;
@@ -283,14 +258,23 @@
                     searchable: true
                 }, {
                     data: "status",
-                    className: "tw-w-[190px]",
+                    className: "tw-min-w-[192px] tw-max-w-[192px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "aksi",
-                    className: "tw-w-[108px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [3],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
             $('input[name="scope_data"]').on('change', function() {

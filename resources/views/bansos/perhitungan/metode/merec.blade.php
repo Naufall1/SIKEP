@@ -9,25 +9,25 @@
         <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
-                <h2 class="">Tahap 1 - Matriks Keputusan</h2>
+                <h2 class="">Tahap 1 - Matriks Keputusan (X)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-full tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-MatriksKeputusan">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-MatriksKeputusan">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-w-[58px]">No</th>
-                                    <th class="tw-grow">Kepala Keluarga</th>
-                                    <th class="tw-w-20 tw-justify-end">K1</th>
-                                    <th class="tw-w-20 tw-justify-end">K2</th>
-                                    <th class="tw-w-20 tw-justify-end">K3</th>
-                                    <th class="tw-w-20 tw-justify-end">K4</th>
-                                    <th class="tw-w-20 tw-justify-end">K5</th>
-                                    <th class="tw-w-20 tw-justify-end">K6</th>
+                                    <th>No</th>
+                                    <th>Kepala Keluarga</th>
+                                    <th>K1</th>
+                                    <th>K2</th>
+                                    <th>K3</th>
+                                    <th>K4</th>
+                                    <th>K5</th>
+                                    <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -40,25 +40,25 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
-                <h2 class="">Tahap 2 - Normalisasi Matriks Keputusan</h2>
+                <h2 class="">Tahap 2 - Normalisasi Matriks Keputusan (N)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-MatriksTernormalisasi">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-MatriksTernormalisasi">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-w-[58px]">No</th>
-                                    <th class="tw-grow">Kepala Keluarga</th>
-                                    <th class="tw-w-20 tw-justify-end">K1</th>
-                                    <th class="tw-w-20 tw-justify-end">K2</th>
-                                    <th class="tw-w-20 tw-justify-end">K3</th>
-                                    <th class="tw-w-20 tw-justify-end">K4</th>
-                                    <th class="tw-w-20 tw-justify-end">K5</th>
-                                    <th class="tw-w-20 tw-justify-end">K6</th>
+                                    <th>No</th>
+                                    <th>Kepala Keluarga</th>
+                                    <th>K1</th>
+                                    <th>K2</th> 
+                                    <th>K3</th>
+                                    <th>K4</th>
+                                    <th>K5</th>
+                                    <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -71,20 +71,20 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
-                <h2 class="">Tahap 3 - Overall Performance by Removing Each Criterion</h2>
+                <h2 class="">Tahap 3 - Kinerja Keseluruhan dari Alternatif (S)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-Nilai-Si">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-Nilai-Si">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-w-[58px]">No</th>
-                                    <th class="tw-grow">Kepala Keluarga</th>
-                                    <th class="tw-w-20 tw-justify-end">S</th>
-                                </tr>
+                                    <th>No</th>
+                                    <th>Kepala Keluarga</th>
+                                    <th>S</th>
+                                </tr> 
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -97,25 +97,25 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
-                <h2 class="">Tahap 4 - Gatau namanya apa (Sij)</h2>
+                <h2 class="">Tahap 4 - Kinerja Keseluruhan dari Alternatif dengan Penghapusan Kriteria (Sij)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-MatriksSij">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-MatriksSij">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-w-[58px]">No</th>
-                                    <th class="tw-grow">Kepala Keluarga</th>
-                                    <th class="tw-w-20 tw-justify-end">K1</th>
-                                    <th class="tw-w-20 tw-justify-end">K2</th>
-                                    <th class="tw-w-20 tw-justify-end">K3</th>
-                                    <th class="tw-w-20 tw-justify-end">K4</th>
-                                    <th class="tw-w-20 tw-justify-end">K5</th>
-                                    <th class="tw-w-20 tw-justify-end">K6</th>
-                                </tr>
+                                    <th>No</th>
+                                    <th>Kepala Keluarga</th>
+                                    <th>K1</th>
+                                    <th>K2</th>
+                                    <th>K3</th>
+                                    <th>K4</th>
+                                    <th>K5</th>
+                                    <th>K6</th>
+                                </tr> 
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -128,25 +128,25 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
-                <h2 class="">Tahap 5 - Gatau namanya apa</h2>
+                <h2 class="">Tahap 5 - Penentuan Deviasi Absolut (Ej)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-Nilai-Ei">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-Nilai-Ei">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-grow">-</th>
-                                    <th class="tw-w-20 tw-justify-end">K1</th>
-                                    <th class="tw-w-20 tw-justify-end">K2</th>
-                                    <th class="tw-w-20 tw-justify-end">K3</th>
-                                    <th class="tw-w-20 tw-justify-end">K4</th>
-                                    <th class="tw-w-20 tw-justify-end">K5</th>
-                                    <th class="tw-w-20 tw-justify-end">K6</th>
-                                    <th class="tw-w-20 tw-justify-end">Total</th>
+                                    <th>-</th>
+                                    <th>K1</th>
+                                    <th>K2</th>
+                                    <th>K3</th> 
+                                    <th>K4</th>
+                                    <th>K5</th>
+                                    <th>K6</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -159,24 +159,24 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1200ms]">
-                <h2 class="">Tahap 6 - Pembobotan</h2>
+                <h2 class="">Tahap 6 - Pembobotan Akhir Kriteria (Wj)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
-                    <div class="tw-w-vw tw-overflow-x-auto tw-flex tw-flex-col tw-gap-6">
+                    <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
 
-                        <table class="tw-w-[768px] md:tw-w-full" id="MEREC-Bobot">
+                        <table class="tw-table-fixed tw-w-[767px]" id="MEREC-Bobot">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
-                                    <th class="tw-grow">-</th>
-                                    <th class="tw-w-20 tw-justify-end">K1</th>
-                                    <th class="tw-w-20 tw-justify-end">K2</th>
-                                    <th class="tw-w-20 tw-justify-end">K3</th>
-                                    <th class="tw-w-20 tw-justify-end">K4</th>
-                                    <th class="tw-w-20 tw-justify-end">K5</th>
-                                    <th class="tw-w-20 tw-justify-end">K6</th>
+                                    <th>-</th>
+                                    <th>K1</th>
+                                    <th>K2</th>
+                                    <th>K3</th> 
+                                    <th>K4</th>
+                                    <th>K5</th>
+                                    <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-y-2 tw-divide-n400">
+                            <tbody class="tw-divide-n400">
 
                                 {{-- DATA HERE --}}
 
@@ -201,18 +201,19 @@
                 ajax: {
                     "url": "{{ route('spk.merec.keputusan') }}",
                     "dataType": "json",
-                    "type": "POST",
+                    "type": "POST", 
                 },
+                dom: 'tp',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -241,55 +242,68 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[58px]",
-                    orderable: true,
+                    className: "tw-min-w-7 tw-max-w-7",
+                    orderable: false,
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-grow",
-                    orderable: true,
+                    className: "tw-grow tw-shrink",
+                    orderable: false,
                 }, {
                     data: "0",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "1",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "2",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "3",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "4",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "5",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
+                    }
+                }],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
                     }
                 }]
             });
@@ -301,16 +315,17 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -339,55 +354,68 @@
                     <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                 `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[58px]",
-                    orderable: true,
+                    className: "tw-min-w-7 tw-max-w-7",
+                    orderable: false,
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-grow",
-                    orderable: true,
+                    className: "tw-grow tw-shrink",
+                    orderable: false,
                 }, {
                     data: "0",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "1",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "2",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "3",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "4",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "5",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
+                    }
+                }],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
                     }
                 }]
             });
@@ -399,12 +427,13 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -437,22 +466,35 @@
                     <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                 `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[58px]",
-                    orderable: true,
+                    className: "tw-min-w-7 tw-max-w-7",
+                    orderable: false,
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-grow",
-                    orderable: true,
+                    className: "tw-grow tw-shrink",
+                    orderable: false,
                 }, {
                     data: "0",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
-                }, ]
+                }, ],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
+                }]
             });
             MERECNilaiSij = $('#MEREC-MatriksSij').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
@@ -461,12 +503,13 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -499,55 +542,68 @@
                     <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                 `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[58px]",
-                    orderable: true,
+                    className: "tw-min-w-7 tw-max-w-7",
+                    orderable: false,
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-grow",
-                    orderable: true,
+                    className: "tw-grow tw-shrink",
+                    orderable: false,
                 }, {
                     data: "0",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "1",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "2",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "3",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "4",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
                     }
                 }, {
                     data: "5",
-                    className: "tw-w-20 tw-justify-end",
-                    orderable: true,
+                    className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                    orderable: false,
                     render: function(data, type, row) {
                         return data.toFixed(3);
+                    }
+                }],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
                     }
                 }]
             });
@@ -559,12 +615,13 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 't',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -597,63 +654,76 @@
                         <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                     `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                         data: "title",
-                        className: "tw-grow",
-                        orderable: true,
+                        className: "tw-grow tw-shrink",
+                        orderable: false,
                     }, {
                         data: "0",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "1",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "2",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "3",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "4",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     },
                     {
                         data: "5",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     },
                     {
                         data: "total",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }
-                ]
+                ],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
+                }]
             });
 
             MERECBobot = $('#MEREC-Bobot').DataTable({
@@ -663,12 +733,13 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 't',
+                lengthMenu: [10],
                 paging: true,
-                searching: false,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -701,55 +772,68 @@
                             <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
                         `);
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 columns: [{
                         data: "title",
-                        className: "tw-grow",
-                        orderable: true,
+                        className: "tw-grow tw-shrink",
+                        orderable: false,
                     }, {
                         data: "0",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "1",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "2",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "3",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     }, {
                         data: "4",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     },
                     {
                         data: "5",
-                        className: "tw-w-20 tw-justify-end",
-                        orderable: true,
+                        className: "tw-min-w-[50px] tw-max-w-[50px] tw-justify-end",
+                        orderable: false,
                         render: function(data, type, row) {
                             return data.toFixed(3);
                         }
                     },
-                ]
+                ],
+                columnDefs: [{
+                    targets: [1],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
+                }]
             });
         });
     </script>

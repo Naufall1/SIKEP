@@ -44,18 +44,18 @@
 
                         </div>
                     </div>
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidde tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Daftar Publikasi</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                        <div class="tw-overflow-x-auto tw-w-full tw-flex tw-flex-col tw-gap-3">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="daftarPublikasi">
+                            <table class="tw-table-fixed tw-w-[701px]" id="daftarPublikasi">
                                 <thead class="">
                                     <tr class="">
                                         <th>No</th>
                                         <th>Judul</th>
                                         <th>Kategori</th>
                                         <th>Status</th>
-                                        <th class="tw-w-[108px]"></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -123,7 +123,7 @@
                      }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.table.dataTable').css('border-collapse', 'collapse');
@@ -136,29 +136,39 @@
                 ],
                 columns: [{
                     data: "kode", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
-                    orderable: true,
+                    className: "tw-min-w-7 tw-max-w-7",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "judul",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "kategori",
-                    className: "tw-grow",
+                    className: "tw-min-w-[108px] tw-max-w-[108px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "status",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[122px] tw-max-w-[122px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[98px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1,2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
         });

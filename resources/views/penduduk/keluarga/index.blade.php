@@ -5,7 +5,8 @@
 @endpush
 
 @section('content')
-    <div class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-px-5 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <div
             class="tw-flex tw-items-center md:tw-items-start {{ Auth::user()->hasLevel['level_kode'] == 'RT' ? 'tw-justify-between' : 'tw-justify-start' }}">
             <h1 class="tw-h1 tw-w-1/2">
@@ -53,20 +54,21 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div
+                    class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-gap-3 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataKeluarga" style="">
+                    <table class="tw-table-fixed tw-w-[780px] md:tw-w-full" id="dataKeluarga" style="">
                         <thead>
                             <tr class="">
-                                <th class="tw-w-[48px]">No</th>
-                                <th class="tw-w-[250px]">No KK</th>
-                                <th class="tw-w-[280px]">Kepala Keluarga</th>
-                                <th class="tw-w-[300px] md:tw-grow">Alamat</th>
-                                <th class="tw-w-[60px]">RT</th>
-                                <th class="tw-w-[108px]"></th>
+                                <th class="">No</th>
+                                <th class="">No KK</th>
+                                <th class="">Kepala Keluarga</th>
+                                <th class="">Alamat</th>
+                                <th class="">RT</th>
+                                <th class=""></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class=" tw-divide-n400">
                             {{-- DATA HERE --}}
                         </tbody>
                     </table>
@@ -90,19 +92,21 @@
                     "url": "{{ route('keluarga.list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d) {
+                    "data": function(d) {
                         d.scope_data = $('input[name="scope_data"]').val();
                     }
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -136,37 +140,55 @@
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "no_kk",
-                    className: "tw-w-[250px]",
+                    className: "tw-min-w-[220px] tw-max-w-[220px]",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "kepala_keluarga",
-                    className: "tw-w-[280px]",
+                    className: "tw-min-w-[280px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "alamat",
-                    className: "tw-w-[300px] md:tw-grow",
+                    className: "tw-min-w-[300px] tw-max-w-[300px]",
                     orderable: false,
                     searchable: true
                 }, {
                     data: "RT",
-                    className: "tw-w-[60px]",
+                    className: "tw-min-w-[60px] tw-max-w-[60px] tw-table-right-align",
                     orderable: true,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row) {
+                        var formattedValue;
+                        if (data < 10) {
+                            formattedValue = 'RT 00' + data;
+                        } else {
+                            formattedValue = 'RT 0' + data;
+                        }
+                        return formattedValue;
+                    }
                 }, {
                     data: "action",
-                    className: "tw-w-[108px]",
+                    className: "tw-min-w-[76px] tw-max-w-[76px]",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [2, 3],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
-            $('input[name="scope_data"]').on('change', function () {
+            $('input[name="scope_data"]').on('change', function() {
                 dataKeluarga.ajax.reload();
             });
         });
