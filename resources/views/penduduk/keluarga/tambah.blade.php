@@ -243,6 +243,7 @@
 
             // dataWarga.row.add($(buttonRow)[0]).draw();
             $('table tbody').after($(buttonRow));
+            fetchWarga($('#no_kk').val());
 
 
             $('#no_kk-list').on('change', function() {

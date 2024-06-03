@@ -368,6 +368,14 @@ class KeluargaController extends Controller
             $pengajuan->keluarga->kepala_keluarga = $request->kepala_keluarga ?? null;
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
+        $pengajuan = new Pengajuan();
+
+        if (!$pengajuan->haveWarga()) {
+            return redirect()->back()->with('flash', (object) [
+                'type' => 'error',
+                'message' => 'Gagal! Tidak ada data warga yang ditambahkan.'
+            ])->withInput();
+        }
 
         $request->validate([
             'kepala_keluarga' => 'required|max:100'
@@ -396,11 +404,14 @@ class KeluargaController extends Controller
             $keluarga->status = 'Menunggu';
         }
 
-        $pengajuan = new Pengajuan();
         $pengajuan->keluarga = $keluarga;
         $pengajuan->store();
 
-        return redirect()->route('keluarga');
+        return redirect()->route('keluarga')->with('flash', (object) [
+            'type' => 'success',
+            'message' => 'Data yang ditambahkan berhasil dikirim.'
+        ]);
+        // return redirect()->route('keluarga');
     }
 
     /**

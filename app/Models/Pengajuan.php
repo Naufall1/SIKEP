@@ -110,6 +110,10 @@ class Pengajuan
         }
         return null;
     }
+    public function haveWarga() : bool
+    {
+        return count($this->daftarWarga) > 0;
+    }
     public function pindahKK(Warga $warga)
     {
         $warga->no_kk = $this->keluarga->no_kk;
