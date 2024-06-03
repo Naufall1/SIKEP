@@ -268,11 +268,11 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->back()->with('success', 'Berhasil Dikonfirmasi');
+            return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil Dikonfirmasi']);
         } catch (Exception $e) {
-            dd($e);
+            // dd($e);
             DB::rollBack();
-            return redirect()->back()->with('error', 'Gagal Melakukan Konfirmasi');
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Gagal Melakukan Konfirmasi']);
         }
     }
 
@@ -284,7 +284,7 @@ class PengajuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            session()->flash('flash', (object) ['type'=>'error', 'message'=>$validator->errors()->first()]);
             return redirect()->back();
         }
         try {
@@ -328,10 +328,10 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil ditolak.']);
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
     }
 
@@ -422,11 +422,11 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
         }
     }
 
@@ -438,7 +438,7 @@ class PengajuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            session()->flash('flash', (object) ['type'=>'error', 'message'=>$validator->errors()->first()]);
             return redirect()->back();
         }
 
@@ -456,11 +456,11 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil ditolak.']);
         } catch (Exception $e) {
             DB::rollBack();
             // dd($e);
-            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
     }
 
@@ -586,11 +586,11 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->route('pengajuan')->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
+            return redirect()->route('pengajuan')->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
-            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
+            // dd($e);
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
         }
     }
 
@@ -602,7 +602,7 @@ class PengajuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            session()->flash('flash', (object) ['status'=>'error', 'message'=>$validator->errors()->first()]);
+            session()->flash('flash', (object) ['type'=>'error', 'message'=>$validator->errors()->first()]);
             return redirect()->back();
         }
 
@@ -631,11 +631,11 @@ class PengajuanController extends Controller
             $pengajuan->save();
 
             DB::commit();
-            return redirect()->back()->with('flash', (object) ['status'=>'success', 'message'=>'Berhasil ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil ditolak.']);
         } catch (Exception $e) {
             // dd($e);
             DB::rollBack();
-            return redirect()->back()->with('flash', (object) ['status'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
+            return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }
     }
 }

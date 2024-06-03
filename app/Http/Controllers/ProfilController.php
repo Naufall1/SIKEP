@@ -34,13 +34,13 @@ class ProfilController extends Controller
         $user = User::where('user_id', $user_id)->firstOrFail();
         if ($request->filled('password') || $request->filled('password_ulangi')) {
             if (!isset($request->old_password)) {
-                return redirect()->back()->with('error', 'Jika rubah Kata Sandi, Maka Isi Kata Sandi Lama');
+                return redirect()->back()->with('flash',(object) ['type'=> 'error','message'=> 'Jika rubah Kata Sandi, Maka Isi Kata Sandi Lama']);
             }
             if (!Hash::check($request->old_password, $user->password)) {
-                return redirect()->back()->with('error', 'Kata Sandi lama salah.');
+                return redirect()->back()->with('flash',(object) ['type'=> 'error','message'=>  'Kata Sandi lama salah.']);
             }
             if ($request->password !== $request->password_ulangi) {
-                return redirect()->back()->with('error', 'Kata Sandi Baru Tidak Sesuai.');
+                return redirect()->back()->with('flash',(object) ['type'=> 'error','message'=>  'Kata Sandi Baru Tidak Sesuai.']);
             }
 
             $user->password = Hash::make($request->password);
@@ -51,7 +51,7 @@ class ProfilController extends Controller
         $user->save();
 
         // nyoba flask message (blom di fix bisa karena blom nyoba)
-        return redirect()->route('profil')->with('success', 'Data pengguna berhasil diperbarui.');
+        return redirect()->route('profil')->with('flash', (object) ['type'=>'success','message'=>'Data pengguna berhasil diperbarui.']);
 
         }
     }

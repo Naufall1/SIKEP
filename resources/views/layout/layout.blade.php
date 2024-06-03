@@ -24,7 +24,23 @@
 
     <div id="floatingFlash"
         class="tw-fixed tw-flex tw-flex-col tw-gap-3 tw-z-50 tw-w-full-mobile-w md:tw-w-[420px] lg:tw-w-[500px] tw-h-fit tw-top-5 tw-left-1/2 -tw-translate-x-1/2">
-        <x-flash-message.information message='halo'></x-flash-message.information>
+        @if (session()->has('flash'))
+            @php
+                $message = session()->get('flash')->message;
+            @endphp
+            @switch(session()->get('flash')->type)
+                @case('information')
+                    <x-flash-message.information message='{{$message}}'></x-flash-message.information>
+                    @break
+                @case('error')
+                    <x-flash-message.warning message='{{$message}}'></x-flash-message.warning>
+                @break
+                @case('success')
+                    <x-flash-message.success message='{{$message}}'></x-flash-message.success>
+                    @break
+                @default
+            @endswitch
+        @endif
         {{-- <x-flash-message.information message='halo'></x-flash-message.information> --}}
     </div>
 
@@ -60,7 +76,7 @@
 
         $(document).ready(function() {
             if ($('#floatingFlash').length) {
-                setTimeout(function() {                    
+                setTimeout(function() {
                     $('#floatingFlash').remove();
                 }, 5000);
             };

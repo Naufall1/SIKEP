@@ -199,10 +199,34 @@ class KeluargaController extends Controller
                         class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                         Lihat
                     </a>';
+                $disabledShow = '
+                    <button disabled href="'. route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) .'"
+                        class="tw-btn tw-btn-disabled tw-btn-md tw-btn-round-md">
+                        Lihat
+                    </button>';
+
+                $disabledTrash = '<button disabled href="'. route('removeAnggotaKeluarga', $warga->NIK) .'"
+                                                    class="tw-btn tw-btn-disabled tw-btn-md tw-btn-round-md tw-px-2">
+                                                    <span class="tw-stroke-n100">
+                                    <svg width="20" height="20" viewBox="0 0 25 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21.647 5.98C18.317 5.65 14.967 5.48 11.627 5.48C9.64703 5.48 7.66703 5.58 5.68703 5.78L3.64703 5.98"
+                                        stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M9.14703 4.97L9.36703 3.66C9.52703 2.71 9.64703 2 11.337 2H13.957C15.647 2 15.777 2.75 15.927 3.67L16.147 4.97"
+                                        stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M19.497 9.14L18.847 19.21C18.737 20.78 18.647 22 15.857 22H9.43703C6.64703 22 6.55703 20.78 6.44703 19.21L5.79703 9.14"
+                                        stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M10.977 16.5H14.307"
+                                        stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path dd="M10.147 12.5H15.147"
+                                        stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    </span>
+                                </button>';
                 if (str_contains($warga->nama, '(Baru)')) {
                     return $trash . $show;
                 }
-                return $show;
+                return $disabledTrash . $disabledShow;
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -463,7 +487,7 @@ class KeluargaController extends Controller
             }
 
             if (empty($keluarga->getDirty())) {
-                return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('message', ['success', 'Tidak ada data yang diubah.']);
+                return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash',(object) ['type'=>'information','message'=> 'Tidak ada data yang diubah.']);
             }
 
             // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
@@ -481,12 +505,12 @@ class KeluargaController extends Controller
                 session()->forget('kartu_keluarga');
             }
             DB::commit();
-            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('message', ['success', 'Permintaan perubahan data Terkirim!']);
+            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash',(object) ['type' => 'success', 'message' => 'Permintaan perubahan data Terkirim!']);
 
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
-            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('message', ['danger', 'Perubahan data gagal!']);
+            // dd($e);
+            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type'=>'danger', 'message'=>'Perubahan data gagal!']);
         }
 
     }
@@ -519,19 +543,6 @@ class KeluargaController extends Controller
         $haveDemografi = $data_warga['haveDemografi'];
         $demografi = $data_warga['demografi'];
         return view('pengajuan.pembaharuan.detailwarga', compact(['warga', 'haveDemografi', 'demografi']));
-    }
-
-    /**
-     * @param Request $request
-     * Fungsi ini menangani upload gambar KK.
-     */
-    private function storeImageKK(Request $request)
-    {
-        $filename = Str::uuid()->getHex()->toString();
-        $extension = $request->file('kartu_keluarga')->getClientOriginalExtension();
-        $filenameSimpan = $filename . '.' . $extension;
-        $request->file('kartu_keluarga')->storeAs('public/KK', $filenameSimpan, 'local');
-        return $filenameSimpan;
     }
 
     /**
