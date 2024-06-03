@@ -148,7 +148,7 @@ class WargaSeeder extends Seeder
                 'tanggal_lahir' => '1985-02-02',
                 'jenis_kelamin' => 'P',
                 'agama' => 'Islam',
-                'status_perkawinan' => 'Cerai Mati',
+                'status_perkawinan' => 'Cerai',
                 'status_keluarga' => 'Kepala Keluarga',
                 'status_warga' => 'Aktif',
                 'jenis_pekerjaan' => 'Belum/Tidak Bekerja',
