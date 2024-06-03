@@ -143,7 +143,7 @@ $(document).ready(function () {
         } else if (id == 'jenis_demografi-list' || id == 'jenis_demografi_keluar-list') {
             return getJenisDemografi();
         } else if (id == 'pendidikan-list') {
-            return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
+            return ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi/Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'];
         } else if (id == 'no_kk-list') {
             return getKeluarga();
         } else if (id == 'jenis_bansos-list') {

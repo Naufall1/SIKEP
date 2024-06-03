@@ -159,7 +159,7 @@ class WargaController extends Controller
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
-            'pendidikan' => 'required|string|max:50',
+            'pendidikan' => 'required|string|max:50|in:Tidak/Belum Sekolah,Belum Tamat SD/Sederajat,Tamat SD/Sederajat,SLTP/Sederajat,SLTA/Sederajat,Diploma I/II,Akademi/Diploma III/S. Muda,Diploma IV/Strata I,Strata II',
             'agama' => 'required|in:Buddha,Hindu,Islam,Katolik,Kristen,Konghuchu',
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai,Cerai Hidup',
             'jenis_pekerjaan' => 'required|string|max:50',
