@@ -12,7 +12,7 @@ class KriteriaModel extends Model
 
     public function kriteriaTagihanListrik($kriteria)
     {
-        if ($kriteria > 0 && $kriteria <= 150000) {
+        if ($kriteria >= 0 && $kriteria <= 150000) {
             return 1;
         } elseif ($kriteria > 150000 && $kriteria <= 250000) {
             return 2;
@@ -25,13 +25,13 @@ class KriteriaModel extends Model
         } elseif ($kriteria > 550000) {
             return 6;
         } else {
-            return 6+1;
+            return 0;
         }
     }
 
     public function kriteriaLuasBangunan($kriteria)
     {
-        if ($kriteria > 0 && $kriteria <= 50) {
+        if ($kriteria >= 0 && $kriteria <= 50) {
             return 1;
         } elseif ($kriteria > 50 && $kriteria <= 75) {
             return 2;
@@ -44,7 +44,7 @@ class KriteriaModel extends Model
         } elseif ($kriteria > 300) {
             return 6;
         } else {
-            return 6+1;
+            return 0;
         }
     }
 
@@ -171,8 +171,8 @@ class KriteriaModel extends Model
             $matriks[$alternatif['no_kk']] = [
                 $this->kriteriaTagihanListrik($alternatif['K1']),
                 $this->kriteriaLuasBangunan($alternatif['K2']),
-                isset($totalPenghasilanPerKeluarga[$alternatif['no_kk']]) ? $this->kriteriaTotalPenghasilan($totalPenghasilanPerKeluarga[$alternatif['no_kk']]['K3']) : 7,
-                isset($jmlWargaBerpenghasilan[$alternatif['no_kk']]) ? $this->kriteriaJumlahWargaBerpenghasilan($jmlWargaBerpenghasilan[$alternatif['no_kk']]['K4']) : 8,
+                isset($totalPenghasilanPerKeluarga[$alternatif['no_kk']]) ? $this->kriteriaTotalPenghasilan($totalPenghasilanPerKeluarga[$alternatif['no_kk']]['K3']) : 0,
+                isset($jmlWargaBerpenghasilan[$alternatif['no_kk']]) ? $this->kriteriaJumlahWargaBerpenghasilan($jmlWargaBerpenghasilan[$alternatif['no_kk']]['K4']) : 1,
                 isset($tanggungan[$alternatif['no_kk']]) ? $this->kriteriaTanggungan($tanggungan[$alternatif['no_kk']]['K5']) : 1,
                 isset($jmlBersekolah[$alternatif['no_kk']]) ? $this->kriteriaJumlahBersekolah($jmlBersekolah[$alternatif['no_kk']]['K6']) : 1
             ];
