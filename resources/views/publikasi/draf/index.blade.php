@@ -74,22 +74,22 @@
                 {{-- End: Tool Bar --}}
 
                 {{-- Start: Table HERE --}}
-                <div class="tw-w-vw tw-overflow-x-auto  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 tw-flex tw-flex-col tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
 
-                    <table class="tw-w-[780px] md:tw-w-full" id="dataDraft" style="">
+                    <table class="tw-table-fixed tw-min-w-fit tw-w-full" id="dataDraft" style="">
                         <thead>
                             <tr class="">
-                                <th class="tw-w-[48px]">No</th>
-                                <th class="tw-w-[250px] md:tw-grow">Judul</th>
-                                <th class="tw-w-[280px]">Penulis</th>
-                                <th class="tw-w-[300px]">Kategori</th>
-                                <th class="tw-w-[60px]">Status</th>
-                                <th class="tw-w-[60px]">Tanggal Dibuat</th>
-                                <th class="tw-w-[60px]">Tanggal Publish</th>
-                                <th class="tw-w-[108px]"></th>
+                                <th class="">No</th>
+                                <th class="">Judul</th>
+                                <th class="">Penulis</th>
+                                <th class="">Kategori</th>
+                                <th class="">Status</th>
+                                <th class="">Tanggal Dibuat</th>
+                                <th class="">Tanggal Publish</th>
+                                <th class=""></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-y-2 tw-divide-n400">
+                        <tbody class="tw-divide-n400">
                             {{-- DATA HERE --}}
                         </tbody>
                     </table>
@@ -120,11 +120,13 @@
                     "dataType": "json",
                     "type": "POST",
                 },
+                dom: 'tp',
+                lengthMenu: [25],
                 paging: true,
                 language: {
                     paginate: {
-                        previous: '<',
-                        next: '>',
+                        previous: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 13.28 5.654 8.933a1.324 1.324 0 0 1 0-1.866L10 2.72"/></svg></span>`,
+                        next: `<span class='tw-stroke-n1000'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#1B1B1B" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m5.94 13.28 4.347-4.347a1.324 1.324 0 0 0 0-1.866L5.94 2.72"/></svg></span>`,
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -162,44 +164,53 @@
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[48px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     // searchable: false
                 }, {
                     data: "judul",
-                    className: "tw-w-[250px]",
+                    className: "tw-min-w-[220px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "penulis",
-                    className: "tw-w-[280px]",
+                    className: "tw-min-w-[128px] tw-max-w-[128px]",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "kategori",
-                    className: "tw-w-[300px] md:tw-grow",
+                    className: "tw-min-w-[108px] tw-max-w-[108px]",
                     orderable: true,
-                    searchable: true
+                    searchable: false
                 }, {
                     data: "status",
-                    className: "tw-w-[60px]",
+                    className: "tw-min-w-[122px] tw-max-w-[122px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_dibuat",
-                    className: "tw-w-[60px]",
+                    className: "tw-min-w-[164px] tw-max-w-[164px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_publish",
-                    className: "tw-w-[60px]",
+                    className: "tw-min-w-[176px] tw-max-w-[176px]",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[108px]",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1, 2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             // $('#level_id').on('change', function () {
             //     dataDraft.ajax.reload();

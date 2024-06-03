@@ -198,28 +198,28 @@
 
 
                     <div
-                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
+                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                         <h2 class="">Keluarga</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3 tw-w-[702px] md:tw-w-full">
+                        <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-hidden  tw-overflow-x-auto">
 
-                            <table class="tw-w-full tw-table-fixed">
+                            <table class="md:tw-w-fit tw-w-[702px] tw-table-fixed">
                                 {{-- <thead class="tw-rounded-lg"> --}}
                                 <thead>
                                     <tr class="tw-h-11 tw-w-full tw-flex tw-bg-n300 tw-rounded-lg">
                                         {{-- <th class="">No</th> --}}
-                                        <th class="">No KK</th>
-                                        <th class="">Kepala Keluarga</th>
-                                        <th class="tw-w-[76px]">RT</th>
-                                        <th class="tw-w-[108px]"></th>
+                                        <th class="tw-min-w-[220px] tw-max-w-[220px]">No KK</th>
+                                        <th class="tw-min-w-[220px] tw-grow tw-shrink">Kepala Keluarga</th>
+                                        <th class="tw-min-w-[88px] tw-max-w-[88px]">RT</th>
+                                        <th class="tw-min-w-[108px] tw-max-w-[108px] tw-flex tw-items-center tw-justify-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="tw-h-16 tw-w-full tw-flex hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                         {{-- <td></td> --}}
-                                        <td class="">{{ $warga->keluarga->no_kk }}</td>
-                                        <td class="">{{ $warga->keluarga->kepala_keluarga }}</td>
-                                        <td class="tw-w-[76px]">RT {{ $warga->keluarga->RT > 10 ? '0' . $warga->keluarga->RT : '00' . $warga->keluarga->RT}}</td>
-                                        <td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-2">
+                                        <td class="tw-min-w-[220px] tw-max-w-[220px]">{{ $warga->keluarga->no_kk }}</td>
+                                        <td class="tw-min-w-[220px] tw-grow tw-shrink"><div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">{{ $warga->keluarga->kepala_keluarga }}</div></td>
+                                        <td class="tw-min-w-[88px] tw-max-w-[88px]">RT {{ $warga->keluarga->RT > 10 ? '0' . $warga->keluarga->RT : '00' . $warga->keluarga->RT}}</td>
+                                        <td class="tw-min-w-[108px] tw-max-w-[108px] tw-flex tw-items-center tw-justify-center">
                                             <a href="{{ route('penduduk.keluarga.detail', ['no_kk' => $warga->keluarga->no_kk]) }}"
                                                 class="tw-btn tw-btn-md tw-btn-round-md tw-btn-primary">
                                                 Detail

@@ -149,18 +149,18 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-scroll">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden">
                         <h2 class="">Warga</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                        <div class="tw-flex tw-flex-col tw-w-full tw-gap-3 tw-overflow-x-auto">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="tableWarga">
-                                <thead class="tw-rounded-lg">
-                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
+                            <table class=" tw-table-fixed tw-w-[701px]" id="tableWarga">
+                                <thead class="">
+                                    <tr class="">
                                         <th>No</th>
                                         <th>NIK</th>
-                                        <th>NAMA</th>
-                                        <th>STATUS KELUARGA</th>
-                                        <th class="tw-w-[108px]"></th>
+                                        <th>Nama</th>
+                                        <th>Status Keluarga</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -252,12 +252,6 @@
                 paging: false,
                 info: false,
                 searching: false,
-                language: {
-                    paginate: {
-                        previous: '<',
-                        next: '>',
-                    }
-                },
                 createdRow: function(row, data, dataIndex) {
                     $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
                 },
@@ -293,29 +287,39 @@
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     searchable: false
                 }, {
-                    // NIK
                     data: "NIK",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[132px] tw-grow tw-shrink",
                     orderable: false,
+                    searchable: false
                 }, {
-                    // Nama
                     data: "nama",
-                    className: "tw-grow",
+                    className: "tw-min-w-[126px] tw-grow tw-shrink",
                     orderable: true,
+                    searchable: false
                 }, {
-                    // Status Keluarga
                     data: "status_keluarga",
-                    className: "tw-w-[180px]",
-                    orderable: true,
-                }, {
-                    // Aksi Detail
-                    data: "aksi",
-                    className: "tw-w-[98px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[174px] tw-max-w-[174px]",
                     orderable: false,
+                    searchable: false
+                }, {
+                    data: "aksi",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-flex tw-items-center tw-justify-center",
+                    orderable: false,
+                    searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1,2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
         });

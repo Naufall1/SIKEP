@@ -9,7 +9,7 @@
         <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
-                <h2 class="">Tahap 1 - Matriks Keputusan</h2>
+                <h2 class="">Tahap 1 - Matriks Keputusan (X)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-full tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
-                <h2 class="">Tahap 2 - Normalisasi Matriks Keputusan</h2>
+                <h2 class="">Tahap 2 - Normalisasi Matriks Keputusan (N)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
@@ -71,7 +71,7 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
-                <h2 class="">Tahap 3 - Overall Performance by Removing Each Criterion</h2>
+                <h2 class="">Tahap 3 - Kinerja Keseluruhan dari Alternatif (S)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
@@ -97,7 +97,7 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
-                <h2 class="">Tahap 4 - Gatau namanya apa (Sij)</h2>
+                <h2 class="">Tahap 4 - Kinerja Keseluruhan dari Alternatif dengan Penghapusan Kriteria (Sij)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
@@ -128,7 +128,7 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
-                <h2 class="">Tahap 5 - Gatau namanya apa</h2>
+                <h2 class="">Tahap 5 - Penentuan Deviasi Absolut (Ej)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">
@@ -159,7 +159,7 @@
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1200ms]">
-                <h2 class="">Tahap 6 - Pembobotan</h2>
+                <h2 class="">Tahap 6 - Pembobotan Akhir Kriteria (Wj)</h2>
                 <div class="tw-flex tw-flex-col tw-gap-3">
                     {{-- Start: Table HERE --}}
                     <div class="tw-w-vw tw-overflow-x-auto tw-pb-3 md:tw-pb-0 tw-flex tw-flex-col tw-gap-6">

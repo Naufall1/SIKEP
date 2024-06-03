@@ -114,18 +114,18 @@
                         </div>
                     </div>
                     
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
                         <h2 class="">Anggota Keluarga</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                        <div class="tw-flex tw-flex-col tw-w-full tw-gap-3 tw-overflow-x-auto">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                            <table class="tw-table-fixed tw-w-[701px]" id="daftarWarga">
                                 <thead class="">
                                     <tr class="">
                                         <th>No</th>
                                         <th>NIK</th>
                                         <th>Nama</th>
                                         <th>Status Keluarga</th>
-                                        <th class="tw-w-[108px]"></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -151,11 +151,11 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-overflow-x-auto tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
+                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                         <h2 class="">Daftar Bansos</h2>
-                        <div class="tw-flex tw-flex-col tw-gap-3">
+                        <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-x-auto ">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="daftarBansos">
+                            <table class=" tw-table-fixed tw-w-[701px]" id="daftarBansos">
                                 <thead class="">
                                     <tr class="">
                                         <th>No</th>
@@ -225,34 +225,44 @@
                 paging: false,
                 info: false,
                 searching: false,
-                order: [
-                    [2, 'asc']
-                ],
+                // order: [
+                //     [2, 'asc']
+                // ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "NIK",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[132px] tw-grow tw-shrink",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "nama",
-                    className: "tw-grow",
+                    className: "tw-min-w-[126px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "status_keluarga",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[174px] tw-max-w-[174px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[98px] tw-h-tw-h-11 tw-flex tw-items-center tw-justify-center",
+                    className: "tw-min-w-[76px] tw-max-w-[76px] tw-flex tw-items-center tw-justify-center",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1,2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
             dataBansos = $('#daftarBansos').DataTable({
@@ -288,28 +298,38 @@
                 info: false,
                 searching: false,
                 order: [
-                    [1, 'asc']
+                    [2, 'asc']
                 ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[44px]",
+                    className: "tw-min-w-7 tw-max-w-7",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "bansos_nama",
-                    className: "tw-grow",
+                    className: "tw-min-w-[146px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "tanggal_menerima",
-                    className: "tw-w-[196px]",
+                    className: "tw-min-w-[190px] tw-max-w-[190px] tw-table-right-align",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "keterangan",
-                    className: "tw-w-[140px]",
+                    className: "tw-min-w-[188px] tw-max-w-[188px]",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1,3],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
         });

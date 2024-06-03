@@ -148,14 +148,14 @@
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-x-auto">
 
-                            <table class="tw-w-[702px] md:tw-w-full" id="daftarWarga">
+                            <table class="tw-table-fixed tw-w-[701px]" id="daftarWarga">
                                 <thead class="tw-rounded-lg">
-                                    <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg">
-                                        <th class="">No</th>
-                                        <th class="">NIK</th>
-                                        <th class="">Nama</th>
-                                        <th class="">Status Keluarga</th>
-                                        <th class=""></th>
+                                    <tr class="">
+                                        <th class="tw-min-w-[60px] tw-max-w-[60px]">No</th>
+                                        <th class="tw-min-w-[172px] tw-max-w-[172px]">NIK</th>
+                                        <th class="tw-min-w-[188px] tw-max-w-[188px] tw-grow tw-shrink">Nama</th>
+                                        <th class="tw-min-w-[205px] tw-max-w-[205px]">Status Keluarga</th>
+                                        <th class="tw-min-w-[140px] tw-max-w-[140px] tw-flex tw-items-center tw-justify-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -277,29 +277,39 @@
                 // ],
                 columns: [{
                     data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
-                    className: "tw-w-[80px]",
+                    className: "tw-min-w-[60px] tw-max-w-[60px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "NIK",
-                    className: "tw-w-[180px]",
+                    className: "tw-min-w-[172px] tw-max-w-[172px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "nama",
-                    className: "tw-grow",
-                    orderable: false,
+                    className: "tw-min-w-[188px] tw-max-w-[188px] tw-grow tw-shrink",
+                    orderable: true,
                     searchable: false
                 }, {
                     data: "status_keluarga",
-                    className: "tw-w-[220px]",
+                    className: "tw-min-w-[205px] tw-max-w-[205px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "action",
-                    className: "tw-w-[140px] tw-flex tw-items-center tw-justify-center tw-gap-2",
+                    className: "tw-min-w-[140px] tw-max-w-[140px] tw-flex tw-items-center tw-justify-center tw-gap-2",
                     orderable: false,
                     searchable: false
+                }],
+                columnDefs: [{
+                    targets: [1,2],
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
+                                data + '</div>';
+                        }
+                        return data;
+                    }
                 }]
             });
         }
