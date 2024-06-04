@@ -15,7 +15,7 @@
     @vite('resources/js/app.js', 'build/')
 </head>
 
-<body class="{{ $isForm ? 'tw-bg-n100' : 'tw-bg-n200' }} selection:tw-bg-b500 selection:tw-text-n100">
+<body class="{{ $isForm ? 'tw-bg-n100' : 'tw-bg-n200' }} selection:tw-bg-b500 selection:tw-text-n100 ">
 
     <div id="loader"
         class="tw-absolute tw-justify-center tw-items-center tw-flex tw-top-0 tw-left-0 tw-z-50 tw-bg-n100 tw-opacity-80 tw-backdrop-blur-2xl tw-w-svw tw-h-svh">
