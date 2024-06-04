@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ARAS;
 use Exception;
 use Illuminate\Http\Request;
-use App\Models\Bansos;
 use App\Models\Keluarga;
 use App\Models\KeluargaHistory;
-use App\Models\KeluargaModified;
-use App\Models\MightGet;
-use App\Models\PengajuanData;
+use App\Models\KriteriaModel;
+use App\Models\MEREC;
 use App\Models\Warga;
 use App\Models\WargaHistory;
-use App\Models\WargaModified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -151,14 +149,30 @@ class BansosController extends Controller
     {
         $user = Auth::user();
         $dataKeluarga = null;
+        $dataKeluargaWithRank = null;
+
+        $kriteria = new KriteriaModel();
+
+        $MEREC = new MEREC($kriteria);
+        $MEREC->calculate();
+
+        $ARAS = new ARAS($kriteria->kriteria(), $kriteria->namaKriteria(), $MEREC->getBobot());
+        $ARAS->calculate();
+
+        $rankOrder = array_keys($ARAS->getPeringkatUtilitas_K());
 
         if (Auth::user()->keterangan === 'ketua') {
             $dataKeluarga = Keluarga::dataBansos($user->keterangan);
         } else {
             $dataKeluarga = Keluarga::dataBansos($user->keterangan);
         }
-        return DataTables::of($dataKeluarga)
-            ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+
+        foreach ($dataKeluarga as $keluarga) {
+            $keluarga['rank'] = array_search($keluarga->no_kk, $rankOrder) + 1;
+        }
+
+        return DataTables::of(collect($dataKeluarga))
+            // ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
             ->addColumn('action', function ($bansos) {
                 return '<td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
                             <a href="'. route('bansos.perhitungan.detail', $bansos->no_kk) . '"

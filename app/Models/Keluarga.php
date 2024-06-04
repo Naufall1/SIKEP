@@ -79,7 +79,7 @@ class Keluarga extends Model
         ->selectRaw('COUNT(DISTINCT warga.NIK) AS jumlah_warga')
         ->selectRaw('COUNT(DISTINCT CASE WHEN warga.penghasilan > 0 THEN warga.NIK END) AS jumlah_warga_berpenghasilan')
         ->selectRaw('SUM(CASE WHEN warga.jenis_pekerjaan = "Pelajar/Mahasiswa" THEN 1 ELSE 0 END) AS jumlah_warga_bersekolah')
-        ->selectRaw('COUNT(CASE WHEN warga.jenis_pekerjaan = "Tidak Bekerja" THEN warga.NIK ELSE NULL END) AS tanggungan')
+        ->selectRaw('COUNT(CASE WHEN warga.penghasilan = 0 THEN warga.NIK ELSE NULL END) AS tanggungan')
         ->join('warga', 'warga.no_kk', '=', 'keluarga.no_kk')
         ->join('user', 'keluarga.rt', '=', 'user.keterangan')
         ->groupBy('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik', 'keluarga.luas_bangunan','user.keterangan', 'keluarga.rt')

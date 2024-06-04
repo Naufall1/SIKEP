@@ -141,9 +141,9 @@
                     [0, 'asc']
                 ],
                 columns: [{
-                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    data: "rank", // nomor urut dari laravel datatable addIndexColumn()
                     className: "tw-min-w-[60px] tw-max-w-[60px]",
-                    orderable: false,
+                    orderable: true,
                     // searchable: false
                 }, {
                     data: "kepala_keluarga",

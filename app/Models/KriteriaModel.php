@@ -132,10 +132,11 @@ class KriteriaModel extends Model
 
     public function kriteria()
     {
-        $keluarga = Keluarga::all(['no_kk', 'tagihan_listrik AS K1', 'luas_bangunan AS K2'])->toArray();
+        $keluarga = Keluarga::select(['no_kk', 'tagihan_listrik AS K1', 'luas_bangunan AS K2'])->where('status', '=', 'Aktif')->get()->toArray();
 
         $totalPenghasilanPerKeluarga = Warga::with('keluarga')
             ->select('no_kk', DB::raw('SUM(penghasilan) as K3'))
+            ->where('status_warga', '=', 'Aktif')
             ->groupBy('no_kk')
             ->get()
             ->keyBy('no_kk')
@@ -144,6 +145,7 @@ class KriteriaModel extends Model
         $jmlWargaBerpenghasilan = Warga::select('keluarga.no_kk', DB::raw('COUNT(warga.penghasilan) as K4'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
             ->where('warga.penghasilan', '>', 0)
+            ->where('status_warga', '=', 'Aktif')
             ->groupBy('keluarga.no_kk')
             ->get()
             ->keyBy('no_kk')
@@ -152,6 +154,7 @@ class KriteriaModel extends Model
         $tanggungan = Warga::select('keluarga.no_kk', DB::raw('COUNT(warga.penghasilan) as K5'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
             ->where('warga.penghasilan', '=', 0)
+            ->where('status_warga', '=', 'Aktif')
             ->groupBy('keluarga.no_kk')
             ->get()
             ->keyBy('no_kk')
@@ -159,6 +162,7 @@ class KriteriaModel extends Model
 
         $jmlBersekolah = Warga::select('keluarga.no_kk', DB::raw('COUNT(CASE WHEN warga.jenis_pekerjaan = "Pelajar/Mahasiswa" THEN warga.no_kk ELSE 0 END) AS K6'))
             ->join('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
+            ->where('status_warga', '=', 'Aktif')
             ->groupBy('keluarga.no_kk')
             ->get()
             ->keyBy('no_kk')
