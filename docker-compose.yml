@@ -11,15 +11,18 @@ services:
   nginx:
     image: nginx:alpine
     container_name: sikep-nginx
-    restart: unless-stopped
+    restart: always
     tty: true
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./docker-compose/nginx:/etc/nginx/conf.d
       - shared-data:/var/www/app
       - ./storage/app/public:/var/www/app/public/file:ro
       # - /etc/letsencrypt/live/sikep-rw2.site:/etc/letsencrypt/live/sikep-rw2.site:ro
+      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/letsencrypt:ro
     networks:
       - laravel
 
@@ -40,3 +43,10 @@ services:
       - laravel
     expose:
       - 9000
+
+  certbot:
+    image: deliverous/certbot:latest
+    command:  certonly --webroot -w /var/www/certbot/ -d sikep-rw2.site --text --agree-tos --email sikeprw02@gmail.com --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges=http
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw

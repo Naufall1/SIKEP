@@ -7,6 +7,7 @@
 /public/file/Dokumen-Pendukung/*
 /storage/*.key
 /vendor
+/certbot
 .env
 .env.backup
 .env.production
