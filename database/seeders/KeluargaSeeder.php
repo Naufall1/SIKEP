@@ -198,7 +198,7 @@ class KeluargaSeeder extends Seeder
                 'image_kk' => 'kk_16.jpg',
                 'tagihan_listrik' => 200000,
                 'luas_bangunan' => 120,
-                "status"=>"Menunggu",
+                "status"=>"Aktif",
                 'created_at' => now(),
             ],
         ]);
