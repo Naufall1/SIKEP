@@ -1,5 +1,5 @@
-<div class="tw-flex tw-border-t-[1.5px] tw-px-5 md:tw-px-[100px] tw-py-6 md:tw-py-11">
-    <div class="tw-flex tw-w-full tw-flex-col-reverse tw-gap-8 md:tw-justify-between md:tw-flex-row">
+<div class="tw-flex tw-flex-col tw-gap-5 tw-border-t-[1.5px] tw-px-5 md:tw-px-[100px] tw-py-6 md:tw-pt-8 md:tw-pb-8">
+    <div class="tw-flex tw-w-full tw-flex-col tw-gap-7 md:tw-gap-8 md:tw-justify-between md:tw-flex-row">
         <div class="tw-flex tw-flex-col tw-gap-5 md:tw-gap-8 ">
             <div class="tw-flex tw-items-center tw-gap-3">
                 <img src="{{ asset('assets/logo/sikep.svg') }}" alt="" class="tw-h-7">
@@ -20,9 +20,13 @@
                 </div>
                 <div class="tw-flex tw-flex-col tw-gap-2">
                     <li><a target="_blank" href="https://github.com/Naufall1" class="tw-font-medium tw-text-n1000 hover:tw-text-b500">Muhammad Naufal Kurniawan</a></li>
-                    <li><a target="_blank" href="" class="tw-font-medium tw-text-n1000 hover:tw-text-b500">Rizky Fitri Andini</a></li>
+                    <li><a target="_blank" href="https://github.com/RizkyFitriAndini" class="tw-font-medium tw-text-n1000 hover:tw-text-b500">Rizky Fitri Andini</a></li>
                 </div>
             </ul>
         </div>
+    </div>
+    <div class="tw-flex tw-justify-between tw-w-full tw-pt-5 tw-border-t-[1.5px] tw-border-n500">
+        <p class="tw-font-sans tw-text-sm tw-font-medium tw-text-n500">&copy; Sikep-RW02 2024</p>
+        <p class="tw-font-sans tw-text-sm tw-font-medium tw-text-n500">Politeknik Negeri Malang</p>
     </div>
 </div>
