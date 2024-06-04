@@ -52,9 +52,10 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="content" label="Isi">
-                                <textarea name="isi" id="isi" class="form-control" required>{{old('isi')}}</textarea>
-
+                            <x-input.label required for="content" label="Isi">
+                                <x-input.textarea name="isi" placeholder="Masukkan Isi Publikasi"
+                                    value="{{ old('isi', isset($formState['isi']) ? $formState['isi'] : '') }}">
+                                </x-input.textarea>
                                 @error('isi')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
@@ -79,8 +80,6 @@
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
-
-
                         </div>
                     </div>
                 </div>
@@ -105,20 +104,7 @@
 @endsection
 
 @push('js')
-<script src="https://cdn.tiny.cloud/1/z0hhm5m2sapddlcptxbuiww7jy2drthhz0q3sk33ev5imf3n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-    $(document).ready(function(){
-        tinymce.init({
-            selector: '#isi',
-            setup: function (editor) {
-                editor.on('change', function () {
-                    editor.save();
-                });
-            },
-            plugins: 'autolink lists link image charmap print preview hr anchor pagebreak',
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        });
-    });
 
     function updatePublishDate() {
         var currentDate = new Date().toISOString().slice(0, 10);
