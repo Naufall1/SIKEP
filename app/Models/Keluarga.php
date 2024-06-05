@@ -82,6 +82,7 @@ class Keluarga extends Model
         ->selectRaw('COUNT(CASE WHEN warga.penghasilan = 0 THEN warga.NIK ELSE NULL END) AS tanggungan')
         ->join('warga', 'warga.no_kk', '=', 'keluarga.no_kk')
         ->join('user', 'keluarga.rt', '=', 'user.keterangan')
+        ->where('status', 'Aktif')
         ->groupBy('keluarga.no_kk', 'keluarga.kepala_keluarga', 'keluarga.tagihan_listrik', 'keluarga.luas_bangunan','user.keterangan', 'keluarga.rt')
         ->orderBy('total_penghasilan');
 

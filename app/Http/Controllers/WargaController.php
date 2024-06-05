@@ -51,7 +51,8 @@ class WargaController extends Controller
 
         if ($user->keterangan == 'ketua') {
             $query = Warga::select($select, 'keluarga.rt')
-                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk');
+                ->join('keluarga', 'keluarga.no_kk', '=', 'warga.no_kk')
+                ->where('status_warga', '!=', 'Menunggu');
 
             if (explode(" ", $request->scope_data)[1] ?? false) {
                     $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
@@ -72,7 +73,8 @@ class WargaController extends Controller
                 ->join('user', function ($join) use ($user) {
                     $join->on('keluarga.rt', '=', 'user.keterangan')
                         ->where('keluarga.rt', '=', $user->keterangan);
-                });
+                })
+                ->where('status_warga', '!=', 'Menunggu');
 
             if (isset($request->agama)) {
                 $query->whereIn('warga.agama', $request->agama);
