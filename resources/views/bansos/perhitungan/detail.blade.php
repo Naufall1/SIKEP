@@ -13,22 +13,27 @@
                 <h2>Tambah Bansos</h2>
             </div>
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{ route('tambahPenerimaBansos') }}"
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{ route('bansos.perhitungan.detail.tambahBansos', $dataKeluarga->no_kk) }}"
                     method="POST" id="formData" enctype="multipart/form-data">
+                    @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
-
                         <x-input.label class="tw-relative" for="jenis_bansos-list" label="Jenis Bansos">
-                            <x-input.select2 name="jenis_bansos" placeholder="Pilih Jenis Bansos"></x-input.select2>
+                            <x-input.select name="bansos_kode" placeholder="Pilih Jenis Bansos">
+                                <option value="BLT">BLT</option>
+                                <option value="BPNT">BPNT</option>
+                                <option value="BSU">BSU</option>
+                                <option value="PKH">PKH</option>
+                            </x-input.select>
                         </x-input.label>
 
                         <x-input.label for="tanggal_penerimaan" label="Tanggal Penerimaan">
                             <x-input.input placeholder=""
-                                type="date" id="tanggal_penerimaan" name="tanggal_penerimaan"></x-input.input>
+                                type="date" id="tanggal_menerima" name="tanggal_menerima"></x-input.input>
                         </x-input.label>
 
-                        <x-input.label for="keterangan" label="Keterangan">
+                        {{-- <x-input.label for="keterangan" label="Keterangan">
                             <x-input.textarea class="tw-h-32" name="keterangan" placeholder="Catatan"></x-input.textarea>
-                        </x-input.label>
+                        </x-input.label> --}}
 
 
                     </div>
@@ -36,9 +41,8 @@
                     <div class="tw-flex tw-gap-2">
                         <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                             id="closeModal">Batal</button>
-                        <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Tolak</a>
-                    </div>
-
+                            <button class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Tambah</a>
+                        </div>
                 </form>
             </div>
         </div>

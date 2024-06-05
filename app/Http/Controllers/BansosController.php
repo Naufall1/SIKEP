@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\ARAS;
+use App\Models\Bansos;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Keluarga;
 use App\Models\KeluargaHistory;
 use App\Models\KriteriaModel;
 use App\Models\MEREC;
+use App\Models\MightGet;
 use App\Models\Warga;
 use App\Models\WargaHistory;
 use Illuminate\Support\Facades\Auth;
@@ -198,8 +200,23 @@ class BansosController extends Controller
         return view('bansos.perhitungan.detail', compact(['dataKeluarga', 'dataKriteria']));
     }
 
-    public function tambah(){
+    public function tambah(Request $request, $id) {
 
+        $dataKeluarga = Keluarga::findOrFail($id);
+
+        $mightGet = new MightGet();
+        $mightGet->bansos_kode = $request->bansos_kode;
+        $mightGet->no_kk = $id;
+        $mightGet->tanggal_menerima = $request->tanggal_menerima;
+        $mightGet->save();
+        // dd($request->bansos_kode);
+
+
+        return redirect()->route('bansos.perhitungan.detail', ['id' => $dataKeluarga->no_kk])
+        ->with('flash', (object)[
+            'type' => 'success',
+            'message' => 'Berhasil menambahkan Bansos'
+        ]);
     }
 
     public function detailPerhitungan(){

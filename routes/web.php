@@ -161,7 +161,7 @@ Route::prefix('bansos')->middleware('role:rw,rt')->group(function () {
     Route::get('/perhitungan', [BansosController::class, 'calc'])->name('bansos.perhitungan'); // menampilkan tabel perankingan dari hasil perhitungan SPK (Sistem Pendukung Keputusan)
     Route::get('/perhitungan/detail', [BansosController::class, 'detailPerhitungan'])->name('bansos.perhitungan.detailPerhitungan'); // menampilkan langkah perhitungan SPK (Sistem Pendukung Keputusan)
     Route::get('/perhitungan/{id}/detail', [BansosController::class, 'detailCalc'])->name('bansos.perhitungan.detail'); // menampilkan detail dari keluarga
-    Route::post('/tambah', [BansosController::class, 'tambah'])->name('tambahPenerimaBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
+    Route::post('/perhitungan/{id}/detail/tambah', [BansosController::class, 'tambah'])->name('bansos.perhitungan.detail.tambahBansos'); // menangani penerimaan data dari form penambahan penerima bansos dan menyimpan pada database
 });
 
 Route::prefix('profile')->group(function () {
