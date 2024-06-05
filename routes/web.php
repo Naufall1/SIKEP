@@ -53,6 +53,8 @@ Route::prefix('spk')->middleware(['auth', 'role:rw,rt'])->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/baca/{id}', [HomeController::class, 'getBacaan'])->name('home.baca'); // menampilkan halaman bacaan publikasi
+
 
 Route::post('/filter-data', [ChartController::class, 'filterData'])->name('filter-data');
 
@@ -186,10 +188,6 @@ Route::prefix('publikasi')->middleware(['auth','role:adm'])->group(function () {
     Route::put('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'update_draf'])->name('publikasi.draf.update'); // menyimpan data
 
 });
-
-Route::get('/baca', function(){
-    return view('landing.bacaan');
-})->name('publikasi.baca'); // menampilkan halaman bacaan publikasi
 
 Route::prefix('api')->group(function () {
     Route::get('/warga', [WargaController::class, 'getAll'])->middleware('role:rt'); // route ini akan mengembalikan json yang berisi semua data warga (TODO data warga berdasarkan RT)

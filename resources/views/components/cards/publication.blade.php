@@ -1,20 +1,22 @@
 @props([
-    'url', 'image', 'type', 'title', 'writer', 'date'
+    'url', 'image', 'type', 'title', 'writer', 'day', 'date'
 ])
 
 <a href="{{$url}}" class='tw-grow tw-flex tw-flex-col tw-h-[404px] tw-col-span-6 md:tw-col-span-3 lg:tw-col-span-2 tw-bg-n100 tw-group'>
     <div class="tw-h-52 tw-rounded-t-md tw-border-[1.5px] tw-border-b-0 tw-border-n400 tw-overflow-hidden">
-        <img class="" src="{{ asset('assets/landing/'. $image .'.jpg') }}" alt="">
+        <img class="tw-h-full tw-w-full tw-object-cover" src="{{Storage::disk('public')->has('publikasi/' . $image)
+            ? asset(Storage::disk('public')->url('publikasi/' . $image))
+            : asset(Storage::disk('public')->url('publikasi/default.jpg'))}}" alt="">
     </div>
     <div
-        class="tw-grow tw-w-full tw-px-4 tw-border-[1.5px] tw-flex tw-flex-col tw-gap-2 tw-items-start tw-justify-center tw-cursor-pointer">
+        class="tw-grow tw-w-full tw-p-4 tw-border-[1.5px] tw-flex tw-flex-col tw-gap-2 tw-items-start tw-justify-start tw-cursor-pointer">
         <x-form.iconlabel content="{{$type}}"></x-form.iconlabel>
         <div class="tw-flex tw-flex-col tw-gap-2">
             <h2 class="tw-text-wrap tw-line-clamp-2">{{$title}}</h2>
             <div class="tw-flex tw-gap-1 tw-items-center">
                 <p class="tw-caption tw-w-fit tw-text-n1000 tw-line-clamp-1">{{$writer}}</p>
                 <div class="tw-h-[6px] tw-w-[6px] tw-rounded-full tw-bg-n600"></div>
-                <p class="tw-caption tw-w-fit tw-text-n1000 tw-line-clamp-1">{{$date}}</p>
+                <p class="tw-caption tw-w-fit tw-text-n1000 tw-line-clamp-1">{{$day}}, {{$date}}</p>
             </div>
         </div>
     </div>

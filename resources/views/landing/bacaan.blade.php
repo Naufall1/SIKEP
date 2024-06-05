@@ -6,11 +6,11 @@
         <span class="tw-font-bold tw-text-b500">Artikel atau Pengumuman</span>
     </p>
 
-    <x-publikasi.index title="{{$announcement->judul}}" created_at="{{$announcement->tanggal_dibuat}}" writer="{{$announcement->penulis}}">
+    <x-publikasi.index title="{{$announcement->judul}}" created_at="{{$announcement->tanggal_dibuat}}" writer="{{$announcement->penulis}}" image_url="{{ $announcement->image_url}}" caption="{{ $announcement->caption}}">
         {{$announcement->isi}}
     </x-publikasi.index>
 
-    <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
+    <div class="tw-flex tw-justify-between tw-pt-4 tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
         <a href="{{ route('home') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
             type="button">
             <x-icons.actionable.arrow-left class="" stroke="1.5"

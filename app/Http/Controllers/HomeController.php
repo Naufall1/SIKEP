@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArticleAnnouncement;
 use App\Models\Bansos;
 use App\Models\Demografi;
 use App\Models\HaveDemografi;
@@ -46,7 +47,28 @@ class HomeController extends Controller
     }
 
     private function dashboardGuest() {
-        return view('landing.index', ['title' => 'Umum', 'text' => 'Warga']);
+
+        $select = [
+            'kode',
+            'judul',
+            'penulis',
+            'kategori',
+            'status',
+            'tanggal_dibuat',
+            'image_url',
+        ];
+
+        $announcements = ArticleAnnouncement::select($select)->where('status', '=', 'ditampilkan')->orderBy('tanggal_dibuat', 'desc')->get();
+
+        return view('landing.index', ['title' => 'Umum', 'text' => 'Warga', 'announcements' => $announcements]);
+    }
+
+    public function getBacaan($id){
+
+        $announcement = ArticleAnnouncement::find($id);
+        // dd($announcement);
+        return view('landing.bacaan', compact('announcement'));
+
     }
 
     private function getData($keterangan) {

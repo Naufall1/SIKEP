@@ -117,7 +117,7 @@
         </div>
     </div>
 @else
-    @if (Route::currentRouteName() !== 'login')
+    @if (Route::currentRouteName() == 'home')
         <a href="{{ route('login') }}" class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round" type="submit">Masuk</a>
     @endif
 @endif

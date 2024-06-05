@@ -77,14 +77,14 @@
                 </x-input.label>
 
                 <div class="tw-flex tw-w-full tw-justify-between md:tw-gap-3 md:tw-items-end">
-                    <button
+                    <a href="{{route('home')}}"
                         class="tw-btn tw-btn-lg-ilead tw-btn-outline tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-bg-cover" stroke="1.5" color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
-                    </button>
+                    </a>
                     <button
                         class="tw-btn tw-btn-lg tw-btn-round tw-btn-primary"
                         type="submit">Masuk</button>
