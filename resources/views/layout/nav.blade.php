@@ -59,7 +59,8 @@
 
 @if (!empty(Auth::user()->hasLevel['level_kode']))
     <div class="tw-flex tw-gap-3 tw-items-center">
-        <div class="nav-notify tw-cursor-pointer tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
+
+        {{-- <div class="nav-notify tw-cursor-pointer tw-h-11 tw-w-11 tw-flex tw-justify-center tw-items-center hover:tw-bg-n200 tw-rounded-md"
             href="">
             <div class="tw-relative tw-flex tw-justify-center">
                 <x-icons.actionable.notification class="tw-bg-cover" stroke="1.5"
@@ -70,7 +71,7 @@
             </div>
         </div>
 
-        <div class="tw-w-[1.5px] tw-h-8 tw-bg-n300"></div>
+        <div class="tw-w-[1.5px] tw-h-8 tw-bg-n300"></div> --}}
 
         {{-- <div class="tw-h-11"> --}}
 
@@ -81,7 +82,7 @@
 
                 <div class="tw-hidden md:tw-inline-block">
                     {{-- Nama --}}
-                    <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->hasLevel['level_kode'] : 'Umum' }}
+                    <h3>{{ !empty(Auth::user()->hasLevel['level_kode']) ? Auth::user()->nama : 'Umum' }}
 
                     </h3>
 

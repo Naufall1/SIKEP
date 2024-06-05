@@ -28,7 +28,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('home');
         }
-        return redirect()->route('login')->with('flash', (object) ['type' => 'error', 'message'=>'Login Gagal!'])->withInput();
+        return redirect()->route('login')->with('flash', (object) ['type' => 'error', 'message'=>'Nama Pengguna atau Kata Sandi yang dimasukkan salah!'])->withInput();
     }
     public function logout(){
         Auth::logout();
