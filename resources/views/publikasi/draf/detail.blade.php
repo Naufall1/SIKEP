@@ -56,7 +56,7 @@
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Preview Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
-                            <x-publikasi.index title="{{$announcement->judul}}" created_at="{{$announcement->tanggal_dibuat}}" writer="{{$announcement->penulis}}">
+                            <x-publikasi.index title="{{$announcement->judul}}" created_at="{{$announcement->tanggal_dibuat}}" writer="{{$announcement->penulis}}"  image_url="{{ $announcement->image_url}}" caption="{{ $announcement->caption}}">
                                 {!!$announcement->isi!!}
                             </x-publikasi.index>
                         </div>

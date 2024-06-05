@@ -52,7 +52,10 @@
                             </x-input.label>
 
                             <x-input.label for="isi" label="Isi">
-                                <textarea id="isi" name="isi" placeholder="Masukkan Isi">{{ old('isi', $announcement->isi) }}</textarea>
+                                {{-- <textarea id="isi" name="isi" placeholder="Masukkan Isi">{{ old('isi', $announcement->isi) }}</textarea> --}}
+                                <x-input.textarea class="tw-h-64" name="isi" placeholder="Masukkan Isi Publikasi"
+                                    value="{{ old('isi', $announcement->isi) }}">
+                                </x-input.textarea>
                                 @error('isi')
                                 <small class="form-text tw-text-red-600">{{ $message }}</small>
 
@@ -84,19 +87,9 @@
 @endsection
 
 @push('js')
-<script src="https://cdn.tiny.cloud/1/z0hhm5m2sapddlcptxbuiww7jy2drthhz0q3sk33ev5imf3n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{{-- <script src="https://cdn.tiny.cloud/1/z0hhm5m2sapddlcptxbuiww7jy2drthhz0q3sk33ev5imf3n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
 <script>
     $(document).ready(function(){
-        tinymce.init({
-            selector: '#isi',
-            setup: function (editor) {
-                editor.on('change', function () {
-                    editor.save();
-                });
-            },
-            plugins: 'autolink lists link image charmap print preview hr anchor pagebreak',
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        });
 
         $('#formData').submit(function(){
             var currentDate = new Date().toISOString().slice(0,10);
