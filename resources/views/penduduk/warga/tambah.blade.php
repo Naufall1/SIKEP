@@ -228,6 +228,7 @@
                                 @include('components.form.textdetail', [
                                     'title' => '',
                                     'isImage' => true,
+                                    'content' => '',
                                     // 'content' => 'data:image/' . $img->ext . ';base64, ' . $img->base64,
                                     // 'content' => 'data:image/' . $img->ext . ';base64, ' . base64_encode(Storage::disk('temp')->get([$img->base64])),
                                 ])
