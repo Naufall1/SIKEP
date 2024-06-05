@@ -214,6 +214,7 @@
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
     <script>
+        var dataWarga;
         $('#formdata').submit(function(e) {
             // e.preventDefault();
             $('#RW').prop('disabled', false);
@@ -243,15 +244,15 @@
 
             // dataWarga.row.add($(buttonRow)[0]).draw();
             $('table tbody').after($(buttonRow));
-            fetchWarga($('#no_kk').val());
+            fetchWarga();
 
 
-            $('#no_kk-list').on('change', function() {
-                dataWarga.ajax.reload();
-            });
+            // $('#no_kk-list').on('change', function() {
+            //     dataWarga.ajax.reload();
+            // });
         });
 
-        function fetchWarga(no_kk) {
+        function fetchWarga() {
             dataWarga = $('#daftarWarga').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
@@ -259,7 +260,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.no_kk = no_kk;
+                        d.no_kk = $('#no_kk').val();
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
@@ -484,7 +485,8 @@
                                 $('#' + key).val(val);
                             });
                             selectRT(response.RT);
-                            fetchWarga($('#no_kk').val());
+                            dataWarga.ajax.reload();
+                            // fetchWarga();
                         }
                     });
                 }
