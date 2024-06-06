@@ -1,4 +1,5 @@
-<div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
+<div
+    class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="lineChart" onchange="dropdownChartLine()">
             <option value="pekerjaan">Pekerjaan</option>
@@ -9,7 +10,7 @@
             <option value="usia" selected>Usia</option>
         </x-input.select>
     </div>
-    @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+    @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
         <div class="tw-w-28">
             <x-input.select class="tw-w-28" id="rtLine" onchange="dropdownChartLine(this.value)">
                 <option value="ketua">Semua</option>
@@ -45,6 +46,8 @@
     <canvas height="242" id="chartUsiaLine" style="width: 590px;" class="tw-flex"></canvas>
 </div>
 
+
+
 <script>
     let pekerjaanLine;
     let jenis_kelaminLine;
@@ -66,7 +69,7 @@
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(1, 'rgba(255,255,255,0)');
         gradient.addColorStop(0, 'rgba(2,92,192,0.1)');
-
+        
         return new Chart(ctx, {
             type: 'line',
             data: {
@@ -248,13 +251,12 @@
             datasets[0].data = labels.map(() => 0);
         }
 
-    chartInstance.update();
-}
-
+        chartInstance.update();
+    }
 
     function dropdownChartLine(selectedRT) {
         const selectedChart = document.getElementById('lineChart').value;
-        var selectedRTValue = '{{Auth::user()->keterangan}}';
+        var selectedRTValue = "{{ is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan}}";
         if (document.getElementById('rtLine') != null) {
             selectedRTValue = document.getElementById('rtLine').value;
         }
@@ -314,3 +316,7 @@
         });
     }
 </script>
+
+@if (is_null(Auth::user()) === false)
+    <script></script>
+@endif

@@ -33,7 +33,7 @@ class Bansos extends Model
                             ->orderBy('bulan')
                             ->groupByRaw('YEAR(tanggal_menerima), MONTH(tanggal_menerima)');
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua') {
             $result = $dataBansos->where('keluarga.RT', '=', $keterangan)->limit(6)->get();
         } else {
             $result = $dataBansos->limit(6)->get();
@@ -72,7 +72,7 @@ class Bansos extends Model
                                 ->groupByRaw('bansos, kode');
 
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua') {
             $result = $dataBansos->where('keluarga.RT', '=', $keterangan)->get();
         } else {
             $result = $dataBansos->get();

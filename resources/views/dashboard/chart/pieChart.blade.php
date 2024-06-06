@@ -1,4 +1,4 @@
-<div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
+<div class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="chartType" onchange="dropdownChartData()">
             <option value="pekerjaan">Pekerjaan</option>
@@ -9,7 +9,7 @@
             <option value="usia">Usia</option>
         </x-input.select>
     </div>
-    @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+    @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
     <div class="tw-w-28">
         <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
             <option value="ketua">Semua</option>
@@ -64,7 +64,7 @@
 
     function createChart(ctx, labels, data, label) {
         return new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
@@ -76,6 +76,7 @@
                 }]
             },
             options: {
+                cutout: '0',
                 responsive: false,
                 plugins: {
                     tooltip: {
@@ -154,7 +155,7 @@
                         }
                     },
                     legend: {
-                        position: 'bottom',
+                        position: 'none',
                         labels: {
                             boxWidth: 14,
                             boxHeight: 14,
@@ -255,7 +256,7 @@
 
     function dropdownChartData(selectedRT) {
         const selectedChart = document.getElementById('chartType').value;
-        var selectedRTValue = '{{Auth::user()->keterangan}}';
+        var selectedRTValue = '{{is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan}}';
         console.log(document.getElementById('rtFilter'));
         if (document.getElementById('rtFilter') != null) {
             selectedRTValue = document.getElementById('rtFilter').value;
