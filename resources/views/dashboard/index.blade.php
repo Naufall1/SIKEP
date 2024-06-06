@@ -43,36 +43,17 @@
                         </thead>
                         <tbody class="tw-divide-n400">
                             {{-- Maks 5 --}}
-                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
-                                <td class="tw-w-grow">Pengaju</td>
-                                <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">Jenis</td>
-                                <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">Tanggal</td>
-                                <td class="tw-w-[108px] tw-grow-0"></td>
-                            </tr>
-                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
-                                <td class="tw-w-grow">Pengaju</td>
-                                <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">Jenis</td>
-                                <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">Tanggal</td>
-                                <td class="tw-w-[108px] tw-grow-0"></td>
-                            </tr>
-                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
-                                <td class="tw-w-grow">Pengaju</td>
-                                <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">Jenis</td>
-                                <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">Tanggal</td>
-                                <td class="tw-w-[108px] tw-grow-0"></td>
-                            </tr>
-                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
-                                <td class="tw-w-grow">Pengaju</td>
-                                <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">Jenis</td>
-                                <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">Tanggal</td>
-                                <td class="tw-w-[108px] tw-grow-0"></td>
-                            </tr>
-                            <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
-                                <td class="tw-w-grow">Pengaju</td>
-                                <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">Jenis</td>
-                                <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">Tanggal</td>
-                                <td class="tw-w-[108px] tw-grow-0"></td>
-                            </tr>
+                            <table>
+                                @foreach($pengajuanTable as $pengajuan)
+                                <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex">
+                                    <td class="tw-w-grow">{{ $pengajuan->user->nama }}</td>
+                                    <td class="md:tw-w-[200px] md:tw-grow-0 tw-grow-0">{{ $pengajuan->tipe }}</td>
+                                    <td class="tw-w-[136px] tw-grow-0 tw-hidden md:tw-flex">{{ strftime('%d %B %Y', strtotime($pengajuan->tanggal_request)) }}</td>
+                                    <td class="tw-w-[108px] tw-grow-0"><a class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md" href="{{route('pengajuan.perubahanwarga', ['id' => $pengajuan])}}">Lihat</a></td>
+                                </tr>
+                                @endforeach
+                            </table>
+
                             {{-- @foreach ($dataBaru as $data) --}}
                                 {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td>1</td>
