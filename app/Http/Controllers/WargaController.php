@@ -203,6 +203,13 @@ class WargaController extends Controller
                 ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
                 ->withInput();
         }
+        // 
+        if (!is_null($pengajuan->getWarga($request->NIK))) {
+            # code...
+            session()->forget('berkas_demografi');
+            return redirect()->route('keluarga-tambah');
+        }
+
         // Mapping data dari request menuju objek
         $warga = new Warga();
         $warga->NIK = $request->NIK;

@@ -64,7 +64,7 @@ class KeluargaController extends Controller
 
         if ($user->keterangan == 'ketua') {
             $query = Keluarga::select($select)
-                                ->where('status', '!=', 'Menunggu');
+                ->where('status', '!=', 'Menunggu');
 
             if (explode(" ", $request->scope_data)[1] ?? false) {
                 $query->where('RT', '=', (int)explode(" ", $request->scope_data)[1]);
@@ -158,6 +158,7 @@ class KeluargaController extends Controller
             'kota' => 'Malang',
             'provinsi' => 'Jawa Timur',
         ];
+        // dd($pengajuan);
         // return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default)->with('daftarWarga', $pengajuan->getDaftarWarga());
         return view('penduduk.keluarga.tambah', compact(['formState', 'daftarKeluarga']))->with('default', $default);
     }
@@ -176,7 +177,7 @@ class KeluargaController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function (Warga $warga) {
                 $trash = '
-                    <a href="'. route('removeAnggotaKeluarga', $warga->NIK) .'"
+                    <a href="' . route('removeAnggotaKeluarga', $warga->NIK) . '"
                         class="tw-btn tw-btn-danger tw-btn-md tw-btn-round-md tw-px-2">
                         <span class="tw-stroke-n100">
     <svg width="20" height="20" viewBox="0 0 25 24" fill="none"
@@ -195,17 +196,17 @@ class KeluargaController extends Controller
 </span>
                     </a>';
                 $show = '
-                    <a href="'. route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) .'"
+                    <a href="' . route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) . '"
                         class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
                         Lihat
                     </a>';
                 $disabledShow = '
-                    <button disabled href="'. route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) .'"
+                    <button disabled href="' . route('detailAnggotaKeluarga', ['nik' => $warga->NIK]) . '"
                         class="tw-btn tw-btn-disabled tw-btn-md tw-btn-round-md">
                         Lihat
                     </button>';
 
-                $disabledTrash = '<button disabled href="'. route('removeAnggotaKeluarga', $warga->NIK) .'"
+                $disabledTrash = '<button disabled href="' . route('removeAnggotaKeluarga', $warga->NIK) . '"
                                                     class="tw-btn tw-btn-disabled tw-btn-md tw-btn-round-md tw-px-2">
                                                     <span class="tw-stroke-n100">
                                     <svg width="20" height="20" viewBox="0 0 25 24" fill="none"
@@ -270,7 +271,7 @@ class KeluargaController extends Controller
             ]);
 
             // Hapus file temporary ketika dilakukan upload file baru
-            if ((FormStateKeluarga::getKartuKeluarga() != null) && (isset($validator_file) &&!$validator_file->fails())) {
+            if ((FormStateKeluarga::getKartuKeluarga() != null) && (isset($validator_file) && !$validator_file->fails())) {
                 Storage::disk('temp')->delete(FormStateKeluarga::getKartuKeluarga()->path);
             }
 
@@ -454,7 +455,7 @@ class KeluargaController extends Controller
         try {
             DB::beginTransaction();
             if ($request->hasFile('kartu_keluarga')) {
-                $validator_file = Validator::make($request->only('kartu_keluarga'),[
+                $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
                 ]);
             }
@@ -466,13 +467,13 @@ class KeluargaController extends Controller
                 $request->file('kartu_keluarga')->storeAs('', $filenameSimpan, 'temp');
             }
 
-            if (session()->exists('kartu_keluarga') && (isset($validator_file) && !$validator_file->fails() )) {
+            if (session()->exists('kartu_keluarga') && (isset($validator_file) && !$validator_file->fails())) {
                 Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
             }
 
             $validator = Validator::make($request->only(['no_kk', 'tagihan_listrik', 'luas_bangunan', 'kepala_keluarga']), $rules);
 
-            if ( isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
+            if (isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
                 session()->put('kartu_keluarga', (object) [
                     'path' => $filenameSimpan,
                     'ext' => explode('.', $filenameSimpan)[1],
@@ -498,7 +499,7 @@ class KeluargaController extends Controller
             }
 
             if (empty($keluarga->getDirty())) {
-                return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash',(object) ['type'=>'information','message'=> 'Tidak ada data yang diubah.']);
+                return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'information', 'message' => 'Tidak ada data yang diubah.']);
             }
 
             // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
@@ -516,14 +517,12 @@ class KeluargaController extends Controller
                 session()->forget('kartu_keluarga');
             }
             DB::commit();
-            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash',(object) ['type' => 'success', 'message' => 'Permintaan perubahan data Terkirim!']);
-
+            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'success', 'message' => 'Permintaan perubahan data Terkirim!']);
         } catch (Exception $e) {
             DB::rollBack();
             // dd($e);
-            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type'=>'danger', 'message'=>'Perubahan data gagal!']);
+            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'danger', 'message' => 'Perubahan data gagal!']);
         }
-
     }
 
 
@@ -547,13 +546,22 @@ class KeluargaController extends Controller
         $data_warga = $pengajuan->getWarga($nik);
 
         if (!$data_warga) {
-            return redirect()->back()->with('flash', (object) ['type' => 'error', 'message'=> 'Data tidak tersedia.']);
+            return redirect()->back()->with('flash', (object) ['type' => 'error', 'message' => 'Data tidak tersedia.']);
         }
 
         $warga = $data_warga['warga'];
         $haveDemografi = $data_warga['haveDemografi'];
         $demografi = $data_warga['demografi'];
-        return view('pengajuan.pembaharuan.detailwarga', compact(['warga', 'haveDemografi', 'demografi']));
+
+        // $filename = $haveDemografi->dokumen_pendukung;
+
+        // session()->put('berkas_demografi', (object) [
+        //     'path' => $filename,
+        //     'ext' => explode('.', $filename)[1],
+        //     'base64' => base64_encode(Storage::disk('temp')->get($filename))
+        // ]);
+
+        return view('penduduk.warga.tambah', compact(['warga', 'haveDemografi', 'demografi']));
     }
 
     /**
@@ -567,7 +575,7 @@ class KeluargaController extends Controller
         $keluarga = Keluarga::with(['warga', 'bansos', 'detailBansos'])->find($no_kk);
 
         $pengajuanInProgres = PengajuanData::where('no_kk', '=', $keluarga->no_kk)
-            ->where('status_request','=', 'Menunggu')
+            ->where('status_request', '=', 'Menunggu')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
 
