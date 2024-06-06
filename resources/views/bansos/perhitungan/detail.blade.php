@@ -5,30 +5,42 @@
 @endpush
 
 @section('content')
+{{-- {{dd(!empty($errors->messages()))}} --}}
     <div id="modalAddBansos"
-        class="tw-hidden modal-menu tw-z-50 tw-animate-disolve tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        class="{{!empty($errors->messages()) ? '' : 'tw-hidden'}} modal-menu tw-z-50 tw-animate-disolve tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
         <div
             class="tw-w-96 md:tw-w-96 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
             <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
                 <h2>Tambah Bansos</h2>
             </div>
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{ route('tambahPenerimaBansos') }}"
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{ route('bansos.perhitungan.detail.tambahBansos', $dataKeluarga->no_kk) }}"
                     method="POST" id="formData" enctype="multipart/form-data">
+                    @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
-
                         <x-input.label class="tw-relative" for="jenis_bansos-list" label="Jenis Bansos">
-                            <x-input.select2 name="jenis_bansos" placeholder="Pilih Jenis Bansos"></x-input.select2>
+                            <x-input.select name="bansos_kode" placeholder="Pilih Jenis Bansos">
+                                <option value="BLT">BLT</option>
+                                <option value="BPNT">BPNT</option>
+                                <option value="BSU">BSU</option>
+                                <option value="PKH">PKH</option>
+                            </x-input.select>
+                            @error('bansos_kode')
+                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+                            @enderror
                         </x-input.label>
 
                         <x-input.label for="tanggal_penerimaan" label="Tanggal Penerimaan">
                             <x-input.input placeholder=""
-                                type="date" id="tanggal_penerimaan" name="tanggal_penerimaan"></x-input.input>
+                                type="date" id="tanggal_menerima" name="tanggal_menerima"></x-input.input>
+                                @error('tanggal_penerimaan')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror
                         </x-input.label>
 
-                        <x-input.label for="keterangan" label="Keterangan">
+                        {{-- <x-input.label for="keterangan" label="Keterangan">
                             <x-input.textarea class="tw-h-32" name="keterangan" placeholder="Catatan"></x-input.textarea>
-                        </x-input.label>
+                        </x-input.label> --}}
 
 
                     </div>
@@ -36,9 +48,8 @@
                     <div class="tw-flex tw-gap-2">
                         <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                             id="closeModal">Batal</button>
-                        <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Tolak</a>
-                    </div>
-
+                            <button class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Tambah</a>
+                        </div>
                 </form>
             </div>
         </div>
@@ -129,15 +140,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @for ($i = 0; $i < count($keluarga->bansos); $i++)
-                                        <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>{{ $keluarga->bansos[$i]->bansos_nama }}</td>
-                                            <td>{{ $keluarga->detailBansos[$i]->tanggal_menerima }}</td>
-                                            <td>{{$keluarga->bansos[$i]->keterangan}}</td>
-                                            <td>-</td>
-                                        </tr>
-                                    @endfor --}}
+
                                     <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
                                             <button id="buttonAddBansos"
@@ -171,29 +174,14 @@
 
         </div>
     </div>
-    @if (Session::has('message'))
-        <script>
-            alert('{{ Session::get('message')[1] }}')
-        </script>
-    @endif
 @endsection
 
-
 @push('js')
-    <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
-    <script>
-        function getJenisBansos() {
-            // let arrayWarga = [];
-            // let dataWarga = [];
-            // for (let i = 0; i < arrayWarga.length; i++) {
-            //     dataWarga[i] = arrayWarga[i].nik + ' - ' + arrayWarga[i].nama;
-            // }
-            // return dataWarga;
-            return [];
-        }
-        $(document).ready(function() {
+<script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
             $("#buttonAddBansos").click(function() {
                 $("#modalAddBansos").removeClass("tw-hidden");
                 $('html, body').css({
@@ -201,6 +189,7 @@
                 });
             });
             $("button#closeModal").click(function() {
+
                 $("#modalAddBansos").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',
