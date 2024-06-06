@@ -13,6 +13,7 @@ use App\Models\MEREC;
 use App\Models\MightGet;
 use App\Models\Warga;
 use App\Models\WargaHistory;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -200,23 +201,38 @@ class BansosController extends Controller
         return view('bansos.perhitungan.detail', compact(['dataKeluarga', 'dataKriteria']));
     }
 
-    public function tambah(Request $request, $id) {
-
-        $dataKeluarga = Keluarga::findOrFail($id);
-
-        $mightGet = new MightGet();
-        $mightGet->bansos_kode = $request->bansos_kode;
-        $mightGet->no_kk = $id;
-        $mightGet->tanggal_menerima = $request->tanggal_menerima;
-        $mightGet->save();
-        // dd($request->bansos_kode);
-
-
-        return redirect()->route('bansos.perhitungan.detail', ['id' => $dataKeluarga->no_kk])
-        ->with('flash', (object)[
-            'type' => 'success',
-            'message' => 'Berhasil menambahkan Bansos'
+    public function tambah(Request $request, $id)
+    {
+        $request->validate([
+            'bansos_kode' => 'required|exists:bansos,bansos_kode',
+            'tanggal_menerima' => 'required|date'
         ]);
+
+        try {
+            DB::beginTransaction();
+
+            $dataKeluarga = Keluarga::findOrFail($id);
+
+            $mightGet = new MightGet();
+            $mightGet->bansos_kode = $request->bansos_kode;
+            $mightGet->no_kk = $id;
+            $mightGet->tanggal_menerima = $request->tanggal_menerima;
+            $mightGet->save();
+
+            DB::commit();
+            return redirect()->route('bansos.perhitungan.detail', ['id' => $dataKeluarga->no_kk])
+                ->with('flash', (object)[
+                    'type' => 'success',
+                    'message' => 'Berhasil menambahkan Bansos'
+                ]);
+        } catch (QueryException $exception) {
+            DB::rollBack();
+            return redirect()->route('bansos.perhitungan.detail', ['id' => $dataKeluarga->no_kk])
+                ->with('flash', (object)[
+                    'type' => 'error',
+                    'message' => 'Gagal menambahkan Bansos, karena data sudah ada.'
+                ]);
+        }
     }
 
     public function detailPerhitungan(){
