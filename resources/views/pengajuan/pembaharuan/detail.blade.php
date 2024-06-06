@@ -139,7 +139,8 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => 'Rp ' . $pengajuan->keluarga->tagihan_listrik,
+                                'content' => 'Rp ' . number_format($pengajuan->keluarga->tagihan_listrik, 0, ",", "."),
+
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',

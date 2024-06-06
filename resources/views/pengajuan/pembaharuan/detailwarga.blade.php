@@ -88,7 +88,8 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp. ' . $warga->penghasilan,
+                                'content' => 'Rp ' . number_format( $warga->penghasilan, 0, ",", "."),
+
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Paspor',

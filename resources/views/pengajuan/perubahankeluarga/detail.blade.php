@@ -90,13 +90,14 @@
                                 @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
                                     @include('components.form.textdetail', [
                                         'title' => 'Tagihan Listrik',
-                                        'content' => $modifiedKeluarga->tagihan_listrik,
+                                        'content' => 'Rp ' . number_format( $modifiedKeluarga->tagihan_listrik, 0, ",", "."),
+
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
                                     @include('components.form.textdetail', [
                                         'title' => 'Luas Bangunan',
-                                        'content' => $modifiedKeluarga->luas_bangunan,
+                                        'content' => $modifiedKeluarga->luas_bangunan . ' m²',
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->image_kk != $currentKeluarga->image_kk)
@@ -130,13 +131,14 @@
                                 @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
                                     @include('components.form.textdetail', [
                                         'title' => 'Tagihan Listrik',
-                                        'content' => $currentKeluarga->tagihan_listrik,
+                                        'content' => 'Rp ' . number_format( $currentKeluarga->tagihan_listrik, 0, ",", "."),
+
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
                                     @include('components.form.textdetail', [
                                         'title' => 'Luas Bangunan',
-                                        'content' => $currentKeluarga->luas_bangunan,
+                                        'content' => $currentKeluarga->luas_bangunan . ' m²',
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->image_kk != $currentKeluarga->image_kk)

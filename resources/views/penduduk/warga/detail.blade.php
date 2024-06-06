@@ -3,9 +3,9 @@
 @section('content')
     <div
         class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
-
-        <x-flash-message.information message='halo'></x-flash-message.information>
-
+        @if ($pengajuanInProgres)
+            <x-flash-message.warning message='Tidak dapat memperbarui data, Data belum di konfirmasi'></x-flash-message.warning>
+        @endif
         <p class="tw-breadcrumb tw-text-n500">Daftar Warga /
             <span class="tw-font-bold tw-text-b500">Detail Warga</span>
         </p>
@@ -114,15 +114,16 @@
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Penghasilan',
-                                'content' => 'Rp ' . $warga->penghasilan,
+                                'content' => 'Rp ' . number_format( $warga->penghasilan, 0, ",", "."),
+
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Paspor',
-                                'content' => $warga->no_paspor,
+                                'content' => $warga->no_paspor  ?? '-',
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Nomor Kitas',
-                                'content' => $warga->no_kitas,
+                                'content' => $warga->no_kitas ?? '-',
                             ])
 
                         </div>

@@ -104,7 +104,7 @@
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => 'Rp ' . $keluarga->tagihan_listrik,
+                                'content' => 'Rp ' . number_format( $keluarga->tagihan_listrik, 0, ",", "."),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
@@ -113,7 +113,7 @@
 
                         </div>
                     </div>
-                    
+
                     <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-w-full tw-gap-3 tw-overflow-x-auto">

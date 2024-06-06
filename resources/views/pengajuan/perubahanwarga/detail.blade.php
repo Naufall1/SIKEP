@@ -184,7 +184,8 @@
                                     @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
                                         @include('components.form.textdetail', [
                                             'title' => 'Penghasilan',
-                                            'content' => $modifiedWarga->penghasilan,
+                                            'content' => 'Rp ' . number_format( $modifiedWarga->penghasilan, 0, ",", "."),
+
                                         ])
                                     @endif
                                     @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
@@ -214,7 +215,8 @@
                                     @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
                                         @include('components.form.textdetail', [
                                             'title' => 'Penghasilan',
-                                            'content' => $currentWarga->penghasilan,
+                                            'content' => 'Rp ' . number_format( $currentWarga->penghasilan, 0, ",", "."),
+
                                         ])
                                     @endif
                                     @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
