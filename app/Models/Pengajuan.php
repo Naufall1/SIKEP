@@ -87,7 +87,7 @@ class Pengajuan
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);         // DELETE THIS ON PROD //
+            // dd($e);
             return false;
         }
     }
@@ -98,8 +98,30 @@ class Pengajuan
             'demografi' => $demografi,
             'haveDemografi' => $haveDemografi
         ];
-        // dd($this->daftarWarga);
+
         $this->save();
+    }
+    public function updateWarga(Warga $warga, Demografi $demografi, HaveDemografi $haveDemografi)
+    {
+        $index = -1;
+        foreach ($this->daftarWarga as $idx => $value) {
+            if ($value['warga']->NIK == $warga->NIK) {
+                $index = $idx;
+            }
+        }
+
+        if ($index == -1) {
+            return false;
+        }
+
+        $this->daftarWarga[$index] = [
+            'warga' => $warga,
+            'demografi' => $demografi,
+            'haveDemografi' => $haveDemografi
+        ];
+
+        $this->save();
+        return true;
     }
     public function getWarga(string $nik): array|null
     {

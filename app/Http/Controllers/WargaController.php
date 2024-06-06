@@ -160,7 +160,7 @@ class WargaController extends Controller
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'pendidikan' => 'required|string|max:50|in:Tidak/Belum Sekolah,Belum Tamat SD/Sederajat,Tamat SD/Sederajat,SLTP/Sederajat,SLTA/Sederajat,Diploma I/II,Akademi/Diploma III/S. Muda,Diploma IV/Strata I,Strata II',
             'agama' => 'required|in:Buddha,Hindu,Islam,Katolik,Kristen,Konghuchu',
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai,Cerai Hidup',
@@ -183,7 +183,6 @@ class WargaController extends Controller
         } else {
             $validator = Validator::make($request->all(), $rules);
         }
-        // dd($pengajuan->keluarga->kepala_keluarga);
 
         if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails())) {
             Storage::disk('temp')->delete(session()->get('berkas_demografi')->path);
@@ -192,7 +191,7 @@ class WargaController extends Controller
             session()->put('berkas_demografi', (object) [
                 'path' => $filenameSimpan,
                 'ext' => explode('.', $filenameSimpan)[1],
-                'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
+                // 'base64' => base64_encode(Storage::disk('temp')->get($filenameSimpan))
             ]);
         }
 
@@ -203,12 +202,6 @@ class WargaController extends Controller
                 ->withErrors(isset($validator_file) ? $validator->errors()->merge($validator_file) : $validator->errors())
                 ->withInput();
         }
-        // 
-        if (!is_null($pengajuan->getWarga($request->NIK))) {
-            # code...
-            session()->forget('berkas_demografi');
-            return redirect()->route('keluarga-tambah');
-        }
 
         // Mapping data dari request menuju objek
         $warga = new Warga();
@@ -217,7 +210,13 @@ class WargaController extends Controller
         $warga->nama = $request->nama;
         $warga->tempat_lahir = $request->tempat_lahir;
         $warga->tanggal_lahir = $request->tanggal_lahir;
-        $warga->jenis_kelamin = $request->jenis_kelamin;
+
+        $jenisKelaminMap = [
+            'Laki-laki' => 'L',
+            'Perempuan' => 'P'
+        ];
+        $warga->jenis_kelamin = $jenisKelaminMap[$request->jenis_kelamin];
+
         $warga->agama = $request->agama;
         $warga->status_perkawinan = $request->status_perkawinan;
         $warga->status_keluarga = $request->status_keluarga;
@@ -250,10 +249,15 @@ class WargaController extends Controller
             FormStateKeluarga::setKepalaKeluarga($warga->nama);
             $pengajuan->keluarga->kepala_keluarga = $warga->nama;
         }
-        $pengajuan->tambahWarga($warga, $demografi, $haveDemografi);
+
+        if (!is_null($pengajuan->getWarga($request->NIK))) {
+            $pengajuan->updateWarga($warga, $demografi, $haveDemografi);
+        } else {
+            $pengajuan->tambahWarga($warga, $demografi, $haveDemografi);
+        }
+
         session()->forget('berkas_demografi');
 
-        // $warga->storeTemp();
         return redirect()->route('keluarga-tambah');
     }
     public function edit($nik)

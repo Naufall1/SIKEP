@@ -128,7 +128,7 @@ $(document).ready(function () {
         } else if (id == 'jenis_data-list') {
             return ['Data Baru', 'Data Lama'];
         } else if (id == 'jenis_kelamin-list') {
-            return ['L', 'P'];
+            return ['Laki-laki', 'Perempuan'];
         } else if (id == 'agama-list') {
             let agama = ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Kristen', 'Konghuchu'];
             return agama.sort();
