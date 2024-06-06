@@ -146,12 +146,15 @@ class PengajuanController extends Controller
         $daftarWargaBaru = Warga::select($select)
                                 ->where('no_kk', '=', $no_kk)
                                 ->where('status_warga', '=', 'Menunggu')
-                                ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                ->where('created_at', '<', $pengajuan->getNext()->tanggal_request)
+                                ->where('created_at', '>', $pengajuan->getPrev()->tanggal_request)
                                 ->get();
         // Ambil daftar anggota keluarga yang berasal dari pindah KK
         $daftarWargaPindahKK = WargaModified::select($select)
                                             ->where('no_kk', '=', $no_kk)
                                             ->where('status_request', '=', 'Menunggu')
+                                            ->where('tanggal_request', '<', $pengajuan->getNext()->tanggal_request)
+                                            ->where('tanggal_request', '>', $pengajuan->getPrev()->tanggal_request)
                                             ->get();
 
         // Ambil data warga dari tabel WargaModified
@@ -248,6 +251,8 @@ class PengajuanController extends Controller
 
             $wargaNew = Warga::where('no_kk', '=', $keluarga->no_kk)
                 ->where('status_warga', '=', 'Menunggu')
+                ->where('created_at', '<', $pengajuan->getNext()->tanggal_request)
+                ->where('created_at', '>', $pengajuan->getPrev()->tanggal_request)
                 ->get();
 
             if (count($wargaNew) > 0) {

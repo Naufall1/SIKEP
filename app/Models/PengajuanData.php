@@ -21,6 +21,21 @@ class PengajuanData extends Model
         'catatan'
     ];
 
+    public function getNext() : PengajuanData|null
+    {
+        return $this->where('tanggal_request', '>', $this->tanggal_request)
+                ->orderBy('tanggal_request')
+                ->limit(1)
+                ->get()[0];
+    }
+    public function getPrev() : PengajuanData|null
+    {
+        return $this->where('tanggal_request', '<', $this->tanggal_request)
+                ->orderByDesc('tanggal_request')
+                ->limit(1)
+                ->get()[0];
+    }
+
     public function keluarga(): BelongsTo
     {
         return $this->belongsTo(Keluarga::class, 'no_kk', 'no_kk');
