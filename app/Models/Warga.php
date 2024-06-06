@@ -62,7 +62,7 @@ class Warga extends Model
                 ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                 ->where('warga.agama', $agama);
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua') {
                 $count = $query->where('keluarga.RT', $keterangan)->count();
                 $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -94,7 +94,7 @@ class Warga extends Model
             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
             ->where('warga.pendidikan', $tingkat);
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
             $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -127,7 +127,7 @@ class Warga extends Model
                             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                             ->where('warga.jenis_pekerjaan',$jenis);
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua') {
             $count = $query->where('keluarga.RT', $keterangan)->count();
             $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
             ->where('keluarga.RT', '=' , $keterangan)->count();
@@ -161,7 +161,7 @@ class Warga extends Model
                         ->join('user', 'keluarga.RT', '=', 'user.keterangan')
                         ->where('warga.jenis_kelamin', $jenis);
 
-            if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+            if ($keterangan !== null && $keterangan !== 'ketua') {
                 $count = $query->where('keluarga.RT', $keterangan)->count();
                 $total = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')
                 ->where('keluarga.RT', '=' , $keterangan)->count();

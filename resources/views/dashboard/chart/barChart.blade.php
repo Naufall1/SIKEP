@@ -1,4 +1,4 @@
-<div class="tw-flex {{ Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '' }}">
+<div class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="barChart" onchange="dropdownChartBar()">
             <option value="pekerjaan" selected>Pekerjaan</option>
@@ -9,7 +9,7 @@
             <option value="usia">Usia</option>
         </x-input.select>
     </div>
-    @if (Auth::user()->hasLevel['level_kode'] == 'RW')
+    @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
         <div class="tw-w-28">
             <x-input.select class="tw-w-28" id="rtBar" onchange="dropdownChartBar()">
                 <option value="ketua">Semua</option>

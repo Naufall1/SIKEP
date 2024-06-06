@@ -60,7 +60,10 @@ class HomeController extends Controller
 
         $announcements = ArticleAnnouncement::select($select)->where('status', '=', 'ditampilkan')->orderBy('tanggal_dibuat', 'desc')->get();
 
-        return view('landing.index', ['title' => 'Umum', 'text' => 'Warga', 'announcements' => $announcements]);
+        // dd(Auth::user());
+        $data = $this->getData(Auth::user());
+
+        return view('landing.index', $data, ['title' => 'Umum', 'text' => 'Warga', 'announcements' => $announcements]);
     }
 
     public function getBacaan($id){

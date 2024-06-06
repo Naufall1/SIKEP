@@ -49,7 +49,7 @@ class Demografi extends Model
             ->join('user', 'keluarga.RT', '=', 'user.keterangan')
             ->groupBy('rentang_usia');
 
-        if ($keterangan !== 'ketua' && Auth::user()->nama !== 'Admin') {
+        if ($keterangan !== null && $keterangan !== 'ketua' ) {
             $result = $dataUsia->where('user.keterangan', '=', $keterangan);
         }
 
