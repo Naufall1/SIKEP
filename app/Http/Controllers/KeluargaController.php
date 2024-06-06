@@ -553,13 +553,13 @@ class KeluargaController extends Controller
         $haveDemografi = $data_warga['haveDemografi'];
         $demografi = $data_warga['demografi'];
 
-        // $filename = $haveDemografi->dokumen_pendukung;
+        $filename = $haveDemografi->dokumen_pendukung;
 
-        // session()->put('berkas_demografi', (object) [
-        //     'path' => $filename,
-        //     'ext' => explode('.', $filename)[1],
-        //     'base64' => base64_encode(Storage::disk('temp')->get($filename))
-        // ]);
+        session()->put('berkas_demografi', (object) [
+            'path' => $filename,
+            'ext' => explode('.', $filename)[1],
+            // 'base64' => base64_encode(Storage::disk('temp')->get($filename))
+        ]);
 
         return view('penduduk.warga.tambah', compact(['warga', 'haveDemografi', 'demografi']));
     }
