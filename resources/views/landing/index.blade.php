@@ -4,11 +4,11 @@
     <div class="tw-pt-[80px] tw-flex tw-flex-col">
         {{-- beranda --}}
         <div
-            class="tw-px-5 md:tw-px-0 tw-flex tw-flex-col tw-h-[calc(100svh)] sm:tw-h-svh tw-pt-16 tw-items-center tw-gap-24 tw-relative tw-bg-cover tw-bg-top sm:tw-bg-center tw-bg-[url('/public/img/hero-landing.png')] sm:tw-bg-[url('/public/img/hero-landing-md.png')]">
+            class="tw-px-5 md:tw-px-0 tw-flex tw-flex-col tw-h-mobile-hero sm:tw-h-svh tw-pt-16 tw-items-center tw-gap-24 tw-relative tw-bg-cover tw-bg-top sm:tw-bg-center tw-bg-[url('/public/img/hero-landing.png')] sm:tw-bg-[url('/public/img/hero-landing-md.png')]">
             <div
                 class=" tw-flex tw-flex-col tw-items-center tw-w-full-mobile-w md:tw-w-full-mobile-w lg:tw-w-[868px] tw-gap-5">
                 <h1 class="tw-font-sans tw-font-semibold tw-text-[44px] md:tw-text-[60px] tw-text-center tw-leading-snug">
-                    Sistem Kependudukan <span class="tw-text-b500">RW 02</span> Kelurahan Gadingkasri</h1>
+                    Sistem Informasi Kependudukan <span class="tw-text-b500">RW 02</span></h1>
                 <p class="tw-font-sans tw-font-medium tw-text-base md:tw-text-xl tw-text-n1000 tw-opacity-40 tw-text-center">
                     Kemudahan Akses
                     Informasi Kependudukan Kapanpun Dimanapun</p>
@@ -110,18 +110,18 @@
                         <x-landing.subtitle>Informasi perkembangan masyarakat di lingkungan RW 02</x-landing.subtitle>
                     </x-landing.title-group>
                 </x-landing.label-group>
-                <div class="tw-w-full tw-flex tw-flex-col tw-pt-12 tw-pb-16 tw-items-center tw-gap-10">
+                <div class="tw-w-full tw-flex tw-flex-col tw-items-center tw-gap-10">
 
-                    <div class="tw-grid tw-grid-cols-6 tw-justify-center tw-gap-4 tw-h-full tw-w-full">
-                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-span-3">
+                    <div class="tw-grid tw-grid-cols-8 tw-justify-center tw-gap-4 tw-h-full tw-w-full">
+                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-8 lg:tw-col-span-4">
                             @include('dashboard.chart.lineChart')
                         </x-cards.chart>
-                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-span-3">
+                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-8 lg:tw-col-span-4">
                             @include('dashboard.chart.barChart')
                         </x-cards.chart>
-                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-6 md:tw-col-start-3 md:tw-col-span-2">
-                            {{-- @include('dashboard.chart.pieChart') --}}
-                            <iframe width="600" height="450" src="https://lookerstudio.google.com/embed/reporting/02f7484e-e5b8-446a-9b5d-a647347e903d/page/p_tymcma0zhd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                        <x-cards.chart class="tw-overflow-x-auto tw-col-span-8 lg:tw-col-start-3 lg:tw-col-span-4">
+                            @include('dashboard.chart.pieChart')
+                            {{-- <iframe width="600" height="450" src="https://lookerstudio.google.com/embed/reporting/02f7484e-e5b8-446a-9b5d-a647347e903d/page/p_tymcma0zhd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe> --}}
                         </x-cards.chart>
                     </div>
                 </div>

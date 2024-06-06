@@ -1,4 +1,5 @@
-<div class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
+<div
+    class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="chartType" onchange="dropdownChartData()">
             <option value="pekerjaan">Pekerjaan</option>
@@ -10,39 +11,51 @@
         </x-input.select>
     </div>
     @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
-    <div class="tw-w-28">
-        <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
-            <option value="ketua">Semua</option>
-            @foreach ($semuaRT as $rt)
-                <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
-            @endforeach
-        </x-input.select>
-    </div>
+        <div class="tw-w-28">
+            <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
+                <option value="ketua">Semua</option>
+                @foreach ($semuaRT as $rt)
+                    <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
+                @endforeach
+            </x-input.select>
+        </div>
     @endif
 </div>
 
-<div id="chartPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartPekerjaanPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartPekerjaanContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartPekerjaanPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartJenisKelaminPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartJenisKelaminContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartJenisKelaminPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartAgamaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartAgamaPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartAgamaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartAgamaPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartTingkatPendidikanPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartTingkatPendidikanContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartTingkatPendidikanPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartPieBansosContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartBansosPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartPieBansosContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartBansosPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartPieUsiaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartUsiaPie" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-flex tw-items-center tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartPieUsiaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartUsiaPie" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
 <script>
@@ -53,13 +66,13 @@
     let usia;
     let bansos;
     document.addEventListener('DOMContentLoaded', function() {
-        dropdownChartData();
         pekerjaan = chartPekerjaan();
         jenis_kelamin = chartJenisKelamin();
         agama = chartAgama();
         tingkat_pendidikan = chartTingkatPendidikan();
         usia = chartUsia();
         bansos = chartBansos();
+        dropdownChartData();
     });
 
     function createChart(ctx, labels, data, label) {
@@ -155,7 +168,7 @@
                         }
                     },
                     legend: {
-                        position: 'none',
+                        position: 'right',
                         labels: {
                             boxWidth: 14,
                             boxHeight: 14,
@@ -256,8 +269,8 @@
 
     function dropdownChartData(selectedRT) {
         const selectedChart = document.getElementById('chartType').value;
-        var selectedRTValue = '{{is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan}}';
-        console.log(document.getElementById('rtFilter'));
+        var selectedRTValue = "{{ is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan }}";
+        // console.log(document.getElementById('rtFilter'));
         if (document.getElementById('rtFilter') != null) {
             selectedRTValue = document.getElementById('rtFilter').value;
         }
@@ -271,7 +284,14 @@
         };
 
         for (const container in containers) {
-            document.getElementById(containers[container]).style.display = (container === selectedChart || container === selectedRTValue) ? 'block' : 'none';
+            if (container === selectedChart) {
+                // console.log($('#' + containers[container]).parent().attr('class'));
+                $('#' + containers[container]).parent().removeClass('tw-hidden');
+            } else {
+                // console.log('false');
+                $('#' + containers[container]).parent().removeClass('tw-hidden');
+                $('#' + containers[container]).parent().addClass('tw-hidden');
+            }
         }
 
         $.ajax({

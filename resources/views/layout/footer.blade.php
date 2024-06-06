@@ -8,7 +8,7 @@
                 <img src="{{ asset('assets/logo/jti.svg') }}" alt="" class="tw-h-8">
             </div>
             <h1 class="tw-font-sans tw-font-semibold tw-text-[24px] tw-leading-snug">
-                Sistem Kependudukan <span class="tw-text-b500">RW02</span><br>Kelurahan Gadingkasri</h1>
+                Sistem Informasi<br>Kependudukan <span class="tw-text-b500">RW02</span></h1>
         </div>
         <div class="tw-flex tw-flex-col tw-gap-3">
             <h2 class="tw-font-semibold">Pengembang</h2>
