@@ -211,7 +211,7 @@
 
     function dropdownChartBar() {
         const selectedChart = document.getElementById('barChart').value;
-        const selectedRTValue = document.getElementById('rtBar') ? document.getElementById('rtBar').value : {{Auth::user()->keterangan ?? 'ketua'}};
+        const selectedRTValue = document.getElementById('rtBar') ? document.getElementById('rtBar').value : '{{Auth::user()->keterangan ?? "ketua"}}';
 
         const containers = {
             pekerjaan: 'chartBarPekerjaanContainer',
