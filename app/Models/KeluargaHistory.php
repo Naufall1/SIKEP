@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class KeluargaHistory extends Model
 {
     use HasFactory;
-    protected $table = 'keluargahistory';
+    protected $table = 'keluargaHistory';
     protected $primaryKey = 'id_history_keluarga';
     public $timestamps = false;
 
