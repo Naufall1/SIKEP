@@ -80,7 +80,7 @@
 
     function createChartLine(ctx, labels, data, label) {
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        gradient.addColorStop(1, 'rgba(2,92,192,0)');
         gradient.addColorStop(0, 'rgba(2,92,192,0.1)');
 
         return new Chart(ctx, {
@@ -106,6 +106,14 @@
                 scales: {
                     x: {
                         ticks: {
+                            callback: function(value) {
+                                // truncate the value only in this axis
+                                const lbl = this.getLabelForValue(value);
+                                if (typeof lbl === 'string' && lbl.length > 6) {
+                                    return `${lbl.substring(0, 6)}...`;
+                                }
+                                return lbl;
+                            },
                             maxRotation: 0,
                             minRotation: 0,
                         }
