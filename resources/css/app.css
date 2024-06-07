@@ -261,6 +261,10 @@
         margin-bottom: 12px !important;
     }
 
+    :has(+ tr:hover), tr:hover{
+        @apply tw-border-opacity-0 tw-border-black;
+    }
+
     /* Divider */
     .tw-divider-hr {
         @apply tw-h-[1.5px] tw-w-full tw-bg-n300;
@@ -305,7 +309,6 @@
             background: #0284FF;
         }
     }
-
 
 
 }

@@ -203,7 +203,7 @@
                         <h2 class="">Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-hidden  tw-overflow-x-auto">
 
-                            <table class="md:tw-w-fit tw-w-[702px] tw-table-fixed">
+                            <table class="tw-w-[702px] tw-table-fixed">
                                 {{-- <thead class="tw-rounded-lg"> --}}
                                 <thead>
                                     <tr class="tw-h-11 tw-w-full tw-flex tw-bg-n300 tw-rounded-lg">
@@ -215,7 +215,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="tw-h-16 tw-w-full tw-flex hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
+                                    <tr class="tw-h-16 tw-w-full tw-flex tw-border-b-[1.5px] tw-border-n400">
                                         {{-- <td></td> --}}
                                         <td class="tw-min-w-[220px] tw-max-w-[220px]">{{ $warga->keluarga->no_kk }}</td>
                                         <td class="tw-min-w-[220px] tw-grow tw-shrink"><div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">{{ $warga->keluarga->kepala_keluarga }}</div></td>

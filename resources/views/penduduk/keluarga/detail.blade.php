@@ -217,7 +217,7 @@
                     "type": "POST",
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.table.dataTable').css('border-collapse', 'collapse');
@@ -273,7 +273,7 @@
                     "type": "POST",
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.table.dataTable').css('border-collapse', 'collapse');
@@ -312,7 +312,7 @@
                     searchable: false
                 }, {
                     data: "tanggal_menerima",
-                    className: "tw-min-w-[190px] tw-max-w-[190px] tw-table-right-align",
+                    className: "tw-min-w-[200px] tw-max-w-[200px] tw-table-right-align",
                     orderable: true,
                     searchable: false
                 }, {
