@@ -64,7 +64,7 @@
 
     <script>
         document.onreadystatechange = function() {
-            console.log(document.readyState);
+            // console.log(document.readyState);
             if (document.readyState !== "complete") {
                 document.querySelector("body").style.overflow = "hidden";
                 document.querySelector("#loader").style.visibility = "visible";

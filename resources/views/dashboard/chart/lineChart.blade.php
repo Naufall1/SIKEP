@@ -21,30 +21,42 @@
         </div>
     @endif
 </div>
-
-<div id="chartLinePekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="linePekerjaanLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLinePekerjaanContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="linePekerjaanLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartLineJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartJenisKelaminLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineJenisKelaminContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartJenisKelaminLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartLineAgamaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartAgamaLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineAgamaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartAgamaLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartLineTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartTingkatPendidikanLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineTingkatPendidikanContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartTingkatPendidikanLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartLineBansosContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartBansosLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineBansosContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartBansosLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartLineUsiaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartUsiaLine" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineUsiaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartUsiaLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
+
 
 
 
@@ -56,20 +68,21 @@
     let usiaLine;
     let bansosLine;
     document.addEventListener('DOMContentLoaded', function() {
-        dropdownChartLine();
         pekerjaanLine = linePekerjaan();
         jenis_kelaminLine = lineJenisKelamin();
         agamaLine = lineAgama();
         tingkat_pendidikanLine = lineTingkatPendidikan();
         usiaLine = lineUsia();
         bansosLine = lineBansos();
+        dropdownChartLine();
+        // hiddenAllChart();
     });
 
     function createChartLine(ctx, labels, data, label) {
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(1, 'rgba(255,255,255,0)');
         gradient.addColorStop(0, 'rgba(2,92,192,0.1)');
-        
+
         return new Chart(ctx, {
             type: 'line',
             data: {
@@ -256,7 +269,7 @@
 
     function dropdownChartLine(selectedRT) {
         const selectedChart = document.getElementById('lineChart').value;
-        var selectedRTValue = "{{ is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan}}";
+        var selectedRTValue = "{{ is_null(Auth::user()) ? 'ketua' : Auth::user()->keterangan }}";
         if (document.getElementById('rtLine') != null) {
             selectedRTValue = document.getElementById('rtLine').value;
         }
@@ -271,7 +284,14 @@
         };
 
         for (const container in containers) {
-            document.getElementById(containers[container]).style.display = (container === selectedChart || container === selectedRTValue) ? 'block' : 'none';
+            if (container === selectedChart) {
+                // console.log($('#'+containers[container]).parent().attr('class'));
+                $('#'+containers[container]).parent().removeClass('tw-hidden');
+            } else {
+                // console.log('false');
+                $('#'+containers[container]).parent().removeClass('tw-hidden');
+                $('#'+containers[container]).parent().addClass('tw-hidden');
+            }
         }
 
         $.ajax({
@@ -283,9 +303,9 @@
                 _token: "{{ csrf_token() }}"
             },
             success: function(data) {
-                console.log("selected rt =", selectedRTValue);
-                console.log("data array =", data);
-                console.log("chart obj = ", pekerjaanLine);
+                // console.log("selected rt =", selectedRTValue);
+                // console.log("data array =", data);
+                // console.log("chart obj = ", pekerjaanLine);
                 switch (selectedChart) {
                     case 'pekerjaan':
                         updateChartLine(pekerjaanLine, data, 'dataPekerjaan');
@@ -314,6 +334,20 @@
                 console.error('Error:', error);
             }
         });
+    }
+
+    function hiddenAllChart() {
+        const containers = {
+            jenis_kelamin: 'chartBarJenisKelaminContainer',
+            agama: 'chartBarAgamaContainer',
+            tingkat_pendidikan: 'chartBarTingkatPendidikanContainer',
+            bansos: 'chartBarBansosContainer',
+            usia: 'chartBarUsiaContainer'
+        };
+
+        for (const container in containers) {
+            $('#'+containers[container]).parent().addClass('tw-hidden');
+        }
     }
 </script>
 

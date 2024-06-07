@@ -1,4 +1,5 @@
-<div class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
+<div
+    class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="barChart" onchange="dropdownChartBar()">
             <option value="pekerjaan" selected>Pekerjaan</option>
@@ -21,28 +22,41 @@
     @endif
 </div>
 
-<div id="chartBarPekerjaanContainer" class="tw-flex tw-w-full">
-    <canvas height="242" id="chartPekerjaanBar" style="width: 100%;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarPekerjaanContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartPekerjaanBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartBarJenisKelaminContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartJenisKelaminBar" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarJenisKelaminContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartJenisKelaminBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartBarAgamaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartAgamaBar" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarAgamaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartAgamaBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartBarTingkatPendidikanContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartTingkatPendidikanBar" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarTingkatPendidikanContainer"
+        class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartTingkatPendidikanBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartBarBansosContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartBansosBar" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarBansosContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartBansosBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
-<div id="chartBarUsiaContainer" class="tw-flex tw-w-full" style="display: none">
-    <canvas height="242" id="chartUsiaBar" style="width: 590px;" class="tw-flex"></canvas>
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartBarUsiaContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full ">
+        <canvas id="chartUsiaBar" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
 </div>
 
 <script>
@@ -60,6 +74,8 @@
         tingkat_pendidikanBar = barTingkatPendidikan();
         usiaBar = barUsia();
         bansosBar = barBansos();
+        dropdownChartBar();
+        // hiddenAllChart();
     });
 
     function createChartBar(ctx, labels, data, label) {
@@ -99,7 +115,8 @@
                             if (!tooltipEl) {
                                 tooltipEl = document.createElement('div');
                                 tooltipEl.id = 'chartjs-tooltip';
-                                tooltipEl.innerHTML = '<div class="tw-flex tw-flex-col tw-gap-1 tw-p-2 tw-bg-n100 tw-border-[1.5px] tw-border-n300 tw-rounded-md"></div>';
+                                tooltipEl.innerHTML =
+                                    '<div class="tw-flex tw-flex-col tw-gap-1 tw-p-2 tw-bg-n100 tw-border-[1.5px] tw-border-n300 tw-rounded-md"></div>';
                                 document.body.appendChild(tooltipEl);
                             }
                             const tooltipModel = context.tooltip;
@@ -113,6 +130,7 @@
                             } else {
                                 tooltipEl.classList.add('no-transform');
                             }
+
                             function getBody(bodyItem) {
                                 return bodyItem.lines;
                             }
@@ -135,10 +153,13 @@
                             const bodyFont = Chart.helpers.toFont(tooltipModel.options.bodyFont);
                             tooltipEl.style.opacity = 1;
                             tooltipEl.style.position = 'absolute';
-                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                            tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel
+                                .caretX + 'px';
+                            tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY +
+                                'px';
                             tooltipEl.style.font = bodyFont.string;
-                            tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
+                            tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding +
+                                'px';
                             tooltipEl.style.pointerEvents = 'none';
                         },
                         xAlign: 'center'
@@ -202,7 +223,8 @@
 
     function updateChartBar(chartInstance, newData, jenisData) {
         if (newData[jenisData] && newData[jenisData].length > 0) {
-            chartInstance.data.datasets[0].data = newData[jenisData].map(item => item['jumlah'] !== undefined ? item['jumlah'] : 0);
+            chartInstance.data.datasets[0].data = newData[jenisData].map(item => item['jumlah'] !== undefined ? item[
+                'jumlah'] : 0);
         } else {
             chartInstance.data.datasets[0].data = chartInstance.data.labels.map(() => 0);
         }
@@ -211,7 +233,8 @@
 
     function dropdownChartBar() {
         const selectedChart = document.getElementById('barChart').value;
-        const selectedRTValue = document.getElementById('rtBar') ? document.getElementById('rtBar').value : '{{Auth::user()->keterangan ?? "ketua"}}';
+        const selectedRTValue = document.getElementById('rtBar') ? document.getElementById('rtBar').value :
+            '{{ Auth::user()->keterangan ?? 'ketua' }}';
 
         const containers = {
             pekerjaan: 'chartBarPekerjaanContainer',
@@ -222,8 +245,15 @@
             usia: 'chartBarUsiaContainer'
         };
 
-        for (const container in containers) {
-            document.getElementById(containers[container]).style.display = container === selectedChart ? 'block' : 'none';
+        for (const container in containers) {            
+            if (container === selectedChart) {
+                // console.log($('#'+containers[container]).parent().attr('class'));
+                $('#'+containers[container]).parent().removeClass('tw-hidden');
+            } else {
+                // console.log('false');
+                $('#'+containers[container]).parent().removeClass('tw-hidden');
+                $('#'+containers[container]).parent().addClass('tw-hidden');
+            }
         }
 
         $.ajax({
@@ -262,5 +292,19 @@
                 console.error('Error:', error);
             }
         });
+    }
+
+    function hiddenAllChart() {
+        const containers = {
+            jenis_kelamin: 'chartBarJenisKelaminContainer',
+            agama: 'chartBarAgamaContainer',
+            tingkat_pendidikan: 'chartBarTingkatPendidikanContainer',
+            bansos: 'chartBarBansosContainer',
+            usia: 'chartBarUsiaContainer'
+        };
+
+        for (const container in containers) {
+            $('#'+containers[container]).parent().addClass('tw-hidden');
+        }
     }
 </script>
