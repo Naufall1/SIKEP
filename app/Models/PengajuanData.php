@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,10 +24,20 @@ class PengajuanData extends Model
 
     public function getNext() : PengajuanData|null
     {
-        return $this->where('tanggal_request', '>', $this->tanggal_request)
+        $next = $this->where('tanggal_request', '>', $this->tanggal_request)
                 ->orderBy('tanggal_request')
                 ->limit(1)
-                ->get()[0];
+                ->get()[0] ?? null;
+        $date= Carbon::parse($this->tanggal_request);
+        $date->addDay();
+
+        $temp = clone $this;
+
+        $temp->tanggal_request = $date->toDateTimeString();
+        if (!empty($next)) {
+            return $next;
+        }
+        return $temp;
     }
     public function getPrev() : PengajuanData|null
     {
