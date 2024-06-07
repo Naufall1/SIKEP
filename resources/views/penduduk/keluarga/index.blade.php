@@ -68,7 +68,7 @@
                                 <th class=""></th>
                             </tr>
                         </thead>
-                        <tbody class=" tw-divide-n400">
+                        <tbody class=" ">
                             {{-- DATA HERE --}}
                         </tbody>
                     </table>

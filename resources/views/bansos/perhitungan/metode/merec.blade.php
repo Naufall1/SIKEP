@@ -27,7 +27,7 @@
                                     <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -58,7 +58,7 @@
                                     <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -84,7 +84,7 @@
                                     <th>S</th>
                                 </tr> 
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -115,7 +115,7 @@
                                     <th>K6</th>
                                 </tr> 
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -146,7 +146,7 @@
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -176,7 +176,7 @@
                                     <th>K6</th>
                                 </tr>
                             </thead>
-                            <tbody class="tw-divide-n400">
+                            <tbody class="">
 
                                 {{-- DATA HERE --}}
 
@@ -213,7 +213,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -325,7 +325,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-border-b-[1px] tw-border-n400 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -437,7 +437,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -513,7 +513,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -625,7 +625,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(
@@ -743,7 +743,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(

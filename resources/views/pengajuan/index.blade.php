@@ -100,7 +100,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody class=" tw-divide-n400">
+                        <tbody class="">
                             {{-- @foreach ($dataBaru as $data) --}}
                                 {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td>1</td>
@@ -190,7 +190,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(

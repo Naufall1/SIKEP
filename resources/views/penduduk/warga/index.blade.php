@@ -118,7 +118,7 @@
                                 <th class=""></th>
                             </tr>
                         </thead>
-                        <tbody class="tw-divide-n400">
+                        <tbody class="">
                             {{-- @foreach ($warga as $w) --}}
                             {{-- <tr class="tw-h-16 hover:tw-bg-n300">
                                     <td></td>
@@ -206,7 +206,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(

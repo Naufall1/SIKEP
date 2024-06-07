@@ -254,7 +254,7 @@
                 info: false,
                 searching: false,
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(

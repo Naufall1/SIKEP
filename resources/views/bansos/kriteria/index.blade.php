@@ -53,7 +53,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody class=" tw-divide-n400">
+                        <tbody class="">
 
                             {{-- DATA HERE --}}
 
@@ -91,7 +91,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 tw-w-full hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-w-full tw-flex");
                 },
                 drawCallback: function() {
                     $('.pagination').addClass(

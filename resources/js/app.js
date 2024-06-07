@@ -80,11 +80,6 @@ $(document).ready(function () {
 
 
     $(document).on("click", ".dropdownTrigger", function () {
-        // $(this).val();
-        // console.log('tes');
-        // getDropContent();
-
-
         if ($(this).siblings().next().hasClass('tw-hidden')) {
             // rotateArrow($(this).children().last())
             // $('.dropdownTrigger').siblings().addClass('tw-hidden');
@@ -147,14 +142,14 @@ $(document).ready(function () {
         } else if (id == 'no_kk-list') {
             return getKeluarga();
         } else if (id == 'jenis_bansos-list') {
-            return getJenisBansos();
+            return getDaftarBansos();
         } else if (id == 'scope_data-list') {
             return ['Semua', 'RT 001', 'RT 002', 'RT 003', 'RT 004', 'RT 005', 'RT 006', 'RT 007', 'RT 008', 'RT 009', 'RT 010', 'RT 011'];;
         }
     }
     $(document).on("keyup", "input[name=searchDropItem]", function (e) {
         // console.log($(this).val());
-        let id = $(this).parents().parents().parents().children().attr('id');
+        let id = $(this).parent().parent().parent().children().next().attr('id');
         let parent = $(this).parents().parents();
         let dropdownItems = $(parent).find('ul');
         let arr = [];

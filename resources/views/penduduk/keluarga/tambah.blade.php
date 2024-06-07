@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <p class="tw-breadcrumb tw-text-n500">Daftar Penduduk /
             <span class="tw-font-bold tw-text-b500">Tambah Keluarga</span>
         </p>
@@ -148,18 +149,22 @@
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-x-auto">
 
-                            <table class="tw-table-fixed tw-w-[701px]" id="daftarWarga">
-                                <thead class="tw-rounded-lg">
-                                    <tr class="">
-                                        <th class="tw-min-w-[60px] tw-max-w-[60px]">No</th>
-                                        <th class="tw-min-w-[172px] tw-max-w-[172px]">NIK</th>
-                                        <th class="tw-min-w-[188px] tw-max-w-[188px] tw-grow tw-shrink">Nama</th>
-                                        <th class="tw-min-w-[205px] tw-max-w-[205px]">Status Keluarga</th>
-                                        <th class="tw-min-w-[140px] tw-max-w-[140px] tw-flex tw-items-center tw-justify-center"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- @foreach ($daftarWarga as $warga)
+                            <div class="tw-w-full">
+
+                                <table class="tw-table-fixed tw-w-[701px]" id="daftarWarga">
+                                    <thead class="tw-rounded-lg">
+                                        <tr class="">
+                                            <th class="tw-min-w-[60px] tw-max-w-[60px]">No</th>
+                                            <th class="tw-min-w-[152px] tw-max-w-[152px]">NIK</th>
+                                            <th class="tw-min-w-[140px] tw-grow tw-shrink">Nama</th>
+                                            <th class="tw-min-w-[205px] tw-max-w-[205px]">Status Keluarga</th>
+                                            <th
+                                                class="tw-min-w-[140px] tw-max-w-[140px] tw-flex tw-items-center tw-justify-center">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- @foreach ($daftarWarga as $warga)
                                         <tr class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1.5px] tw-border-n400">
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $warga['warga']->NIK }}</td>
@@ -180,7 +185,7 @@
                                             </td>
                                         </tr>
                                     @endforeach --}}
-                                    {{-- <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
+                                        {{-- <tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300">
                                         <td class="tw-h-16 tw-relative" colspan="5">
                                             <button type="submit" name="action" value="tambah"
                                                 class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
@@ -188,9 +193,10 @@
                                         </td>
                                     </tr> --}}
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
+                            </div>
                         </div>
 
                     </div>
@@ -238,10 +244,8 @@
                 '{{ old('jenis_data', empty(session()->get('formState')['jenis_data']) ? 'Data Baru' : session()->get('formState')['jenis_data']) }}'
             );
             selectRT('{{ empty(session()->get('formState')['RT']) ? '' : session()->get('formState')['RT'] }}')
-
             var buttonRow =
-                `<tr class="tw-h-16 tw-border-b-[1.5px] tw-border-n400 hover:tw-bg-n300"><td class="tw-h-16 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 tw-w-fit" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
-
+                `<tr class="tw-h-16"><td class="tw-h-16 tw-relative tw-flex tw-items-center tw-justify-center tw-w-full" colspan="5"><button type="submit" name="action" value="tambah"class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">Tambah</button></td></tr>`
             // dataWarga.row.add($(buttonRow)[0]).draw();
             $('table tbody').after($(buttonRow));
             fetchWarga();
@@ -264,7 +268,7 @@
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass("tw-h-16 hover:tw-bg-n300 tw-flex");
+                    $(row).addClass("tw-h-16 tw-flex");
                 },
                 drawCallback: function() {
                     $('.table.dataTable').css('border-collapse', 'collapse');
@@ -284,12 +288,12 @@
                     searchable: false
                 }, {
                     data: "NIK",
-                    className: "tw-min-w-[172px] tw-max-w-[172px]",
+                    className: "tw-min-w-[152px] tw-max-w-[152px]",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "nama",
-                    className: "tw-min-w-[188px] tw-max-w-[188px] tw-grow tw-shrink",
+                    className: "tw-min-w-[140px] tw-grow tw-shrink",
                     orderable: true,
                     searchable: false
                 }, {
@@ -304,7 +308,7 @@
                     searchable: false
                 }],
                 columnDefs: [{
-                    targets: [1,2],
+                    targets: [1, 2],
                     render: function(data, type, row) {
                         if (type === 'display') {
                             return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +

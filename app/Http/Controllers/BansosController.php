@@ -197,8 +197,9 @@ class BansosController extends Controller
     {
         $dataKeluarga = Keluarga::findOrFail($id);
         $dataKriteria = $dataKeluarga->getDataKriteria();
+        $daftarBansos = Bansos::get();
 
-        return view('bansos.perhitungan.detail', compact(['dataKeluarga', 'dataKriteria']));
+        return view('bansos.perhitungan.detail', compact(['dataKeluarga', 'dataKriteria', 'daftarBansos']));
     }
 
     public function tambah(Request $request, $id)
