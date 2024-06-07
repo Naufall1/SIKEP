@@ -1,11 +1,15 @@
 @props(['title', 'created_at', 'writer', 'image_url', 'caption'])
 
+@php
+    use Carbon\Carbon;
+@endphp
+
 <div class="md:tw-w-full tw-flex tw-flex-col tw-gap-4">
 
     <div class="tw-flex tw-flex-col tw-gap-2">
         <h1 class="tw-display">{{$title}}</h1>
         <div class="tw-flex">
-            <p class="tw-caption tw-text-n600">{{date('D', strtotime($created_at))}}, {{date('d M Y', strtotime($created_at))}} -&nbsp;</p>
+            <p class="tw-caption tw-text-n600">{{Carbon::parse($created_at)->locale('id')->translatedFormat('l')}}, {{Carbon::parse($created_at)->locale('id')->translatedFormat('d F Y')}} -&nbsp;</p>
             <p class="tw-caption tw-text-n1000">{{$writer}}</p>
         </div>
     </div>
@@ -23,5 +27,5 @@
     {{-- {!! $announcement->isi !!} --}}
 
     {{-- CONTENT WYSIWIG END --}}
-    
+
 </div>

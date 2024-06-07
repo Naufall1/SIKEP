@@ -1,5 +1,7 @@
 @extends('layout.layout', ['isForm' => true])
-
+@php
+    use Carbon\Carbon;
+@endphp
 @section('content')
     <div class="tw-pt-[80px] tw-flex tw-flex-col">
         {{-- beranda --}}
@@ -172,8 +174,8 @@
                         <x-cards.publication url="{{ route('home.baca', ['id' => $announcement->kode]) }}"
                             image="{{ $announcement->image_url }}" type="{{ $announcement->kategori }}"
                             title="{{ $announcement->judul }}" writer="{{ $announcement->penulis }}"
-                            day="{{ date('D', strtotime($announcement->tanggal_dibuat)) }}"
-                            date="{{ date('d M Y', strtotime($announcement->tanggal_dibuat)) }}"></x-cards.publication>
+                            day="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('l') }}"
+                            date="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('d F Y') }}"></x-cards.publication>
                     @endforeach
                 @endif
             </div>
