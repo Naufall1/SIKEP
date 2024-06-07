@@ -55,16 +55,28 @@
                                         <td class="tw-min-w-[220px] tw-max-w-[220px]">{{ $pengajuan->tipe }}</td>
                                         <td class="tw-min-w-[220px] tw-max-w-[220px] tw-table-right-align">
                                             {{ strftime('%d %B %Y', strtotime($pengajuan->tanggal_request)) }}</td>
-                                        <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
+                                            @if ($pengajuan->tipe == 'Pembaruan')
+                                            <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
+                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
+                                                href="{{ route('pengajuan.pembaharuan', ['id' => $pengajuan]) }}">Lihat</a>
+                                            </td>
+                                            @endif
+                                            @if ($pengajuan->tipe == 'Perubahan Warga')
+                                            <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
                                                 class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
                                                 href="{{ route('pengajuan.perubahanwarga', ['id' => $pengajuan]) }}">Lihat</a>
-                                        </td>
+                                             </td>
+                                            @endif
+                                            @if ($pengajuan->tipe == 'Perubahan Keluarga')
+                                            <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
+                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
+                                                href="{{ route('pengajuan.perubahankeluarga', ['id' => $pengajuan]) }}">Lihat</a>
+                                             </td>
+                                            @endif
                                     </tr>
                                 @endforeach
 
                                 @if (is_null($pengajuanTable))
-                                    
-                                
                                 <tr class="tw-h-full tw-border-0">
                                     <td
                                         class="tw-col-span-4 tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full tw-py-6 tw-gap-3">
