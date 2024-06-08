@@ -52,7 +52,7 @@
                                 <x-input.select2 name="pendidikan" default="{{ old('pendidikan', $warga->pendidikan) }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>
                                 @error('pendidikan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -60,7 +60,7 @@
                                 <x-input.select2 name="agama" default="{{ old('agama', $warga->agama) }}"
                                     placeholder="Pilih Agama"></x-input.select2>
                                 @error('agama')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -69,7 +69,7 @@
                                     default="{{ old('status_perkawinan', $warga->status_perkawinan) }}"
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>
                                 @error('status_perkawinan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -78,7 +78,7 @@
                                     default="{{ old('jenis_pekerjaan', $warga->jenis_pekerjaan) }}"
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>
                                 @error('jenis_pekerjaan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -131,7 +131,7 @@
                                         type="date" id="tanggal_kejadian_demografi_keluar"
                                         name="tanggal_kejadian_demografi_keluar"></x-input.input>
                                     @error('tanggal_kejadian_demografi_keluar')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 
@@ -139,7 +139,7 @@
                                     <x-input.file id="berkas_demografi_keluar"
                                         name="berkas_demografi_keluar"></x-input.file>
                                     @error('berkas_demografi_keluar')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
                                 <div id="berkas">
@@ -218,14 +218,14 @@
                                         placeholder="" type="date" id="tanggal_kejadian"
                                         name="tanggal_kejadian"></x-input.input>
                                     @error('tanggal_kejadian')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 
                                 <x-input.label for="berkas_demografi" label="Berkas Pendukung">
                                     <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                     @error('berkas_demografi')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 
@@ -267,7 +267,7 @@
                     <x-input.label for="berkas_demografi_keluar" label="Berkas Pendukung">
                         <x-input.file id="berkas_demografi_keluar" name="berkas_demografi_keluar"></x-input.file>
                         @error('berkas_demografi')
-                            <small class="form-text tw-text-red-600">{{ $message }}</small>
+                            <x-input.error-message>{{ $message }}</x-input.error-message>
                         @enderror
                     </x-input.label>`;
             const tanggalKejadian = `
@@ -275,7 +275,7 @@
                         <x-input.input value="{{ old('tanggal_kejadian_demografi_keluar') }}" placeholder="" type="date"
                             id="tanggal_kejadian_demografi_keluar" name="tanggal_kejadian_demografi_keluar"></x-input.input>
                         @error('tanggal_kejadian_demografi_keluar')
-                            <small class="form-text tw-text-red-600">{{ $message }}</small>
+                            <x-input.error-message>{{ $message }}</x-input.error-message>
                         @enderror
                     </x-input.label>
                 `;

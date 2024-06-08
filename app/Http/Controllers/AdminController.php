@@ -78,6 +78,15 @@ class AdminController extends Controller
             'keterangan' => 'max:15',
             'username' => 'required|unique:user,username|max:50',
             'password' => 'required|min:8|confirmed|max:100',
+        ], [
+            'nama.required' => 'Masukkan Nama',
+            'keterangan.max' => 'Keterangan melebihi 15 karakter. Periksa kembali',
+            'username.required' => 'Masukkan Nama Pengguna',
+            'username.unique' => 'Nama Pengguna telah terdaftar. Periksa kembali',
+            'username.max' => 'Nama Pengguna melebihi 50 karakter. Periksa kembali',
+            'password.required' => 'Masukkan Kata Sandi',
+            'password.min' => 'Kata Sandi kurang dari 8 karakter. Periksa kembali',
+            'password.confirmed' => 'Kata Sandi kurang dari 8 karakter. Periksa kembali',
         ]);
 
         $user = new User();

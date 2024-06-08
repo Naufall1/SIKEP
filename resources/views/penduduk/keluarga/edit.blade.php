@@ -137,9 +137,9 @@
                             </label>                             --}}
 
                             <x-input.label for="kartu_keluarga" label="Berkas Pendukung">
-                                <x-input.file id="kartu_keluarga" name="kartu_keluarga"></x-input.file>
+                                <x-input.file accept="image/.jpg,.jpeg,.png" id="kartu_keluarga" name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -151,12 +151,12 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder=".0"
+                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
                                     value="{{ old('tagihan_listrik', $keluarga->tagihan_listrik) }}" icon="rupiah"
                                     alt="Rp">
                                 </x-input.leadingicon>
                                 @error('tagihan_listrik')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -174,12 +174,12 @@
                             </label> --}}
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan">
-                                <x-input.input placeholder="HERE"
+                                <x-input.input placeholder="Masukkan Luas Bangunan"
                                     value="{{ old('luas_bangunan', $keluarga->luas_bangunan) }}" type="number"
                                     min="0" id="luas_bangunan" name="luas_bangunan">
                                 </x-input.input>
                                 @error('luas_bangunan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 

@@ -38,7 +38,7 @@
                                 <x-input.input maxlength=16 value="{{ old('NIK', $warga->NIK ?? '') }}" type="text" name="NIK"
                                     placeholder="Masukkan NIK"></x-input.input>
                                 @error('NIK')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -46,7 +46,7 @@
                                 <x-input.input value="{{ old('nama', $warga->nama ?? '') }}" type="text" name="nama" id="nama"
                                     placeholder="Masukkan Nama"></x-input.input>
                                 @error('nama')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -55,7 +55,7 @@
                                     placeholder="Masukkan Tempat Lahir" id="tempat_lahir"
                                     name="tempat_lahir"></x-input.input>
                                 @error('tempat_lahir')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -63,7 +63,7 @@
                                 <x-input.input value="{{ old('tanggal_lahir', $warga->tanggal_lahir ?? '') }}" placeholder="Masukkan Tempat Lahir"
                                     type="date" id="tanggal_lahir" name="tanggal_lahir"></x-input.input>
                                 @error('tanggal_lahir')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -72,7 +72,7 @@
                                     default="{{ old('jenis_kelamin', $warga->jenis_kelamin ?? '') == 'L' ? 'Laki-laki' : (old('jenis_kelamin',$warga->jenis_kelamin ?? '') == 'P' ? 'Perempuan' : 'Pilih Jenis Kelamin') }}"
                                     placeholder="Pilih Jenis Kelamin"></x-input.select2>
                                 @error('jenis_kelamin')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -81,7 +81,7 @@
                                     default="{{ old('pendidikan', $warga->pendidikan ?? null) ? old('pendidikan', $warga->pendidikan ?? '') : 'Pilih Pendidikan' }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>
                                 @error('pendidikan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -89,7 +89,7 @@
                                 <x-input.select2 name="agama" default="{{  old('agama', $warga->agama ?? null) ? old('agama', $warga->agama ?? '') : 'Pilih Agama' }}"
                                     placeholder="Pilih Agama"></x-input.select2>
                                 @error('agama')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -100,7 +100,7 @@
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>
 
                                 @error('status_perkawinan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -110,7 +110,7 @@
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>
 
                                 @error('jenis_pekerjaan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -120,7 +120,7 @@
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>
 
                                 @error('kewarganegaraan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -138,7 +138,7 @@
                                     placeholder="Pilih Status"></x-input.select2>
 
                                 @error('status_keluarga')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -146,7 +146,7 @@
                                 <x-input.input value="{{ old('nama_ayah', $warga->nama_ayah ?? '') }}" placeholder="Masukkan Nama Ayah"
                                     type="text" id="nama_ayah" name="nama_ayah"></x-input.input>
                                 @error('nama_ayah')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -154,7 +154,7 @@
                                 <x-input.input value="{{ old('nama_ibu', $warga->nama_ibu ?? '') }}" placeholder="Masukkan Nama Ibu"
                                     type="text" id="nama_ibu" name="nama_ibu"></x-input.input>
                                 @error('nama_ibu')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -164,7 +164,7 @@
                                     alt="Rp">
                                 </x-input.leadingicon>
                                 @error('penghasilan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -172,7 +172,7 @@
                                 <x-input.input value="{{ old('no_paspor', $warga->no_paspor ?? '') }}" placeholder="Masukkan Nomor Paspor"
                                     type="text" id="no_paspor" name="no_paspor"></x-input.input>
                                 @error('no_paspor')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -180,7 +180,7 @@
                                 <x-input.input value="{{ old('no_kitas', $warga->no_kitas ?? '') }}" placeholder="Masukkan Nomor Paspor"
                                     type="text" id="no_kitas" name="no_kitas"></x-input.input>
                                 @error('no_kitas')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -196,7 +196,7 @@
                                     default="{{ old('jenis_demografi', $demografi->jenis ?? null) ? old('jenis_demografi', $demografi->jenis ?? '') : 'Pilih Jenis Demografi' }}"
                                     placeholder="Pilih Jenis Demografi"></x-input.select2>
                                 @error('jenis_demografi')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -209,14 +209,14 @@
                                         id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
                                 @endif
                                 @error('tanggal_kejadian')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
                             <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
-                                <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
+                                <x-input.file accept="image/.jpg, .jpeg, .png" id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                 @error('berkas_demografi')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -291,7 +291,9 @@
             $("label[for='NIK']").attr('for', 'NIK-list');
             $("label[for='NIK-list']").children().next().remove();
             $("label[for='NIK-list']").append(`<x-input.select2 name="NIK" searchable
-                                    placeholder="Pilih NIK"></x-input.select2>`);
+                                    placeholder="Pilih NIK"></x-input.select2> @error('NIK')
+                                <x-input.error-message>{{ $message }}</x-input.error-message>
+                                @enderror`);
 
             $('#demografiMasuk').remove();
 
@@ -472,7 +474,7 @@
                                         default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
                                         placeholder="Pilih Jenis Demografi"></x-input.select2>
                                     @error('jenis_demografi')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 
@@ -480,14 +482,14 @@
                                     <x-input.input value="{{ old('tanggal_kejadian', $haveDemografi->tanggal_kejadian ?? '') }}" placeholder="" type="date"
                                         id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
                                     @error('tanggal_kejadian')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 
                                 <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
                                     <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                     @error('berkas_demografi')
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 

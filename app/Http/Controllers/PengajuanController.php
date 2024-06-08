@@ -286,6 +286,8 @@ class PengajuanController extends Controller
         $validator = Validator::make($request->all(),[
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
             'catatan' => 'required|string'
+        ], [
+            'catatan.required' => 'Masukkan Catatan',
         ]);
 
         if ($validator->fails()) {
@@ -440,6 +442,8 @@ class PengajuanController extends Controller
         $validator = Validator::make($request->all(),[
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
             'catatan' => 'required|string'
+        ], [
+            'catatan.required' => 'Masukkan Catatan',
         ]);
 
         if ($validator->fails()) {
@@ -604,6 +608,8 @@ class PengajuanController extends Controller
         $validator = Validator::make($request->all(),[
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed],
             'catatan' => 'required|string'
+        ], [
+            'catatan.required' => 'Masukkan Catatan',
         ]);
 
         if ($validator->fails()) {

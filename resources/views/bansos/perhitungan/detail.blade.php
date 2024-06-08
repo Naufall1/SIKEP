@@ -29,7 +29,7 @@
                             {{-- <x-input.select2 name="jenis_bansos"
                                 placeholder="Pilih Jenis Bansos"></x-input.select2> --}}
                             @error('bansos_kode')
-                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                <x-input.error-message>{{ $message }}</x-input.error-message>
                             @enderror
                         </x-input.label>
 
@@ -37,7 +37,7 @@
                             <x-input.input placeholder="" type="date" id="tanggal_menerima"
                                 name="tanggal_menerima"></x-input.input>
                             @error('tanggal_penerimaan')
-                                <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                <x-input.error-message>{{ $message }}</x-input.error-message>
                             @enderror
                         </x-input.label>
 

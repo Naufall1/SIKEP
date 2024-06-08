@@ -256,6 +256,9 @@ class KeluargaController extends Controller
             if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
                 $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ], [
+                    'kartu_keluarga.required' => 'Masukkan berkas Kartu Keluarga',
+                    'kartu_keluarga.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
                 ]);
             }
 
@@ -307,6 +310,9 @@ class KeluargaController extends Controller
             if (!FormStateKeluarga::getKartuKeluarga() || $request->has('kartu_keluarga')) {
                 $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ], [
+                    'kartu_keluarga.required' => 'Masukkan berkas Kartu Keluarga',
+                    'kartu_keluarga.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
                 ]);
             }
 
@@ -329,6 +335,15 @@ class KeluargaController extends Controller
                 'provinsi' => 'required|max:20',
                 'tagihan_listrik' => 'required|integer',
                 'luas_bangunan' => 'required|integer',
+            ], [
+                'no_kk.required' => 'Masukkan No KK',
+                'no_kk.size' => 'No KK tidak valid. Periksa kembali',
+                'no_kk.unique' => 'No KK telah terdaftar. Periksa kembali',
+                'alamat.required' => 'Masukkan Alamat',
+                'tagihan_listrik.required' => 'Masukkan Tagihan Listrik',
+                'tagihan_listrik.integer' => 'Tagihan Listrik tidak valid. Periksa kembali',
+                'luas_bangunan.required' => 'Masukkan Luas Bangunan',
+                'luas_bangunan.integer' => 'Luas Bangunan tidak valid. Periksa kembali',
             ]);
 
             // Hapus file temporary ketika dilakukan upload file baru
@@ -452,11 +467,20 @@ class KeluargaController extends Controller
             'luas_bangunan' => 'required',
         ];
 
+        $customMessage = [
+            'kepala_keluarga.required' => 'Pilih Kepala Keluarga',
+            'tagihan_listrik.required' => 'Masukkan Tagihan Listrik',
+            'luas_bangunan.required' => 'Masukkan Luas Bangunan',
+        ];
+
         try {
             DB::beginTransaction();
             if ($request->hasFile('kartu_keluarga')) {
                 $validator_file = Validator::make($request->only('kartu_keluarga'), [
                     'kartu_keluarga' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ], [
+                    'kartu_keluarga.required' => 'Masukkan berkas Kartu Keluarga',
+                    'kartu_keluarga.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
                 ]);
             }
 
@@ -471,7 +495,7 @@ class KeluargaController extends Controller
                 Storage::disk('temp')->delete(session()->get('kartu_keluarga')->path);
             }
 
-            $validator = Validator::make($request->only(['no_kk', 'tagihan_listrik', 'luas_bangunan', 'kepala_keluarga']), $rules);
+            $validator = Validator::make($request->only(['no_kk', 'tagihan_listrik', 'luas_bangunan', 'kepala_keluarga']), $rules, $customMessage);
 
             if (isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
                 session()->put('kartu_keluarga', (object) [

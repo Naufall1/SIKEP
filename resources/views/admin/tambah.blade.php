@@ -29,7 +29,7 @@
                                     value="">
                                 </x-input.input>
                                 @error('nama')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -37,7 +37,7 @@
                                 <x-input.input type="text" name="keterangan" placeholder="Masukkan Keterangan"
                                     value=""></x-input.input>
                                 @error('keterangan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -53,7 +53,7 @@
                                 <x-input.input type="text" name="username" placeholder="Masukkan Nama Pengguna"
                                     value=""></x-input.input>
                                 @error('username')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -61,7 +61,7 @@
                                 <x-input.input type="password" name="password" placeholder="Masukkan Kata Sandi"
                                     value=""></x-input.input>
                                 @error('password')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -69,7 +69,7 @@
                                 <x-input.input type="password" name="password_confirmation" placeholder="Masukkan Kata Sandi"
                                     value=""></x-input.input>
                                 @error('password_confirmation')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
                         </div>

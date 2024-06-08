@@ -77,6 +77,12 @@ class BansosController extends Controller
             'luas_bangunan' => 'required',
             'penghasilan' => 'required|array',
             'penghasilan.*' => 'integer'
+        ], [
+            'tagihan_listrik.required' => 'Masukkan Tagihan Listrik',
+            'luas_bangunan.required' => 'Masukkan Luas Bangunan',
+            'penghasilan.required' => 'Masukkan Penghasilan',
+            'penghasilan.integer' => 'Penghasilan tidak valid. Periksa kembali',
+            'penghasilan.*.integer' => 'Penghasilan tidak valid. Periksa kembali',
         ]);
 
         try {
@@ -207,6 +213,8 @@ class BansosController extends Controller
         $request->validate([
             'bansos_kode' => 'required|exists:bansos,bansos_kode',
             'tanggal_menerima' => 'required|date'
+        ], [
+            'tanggal_menerima.required' => 'Masukkan Tanggal Penerimaan'
         ]);
 
         try {

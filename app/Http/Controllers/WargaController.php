@@ -55,7 +55,7 @@ class WargaController extends Controller
                 ->where('status_warga', '!=', 'Menunggu');
 
             if (explode(" ", $request->scope_data)[1] ?? false) {
-                    $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
+                $query->where('keluarga.RT', '=', (int)explode(" ", $request->scope_data)[1]);
             }
 
             if (isset($request->agama)) {
@@ -144,6 +144,10 @@ class WargaController extends Controller
         if (!session()->exists('berkas_demografi') || $request->has('berkas_demografi')) {
             $validator_file = Validator::make($request->only('berkas_demografi'), [
                 'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+            ], [
+                'berkas_demografi.required' => 'Masukkan Berkas Pendukung',
+                'berkas_demografi.mimes' => 'Berkas salah. Masukkan berkas .jpeg, .jpg, atau .png',
+                'berkas_demografi.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
             ]);
         }
 
@@ -159,29 +163,83 @@ class WargaController extends Controller
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
-            'tanggal_lahir' => 'required|date',
+            'tanggal_lahir' => 'required|date|before:today',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'pendidikan' => 'required|string|max:50|in:Tidak/Belum Sekolah,Belum Tamat SD/Sederajat,Tamat SD/Sederajat,SLTP/Sederajat,SLTA/Sederajat,Diploma I/II,Akademi/Diploma III/S. Muda,Diploma IV/Strata I,Strata II',
             'agama' => 'required|in:Buddha,Hindu,Islam,Katolik,Kristen,Konghuchu',
-            'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai,Cerai Hidup',
-            'jenis_pekerjaan' => 'required|string|max:50',
+            'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Mati,Cerai Hidup',
+            'jenis_pekerjaan' => 'required|string|max:50|in:Belum/Tidak Bekerja,Mengurus Rumah Tangga,Pelajar/Mahasiswa,Pensiunan,Pegawai Negeri Sipil,Tentara Nasional Indonesia,Kepolisian RI,Perdagangan,Petani/Pekebun,Peternak,Nelayan/Perikanan,Industri,Konstruksi,Transportasi,Karyawan Swasta,Karyawan BUMN,Karyawan BUMD,Karyawan Honorer,Buruh Harian Lepas,Buruh Tani/Perkebunan,Buruh Nelayan/Perikanan,Buruh Peternakan,Pembantu Rumah Tangga,Tukang Cukur,Tukang Listrik,Tukang Batu,Tukang Kayu,Tukang Sol Sepatu,Tukang Las/Pandai Besi,Tukang Jahit,Penata Rambut,Penata Rias,Penata Busana,Mekanik,Tukang Gigi,Seniman,Tabib,Paraji,Perancang Busana,Penerjemah,Imam Masjid,Pendeta,Pastur,Wartawan,Ustadz/Mubaligh,Juru Masak,Promotor Acara,Anggota DPR-RI,Anggota DPD,Anggota BPK,Presiden,Wakil Presiden,Anggota Mahkamah Konstitusi,Anggota Kabinet/Kementerian,Duta Besar,Gubernur,Wakil Gubernur,Bupati,Wakil Bupati,Walikota,Wakil Walikota,Anggota DPRD Provinsi,Anggota DPRD Kabupaten,Dosen,Guru,Pilot,Pengacara,Notaris,Arsitek,Akuntan,Konsultan,Dokter,Bidan,Perawat,Apoteker,Psikiater/Psikolog,Penyiar Televisi,Penyiar Radio,Pelaut,Peneliti,Sopir,Pialang,Paranormal,Pedagang,Perangkat Desa,Kepala Desa,Biarawati,Wiraswasta,Anggota Lembaga Tinggi,Artis,Atlit,Chef,Manajer,Tenaga Tata Usaha,Operator,Pekerja Pengolahan,Kerajinan,Teknisi,Asisten Ahli,Lainnya',
             'kewarganegaraan' => 'required|in:WNI,WNA',
+            'status_keluarga' => 'required|in:Kepala Keluarga,Suami,Istri,Anak,Menantu,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu,Lainnya',
             'nama_ayah' => 'required|string|max:100',
             'nama_ibu' => 'required|string|max:100',
             'penghasilan' => 'required|integer',
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
             'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar',
-            'tanggal_kejadian' => 'required|date',
+            'tanggal_kejadian' => 'required|date|after_or_equal:tanggal_lahir',
         ];
+
+        $customMessage = [
+            'NIK.required' => 'Masukkan NIK',
+            'NIK.size' => 'NIK tidak valid. Periksa kembali',
+            'NIK.unique' => 'NIK telah terdaftar. Periksa kembali',
+            'nama.required' => 'Masukkan Nama',
+            'nama.string' => 'Nama tidak valid. Periksa kembali',
+            'nama.max' => 'Nama melebihi 100 karakter. Periksa kembali',
+            'tempat_lahir.required' => 'Masukkan Tempat Lahir',
+            'tempat_lahir.max' => 'Tempat Lahir melebihi 50 karakter. Periksa kembali',
+            'tempat_lahir.string' => 'Tempat Lahir tidak valid. Periksa kembali',
+            'tanggal_lahir.required' => 'Masukkan Tanggal Lahir',
+            'tanggal_lahir.date' => 'Masukan Tanggal Lahir bukan tanggal. Periksa kembali',
+            'tanggal_lahir.before' => 'Tanggal Lahir tidak valid. Periksa kembali',
+            'jenis_kelamin.required' => 'Pilih Jenis Kelamin',
+            'jenis_kelamin.in' => 'Jenis Kelamin tidak valid. Periksa kembali',
+            'pendidikan.required' => 'Pilih Pendidikan',
+            'pendidikan.string' => 'Pendidikan tidak valid. Periksa kembali',
+            'pendidikan.max' => 'Pendidikan melebihi 50 karakter. Periksa kembali',
+            'pendidikan.in' => 'Pilihan Pendidikan salah. Pilih kembali',
+            'agama.required' => 'Pilih Agama',
+            'agama.in' => 'Pilihan Agama salah. Pilih kembali',
+            'status_perkawinan.required' => 'Pilih Status Perkawinan',
+            'status_perkawinan.in' => 'Pilihan Status Perkawinan salah. Pilih kembali',
+            'jenis_pekerjaan.required' => 'Pilih Jenis Pekerjaan',
+            'jenis_pekerjaan.in' => 'Pilihan Jenis Pekerjaan salah. Pilih kembali',
+            'jenis_pekerjaan.string' => 'Jenis Pekerjaan tidak valid. Periksa kembali',
+            'jenis_pekerjaan.max' => 'Jenis Pekerjaan melebihi 50 karakter. Periksa kembali',
+            'kewarganegaraan.required' => 'Pilih Kewarganegaraan',
+            'kewarganegaraan.in' => 'Pilihan Kewarganegaraan salah. Pilih kembali',
+            'status_keluarga.required' => 'Pilih Status Keluarga',
+            'status_keluarga.in' => 'Pilihan Status Keluarga salah. Periksa kembali',
+            'nama_ayah.required' => 'Masukkan Nama Ayah',
+            'nama_ayah.string' => 'Nama Ayah tidak valid. Periksa kembali',
+            'nama_ayah.max' => 'Nama Ayah melebihi 100 karakter. Periksa kembali',
+            'nama_ibu.required' => 'Masukkan Nama Ibu',
+            'nama_ibu.string' => 'Nama Ibu tidak valid. Periksa kembali',
+            'nama_ibu.max' => 'Nama Ibu melebihi 100 karakter. Periksa kembali',
+            'penghasilan.required' => 'Masukkan Penghasilan',
+            'penghasilan.integer' => 'Penghasilan tidak valid. Periksa kembali',
+            'no_paspor.string' => 'Nomor Paspor tidak valid. Periksa kembali',
+            'no_paspor.max' => 'Nomor Paspor melebihi 10 karakter. Periksa kembali',
+            'no_kitas.string' => 'Nomor Kitas tidak valid. Periksa kembali',
+            'no_kitas.max' => 'Nomor Kitas melebihi 10 karakter. Periksa kembali',
+            'jenis_demografi.required' => 'Pilih Jenis Demografi',
+            'jenis_demografi.in' => 'Pilihan Jenis Demografi salah. Pilih kembali',
+            'tanggal_kejadian.required' => 'Masukkan Tanggal Kejadian',
+            'tanggal_kejadian.date' => 'Masukan Tanggal Kejadian bukan tanggal. Periksa kembali',
+            'tanggal_kejadian.after_or_equal' => 'Tanggal Kejadian tidak valid. Periksa kembali',
+        ];
+
 
         $pengajuan = new Pengajuan();
 
         if ($pengajuan->keluarga->kepala_keluarga == null) {
             $rules['status_keluarga'] = 'required|in:Kepala Keluarga';
-            $validator = Validator::make($request->all(), $rules, ['status_keluarga.in' => 'Warga pertama WAJIB Kepala Keluarga']);
+            $customMessage['status_keluarga.in'] = 'Warga pertama WAJIB Kepala Keluarga';
+            // $customMessage = array_merge($customMessage, ['status_keluarga.required' => 'Masukkan Status Keluarga', 'status_keluarga.in' => 'Warga pertama WAJIB Kepala Keluarga']);
+            $validator = Validator::make($request->all(), $rules, $customMessage);
         } else {
-            $validator = Validator::make($request->all(), $rules);
+            $validator = Validator::make($request->all(), $rules, $customMessage);
         }
 
         if (session()->exists('berkas_demografi') && (isset($validator_file) && !$validator_file->fails())) {
@@ -284,14 +342,19 @@ class WargaController extends Controller
     }
     public function update(Request $request, $nik)
     {
+        
+        // Mengambil data warga
+        $warga = Warga::find($nik);
+
         $request->merge(['nik' => $nik]);
+        $request->merge(['tanggal_lahir' => $warga->tanggal_lahir]);
         $request->validate([
             'nik' => 'required|numeric'
         ]);
 
         // Jika data tidak ditemukan, maka akan dikembalikan ke halaman warga
         if (!Warga::find($nik)) {
-            return redirect()->route('warga')->with('flash',(object) ['type' => 'error', 'message' => 'Data tidak ditemukan!']);
+            return redirect()->route('warga')->with('flash', (object) ['type' => 'error', 'message' => 'Data tidak ditemukan!']);
         }
 
         // Ambil data warga
@@ -309,11 +372,33 @@ class WargaController extends Controller
             'pendidikan' => 'required|string|max:50',
             'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Konghucu',
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
-            'jenis_pekerjaan' => 'required|string|max:50',
-            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak',
+            'jenis_pekerjaan' => 'required|string|max:50|in:Belum/Tidak Bekerja,Mengurus Rumah Tangga,Pelajar/Mahasiswa,Pensiunan,Pegawai Negeri Sipil,Tentara Nasional Indonesia,Kepolisian RI,Perdagangan,Petani/Pekebun,Peternak,Nelayan/Perikanan,Industri,Konstruksi,Transportasi,Karyawan Swasta,Karyawan BUMN,Karyawan BUMD,Karyawan Honorer,Buruh Harian Lepas,Buruh Tani/Perkebunan,Buruh Nelayan/Perikanan,Buruh Peternakan,Pembantu Rumah Tangga,Tukang Cukur,Tukang Listrik,Tukang Batu,Tukang Kayu,Tukang Sol Sepatu,Tukang Las/Pandai Besi,Tukang Jahit,Penata Rambut,Penata Rias,Penata Busana,Mekanik,Tukang Gigi,Seniman,Tabib,Paraji,Perancang Busana,Penerjemah,Imam Masjid,Pendeta,Pastur,Wartawan,Ustadz/Mubaligh,Juru Masak,Promotor Acara,Anggota DPR-RI,Anggota DPD,Anggota BPK,Presiden,Wakil Presiden,Anggota Mahkamah Konstitusi,Anggota Kabinet/Kementerian,Duta Besar,Gubernur,Wakil Gubernur,Bupati,Wakil Bupati,Walikota,Wakil Walikota,Anggota DPRD Provinsi,Anggota DPRD Kabupaten,Dosen,Guru,Pilot,Pengacara,Notaris,Arsitek,Akuntan,Konsultan,Dokter,Bidan,Perawat,Apoteker,Psikiater/Psikolog,Penyiar Televisi,Penyiar Radio,Pelaut,Peneliti,Sopir,Pialang,Paranormal,Pedagang,Perangkat Desa,Kepala Desa,Biarawati,Wiraswasta,Anggota Lembaga Tinggi,Artis,Atlit,Chef,Manajer,Tenaga Tata Usaha,Operator,Pekerja Pengolahan,Kerajinan,Teknisi,Asisten Ahli,Lainnya',
+            'status_keluarga' => 'required|in:Kepala Keluarga,Suami,Istri,Anak,Menantu,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu,Lainnya',
             'penghasilan' => 'required|integer',
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
+        ];
+
+        // Custom message error
+        $customMessage = [
+            'pendidikan.required' => 'Pilih Pendidikan',
+            'pendidikan.string' => 'Pendidikan tidak valid. Periksa kembali',
+            'pendidikan.max' => 'Pendidikan melebihi 50 karakter. Periksa kembali',
+            'pendidikan.in' => 'Pilihan Pendidikan salah. Pilih kembali',
+            'agama.required' => 'Pilih Agama',
+            'agama.in' => 'Pilihan Agama salah. Pilih kembali',
+            'status_perkawinan.required' => 'Pilih Status Perkawinan',
+            'status_perkawinan.in' => 'Pilihan Status Perkawinan salah. Pilih kembali',
+            'jenis_pekerjaan.required' => 'Pilih Jenis Pekerjaan',
+            'jenis_pekerjaan.in' => 'Pilihan Jenis Pekerjaan salah. Pilih kembali',
+            'jenis_pekerjaan.string' => 'Jenis Pekerjaan tidak valid. Periksa kembali',
+            'jenis_pekerjaan.max' => 'Jenis Pekerjaan melebihi 50 karakter. Periksa kembali',
+            'penghasilan.required' => 'Masukkan Penghasilan',
+            'penghasilan.integer' => 'Penghasilan tidak valid. Periksa kembali',
+            'no_paspor.string' => 'Nomor Paspor tidak valid. Periksa kembali',
+            'no_paspor.max' => 'Nomor Paspor melebihi 10 karakter. Periksa kembali',
+            'no_kitas.string' => 'Nomor Kitas tidak valid. Periksa kembali',
+            'no_kitas.max' => 'Nomor Kitas melebihi 10 karakter. Periksa kembali',
         ];
 
 
@@ -326,6 +411,10 @@ class WargaController extends Controller
             if (!session()->exists('berkas_demografi_keluar') || $request->hasFile('berkas_demografi_keluar')) {
                 $validator_file = Validator::make($request->only('berkas_demografi_keluar'), [
                     'berkas_demografi_keluar' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ], [
+                    'berkas_demografi_keluar.required' => 'Masukkan Berkas Pendukung',
+                    'berkas_demografi_keluar.mimes' => 'Berkas salah. Masukkan berkas .jpeg, .jpg, atau .png',
+                    'berkas_demografi_keluar.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
                 ]);
             }
 
@@ -341,19 +430,35 @@ class WargaController extends Controller
             }
 
             $rules = array_merge($rules, [
-                'tanggal_kejadian_demografi_keluar' => 'required|date'
+                'tanggal_kejadian_demografi_keluar' => 'required|date|after_or_equal:tanggal_lahir'
+            ]);
+
+            $customMessage = array_merge($customMessage, [
+                'tanggal_kejadian_demografi_keluar.required' => 'Masukkan Tanggal Kejadian',
+                'tanggal_kejadian_demografi_keluar.date' => 'Masukan Tanggal Kejadian bukan tanggal. Periksa kembali',
+                'tanggal_kejadian_demografi_keluar.after_or_equal' => 'Tanggal Kejadian tidak valid. Periksa kembali',
             ]);
         }
 
         // Jika data demografi sebelumnya ada, maka tambahkan validasi berikut
         else if ($demografi) {
             $rules = array_merge($rules, [
-                'tanggal_kejadian' => 'required|date',
+                'tanggal_kejadian' => 'required|date|after_or_equal:tanggal_lahir',
+            ]);
+
+            $customMessage = array_merge($customMessage, [
+                'tanggal_kejadian.required' => 'Masukkan Tanggal Kejadian',
+                'tanggal_kejadian.date' => 'Masukan Tanggal Kejadian bukan tanggal. Periksa kembali',
+                'tanggal_kejadian.after_or_equal' => 'Tanggal Kejadian tidak valid. Periksa kembali',
             ]);
 
             if ($request->hasFile('berkas_demografi')) {
                 $validator_file_2 = Validator::make($request->only('berkas_demografi'), [
                     'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
+                ], [
+                    'berkas_demografi.required' => 'Masukkan Berkas Pendukung',
+                    'berkas_demografi.mimes' => 'Berkas salah. Masukkan berkas .jpeg, .jpg, atau .png',
+                    'berkas_demografi.max' => 'Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB',
                 ]);
             }
 
@@ -370,7 +475,7 @@ class WargaController extends Controller
         }
 
         // Dilakukan validasi terhadap semua rule yang telah ditambahkan kedalam $rules
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, $customMessage);
 
         // Jika terdapat file yang diupload, maka akan disimpan informasinya pada session
         if (isset($validator_file) && !$validator_file->fails() && $validator->fails()) {
@@ -488,11 +593,11 @@ class WargaController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('flash', (object) ['type' => $messageType, 'message'=>$message['message']]);
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('flash', (object) ['type' => $messageType, 'message' => $message['message']]);
         } catch (Exception $e) {
             dd($e);
             DB::rollBack();
-            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', (object) ['type' => 'warning', 'message'=>'Gagal ubah data warga!']);
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', (object) ['type' => 'warning', 'message' => 'Gagal ubah data warga!']);
         }
     }
     /**
@@ -504,7 +609,12 @@ class WargaController extends Controller
         $validator = Validator::make($request->all(), [
             'NIK' => 'required|size:16|exists:warga,NIK',
             'no_kk' => 'required',
-            'status_keluarga' => 'required|in:Kepala Keluarga,Istri,Anak'
+            'status_keluarga' => 'required|in:Kepala Keluarga,Suami,Istri,Anak,Menantu,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu,Lainnya'
+        ], [
+            'NIK.required' => 'Masukkan NIK',
+            'NIK.size' => 'NIK tidak valid. Periksa kembali',
+            'status_keluarga.required' => 'Masukkan Status Keluarga',
+            'status_keluarga.in' => 'Pilihan Status Keluarga salah. Periksa kembali',
         ]);
         if ($validator->fails()) {
             return redirect()->back()
