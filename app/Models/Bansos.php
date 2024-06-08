@@ -13,6 +13,7 @@ class Bansos extends Model
     use HasFactory;
     protected $table = 'bansos';
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'bansos_kode';
 
     protected $fillable = [

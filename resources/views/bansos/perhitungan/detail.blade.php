@@ -20,23 +20,17 @@
                     @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
                         <x-input.label required class="tw-relative" for="jenis_bansos-list" label="Jenis Bansos">
-                            <x-input.select name="bansos_kode" placeholder="Pilih Jenis Bansos">
-                                <option value="BLT">BLT</option>
-                                <option value="BPNT">BPNT</option>
-                                <option value="BSU">BSU</option>
-                                <option value="PKH">PKH</option>
-                            </x-input.select>
-                            {{-- <x-input.select2 name="jenis_bansos"
-                                placeholder="Pilih Jenis Bansos"></x-input.select2> --}}
+                            <x-input.select2 name="jenis_bansos" default="{{old('jenis_bansos', 'Pilih Jenis Bansos')}}"
+                                placeholder="Pilih Jenis Bansos"></x-input.select2>
                             @error('bansos_kode')
                                 <small class="form-text tw-text-red-600">{{ $message }}</small>
                             @enderror
                         </x-input.label>
 
-                        <x-input.label required for="tanggal_penerimaan" label="Tanggal Penerimaan">
+                        <x-input.label required for="tanggal_menerima" label="Tanggal Penerimaan">
                             <x-input.input placeholder="" type="date" id="tanggal_menerima"
                                 name="tanggal_menerima"></x-input.input>
-                            @error('tanggal_penerimaan')
+                            @error('tanggal_menerima')
                                 <small class="form-text tw-text-red-600">{{ $message }}</small>
                             @enderror
                         </x-input.label>
@@ -261,18 +255,14 @@
 {{-- Kalau ini fixed, uncomment select2 diatas!! --}}
 @push('js')
     <script>
-        function getDaftarBansos() {
-            let arrayBansos = [];
-            @foreach ($daftarBansos as $bansos)
-                arrayBansos.push({
-                    bansos_kode: '{{ $bansos->bansos_kode }}',
-                })
-            @endforeach
+        function getJenisBansos() {
             let dataBansos = [];
-            for (let i = 0; i < arrayBansos.length; i++) {
-                dataBansos[i] = arrayBansos[i];
-            }
-            console.log(arrayBansos);
+            @foreach ($daftarBansos as $bansos)
+                dataBansos.push(
+                    '{{ $bansos->bansos_kode }}',
+                )
+            @endforeach
+
             return dataBansos;
         }
     </script>
