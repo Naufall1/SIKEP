@@ -26,17 +26,17 @@
                             </x-input.label>
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon type="text" id="tagihan_listrik" name="tagihan_listrik" value="{{ old('tagihan_listrik', $dataKeluarga->tagihan_listrik) }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
+                                <x-input.leadingicon placeholder="Misal: 1000000" type="text" id="tagihan_listrik" name="tagihan_listrik" value="{{ old('tagihan_listrik', $dataKeluarga->tagihan_listrik) }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
                                 @error('tagihan_listrik')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan (m²)">
-                                <x-input.input type="text" id="luas_bangunan" name="luas_bangunan"
+                                <x-input.input placeholder="Masukkan Luas Bangunan" type="text" id="luas_bangunan" name="luas_bangunan"
                                 value="{{ old('luas_bangunan', $dataKeluarga->luas_bangunan) }}"></x-input.input>
                                 @error('luas_bangunan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -67,10 +67,10 @@
                                 </x-input.label>
 
                                 <x-input.label for="penghasilan" label="Penghasilan">
-                                    <x-input.leadingicon type="number" id="penghasilan" name="penghasilan[{{$anggota->nik}}]"
+                                    <x-input.leadingicon placeholder="Misal: 1000000" type="number" id="penghasilan" name="penghasilan[{{$anggota->nik}}]"
                                     value="{{ old('penghasilan.' . $anggota->nik, $anggota->penghasilan) }}" icon="rupiah" alt="Rp"></x-input.leadingicon>
                                     @error('penghasilan.' . $anggota->nik)
-                                        <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
 

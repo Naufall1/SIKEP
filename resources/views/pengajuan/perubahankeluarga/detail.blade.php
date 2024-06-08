@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="modalReject"
-        class="tw-hidden modal-menu tw-z-20 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        class="{{ !empty($errors->messages()) ? '' : 'tw-hidden' }} modal-menu tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
         <div
             class="tw-w-96 md:tw-w-96 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
             <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
@@ -17,8 +17,11 @@
 
                         <x-input.label for="catatan" label="Catatan">
                             <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
+                            @error('catatan')
+                                <x-input.error-message>{{$message}}</x-input.error-message>
+                            @enderror
                         </x-input.label>
-
+                        
                     </div>
 
                     <div class="tw-flex tw-gap-2">

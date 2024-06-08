@@ -42,24 +42,24 @@
                                     @endforeach
                                 </x-input.select> --}}
                                 @error('no_kk')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.input disabled type="text" name="kepala_keluarga" placeholder="Tambahkan Warga"
+                            {{-- <x-input.label for="kepala_keluarga" label="Kepala Keluarga"> --}}
+                                <x-input.input disabled type="hidden" name="kepala_keluarga" placeholder="Tambahkan Warga"
                                     value="{{ isset($formState['kepala_keluarga']) ? $formState['kepala_keluarga'] : '' }}"></x-input.input>
-                                @error('kepala_keluarga')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
-                                @enderror
-                            </x-input.label>
+                                {{-- @error('kepala_keluarga')
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
+                                @enderror --}}
+                            {{-- </x-input.label> --}}
 
                             <x-input.label required for="alamat" label="Alamat">
                                 <x-input.textarea name="alamat" placeholder="Masukkan Alamat"
                                     value="{{ old('alamat', isset($formState['alamat']) ? $formState['alamat'] : '') }}">
                                 </x-input.textarea>
                                 @error('alamat')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -99,9 +99,9 @@
                             </x-input.label>
 
                             <x-input.label required for="kartu_keluarga" label="Kartu Keluarga">
-                                <x-input.file name="kartu_keluarga"></x-input.file>
+                                <x-input.file accept="image/.jpg, .jpeg, .png" name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
                             @if (isset(session()->get('formState')['kartu_keluarga']))
@@ -129,7 +129,7 @@
                                     value="{{ old('tagihan_listrik', $formState['tagihan_listrik'] ?? 0) }}" icon="rupiah"
                                     alt="Rp"></x-input.leadingicon>
                                 @error('tagihan_listrik')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
@@ -137,7 +137,7 @@
                                 <x-input.input type="text" id="luas_bangunan" name="luas_bangunan"
                                     value="{{ old('luas_bangunan', $formState['luas_bangunan'] ?? 0) }}"></x-input.input>
                                 @error('luas_bangunan')
-                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
 
