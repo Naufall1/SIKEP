@@ -96,13 +96,21 @@
                 scales: {
                     x: {
                         ticks: {
-                            maxRotation: 0,
+                            callback: function(value) {
+                                // truncate the value only in this axis
+                                const lbl = this.getLabelForValue(value);
+                                if (typeof lbl === 'string' && lbl.length > 6) {
+                                    return `${lbl.substring(0, 6)}...`;
+                                }
+                                return lbl;
+                            },
+                            maxRotation: 10,
                             minRotation: 0,
                         }
                     },
                     y: {
                         ticks: {
-                            stepSize: 1
+                            stepSize: 1,
                         }
                     }
                 },
@@ -245,14 +253,14 @@
             usia: 'chartBarUsiaContainer'
         };
 
-        for (const container in containers) {            
+        for (const container in containers) {
             if (container === selectedChart) {
                 // console.log($('#'+containers[container]).parent().attr('class'));
-                $('#'+containers[container]).parent().removeClass('tw-hidden');
+                $('#' + containers[container]).parent().removeClass('tw-hidden');
             } else {
                 // console.log('false');
-                $('#'+containers[container]).parent().removeClass('tw-hidden');
-                $('#'+containers[container]).parent().addClass('tw-hidden');
+                $('#' + containers[container]).parent().removeClass('tw-hidden');
+                $('#' + containers[container]).parent().addClass('tw-hidden');
             }
         }
 
@@ -304,7 +312,7 @@
         };
 
         for (const container in containers) {
-            $('#'+containers[container]).parent().addClass('tw-hidden');
+            $('#' + containers[container]).parent().addClass('tw-hidden');
         }
     }
 </script>

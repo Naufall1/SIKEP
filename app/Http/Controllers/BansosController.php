@@ -211,7 +211,7 @@ class BansosController extends Controller
     public function tambah(Request $request, $id)
     {
         $request->validate([
-            'bansos_kode' => 'required|exists:bansos,bansos_kode',
+            'jenis_bansos' => 'required|exists:bansos,bansos_kode',
             'tanggal_menerima' => 'required|date'
         ], [
             'tanggal_menerima.required' => 'Masukkan Tanggal Penerimaan'
@@ -223,7 +223,7 @@ class BansosController extends Controller
             $dataKeluarga = Keluarga::findOrFail($id);
 
             $mightGet = new MightGet();
-            $mightGet->bansos_kode = $request->bansos_kode;
+            $mightGet->bansos_kode = $request->jenis_bansos;
             $mightGet->no_kk = $id;
             $mightGet->tanggal_menerima = $request->tanggal_menerima;
             $mightGet->save();
