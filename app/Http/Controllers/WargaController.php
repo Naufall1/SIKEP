@@ -342,7 +342,7 @@ class WargaController extends Controller
     }
     public function update(Request $request, $nik)
     {
-        
+
         // Mengambil data warga
         $warga = Warga::find($nik);
 
@@ -539,7 +539,7 @@ class WargaController extends Controller
                     'demografi_id' => $dm->demografi_id,
                     'tanggal_kejadian' => $request->tanggal_kejadian_demografi_keluar,
                     'tanggal_request' => now(),
-                    'dokumen_pendukung' => $filenameSimpan,
+                    'dokumen_pendukung' => $filenameSimpan ?? session()->get('berkas_demografi_keluar')->path,
                     'status_request' => 'Menunggu',
                 ]);
 
@@ -595,9 +595,9 @@ class WargaController extends Controller
             DB::commit();
             return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('flash', (object) ['type' => $messageType, 'message' => $message['message']]);
         } catch (Exception $e) {
-            dd($e);
+            // dd($e);
             DB::rollBack();
-            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('message', (object) ['type' => 'warning', 'message' => 'Gagal ubah data warga!']);
+            return redirect()->route('wargaDetail', ['nik' => $request->nik])->with('flash', (object) ['type' => 'error', 'message' => 'Gagal ubah data warga!']);
         }
     }
     /**
