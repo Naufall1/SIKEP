@@ -217,7 +217,7 @@
         const ctx = document.getElementById('chartBansosBar').getContext('2d');
         const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
-        const jmlWarga = dataBansos.map(item => item.persentase);
+        const jmlWarga = dataBansos.map(item => item.jumlah);
         return createChartBar(ctx, bulanTahun, jmlWarga, 'Jumlah');
     }
 
