@@ -70,6 +70,13 @@
                                 @enderror
                             </x-input.label>
 
+                            <x-input.label class="tw-relative" for="status_publikasi-list" label="Status">
+                                <x-input.select2 name="status_publikasi" placeholder="Ubah Status" default="{{ old('status', $announcement->status) }}"></x-input.select2>
+                                {{-- @error('jenis_pekerjaan')
+                                    <small class="form-text tw-text-red-600">{{ $message }}</small>
+                                @enderror --}}
+                            </x-input.label>
+
                         </div>
                     </div>
                 </div>
