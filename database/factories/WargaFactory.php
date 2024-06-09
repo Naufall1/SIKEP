@@ -21,13 +21,13 @@ class WargaFactory extends Factory
          $religions = ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Kristen', 'Konghuchu'];
 
         // Contoh daftar status perkawinan
-        $status_perkawinan = ["Kawin", "Belum Kawin", "Cerai", "Cerai Hidup"];
+        $status_perkawinan = ["Kawin", "Belum Kawin", "Cerai Mati", "Cerai Hidup"];
 
         // Contoh daftar status keluarga
-        $familyStatuses = ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
+        $familyStatuses = ["Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"];
 
         // Contoh daftar status warga
-        $citizenStatuses = ['Aktif', 'Meninggal', 'Migrasi Keluar', 'Menunggu', 'Tidak Aktif'];
+        $citizenStatuses = ['Aktif' => 80, 'Meninggal' => 10, 'Migrasi Keluar' => 5, 'Tidak Aktif' => 5];
 
         // Contoh daftar jenis pekerjaan
         $jobs = ["Belum/Tidak Bekerja", "Mengurus Rumah Tangga", "Pelajar/Mahasiswa", "Pensiunan", "Pegawai Negeri Sipil", "Tentara Nasional Indonesia", "Kepolisian RI", "Perdagangan", "Petani/Pekebun", "Peternak", "Nelayan/Perikanan", "Industri", "Konstruksi", "Transportasi", "Karyawan Swasta", "Karyawan BUMN", "Karyawan BUMD", "Karyawan Honorer", "Buruh Harian Lepas", "Buruh Tani/Perkebunan", "Buruh Nelayan/Perikanan", "Buruh Peternakan", "Pembantu Rumah Tangga", "Tukang Cukur", "Tukang Listrik", "Tukang Batu", "Tukang Kayu", "Tukang Sol Sepatu", "Tukang Las/Pandai Besi", "Tukang Jahit", "Penata Rambut", "Penata Rias", "Penata Busana", "Mekanik", "Tukang Gigi", "Seniman", "Tabib", "Paraji", "Perancang Busana", "Penerjemah", "Imam Masjid", "Pendeta", "Pastur", "Wartawan", "Ustadz/Mubaligh", "Juru Masak", "Promotor Acara", "Anggota DPR-RI", "Anggota DPD", "Anggota BPK", "Presiden", "Wakil Presiden", "Anggota Mahkamah Konstitusi", "Anggota Kabinet/Kementerian", "Duta Besar", "Gubernur", "Wakil Gubernur", "Bupati", "Wakil Bupati", "Walikota", "Wakil Walikota", "Anggota DPRD Provinsi", "Anggota DPRD Kabupaten", "Dosen", "Guru", "Pilot", "Pengacara", "Notaris", "Arsitek", "Akuntan", "Konsultan", "Dokter", "Bidan", "Perawat", "Apoteker", "Psikiater/Psikolog", "Penyiar Televisi", "Penyiar Radio", "Pelaut", "Peneliti", "Sopir", "Pialang", "Paranormal", "Pedagang", "Perangkat Desa", "Kepala Desa", "Biarawati", "Wiraswasta", "Anggota Lembaga Tinggi", "Artis", "Atlit", "Chef", "Manajer", "Tenaga Tata Usaha", "Operator", "Pekerja Pengolahan, Kerajinan", "Teknisi", "Asisten Ahli", "Lainnya"];
@@ -44,7 +44,7 @@ class WargaFactory extends Factory
             'agama' => $this->faker->randomElement($religions),
             'status_perkawinan' => $this->faker->randomElement($status_perkawinan),
             'status_keluarga' => $this->faker->randomElement($familyStatuses),
-            'status_warga' => $this->faker->randomElement($citizenStatuses),
+            'status_warga' => $this->getBucketFromWeights($citizenStatuses),
             'jenis_pekerjaan' => $this->faker->randomElement($jobs),
             'penghasilan' => $this->faker->numberBetween(0, 10000000),
             'kewarganegaraan' => $this->faker->randomElement(['WNI']),
@@ -82,6 +82,30 @@ class WargaFactory extends Factory
 
         // Gabungkan menjadi NIK
         return $provinceCode . $cityCode . $districtCode . $birthDay . $birthMonth . $birthYear . $uniqueNumber;
+    }
+
+    private function getBucketFromWeights($values) {
+        $total = $currentTotal = $bucket = 0;
+        $firstRand = mt_rand(1, 100);
+
+        foreach ($values as $amount) {
+            $total += $amount;
+        }
+
+        $rand = ($firstRand / 100) * $total;
+
+        foreach ($values as $amount) {
+            $currentTotal += $amount;
+
+            if ($rand > $currentTotal) {
+                $bucket++;
+            }
+            else {
+                break;
+            }
+        }
+
+        return array_keys($values)[$bucket];
     }
 }
 // Keluarga::factory()->count(3)->create()->each(function ($keluarga) {$jumlahWarga = rand(1, 10);Warga::factory()->count($jumlahWarga)->create(['no_kk' => $keluarga->no_kk]);});

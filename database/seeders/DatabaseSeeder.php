@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Keluarga;
+use App\Models\Warga;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Keluarga::factory()->count(800)->create()->each(
+            function ($keluarga) {
+                $jumlahWarga = rand(0, 5);
+                Warga::factory()->count(1)->create(['no_kk' => $keluarga->no_kk, 'nama' => $keluarga->kepala_keluarga, 'status_keluarga' => 'Kepala Keluarga']);
+                Warga::factory()->count($jumlahWarga)->create(['no_kk' => $keluarga->no_kk]);
+            });
         $this->call([
             LevelSeeder::class,
             UserSeeder::class,
@@ -22,9 +31,9 @@ class DatabaseSeeder extends Seeder
             BansosSeeder::class,
             ArticleAnnouncementSeeder::class,
             MightGetSeeder::class,
-            WargaModifiedSeeder::class,
-            KeluargaModifiedSeeder::class,
-            PengajuanSeeder::class,
+            // WargaModifiedSeeder::class,
+            // KeluargaModifiedSeeder::class,
+            // PengajuanSeeder::class,
         ]);
     }
 }
