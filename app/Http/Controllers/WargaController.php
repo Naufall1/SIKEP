@@ -288,6 +288,12 @@ class WargaController extends Controller
         $warga->nama_ayah = $request->nama_ayah;
         $warga->nama_ibu = $request->nama_ibu;
 
+        if ($warga->status_keluarga != 'Kepala Keluarga' && !$pengajuan->hasKepalaKeluarga($warga)) {
+            return redirect()->back()
+                ->withErrors(['status_keluarga' => 'Warga pertama WAJIB Kepala Keluarga'])
+                ->withInput();
+        }
+
         $demografi = new Demografi();
         $demografi->user_id = Auth::user()->user_id;
         $demografi->jenis = $request->jenis_demografi;

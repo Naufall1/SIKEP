@@ -224,8 +224,11 @@ class KeluargaController extends Controller
                                     </svg>
                                     </span>
                                 </button>';
-                if (str_contains($warga->nama, '(Baru)')) {
+                if (str_contains($warga->nama, '(Baru)') && !$warga->exists) {
                     return $trash . $show;
+                }
+                if (str_contains($warga->nama, '(Baru)') && $warga->exists) {
+                    return $trash . $disabledShow;
                 }
                 return $disabledTrash . $disabledShow;
             })
@@ -382,6 +385,7 @@ class KeluargaController extends Controller
         if ($request->action == 'tambah') {
             $pengajuan = new Pengajuan();
             $pengajuan->keluarga->kepala_keluarga = $request->kepala_keluarga ?? null;
+            $pengajuan->keluarga->no_kk = $request->no_kk ?? null;
             return redirect()->route('tambah-warga', ['no_kk' => $request->no_kk]);
         }
         $pengajuan = new Pengajuan();
@@ -574,16 +578,24 @@ class KeluargaController extends Controller
         }
 
         $warga = $data_warga['warga'];
+        $jenisKelaminMap = [
+            'L' => 'Laki-laki',
+            'P' => 'Perempuan'
+        ];
+        $warga->jenis_kelamin = in_array($warga->jenis_kelamin, array_keys($jenisKelaminMap)) ? $jenisKelaminMap[$warga->jenis_kelamin] : $warga->jenis_kelamin;
+
         $haveDemografi = $data_warga['haveDemografi'];
         $demografi = $data_warga['demografi'];
 
-        $filename = $haveDemografi->dokumen_pendukung;
+        $filename = $haveDemografi->dokumen_pendukung ?? null;
 
-        session()->put('berkas_demografi', (object) [
-            'path' => $filename,
-            'ext' => explode('.', $filename)[1],
-            // 'base64' => base64_encode(Storage::disk('temp')->get($filename))
-        ]);
+        if ($filename) {
+            session()->put('berkas_demografi', (object) [
+                'path' => $filename,
+                'ext' => explode('.', $filename)[1],
+                // 'base64' => base64_encode(Storage::disk('temp')->get($filename))
+            ]);
+        }
 
         return view('penduduk.warga.tambah', compact(['warga', 'haveDemografi', 'demografi']));
     }

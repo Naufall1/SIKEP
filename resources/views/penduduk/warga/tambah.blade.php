@@ -69,7 +69,7 @@
 
                             <x-input.label required class="tw-relative" for="jenis_kelamin-list" label="Jenis Kelamin">
                                 <x-input.select2 name="jenis_kelamin"
-                                    default="{{ old('jenis_kelamin', $warga->jenis_kelamin ?? '') == 'L' ? 'Laki-laki' : (old('jenis_kelamin',$warga->jenis_kelamin ?? '') == 'P' ? 'Perempuan' : 'Pilih Jenis Kelamin') }}"
+                                    default="{{ old('jenis_kelamin', $warga->jenis_kelamin ?? null) ?? 'Pilih Jenis Kelamin' }}"
                                     placeholder="Pilih Jenis Kelamin"></x-input.select2>
                                 @error('jenis_kelamin')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>

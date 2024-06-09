@@ -136,6 +136,25 @@ class Pengajuan
     {
         return count($this->daftarWarga) > 0;
     }
+    public function hasKepalaKeluarga(Warga $except = null) : bool
+    {
+        foreach ($this->daftarWarga as $key => $value) {
+            if ($value['warga']->status_keluarga == 'Kepala Keluarga') {
+                if (is_null($except)) {
+                    return true;
+                }
+                if ($value['warga']->NIK != $except->NIK) {
+                    return true;
+                }
+            }
+        }
+        foreach (Warga::where('no_kk', $this->keluarga->no_kk)->get() as $key => $warga) {
+            if ($warga->status_keluarga == 'Kepala Keluarga') {
+                return true;
+            }
+        }
+        return false;
+    }
     public function pindahKK(Warga $warga)
     {
         $warga->no_kk = $this->keluarga->no_kk;
@@ -160,6 +179,7 @@ class Pengajuan
         }
         if (!count($this->daftarWarga) == 0 && $idx != -1) {
             array_splice($this->daftarWarga, $idx, 1);
+            session()->forget('berkas_demografi');
             $this->save();
         }
     }
