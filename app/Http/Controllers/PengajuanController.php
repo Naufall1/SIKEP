@@ -399,21 +399,25 @@ class PengajuanController extends Controller
             'id' => ['required', 'exists:pengajuan,id', new PengajuanNotConfirmed]
         ]);
 
-        
+
         // dd($validator->fails());
-        
+
         try {
             DB::beginTransaction();
-            
+
             $pengajuan = PengajuanData::with('keluarga')->find($request->id);
             $modifiedKeluarga = KeluargaModified::where('no_kk', '=', $pengajuan->no_kk)
             ->where('tanggal_request', '=', $pengajuan->tanggal_request)
             ->where('status_request', '=', 'Menunggu')
             ->first();
-    
+
             // Check if kepala keluarga changed
             $keluarga = Keluarga::find($pengajuan->no_kk);
-            $old_kepala_keluarga_nik = Warga::select('*')->where('nama', '=', $keluarga->kepala_keluarga)->get()->first();
+            $old_kepala_keluarga_nik = Warga::select('*')
+                                        ->where('no_kk', '=', $keluarga->no_kk)
+                                        ->where('nama', '=', $keluarga->kepala_keluarga)
+                                        ->get()
+                                        ->first();
             $old_kepala_keluarga = Warga::find($old_kepala_keluarga_nik->NIK);
             $new_kepala_keluarga = Warga::select('*')->where('nama', '=' ,$modifiedKeluarga->kepala_keluarga)->get()->first();
             if ($old_kepala_keluarga->nama != $new_kepala_keluarga->nama) {
@@ -421,13 +425,13 @@ class PengajuanController extends Controller
                 $old_kepala_keluarga->status_keluarga = 'Lainnya';
                 WargaModified::updateWarga($old_kepala_keluarga);
                 Warga::applyModifications(WargaModified::getMenunggu($old_kepala_keluarga->no_kk));
-                
+
                 // Change status keluarga on new kepala keluarga to 'Kepala Keluarga'
                 $new_kepala_keluarga->status_keluarga = 'Kepala Keluarga';
                 WargaModified::updateWarga($new_kepala_keluarga);
                 Warga::applyModifications(WargaModified::getMenunggu($new_kepala_keluarga->no_kk));
             }
-            
+
             if (!Keluarga::applyModifications($modifiedKeluarga)){
                 throw new Exception('Gagal menyimpan perubahan kedalam table Keluarga.');
             }
