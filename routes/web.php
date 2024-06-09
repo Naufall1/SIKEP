@@ -170,7 +170,7 @@ Route::prefix('profile')->group(function () {
     Route::put('/ubah/{user_id}', [ProfilController::class, 'update'])->name('profilUpdate'); // menangani penerimaan data dari form edit user dan menyimpan pada database
 })->middleware('role:rt,rw,adm');
 
-Route::prefix('publikasi')->middleware(['auth','role:adm'])->group(function () {
+Route::prefix('publikasi')->middleware(['auth','role:adm,rw'])->group(function () {
     Route::get('/', [ArticleAnnouncementController::class, 'index_publikasi'])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
     Route::post('/list', [ArticleAnnouncementController::class, 'list_publikasi'])->name('publikasi.list'); // menampilkan halaman yang berisi tabel daftar publikasi
     Route::get('/{id}/detail', [ArticleAnnouncementController::class, 'show'])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
