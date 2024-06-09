@@ -22,6 +22,7 @@ class ChartController extends Controller
         $dataBansos = Bansos::getDataBansos($selectedRT);
         $dataBansosByMonth = Bansos::getDataBansosByMonth($selectedRT);
         $dataUsia = Demografi::getDataUsia($selectedRT);
+        $dataMeninggal = Demografi::getDataMeninggal($selectedRT);
 
         // tes
         $filteredData = Keluarga::join('warga', 'keluarga.no_kk', '=', 'warga.no_kk')->selectRaw('keluarga.RT, warga.nama')->where('keluarga.RT', $selectedRT)->get();
@@ -33,6 +34,7 @@ class ChartController extends Controller
             'dataTingkatPendidikan' => $dataTingkatPendidikan,
             'dataBansos' => $dataBansos,
             'dataBansosByMonth' => $dataBansosByMonth,
+            'dataMeninggal' => $dataMeninggal,
             'dataUsia' => $dataUsia,
             'filteredData' => $filteredData,
         ];

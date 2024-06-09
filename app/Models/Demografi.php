@@ -72,6 +72,30 @@ class Demografi extends Model
         return $data;
     }
 
+    public static function getDataMeninggal($keterangan) {
+        $data = [];
+        $dataMeninggal = HaveDemografi::selectRaw('COUNT(*) as count, DATE_FORMAT(tanggal_kejadian, "%M") as bulan, DATE_FORMAT(tanggal_kejadian, "%Y") as tahun')
+            ->join('demografi', 'have_demografi.demografi_id', '=', 'demografi.demografi_id')
+            ->join('user', 'demografi.user_id', '=', 'user.user_id')
+            ->where('demografi.jenis', 'Meninggal')
+            ->where('have_demografi.status_request', 'Dikonfirmasi')
+            ->groupBy('bulan', 'tahun');
+
+        if ($keterangan !== null && $keterangan !== 'ketua' ) {
+            $dataMeninggal->where('user.keterangan', '=', $keterangan);
+        }
+
+        $result = $dataMeninggal->get();
+
+        foreach ($result as $row) {
+            $data[] = [
+                'bulan' => $row->bulan,
+                'tahun' => $row->tahun,
+                'jumlah' => $row->count,
+            ];
+        }
+        return $data;
+    }
 
     public function user(): BelongsTo
     {

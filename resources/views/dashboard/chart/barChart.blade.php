@@ -15,7 +15,7 @@
             <x-input.select class="tw-w-28" id="rtBar" onchange="dropdownChartBar()">
                 <option value="ketua">Semua</option>
                 @foreach ($semuaRT as $rt)
-                    <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
+                    <option value="{{ $rt->keterangan }}">RT {{ str_pad( $rt->keterangan, 3, '0', STR_PAD_LEFT )}}</option>
                 @endforeach
             </x-input.select>
         </div>
@@ -217,7 +217,7 @@
         const ctx = document.getElementById('chartBansosBar').getContext('2d');
         const dataBansos = @json($dataBansos);
         const bulanTahun = dataBansos.map(item => `${item.bansos} (${item.kode})`);
-        const jmlWarga = dataBansos.map(item => item.persentase);
+        const jmlWarga = dataBansos.map(item => item.jumlah);
         return createChartBar(ctx, bulanTahun, jmlWarga, 'Jumlah');
     }
 

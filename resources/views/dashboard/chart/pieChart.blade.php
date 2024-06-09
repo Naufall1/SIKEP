@@ -15,7 +15,7 @@
             <x-input.select class="tw-w-28" id="rtFilter" onchange="dropdownChartData(this.value)">
                 <option value="ketua">Semua</option>
                 @foreach ($semuaRT as $rt)
-                    <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
+                    <option value="{{ $rt->keterangan }}">RT {{ str_pad( $rt->keterangan, 3, '0', STR_PAD_LEFT )}}</option>
                 @endforeach
             </x-input.select>
         </div>
@@ -76,15 +76,28 @@
     });
 
     function createChart(ctx, labels, data, label) {
+        let combinedData = labels.map((label, index) => ({ label, data: data[index] }))
+                        .sort((a, b) => b.data - a.data);
+
+        let topFiveData = combinedData.slice(0, 5);
+        let otherData = combinedData.slice(5);
+
+        let topLabels = topFiveData.map(item => item.label);
+        let topData = topFiveData.map(item => item.data);
+
+        if (otherData.length > 0) {
+            topLabels.push('Lainnya');
+            topData.push(otherData.reduce((sum, item) => sum + item.data, 0));
+        }
         return new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: labels,
+                labels: topLabels,
                 datasets: [{
                     label: label,
-                    data: data,
-                    backgroundColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
-                    borderColor: ['#2C90FF', '#025CC0', '#01448E', '#013065', '#01244C', '#001833'],
+                    data: topData,
+                    backgroundColor: ['#CCE4FF', '#A8D1FF', '#56A6FF', '#2C90FF', '#025CC0', '#01448E'],
+                    borderColor: ['#CCE4FF', '#A8D1FF', '#56A6FF', '#2C90FF', '#025CC0', '#01448E'],
                     borderWidth: 1.5
                 }]
             },
@@ -237,31 +250,28 @@
         return createChart(ctx, rentangUsia, jumlahPenduduk, 'Persentase');
     }
 
-    // generate chart e ga work (gpt)
-    // function updateChart(chartInstance, newData, jenisData) {
-    //     // Mendefinisikan variabel datasets dan labels
-    //     let datasets = chartInstance.data.datasets;
-    //     let labels = chartInstance.data.labels;
-    //     let data = []
-
-    //     datasets[0].data.forEach((dataset, index) => {
-    //         chartInstance.data.datasets[0].data[index] = newData[jenisData][index]['persentase'];
-    //     });
-    //     chartInstance.update();
-    // }
-
     function updateChart(chartInstance, newData, jenisData) {
-        let datasets = chartInstance.data.datasets;
-        let labels = chartInstance.data.labels;
-
-        // Jika data baru ada dan tidak kosong, perbarui data chart
         if (newData[jenisData] && newData[jenisData].length > 0) {
-            datasets[0].data = newData[jenisData].map((item, index) => {
-                return item['persentase'] !== undefined ? item['persentase'] : 0;
-            });
+            // Combine labels and data into a single array of objects
+            let combinedData = newData[jenisData].map(item => ({
+                label: item[Object.keys(item)[0]],
+                data: item.persentase
+            })).sort((a, b) => b.data - a.data); // Sort in descending order
+
+            // Select the top 5 items and combine the rest into "Other"
+            let topFiveData = combinedData.slice(0, 5);
+            let otherData = combinedData.slice(5);
+
+            chartInstance.data.labels = topFiveData.map(item => item.label);
+            chartInstance.data.datasets[0].data = topFiveData.map(item => item.data);
+
+            if (otherData.length > 0) {
+                chartInstance.data.labels.push('Other');
+                chartInstance.data.datasets[0].data.push(otherData.reduce((sum, item) => sum + item.data, 0));
+            }
         } else {
-            // Jika data kosong, set semua data pada chart ke 0
-            datasets[0].data = labels.map(() => 0);
+            chartInstance.data.labels = ['No Data'];
+            chartInstance.data.datasets[0].data = [100];
         }
 
         chartInstance.update();
