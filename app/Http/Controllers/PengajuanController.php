@@ -620,7 +620,7 @@ class PengajuanController extends Controller
             return redirect()->route('pengajuan')->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil dikonfirmasi.']);
         } catch (Exception $e) {
             DB::rollBack();
-            // dd($e);
+            dd($e);
             return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal dikonfirmasi.']);
         }
     }

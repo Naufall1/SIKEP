@@ -3,6 +3,7 @@
     <div class="tw-w-56">
         <x-input.select id="lineChart" onchange="dropdownChartLine()">
             <option value="bansos">Bansos</option>
+            <option value="kematian">Kematian</option>
         </x-input.select>
     </div>
     @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
@@ -10,7 +11,7 @@
             <x-input.select class="tw-w-28" id="rtLine" onchange="dropdownChartLine(this.value)">
                 <option value="ketua">Semua</option>
                 @foreach ($semuaRT as $rt)
-                    <option value="{{ $rt->keterangan }}">RT. {{ $rt->keterangan }}</option>
+                    <option value="{{ $rt->keterangan }}">RT {{ str_pad( $rt->keterangan, 3, '0', STR_PAD_LEFT )}}</option>
                 @endforeach
             </x-input.select>
         </div>
@@ -22,11 +23,18 @@
     </div>
 </div>
 
+<div class="tw-w-full tw-h-full tw-overflow-x-auto">
+    <div id="chartLineKematianContainer" class="tw-flex tw-h-[242px] tw-min-w-[580px] tw-w-[580px] sm:tw-w-full">
+        <canvas id="chartKematianLine" style="width: 100%; height: 100%;" class="tw-flex"></canvas>
+    </div>
+</div>
 
 <script>
     let bansosLine;
+    let kematianLine;
     document.addEventListener('DOMContentLoaded', function() {
         bansosLine = lineBansos();
+        kematianLine = lineKematian();
         dropdownChartLine();
         // hiddenAllChart();
     });
@@ -169,6 +177,14 @@
         return createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
     }
 
+    function lineKematian() {
+        const ctx = document.getElementById('chartKematianLine').getContext('2d');
+        const dataKematian = @json($dataMeninggal);
+        const bulanTahun = dataKematian.map(item => `${item.bulan} (${item.tahun})`);
+        const jmlWarga = dataKematian.map(item => item.count);
+        return createChartLine(ctx, bulanTahun, jmlWarga, 'Jumlah');
+    }
+
     function updateChartLine(chartInstance, newData, jenisData) {
         let datasets = chartInstance.data.datasets;
         let labels = chartInstance.data.labels;
@@ -195,6 +211,7 @@
 
         const containers = {
             bansos: 'chartLineBansosContainer',
+            kematian: 'chartLineKematianContainer',
         };
 
         for (const container in containers) {
@@ -224,6 +241,9 @@
                     case 'bansos':
                         updateChartLine(bansosLine, data, 'dataBansosByMonth');
                         break;
+                    case 'kematian':
+                        updateChartLine(kematianLine, data, 'dataMeninggal');
+                        break;
                     default:
                         console.error('dropdownChartDataRT() error');
                 }
@@ -237,6 +257,7 @@
     function hiddenAllChart() {
         const containers = {
             bansos: 'chartBarBansosContainer',
+            kematian: 'chartBarKematianContainer',
         };
 
         for (const container in containers) {

@@ -84,6 +84,8 @@ class HomeController extends Controller
         $dataBansos = Bansos::getDataBansos($keterangan);
         $dataBansosByMonth = Bansos::getDataBansosByMonth($keterangan);
         $dataUsia = Demografi::getDataUsia($keterangan);
+        $dataMeninggal = Demografi::getDataMeninggal($keterangan);
+        // dd($dataMeninggal);
         $semuaRT = Warga::rightJoin('keluarga', 'warga.no_kk', '=', 'keluarga.no_kk')
             ->rightJoin('user', 'keluarga.RT', '=', 'user.keterangan')
             ->select('user.keterangan')
@@ -131,7 +133,7 @@ class HomeController extends Controller
                             ->get();
         }
 
-        return compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataBansosByMonth', 'dataUsia', 'semuaRT',
+        return compact('dataMeninggal','dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataBansosByMonth', 'dataUsia', 'semuaRT',
             'countPengajuan', 'countKeluarga', 'countPenduduk', 'pengajuanTable');
     }
 
