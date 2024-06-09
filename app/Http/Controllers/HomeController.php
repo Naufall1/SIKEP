@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         if (!Auth::check()) {
             return $this->dashboardGuest();
         }
@@ -34,21 +35,25 @@ class HomeController extends Controller
         }
     }
 
-    private function dashboardRW() {
+    private function dashboardRW()
+    {
         $data = $this->getData(Auth::user()->keterangan);
         return view('dashboard.index', $data, ['title' => 'RW', 'text' => 'Ketua RW']);
     }
 
-    private function dashboardRT(int $rt) {
+    private function dashboardRT(int $rt)
+    {
         $data = $this->getData($rt);
         return view('dashboard.index', $data, ['title' => 'RT', 'text' => 'Ketua RT']);
     }
 
-    private function dashboardADM() {
+    private function dashboardADM()
+    {
         return redirect()->route('publikasi');
     }
 
-    private function dashboardGuest() {
+    private function dashboardGuest()
+    {
 
         $select = [
             'kode',
@@ -68,15 +73,16 @@ class HomeController extends Controller
         return view('landing.index', $data, ['title' => 'Umum', 'text' => 'Warga', 'announcements' => $announcements]);
     }
 
-    public function getBacaan($id){
+    public function getBacaan($id)
+    {
 
         $announcement = ArticleAnnouncement::find($id);
         // dd($announcement);
         return view('landing.bacaan', compact('announcement'));
-
     }
 
-    private function getData($keterangan) {
+    private function getData($keterangan)
+    {
         $dataPekerjaan = Warga::getDataPekerjaan($keterangan);
         $dataJenisKelamin = Warga::getDataJenisKelamin($keterangan);
         $dataAgama = Warga::getDataAgama($keterangan);
@@ -88,7 +94,7 @@ class HomeController extends Controller
             ->rightJoin('user', 'keluarga.RT', '=', 'user.keterangan')
             ->select('user.keterangan')
             ->distinct()
-            ->whereNotIn('keterangan', function($query) {
+            ->whereNotIn('keterangan', function ($query) {
                 $query->select('keterangan')
                     ->from('user')
                     ->where('keterangan', 'like', 'admin%')
@@ -96,43 +102,59 @@ class HomeController extends Controller
             })
             ->get();
 
-            // dd($pengajuanTable);
+        // dd($pengajuanTable);
 
 
         if ($keterangan !== 'ketua' && $keterangan !== 'Admin') {
             $countPenduduk = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
-                            ->join('warga as w', 'keluarga.no_kk', '=', 'w.no_kk')
-                            ->where('keluarga.RT', $keterangan)
-                            ->count('w.no_kk');
+                ->join('warga as w', 'keluarga.no_kk', '=', 'w.no_kk')
+                ->where('w.status_warga', 'Aktif')
+                ->where('keluarga.RT', $keterangan)
+                ->count('w.no_kk');
             $countKeluarga = Keluarga::join('user as u', 'keluarga.RT', '=', 'u.keterangan')
-                            ->where('keluarga.RT', $keterangan)
-                            ->count();
+                ->where('keluarga.RT', $keterangan)
+                ->count();
             $pengajuanTable = PengajuanData::with('user')->limit(5)
-                            ->join('user', 'pengajuan.user_id', '=', 'user.user_id')
-                            ->where('status_request', '=' ,'Menunggu')
-                            ->where('user.keterangan',  '=' ,$keterangan)
-                            ->orderByDesc('tanggal_request')
-                            ->get();
+                ->join('user', 'pengajuan.user_id', '=', 'user.user_id')
+                ->where('status_request', '=', 'Menunggu')
+                ->where('user.keterangan',  '=', $keterangan)
+                ->orderByDesc('tanggal_request')
+                ->get();
 
             if (isset(Auth::user()->user_id)) {
-                $countPengajuan = PengajuanData::where('user_id', Auth::user()->user_id)->count();
+                $countPengajuan = PengajuanData::where('user_id', Auth::user()->user_id)
+                    ->where('status_request', '=', 'Menunggu')
+                    ->count();
+            } else {
+                $countPengajuan = PengajuanData::where('status_request', '=', 'Menunggu')
+                    ->count();
             }
-            else {
-                $countPengajuan = PengajuanData::count();
-            }
-
         } else {
-            $countPenduduk = Warga::where('status_warga', '!=', 'Menunggu')->count();
+            $countPenduduk = Warga::where('status_warga', '=', 'Aktif')->count();
             $countKeluarga = Keluarga::where('status', '=', 'Aktif')->count();
-            $countPengajuan = PengajuanData::count();
+            $countPengajuan = PengajuanData::where('status_request', '=', 'Menunggu')
+                ->count();
             $pengajuanTable = PengajuanData::with('user')->limit(5)
-                            ->where('status_request', '=' ,'Menunggu')
-                            ->orderByDesc('tanggal_request')
-                            ->get();
+                ->where('status_request', '=', 'Menunggu')
+                ->orderByDesc('tanggal_request')
+                ->get();
         }
 
-        return compact('dataPekerjaan', 'dataJenisKelamin', 'dataAgama', 'dataTingkatPendidikan', 'dataBansos', 'dataBansosByMonth', 'dataUsia', 'semuaRT',
-            'countPengajuan', 'countKeluarga', 'countPenduduk', 'pengajuanTable');
-    }
+        // dd($countPenduduk);
 
+        return compact(
+            'dataPekerjaan',
+            'dataJenisKelamin',
+            'dataAgama',
+            'dataTingkatPendidikan',
+            'dataBansos',
+            'dataBansosByMonth',
+            'dataUsia',
+            'semuaRT',
+            'countPengajuan',
+            'countKeluarga',
+            'countPenduduk',
+            'pengajuanTable'
+        );
+    }
 }
