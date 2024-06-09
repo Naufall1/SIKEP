@@ -159,7 +159,7 @@ class ArticleAnnouncementController extends Controller
     {
         // $announcement = ArticleAnnouncement::where('kode', $kode)->where('user_id', Auth::user()->user_id)->firstOrFail();
         $announcement = ArticleAnnouncement::where('kode', $kode)->firstOrFail();
-        return view('publikasi.detail', compact('announcement'));
+        return view('publikasi.draf.detail', compact('announcement'));
     }
     public function show_draf($kode)
     {

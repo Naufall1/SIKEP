@@ -12,14 +12,20 @@
             <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Publikasi</h1>
-                <a href="{{ route('publikasi.draf.ubah', ['id' => $announcement->kode]) }}"
+                @if ($announcement->user_id == Auth::user()->user_id)
+                    <a href="{{ route('publikasi.draf.ubah', ['id' => $announcement->kode]) }}"
                     class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full" type="button">
-                    <x-icons.actionable.edit class="" stroke="2" size="20"
-                        color="n100"></x-icons.actionable.edit>
-                    <span class="">
-                        Perbarui
-                    </span>
-                </a>
+                        <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
+                        <span>Perbarui</span>
+                    </a>
+                @else
+                    <a href="{{ route('publikasi.draf.ubah', ['id' => $announcement->kode]) }}"
+                        class="tw-btn tw-btn-md-ilead tw-rounded-full" type="button"
+                        style="pointer-events: none; background-color: grey; border-color: grey; color: white; cursor: not-allowed;">
+                        <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
+                        <span>Perbarui</span>
+                    </a>
+                @endif
             </div>
 
             <div class="tw-flex tw-flex-col tw-gap-7">
