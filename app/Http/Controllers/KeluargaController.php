@@ -173,6 +173,7 @@ class KeluargaController extends Controller
         $pengajuan->keluarga = new Keluarga;
         $pengajuan->keluarga->no_kk = $request->no_kk;
         $daftarWarga = $pengajuan->getDaftarWargaOnly();
+        // dd($request->no_kk);
         return DataTables::of($daftarWarga)
             ->addIndexColumn()
             ->addColumn('action', function (Warga $warga) {
@@ -224,10 +225,10 @@ class KeluargaController extends Controller
                                     </svg>
                                     </span>
                                 </button>';
-                if (str_contains($warga->nama, '(Baru)') && !$warga->exists) {
+                if (str_contains($warga->nama, '(Baru)') && (!$warga->exists || $warga->status_warga == 'Tidak Aktif')) {
                     return $trash . $show;
                 }
-                if (str_contains($warga->nama, '(Baru)') && $warga->exists) {
+                if (str_contains($warga->nama, '(Baru)') && $warga->exists && $warga->status_warga == 'Aktif') {
                     return $trash . $disabledShow;
                 }
                 return $disabledTrash . $disabledShow;
@@ -327,7 +328,7 @@ class KeluargaController extends Controller
             }
 
             $validator = Validator::make($request->except('kartu_keluarga'), [
-                'no_kk' => 'required|size:16|unique:keluarga,no_kk',
+                'no_kk' => 'required|size:16'  . (is_null(Keluarga::where('no_kk', $request->no_kk)->where('status', 'Tidak Aktif')->first()) ? '|unique:keluarga,no_kk' :''),
                 'alamat' => 'required',
                 'RT' => 'required|integer',
                 'RW' => 'required|integer',
@@ -403,9 +404,24 @@ class KeluargaController extends Controller
             'kepala_keluarga.required' => 'Tambahkan minimal 1 warga sebagai kepala keluarga.'
         ]);
 
-        if (Keluarga::find($request->no_kk)) {
+        if (Keluarga::find($request->no_kk) && is_null(Keluarga::where('no_kk', $request->no_kk)->where('status', 'Tidak Aktif')->first())) {
             $keluarga = Keluarga::find($request->no_kk);
             $keluarga->image_kk = isset($filenameSimpan) ? $filenameSimpan : (FormStateKeluarga::getKartuKeluarga()->path);
+        } else if (!is_null(Keluarga::where('no_kk', $request->no_kk)->where('status', 'Tidak Aktif')->first())) {
+            $keluarga = Keluarga::find($request->no_kk);
+            $keluarga->kepala_keluarga = $request->kepala_keluarga;
+            $keluarga->alamat = $request->alamat;
+            $keluarga->RT = $request->RT;
+            $keluarga->RW = $request->RW;
+            $keluarga->kode_pos = $request->kode_pos;
+            $keluarga->kelurahan = $request->kelurahan;
+            $keluarga->kecamatan = $request->kecamatan;
+            $keluarga->kota = $request->kota;
+            $keluarga->provinsi = $request->provinsi;
+            $keluarga->image_kk = isset($filenameSimpan) ? $filenameSimpan : (FormStateKeluarga::getKartuKeluarga()->path);
+            $keluarga->tagihan_listrik = $request->tagihan_listrik;
+            $keluarga->luas_bangunan = $request->luas_bangunan;
+            $keluarga->status = 'Menunggu';
         } else {
             $keluarga = new Keluarga;
             $keluarga->no_kk = $request->no_kk;
@@ -425,11 +441,15 @@ class KeluargaController extends Controller
         }
 
         $pengajuan->keluarga = $keluarga;
-        $pengajuan->store();
-
-        return redirect()->route('keluarga')->with('flash', (object) [
-            'type' => 'success',
-            'message' => 'Data yang ditambahkan berhasil dikirim.'
+        if($pengajuan->store()){
+            return redirect()->route('keluarga')->with('flash', (object) [
+                'type' => 'success',
+                'message' => 'Data yang ditambahkan berhasil dikirim.'
+            ]);
+        }
+        return redirect()->back()->with('flash', (object) [
+            'type' => 'error',
+            'message' => 'Gagal menambahkan data!'
         ]);
         // return redirect()->route('keluarga');
     }

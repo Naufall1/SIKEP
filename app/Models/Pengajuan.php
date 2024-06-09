@@ -39,6 +39,7 @@ class Pengajuan
     public function store():bool
     {
         try {
+            $kk = $this->keluarga->image_kk;
             DB::beginTransaction();
             $no_kk = $this->keluarga->no_kk;
             $this->keluarga->save();
@@ -49,7 +50,6 @@ class Pengajuan
             if (!$res) {
                 throw new \Exception('Failed to move file from temporary');
             }
-            Storage::disk('temp')->delete($this->keluarga->image_kk);
             foreach ($this->daftarWarga as $warga) {
                 $warga['warga']->no_kk = $no_kk;
                 if (!empty(Warga::find($warga['warga']->NIK))) {
@@ -83,11 +83,12 @@ class Pengajuan
             );
             $this->clear();
             FormStateKeluarga::clear();
+            Storage::disk('temp')->delete($kk);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            // dd($e);
+            dd($e);
             return false;
         }
     }
@@ -189,9 +190,10 @@ class Pengajuan
     }
     public function getDaftarWargaOnly(): Collection|Warga
     {
+        // dd(Keluarga::find($this->keluarga->no_kk));
         $temp = new Collection;
         if ($this->keluarga && Keluarga::find($this->keluarga->no_kk)) {
-            foreach (Warga::where('no_kk', '=', $this->keluarga->no_kk)->where('status_warga', '!=', 'Menunggu')->get() as $tempWarga) {
+            foreach (Warga::where('no_kk', '=', $this->keluarga->no_kk)->where('status_warga', '=', 'Aktif')->get() as $tempWarga) {
                $temp->push($tempWarga);
             }
         }

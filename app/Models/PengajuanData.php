@@ -41,10 +41,21 @@ class PengajuanData extends Model
     }
     public function getPrev() : PengajuanData|null
     {
-        return $this->where('tanggal_request', '<', $this->tanggal_request)
+        $prev = $this->where('tanggal_request', '<', $this->tanggal_request)
                 ->orderByDesc('tanggal_request')
                 ->limit(1)
-                ->get()[0];
+                ->get()[0] ?? null;
+
+        $date= Carbon::parse($this->tanggal_request);
+        $date->subDay();
+
+        $temp = clone $this;
+
+        $temp->tanggal_request = $date->toDateTimeString();
+        if (!empty($prev)) {
+            return $prev;
+        }
+        return $temp;
     }
 
     public function keluarga(): BelongsTo

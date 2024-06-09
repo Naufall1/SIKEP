@@ -136,32 +136,56 @@ class PengajuanController extends Controller
         $pengajuan = PengajuanData::find($request->id);
         // Ambil Nomor KK dari pengajuan yang dipilih
         $no_kk = $pengajuan->no_kk;
-        // Ambil daftar anggota keluarga asli
-        $daftarWarga = Warga::select($select)
-                                ->where('no_kk', '=', $no_kk)
-                                ->where('status_warga', '!=', 'Menunggu')
-                                ->where('created_at', '<=', $pengajuan->tanggal_request)
-                                ->get();
-        // Ambil daftar anggota keluarga yang ditambahkan dari data baru
-        $daftarWargaBaru = Warga::select($select)
-                                ->where('no_kk', '=', $no_kk)
-                                ->where('status_warga', '=', 'Menunggu')
-                                ->where('created_at', '<', $pengajuan->getNext()->tanggal_request)
-                                ->where('created_at', '>', $pengajuan->getPrev()->tanggal_request)
-                                ->get();
-        // Ambil daftar anggota keluarga yang berasal dari pindah KK
-        $daftarWargaPindahKK = WargaModified::select($select)
-                                            ->where('no_kk', '=', $no_kk)
-                                            ->where('status_request', '=', 'Menunggu')
-                                            ->where('tanggal_request', '<', $pengajuan->getNext()->tanggal_request)
-                                            ->where('tanggal_request', '>', $pengajuan->getPrev()->tanggal_request)
-                                            ->get();
+
+        if ($pengajuan->status_request == 'Ditolak') {
+            // Ambil daftar anggota keluarga asli
+            $daftarWarga = Warga::select($select)
+                                    ->where('no_kk', '=', $no_kk)
+                                    ->whereIn('status_warga',['Tidak Aktif'])
+                                    ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                    ->get();
+            // Ambil daftar anggota keluarga yang ditambahkan dari data baru
+            $daftarWargaBaru = Warga::select($select)
+                                    ->where('no_kk', '=', $no_kk)
+                                    ->where('status_warga', '=', 'Tidak Aktif')
+                                    ->where('created_at', '<', $pengajuan->getNext()->tanggal_request)
+                                    ->where('created_at', '>', $pengajuan->getPrev()->tanggal_request)
+                                    ->get();
+            // Ambil daftar anggota keluarga yang berasal dari pindah KK
+            $daftarWargaPindahKK = WargaModified::select($select)
+                                                ->where('no_kk', '=', $no_kk)
+                                                ->where('status_request', '=', 'Ditolak')
+                                                ->where('tanggal_request', '<', $pengajuan->getNext()->tanggal_request)
+                                                ->where('tanggal_request', '>', $pengajuan->getPrev()->tanggal_request)
+                                                ->get();
+        } else {
+            // Ambil daftar anggota keluarga asli
+            $daftarWarga = Warga::select($select)
+                                    ->where('no_kk', '=', $no_kk)
+                                    ->whereNotIn('status_warga',['Tidak Aktif'])
+                                    ->where('created_at', '<=', $pengajuan->tanggal_request)
+                                    ->get();
+            // Ambil daftar anggota keluarga yang ditambahkan dari data baru
+            $daftarWargaBaru = Warga::select($select)
+                                    ->where('no_kk', '=', $no_kk)
+                                    ->where('status_warga', '=', 'Menunggu')
+                                    ->where('created_at', '<', $pengajuan->getNext()->tanggal_request)
+                                    ->where('created_at', '>', $pengajuan->getPrev()->tanggal_request)
+                                    ->get();
+            // Ambil daftar anggota keluarga yang berasal dari pindah KK
+            $daftarWargaPindahKK = WargaModified::select($select)
+                                                ->where('no_kk', '=', $no_kk)
+                                                ->where('status_request', '=', 'Menunggu')
+                                                ->where('tanggal_request', '<', $pengajuan->getNext()->tanggal_request)
+                                                ->where('tanggal_request', '>', $pengajuan->getPrev()->tanggal_request)
+                                                ->get();
+        }
 
         // Ambil data warga dari tabel WargaModified
         if ($daftarWargaPindahKK) {
             $warga = [];
             foreach ($daftarWargaPindahKK as $wargaMod) {
-                $tmp = Warga::find($wargaMod->NIK);
+                $tmp = $wargaMod;
                 $tmp->status_warga = 'Menunggu';
                 // Tambahkan keterangan `(Baru)` pada nama anggota keluarga
                 $tmp->nama = $tmp->nama . ' (Baru)';
@@ -329,7 +353,9 @@ class PengajuanController extends Controller
 
             $pengajuan->status_request = 'Ditolak';
             $pengajuan->catatan = $request->catatan;
-            $keluarga->status = 'Tidak Aktif';
+            if ($keluarga->status != 'Aktif') {
+                $keluarga->status = 'Tidak Aktif';
+            }
 
             $keluarga->save();
             $pengajuan->save();
@@ -337,6 +363,7 @@ class PengajuanController extends Controller
             DB::commit();
             return redirect()->back()->with('flash', (object) ['type'=>'success', 'message'=>'Berhasil ditolak.']);
         } catch (Exception $e) {
+            dd($e);
             DB::rollBack();
             return redirect()->back()->with('flash', (object) ['type'=>'error', 'message'=>'Pengajuan gagal ditolak.']);
         }

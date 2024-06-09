@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('no_kk', 16)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('nama', 100);
-            $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', '-'])->nullable();
+            $table->enum('agama', ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Kristen', 'Konghuchu', '-'])->nullable();
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati', '-'])->nullable();
             $table->enum('status_keluarga', ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"])->nullable();
             $table->enum('status_warga', ['Aktif', 'Migrasi Masuk', 'Lahir', 'Meninggal', 'Migrasi Keluar', '-'])->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('penghasilan')->nullable();
             $table->enum('pendidikan', ['Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Tamat SD/Sederajat', 'SLTP/Sederajat', 'SLTA/Sederajat', 'Diploma I/II', 'Akademi/Diploma III/S. Muda', 'Diploma IV/Strata I', 'Strata II'])->nullable();
             $table->char('no_paspor', 10)->nullable();
-            $table->char('no_kitas', 10)->nullable();     
+            $table->char('no_kitas', 10)->nullable();
             $table->datetime('tanggal_request');
             $table->enum('status_request', ['Menunggu', 'Dikonfirmasi', 'Ditolak']);
             $table->text('catatan')->nullable();
