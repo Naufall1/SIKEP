@@ -103,35 +103,35 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between">
-
-                        <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
-                            <h2 class="">Demografi Masuk</h2>
-                            <div class="tw-flex tw-flex-col tw-gap-3">
-                                @include('components.form.textdetail', [
-                                    'title' => 'Jenis',
-                                    'content' => $haveDemografi->demografi->jenis ?? $demografi->jenis,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'title' => 'Tanggal',
-                                    'content' => $haveDemografi->tanggal_kejadian,
-                                ])
-                                @include('components.form.textdetail', [
-                                    'isImage' => true,
-                                    'title' => 'Berkas Pendukung',
-                                    'content' =>
-                                            !is_null(Storage::disk('public')->get('Dokumen-Pendukung/'. $haveDemografi->dokumen_pendukung)) ?
-                                            asset(Storage::disk('public')->url('Dokumen-Pendukung/' . $haveDemografi->dokumen_pendukung)) :
-                                            'data:image/' .
-                                                explode('.', $haveDemografi->dokumen_pendukung)[1] .
-                                                ';base64, ' .
-                                                base64_encode(Storage::disk('temp')->get(
-                                                        $haveDemografi->dokumen_pendukung)),
-                                ]) {{-- kalau label kasih value var $isLabel with true --}}
-
+                    @if (!is_null($haveDemografi))
+                        <div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between">
+                            <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6">
+                                <h2 class="">Demografi Masuk</h2>
+                                <div class="tw-flex tw-flex-col tw-gap-3">
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Jenis',
+                                        'content' => $haveDemografi->demografi->jenis ?? $demografi->jenis,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'title' => 'Tanggal',
+                                        'content' => $haveDemografi->tanggal_kejadian,
+                                    ])
+                                    @include('components.form.textdetail', [
+                                        'isImage' => true,
+                                        'title' => 'Berkas Pendukung',
+                                        'content' =>
+                                                !is_null(Storage::disk('public')->get('Dokumen-Pendukung/'. $haveDemografi->dokumen_pendukung)) ?
+                                                asset(Storage::disk('public')->url('Dokumen-Pendukung/' . $haveDemografi->dokumen_pendukung)) :
+                                                'data:image/' .
+                                                    explode('.', $haveDemografi->dokumen_pendukung)[1] .
+                                                    ';base64, ' .
+                                                    base64_encode(Storage::disk('temp')->get(
+                                                            $haveDemografi->dokumen_pendukung)),
+                                    ]) {{-- kalau label kasih value var $isLabel with true --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
 

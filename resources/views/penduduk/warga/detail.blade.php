@@ -238,7 +238,7 @@
 
                 <div
                     class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
-                    <a href="{{ route('penduduk.warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ url()->previous() }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
