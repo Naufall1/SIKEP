@@ -19,12 +19,10 @@
                         <span>Perbarui</span>
                     </a>
                 @else
-                    <a href="{{ route('publikasi.draf.ubah', ['id' => $announcement->kode]) }}"
-                        class="tw-btn tw-btn-md-ilead tw-rounded-full" type="button"
-                        style="pointer-events: none; background-color: grey; border-color: grey; color: white; cursor: not-allowed;">
+                    <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full" type="button">
                         <x-icons.actionable.edit class="" stroke="2" size="20" color="n100"></x-icons.actionable.edit>
                         <span>Perbarui</span>
-                    </a>
+                    </button>
                 @endif
             </div>
 
