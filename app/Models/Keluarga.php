@@ -19,6 +19,8 @@ class Keluarga extends Model
 
     protected $table = 'keluarga';
     protected $primaryKey = 'no_kk';
+    public $incrementing = false;
+
     // public $timestamps = false;
 
     protected $fillable = [
