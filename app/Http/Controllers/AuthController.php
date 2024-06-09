@@ -23,6 +23,9 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
+        ], [
+            'username.required' => 'Masukkan Nama Pengguna',
+            'password.required' => 'Masukkan Kata Sandi',
         ]);
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
