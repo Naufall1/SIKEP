@@ -38,7 +38,7 @@
                             @include('components.form.textdetail', [
                                 'isImage' => false,
                                 'title' => 'Keterangan',
-                                'content' => $user->keterangan,
+                                'content' => $user->keterangan === 'ketua' ? 'Ketua RW' : (is_numeric($user->keterangan) ? ($user->keterangan < 9 ? 'Ketua RT 00'.$user->keterangan : 'Ketua RT 0'.$user->keterangan) : $user->keterangan ),
                             ])
 
                         </div>
