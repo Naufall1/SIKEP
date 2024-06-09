@@ -29,7 +29,7 @@
 
                             <x-input.label for="keterangan" label="Keterangan">
                                 <x-input.textarea name="keterangan" placeholder=""
-                                    value="{{ $user->keterangan }}" disabled>
+                                    value="{{ $user->keterangan === 'ketua' ? 'Ketua RW' : (is_numeric($user->keterangan) ? ($user->keterangan < 9 ? 'Ketua RT 00'.$user->keterangan : 'Ketua RT 0'.$user->keterangan) : $user->keterangan ) }}" disabled>
                                 </x-input.textarea>
                             </x-input.label>
 

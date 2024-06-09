@@ -35,9 +35,9 @@
                         <h2>Pengajuan Menunggu</h2>
                         <a href="{{ route('pengajuan') }}" class="tw-text-b500 tw-body">Lihat Semua</a>
                     </div>
-                    <div class="tw-w-full tw-overflow-x-auto">
+                    <div class="tw-w-full tw-h-full tw-overflow-x-auto">
 
-                        <table class="tw-w-fit" id="tablePengajuan">
+                        <table class="tw-w-fit md:tw-w-full tw-h-full" id="tablePengajuan">
                             <thead>
                                 <tr class="tw-h-11 tw-bg-n300 tw-rounded-lg tw-flex">
                                     <th class="tw-min-w-[280px] tw-grow tw-shrink">Pengaju</th>
@@ -50,7 +50,7 @@
                                 {{-- Maks 5 --}}
                                 @foreach ($pengajuanTable as $pengajuan)
                                     <tr
-                                        class="tw-h-16 hover:tw-bg-n300 tw-border-b-[1px] last:tw-rounded-r-md tw-border-n400 tw-flex">
+                                        class="tw-h-16 tw-flex">
                                         <td class="tw-min-w-[280px] tw-grow tw-shrink">{{ $pengajuan->user->nama }}</td>
                                         <td class="tw-min-w-[220px] tw-max-w-[220px]">{{ $pengajuan->tipe }}</td>
                                         <td class="tw-min-w-[220px] tw-max-w-[220px] tw-table-right-align">
@@ -76,7 +76,7 @@
                                     </tr>
                                 @endforeach
 
-                                @if (is_null($pengajuanTable))
+                                @if (($pengajuanTable->count() == 0))
                                 <tr class="tw-h-full tw-border-0">
                                     <td
                                         class="tw-col-span-4 tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full tw-py-6 tw-gap-3">
