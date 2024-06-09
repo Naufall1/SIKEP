@@ -1,19 +1,50 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-    <div id="modalReject"
-        class="tw-hidden modal-menu tw-z-20 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+    <div id="modalConfirm"
+        class="tw-hidden modal-menu tw-px-5 md:tw-px-0 tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
         <div
-            class="tw-w-96 md:tw-w-96 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
+            class="tw-w-mobile-full-w md:tw-w-2/4 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
+            {{-- <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
+            </div> --}}
+            <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" method="POST"
+                    action="{{ route('pengajuan.confirm.perubahan.warga') }}">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+                    <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+                    <div class="tw-flex tw-w-full tw-flex-col tw-gap-2">
+
+                        <h2>Yakin Konfirmasi Pengajuan Ini?</h2>
+                        <p class="tw-body tw-text-n800">Pastikan semua data yang diajukan telah Anda periksa dengan baik
+                        </p>
+                    </div>
+
+                    <div class="tw-flex tw-gap-2">
+                        <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModalConfirm">Batal</button>
+                        <button class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalReject"
+        class="tw-hidden modal-menu tw-px-5 md:tw-px-0 tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        <div
+            class="tw-w-mobile-full-w md:tw-w-2/4 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
             <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
                 <h2>Tolak Pengajuan</h2>
             </div>
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{route('pengajuan.reject.perubahan.warga')}}" method="POST">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end"
+                    action="{{ route('pengajuan.reject.perubahan.warga') }}" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
-                        <input type="hidden" name="id" value="{{$pengajuan->id}}">
+                        <input type="hidden" name="id" value="{{ $pengajuan->id }}">
 
                         <x-input.label for="catatan" label="Catatan">
                             <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
@@ -23,7 +54,7 @@
 
                     <div class="tw-flex tw-gap-2">
                         <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
-                            id="closeModal">Batal</button>
+                            id="closeModalReject">Batal</button>
                         <button class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
@@ -32,9 +63,10 @@
         </div>
     </div>
 
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10  tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         @if (session()->has('flash'))
-            <x-flash-message.information message="{{session()->get('flash')->message}}"></x-flash-message.information>
+            <x-flash-message.information message="{{ session()->get('flash')->message }}"></x-flash-message.information>
         @else
         @endif {{-- DONT DELETE THIS LINE --}}
 
@@ -170,7 +202,11 @@
 
                     </div>
 
-                    @if (($modifiedWarga->status_keluarga != $currentWarga->status_keluarga) || ($modifiedWarga->penghasilan != $currentWarga->penghasilan) || ($modifiedWarga->no_paspor != $currentWarga->no_paspor) || ($modifiedWarga->no_kitas != $currentWarga->no_kitas))
+                    @if (
+                        $modifiedWarga->status_keluarga != $currentWarga->status_keluarga ||
+                            $modifiedWarga->penghasilan != $currentWarga->penghasilan ||
+                            $modifiedWarga->no_paspor != $currentWarga->no_paspor ||
+                            $modifiedWarga->no_kitas != $currentWarga->no_kitas)
                         <div class="tw-flex tw-flex-col md:tw-flex-row-reverse tw-justify-between">
                             <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-2 md:tw-w-[358px]">
                                 <h2 class="">Detail Tambahan Baru</h2>
@@ -184,8 +220,8 @@
                                     @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
                                         @include('components.form.textdetail', [
                                             'title' => 'Penghasilan',
-                                            'content' => 'Rp ' . number_format( $modifiedWarga->penghasilan, 0, ",", "."),
-
+                                            'content' =>
+                                                'Rp ' . number_format($modifiedWarga->penghasilan, 0, ',', '.'),
                                         ])
                                     @endif
                                     @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
@@ -207,16 +243,16 @@
                                 <h2 class="">Detail Tambahan Lama</h2>
                                 <div class="tw-flex tw-flex-col tw-gap-3">
                                     @if ($modifiedWarga->status_keluarga != $currentWarga->status_keluarga)
-                                    @include('components.form.textdetail', [
-                                        'title' => 'Status Keluarga',
-                                        'content' => $currentWarga->status_keluarga,
+                                        @include('components.form.textdetail', [
+                                            'title' => 'Status Keluarga',
+                                            'content' => $currentWarga->status_keluarga,
                                         ])
                                     @endif
                                     @if ($modifiedWarga->penghasilan != $currentWarga->penghasilan)
                                         @include('components.form.textdetail', [
                                             'title' => 'Penghasilan',
-                                            'content' => 'Rp ' . number_format( $currentWarga->penghasilan, 0, ",", "."),
-
+                                            'content' =>
+                                                'Rp ' . number_format($currentWarga->penghasilan, 0, ',', '.'),
                                         ])
                                     @endif
                                     @if ($modifiedWarga->no_paspor != $currentWarga->no_paspor)
@@ -351,7 +387,7 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="#" onclick="history.back()" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="{{route('pengajuan')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -364,14 +400,16 @@
                             <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                                 id="buttonReject">Tolak</button>
                             {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
-                            <form class="d-inline-block" method="POST"
+                            {{-- <form class="d-inline-block" method="POST"
                                 action="{{ route('pengajuan.confirm.perubahan.warga') }}">
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
                                 <input type="hidden" name="id" value="{{ $pengajuan->id }}">
                                 <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                                     onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
-                            </form>
+                                </form> --}}
+                            <button id="buttonConfirm"
+                                class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round">Konfirmasi</button>
                         </div>
                     @endif
                 </div>
@@ -388,8 +426,20 @@
                     overflow: 'hidden',
                 });
             });
-            $("#modalReject #closeModal").click(function() {
+            $("#closeModalReject").click(function() {
                 $("#modalReject").addClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'auto',
+                });
+            });
+            $("#buttonConfirm").click(function() {
+                $("#modalConfirm").removeClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'hidden',
+                });
+            });
+            $("#closeModalConfirm").click(function() {
+                $("#modalConfirm").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',
                 });

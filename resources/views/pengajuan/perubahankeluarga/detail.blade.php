@@ -1,32 +1,61 @@
 @extends('layout.layout', ['isForm' => false])
 
 @section('content')
-    <div id="modalReject"
-        class="{{ !empty($errors->messages()) ? '' : 'tw-hidden' }} modal-menu tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+    <div id="modalConfirm"
+        class="tw-hidden modal-menu tw-px-5 md:tw-px-0 tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
         <div
-            class="tw-w-96 md:tw-w-96 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
-            <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
-                <h2>Tolak Pengajuan</h2>
-            </div>
+            class="tw-w-mobile-full-w md:tw-w-2/4 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
+            {{-- <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
+            </div> --}}
             <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
-                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" action="{{route('pengajuan.reject.perubahan.keluarga')}}" method="POST">
-                    @method('PUT')
-                    @csrf
-                    <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
-                        <input type="hidden" name="id" value="{{$pengajuan->id}}">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end" method="POST" action="{{ route('pengajuan.confirm.perubahan.keluarga') }}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+                    <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+                    <div class="tw-flex tw-w-full tw-flex-col tw-gap-2">
 
-                        <x-input.label for="catatan" label="Catatan">
-                            <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
-                            @error('catatan')
-                                <x-input.error-message>{{$message}}</x-input.error-message>
-                            @enderror
-                        </x-input.label>
-                        
+                        <h2>Yakin Konfirmasi Pengajuan Ini?</h2>
+                        <p class="tw-body tw-text-n800">Pastikan semua data yang diajukan telah Anda periksa dengan baik
+                        </p>
                     </div>
 
                     <div class="tw-flex tw-gap-2">
                         <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
-                            id="closeModal">Batal</button>
+                            id="closeModalConfirm">Batal</button>
+                        <button class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="modalReject"
+        class="{{ !empty($errors->messages()) ? '' : 'tw-hidden' }} tw-px-5 md:tw-px-0 modal-menu tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        <div
+            class="tw-w-mobile-full-w md:tw-w-2/4 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
+            <div class="tw-flex tw-items-center tw-px-4 tw-h-14 tw-border-b-[1px]">
+                <h2>Tolak Pengajuan</h2>
+            </div>
+            <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
+                <form class="tw-flex tw-flex-col tw-gap-7 tw-items-end"
+                    action="{{ route('pengajuan.reject.perubahan.keluarga') }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
+                        <input type="hidden" name="id" value="{{ $pengajuan->id }}">
+
+                        <x-input.label for="catatan" label="Catatan">
+                            <x-input.textarea class="tw-h-32" name="catatan" placeholder="Catatan"></x-input.textarea>
+                            @error('catatan')
+                                <x-input.error-message>{{ $message }}</x-input.error-message>
+                            @enderror
+                        </x-input.label>
+
+                    </div>
+
+                    <div class="tw-flex tw-gap-2">
+                        <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModalReject">Batal</button>
                         <button class="tw-btn tw-btn-danger tw-btn-lg tw-btn-round" type="submit">Tolak</a>
                     </div>
 
@@ -35,9 +64,10 @@
         </div>
     </div>
 
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[754px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         @if (session()->has('flash'))
-            <x-flash-message.information message="{{session()->get('flash')->message}}"></x-flash-message.information>
+            <x-flash-message.information message="{{ session()->get('flash')->message }}"></x-flash-message.information>
         @else
         @endif {{-- DONT DELETE THIS LINE --}}
         <p class="tw-breadcrumb tw-text-n500">Daftar Data Baru /
@@ -93,8 +123,8 @@
                                 @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
                                     @include('components.form.textdetail', [
                                         'title' => 'Tagihan Listrik',
-                                        'content' => 'Rp ' . number_format( $modifiedKeluarga->tagihan_listrik, 0, ",", "."),
-
+                                        'content' =>
+                                            'Rp ' . number_format($modifiedKeluarga->tagihan_listrik, 0, ',', '.'),
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
@@ -107,13 +137,14 @@
                                     @include('components.form.textdetail', [
                                         'title' => 'Kartu Keluarga',
                                         'isImage' => true,
-                                        'content' => $pengajuan->status_request == 'Dikonfirmasi'
-                                            ? asset(Storage::disk('public')->url('KK/' . $modifiedKeluarga->image_kk)) :
-                                            'data:image/' .
-                                                explode('.', $modifiedKeluarga->image_kk)[1] .
-                                                ';base64, ' .
-                                                base64_encode(Storage::disk('temp')->get(
-                                                        $modifiedKeluarga->image_kk)),
+                                        'content' =>
+                                            $pengajuan->status_request == 'Dikonfirmasi'
+                                                ? asset(Storage::disk('public')->url(
+                                                        'KK/' . $modifiedKeluarga->image_kk))
+                                                : 'data:image/' .
+                                                    explode('.', $modifiedKeluarga->image_kk)[1] .
+                                                    ';base64, ' .
+                                                    base64_encode(Storage::disk('temp')->get($modifiedKeluarga->image_kk)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 @endif
                             </div>
@@ -134,8 +165,8 @@
                                 @if ($modifiedKeluarga->tagihan_listrik != $currentKeluarga->tagihan_listrik)
                                     @include('components.form.textdetail', [
                                         'title' => 'Tagihan Listrik',
-                                        'content' => 'Rp ' . number_format( $currentKeluarga->tagihan_listrik, 0, ",", "."),
-
+                                        'content' =>
+                                            'Rp ' . number_format($currentKeluarga->tagihan_listrik, 0, ',', '.'),
                                     ])
                                 @endif
                                 @if ($modifiedKeluarga->luas_bangunan != $currentKeluarga->luas_bangunan)
@@ -150,8 +181,7 @@
                                         'isImage' => true,
                                         'content' => !isset($modifiedKeluarga->image_kk)
                                             ? ''
-                                            : asset(Storage::disk('public')->url(
-                                                    'KK/' . $currentKeluarga->image_kk)),
+                                            : asset(Storage::disk('public')->url('KK/' . $currentKeluarga->image_kk)),
                                     ]) {{-- kalau label kasih value var $isLabel with true --}}
                                 @endif
                             </div>
@@ -163,7 +193,7 @@
 
 
                 <div class="tw-flex tw-justify-between">
-                    <a href="{{route('pengajuan')}}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
+                    <a href="{{ route('pengajuan') }}" class="tw-btn tw-btn-outline tw-btn-lg-ilead tw-btn-round"
                         type="button">
                         <x-icons.actionable.arrow-left class="tw-btn-i-lead-lg" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -176,14 +206,16 @@
                             <button href="" class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                                 id="buttonReject">Tolak</button>
                             {{-- <a href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Konfirmasi</a> --}}
-                            <form class="d-inline-block" method="POST"
+                            {{-- <form class="d-inline-block" method="POST"
                                 action="{{ route('pengajuan.confirm.perubahan.keluarga') }}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
                                 <input type="hidden" name="id" value="{{ $pengajuan->id }}">
                                 <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                                     onclick="return confirm('Apakah Anda yakin melakukan konfirmasi data ini?');">Konfirmasi</button>
-                            </form>
+                            </form> --}}
+                            <button id="buttonConfirm"
+                                class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round">Konfirmasi</button>
                         </div>
                     @endif
                 </div>
@@ -200,8 +232,20 @@
                     overflow: 'hidden',
                 });
             });
-            $("#modalReject #closeModal").click(function() {
+            $("#closeModalReject").click(function() {
                 $("#modalReject").addClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'auto',
+                });
+            });
+            $("#buttonConfirm").click(function() {
+                $("#modalConfirm").removeClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'hidden',
+                });
+            });
+            $("#closeModalConfirm").click(function() {
+                $("#modalConfirm").addClass("tw-hidden");
                 $('html, body').css({
                     overflow: 'auto',
                 });
