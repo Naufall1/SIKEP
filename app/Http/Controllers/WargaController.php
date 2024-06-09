@@ -159,7 +159,7 @@ class WargaController extends Controller
         }
 
         $rules = [
-            'NIK' => 'required|size:16|unique:warga,NIK',
+            'NIK' => 'required|size:16' . (is_null(Warga::where('NIK', $request->NIK)->where('status_warga', 'Tidak Aktif')->first()) ? '|unique:warga,NIK' :''),
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
@@ -262,8 +262,12 @@ class WargaController extends Controller
         }
 
         // Mapping data dari request menuju objek
-        $warga = new Warga();
-        $warga->NIK = $request->NIK;
+        if (!is_null(Warga::where('NIK', $request->NIK)->where('status_warga', 'Tidak Aktif')->first())) {
+            $warga = Warga::find($request->NIK);
+        } else {
+            $warga = new Warga();
+            $warga->NIK = $request->NIK;
+        }
         $warga->no_kk = $request->no_kk;
         $warga->nama = $request->nama;
         $warga->tempat_lahir = $request->tempat_lahir;
@@ -632,6 +636,15 @@ class WargaController extends Controller
         $pengajuan = new Pengajuan();
         $warga = Warga::find($request->NIK);
         $warga->status_keluarga = $request->status_keluarga;
+        if ($warga->status_keluarga != 'Kepala Keluarga' && !$pengajuan->hasKepalaKeluarga($warga)) {
+            return redirect()->back()
+                ->with('data_lama', true)
+                ->withErrors(['status_keluarga' => 'Warga pertama WAJIB Kepala Keluarga'])
+                ->withInput();
+        }
+        if ($warga->status_keluarga == 'Kepala Keluarga') {
+            $pengajuan->keluarga->kepala_keluarga = $warga->nama;
+        }
         $pengajuan->pindahKK($warga);
         return redirect()->route('keluarga-tambah');
     }
