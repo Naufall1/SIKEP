@@ -202,7 +202,10 @@ class PengajuanController extends Controller
         }
         if ($daftarWargaPindahKK) {
             // Gabungkan data anggota keluarga asli dengan anggota keluarga pindah KK
-            $daftarWarga = $daftarWarga->merge($warga);
+            // $daftarWarga = $daftarWarga->merge($warga);
+            foreach ($warga as $key => $value) {
+                $daftarWarga->push($value);
+            }
         }
 
         return DataTables::of($daftarWarga)

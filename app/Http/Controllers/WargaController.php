@@ -636,6 +636,15 @@ class WargaController extends Controller
         $pengajuan = new Pengajuan();
         $warga = Warga::find($request->NIK);
         $warga->status_keluarga = $request->status_keluarga;
+        if ($warga->status_keluarga != 'Kepala Keluarga' && !$pengajuan->hasKepalaKeluarga($warga)) {
+            return redirect()->back()
+                ->with('data_lama', true)
+                ->withErrors(['status_keluarga' => 'Warga pertama WAJIB Kepala Keluarga'])
+                ->withInput();
+        }
+        if ($warga->status_keluarga == 'Kepala Keluarga') {
+            $pengajuan->keluarga->kepala_keluarga = $warga->nama;
+        }
         $pengajuan->pindahKK($warga);
         return redirect()->route('keluarga-tambah');
     }

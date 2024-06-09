@@ -399,11 +399,17 @@ class KeluargaController extends Controller
             ])->withInput();
         }
 
-        $request->validate([
+        $validator_kepalaKeluarga = Validator::make($request->only('kepala_keluarga'), [
             'kepala_keluarga' => 'required|max:100'
         ], [
             'kepala_keluarga.required' => 'Tambahkan minimal 1 warga sebagai kepala keluarga.'
         ]);
+        if ($validator_kepalaKeluarga->fails()) {
+            return redirect()->back()->with('flash', (object) [
+                'type' => 'error',
+                'message' => 'Gagal! Tambahkan minimal 1 warga sebagai kepala keluarga.'
+            ])->withErrors($validator_kepalaKeluarga->errors())->withInput();
+        }
 
         if (Keluarga::find($request->no_kk) && is_null(Keluarga::where('no_kk', $request->no_kk)->where('status', 'Tidak Aktif')->first())) {
             $keluarga = Keluarga::find($request->no_kk);
