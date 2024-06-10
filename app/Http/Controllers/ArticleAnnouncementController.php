@@ -244,6 +244,8 @@ class ArticleAnnouncementController extends Controller
         $announcement->judul = $request->judul;
         $announcement->caption = $request->caption;
         $announcement->isi = $request->isi;
+        $announcement->status = $request->status_publikasi;
+
 
         if ($announcement->isDirty()) {
             $announcement->tanggal_edit = now();
