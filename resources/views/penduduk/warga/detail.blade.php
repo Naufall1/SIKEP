@@ -4,7 +4,7 @@
     <div
         class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         @if ($pengajuanInProgres)
-            <x-flash-message.warning message='Tidak dapat memperbarui data, Data belum di konfirmasi'></x-flash-message.warning>
+            <x-flash-message.warning message='Data dalam proses pengajuan'></x-flash-message.warning>
         @endif
         <p class="tw-breadcrumb tw-text-n500">Daftar Warga /
             <span class="tw-font-bold tw-text-b500">Detail Warga</span>
@@ -17,7 +17,7 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    @if (!$pengajuanInProgres)
+                    {{-- @if (!$pengajuanInProgres) --}}
                         <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}"
                             class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
@@ -26,7 +26,7 @@
                                 Perbarui
                             </span>
                         </a>
-                    @else
+                    {{-- @else
                         <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
                                 color="n100"></x-icons.actionable.edit>
@@ -34,7 +34,7 @@
                                 Perbarui
                             </span>
                         </button>
-                    @endif
+                    @endif --}}
                 @endif
             </div>
 

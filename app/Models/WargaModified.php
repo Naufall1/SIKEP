@@ -26,18 +26,26 @@ class WargaModified extends Model
         'jenis_pekerjaan',
         'penghasilan',
         'pendidikan',
+        'no_kitas',
+        'no_paspor',
         'tanggal_request',
         'status_request',
     ];
 
-    public static function updateWarga(Warga $warga){
+    public static function updateWarga(Warga $warga,$date = null){
+        $modif = WargaModified::where('NIK', $warga->NIK)->where('status_request', 'Menunggu')->first();
+        if ($modif) {
+            $modif->fill($warga->toArray());
+            $modif->tanggal_request = $date;
+            return $modif->save();
+        }
         $modif = new WargaModified();
         $modif->user_id = Auth::user()->user_id;
         $modif->NIK = $warga->NIK;
 
         $modif->fill($warga->toArray());
 
-        $modif->tanggal_request = now();
+        $modif->tanggal_request = $date ?? now();
         $modif->status_request = 'Menunggu';
 
         $modif->save();

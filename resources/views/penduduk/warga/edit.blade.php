@@ -49,7 +49,7 @@
                             </x-input.label>
 
                             <x-input.label class="tw-relative" for="pendidikan-list" label="Pendidikan">
-                                <x-input.select2 name="pendidikan" default="{{ old('pendidikan', $warga->pendidikan) }}"
+                                <x-input.select2 name="pendidikan" default="{{ old('pendidikan', $warga_edited->pendidikan ?? $warga->pendidikan) }}"
                                     placeholder="Pilih Pendidikan"></x-input.select2>
                                 @error('pendidikan')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -57,7 +57,7 @@
                             </x-input.label>
 
                             <x-input.label class="tw-relative" for="agama-list" label="Agama">
-                                <x-input.select2 name="agama" default="{{ old('agama', $warga->agama) }}"
+                                <x-input.select2 name="agama" default="{{ old('agama', $warga_edited->agama ?? $warga->agama) }}"
                                     placeholder="Pilih Agama"></x-input.select2>
                                 @error('agama')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -66,7 +66,7 @@
 
                             <x-input.label class="tw-relative" for="status_perkawinan-list" label="Status Perkawinan">
                                 <x-input.select2 name="status_perkawinan"
-                                    default="{{ old('status_perkawinan', $warga->status_perkawinan) }}"
+                                    default="{{ old('status_perkawinan', $warga_edited->status_perkawinan ?? $warga->status_perkawinan) }}"
                                     placeholder="Pilih Status Perkawinan"></x-input.select2>
                                 @error('status_perkawinan')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -75,7 +75,7 @@
 
                             <x-input.label class="tw-relative" for="jenis_pekerjaan-list" label="Jenis Pekerjaan">
                                 <x-input.select2 searchable name="jenis_pekerjaan"
-                                    default="{{ old('jenis_pekerjaan', $warga->jenis_pekerjaan) }}"
+                                    default="{{ old('jenis_pekerjaan',$warga_edited->jenis_pekerjaan ?? $warga->jenis_pekerjaan) }}"
                                     placeholder="Pilih Jenis Pekerjaan"></x-input.select2>
                                 @error('jenis_pekerjaan')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -95,7 +95,7 @@
                                 @else
                                     <x-input.select2 name="jenis_demografi_keluar"
                                         {{-- default="{{ old('jenis_demografi_keluar', $demografi ? $demografi->demografi->jenis : 'Aktif') }}" --}}
-                                        default="{{ old('jenis_demografi_keluar', ($demografi ? ($demografi->demografi->jenis != 'Lahir' ? $demografi->demografi->jenis : ($demografi->demografi->jenis != 'Migrasi Masuk' ? $demografi->demografi->jenis : 'Aktif' )) : 'Aktif')) }}"
+                                        default="{{ old('jenis_demografi_keluar', ($demografi || $haveDemografi_edited ? $haveDemografi_edited->demografi->jenis ?? ($demografi->demografi->jenis != 'Lahir' ? $demografi->demografi->jenis : ($demografi->demografi->jenis != 'Migrasi Masuk' ? $demografi->demografi->jenis : 'Aktif' )) : 'Aktif')) }}"
                                         placeholder="Pilih Status Warga"></x-input.select2>
                                 @endif
                             </x-input.label>
@@ -125,9 +125,9 @@
                                 @endif
                             </x-input.label> --}}
 
-                            @if ($errors->has('berkas_demografi_keluar') || $errors->has('tanggal_kejadian_demografi_keluar'))
+                            @if ($errors->has('berkas_demografi_keluar') || $errors->has('tanggal_kejadian_demografi_keluar') || $haveDemografi_edited)
                                 <x-input.label for="tanggal_kejadian_demografi_keluar" label="Tanggal Kejadian">
-                                    <x-input.input value="{{ old('tanggal_kejadian_demografi_keluar') }}" placeholder=""
+                                    <x-input.input value="{{ old('tanggal_kejadian_demografi_keluar', $haveDemografi_edited->tanggal_kejadian ?? '') }}" placeholder=""
                                         type="date" id="tanggal_kejadian_demografi_keluar"
                                         name="tanggal_kejadian_demografi_keluar"></x-input.input>
                                     @error('tanggal_kejadian_demografi_keluar')
@@ -168,7 +168,7 @@
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             <x-input.label class="tw-relative" for="status_keluarga-list" label="Status Keluarga">
-                                <x-input.select2 name="status_keluarga" default="{{ $warga->status_keluarga }}"
+                                <x-input.select2 name="status_keluarga" default="{{ old('status_keluarga', $warga_edited->status_keluarga ?? $warga->status_keluarga) }}"
                                     placeholder="Pilih Status Keluarga"></x-input.select2>
                             </x-input.label>
 
@@ -183,19 +183,19 @@
                             </x-input.label>
 
                             <x-input.label for="penghasilan" label="Penghasilan">
-                                <x-input.leadingicon type="number" value="{{ $warga->penghasilan }}" min="0"
+                                <x-input.leadingicon type="number" value="{{ old('penghasilan', $warga_edited->penghasilan ?? $warga->penghasilan) }}" min="0"
                                     id="penghasilan" name="penghasilan" placeholder="Misal: 1000000" icon="rupiah"
                                     alt="Rp">
                                 </x-input.leadingicon>
                             </x-input.label>
 
                             <x-input.label for="no_paspor" label="Nomor Paspor">
-                                <x-input.input value="{{ $warga->no_paspor }}" type="text" id="no_paspor"
+                                <x-input.input value="{{ old('no_paspor', $warga_edited->no_paspor ?? $warga->no_paspor) }}" type="text" id="no_paspor"
                                     placeholder="Masukkan Nomor Paspor" name="no_paspor"></x-input.input>
                             </x-input.label>
 
                             <x-input.label for="no_kitas" label="Nomor Kitas">
-                                <x-input.input value="{{ $warga->no_kitas }}" type="text" id="no_kitas"
+                                <x-input.input value="{{ old('no_kitas',$warga_edited->no_kitas ?? $warga->no_kitas) }}" type="text" id="no_kitas"
                                     placeholder="Masukkan Nomor Kitas" name="no_kitas"></x-input.input>
                             </x-input.label>
 
@@ -228,6 +228,24 @@
                                         <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
                                 </x-input.label>
+                                <div id="berkas">
+                                        @php
+                                            $filename = $demografi->dokumen_pendukung;
+                                            $img = (object) [
+                                                'ext' => explode('.', $filename)[1],
+                                                'path' => $filename
+                                            ];
+                                        @endphp
+                                        @include('components.form.textdetail', [
+                                            'title' => '',
+                                            'isImage' => true,
+                                            'content' =>
+                                                'data:image/' .
+                                                $img->ext .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get($img->path)),
+                                        ])
+                                </div>
 
                             </div>
                         </div>

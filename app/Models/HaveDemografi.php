@@ -35,7 +35,7 @@ class HaveDemografi extends Model
     {
         $query->where('NIK', '=', $this->NIK)
             ->where('demografi_id', '=', $this->demografi_id)
-            ->where('tanggal_request', '=', $this->tanggal_request);
+            ->where('tanggal_request', '=', $this->getOriginal()['tanggal_request']);
 
         return $query;
     }
