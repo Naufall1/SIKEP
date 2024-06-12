@@ -159,7 +159,7 @@ class WargaController extends Controller
         }
 
         $rules = [
-            'NIK' => 'required|size:16' . (is_null(Warga::where('NIK', $request->NIK)->where('status_warga', 'Tidak Aktif')->first()) ? '|unique:warga,NIK' :''),
+            'NIK' => 'required|size:16' . (is_null(Warga::where('NIK', $request->NIK)->where('status_warga', 'Tidak Aktif')->first()) ? '|unique:warga,NIK' : ''),
             'no_kk' => 'required',
             'nama' => 'required|string|max:100',
             'tempat_lahir' => 'required|string|max:50',
@@ -339,8 +339,8 @@ class WargaController extends Controller
         // Get Data warga
         $warga = Warga::find($nik);
         $warga_edited = WargaModified::where('NIK', $warga->NIK)
-                            ->where('status_request', 'Menunggu')
-                            ->first();
+            ->where('status_request', 'Menunggu')
+            ->first();
         $haveDemografi_edited = HaveDemografi::with('demografi')->where('NIK', $warga->NIK)->where('status_request', 'Menunggu')->first();
 
         // Get data demografi warga terakhir yang terkonfirmasi
@@ -659,9 +659,9 @@ class WargaController extends Controller
                     ]);
                 } else {
                     $pengajuan = PengajuanData::where('no_kk', $warga->no_kk)
-                                    ->where('status_request', 'Menunggu')
-                                    ->where('tanggal_request', $old_tanggal_request)
-                                    ->first();
+                        ->where('status_request', 'Menunggu')
+                        ->where('tanggal_request', $old_tanggal_request)
+                        ->first();
                     $pengajuan->update([
                         'tanggal_request' => $date
                     ]);
@@ -736,9 +736,18 @@ class WargaController extends Controller
             ->orderBy('tanggal_request', 'DESC')
             ->first();
 
+        $modifiedWarga = '';
+
+        if (isset($pengajuanInProgres->status_request)) {
+            $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuanInProgres->no_kk)
+                // ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                ->where('status_request', '=', 'Menunggu')
+                ->first();
+        }
+
         if (!$warga) {
             return redirect()->back();
         }
-        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres', 'demografiMasuk', 'demografiKeluar']));
+        return view('penduduk.warga.detail', compact(['warga', 'pengajuanInProgres', 'demografiMasuk', 'demografiKeluar', 'modifiedWarga']));
     }
 }
