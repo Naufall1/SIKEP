@@ -310,6 +310,15 @@
         }
     }
 
+    /* Navbar */
+
+    ul.guestMenu>li{
+        @apply tw-text-n600 tw-font-medium tw-text-sm tw-font-sans tw-animate-fade
+    }
+
+    .guestMenu > li.active{
+        @apply tw-text-n1000 tw-font-semibold tw-text-sm tw-font-sans tw-animate-fade
+    }
 
 }
 

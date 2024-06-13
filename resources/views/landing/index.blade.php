@@ -5,7 +5,7 @@
 @section('content')
     <div class="tw-pt-[80px] tw-flex tw-flex-col">
         {{-- beranda --}}
-        <div
+        <section id="home"
             class="tw-px-5 md:tw-px-0 tw-flex tw-flex-col tw-h-mobile-hero sm:tw-h-svh tw-pt-16 tw-items-center tw-gap-24 tw-relative tw-bg-cover tw-bg-top sm:tw-bg-center tw-bg-[url('/public/img/hero-landing.png')] sm:tw-bg-[url('/public/img/hero-landing-md.png')]">
             <div
                 class=" tw-flex tw-flex-col tw-items-center tw-w-full-mobile-w md:tw-w-full-mobile-w lg:tw-w-[868px] tw-gap-5">
@@ -17,10 +17,10 @@
             </div>
             {{-- <img class="-tw-z-20 tw-absolute tw-bottom-0 md:tw-h-1/2 lg:tw-h-3/4 tw-object-cover" src="{{ asset('assets/landing/sikep-landing2.png') }}" alt=""> --}}
             {{-- <div class="-tw-z-10 tw-absolute tw-bottom-0 tw-w-full tw-h-[433px] tw-bg-gradient-to-t tw-from-n100 tw-to-transparent"></div> --}}
-        </div>
+        </section>
         {{-- / beranda --}}
         {{-- visi misi --}}
-        <div class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
+        <section id="about" class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
             <x-landing.label-group>
                 <x-landing.label>Tentang RW 02</x-landing.label>
                 <x-landing.title-group>
@@ -76,10 +76,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         {{-- / visi misi --}}
         {{-- Profil Singkat --}}
-        <div class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
+        <section id="profile" class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
             <x-landing.label-group>
                 <x-landing.label>Video Profil</x-landing.label>
                 <x-landing.title-group>
@@ -97,12 +97,12 @@
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
-        </div>
+        </section>
 
         {{-- / Profil Singkat --}}
 
         {{-- Informasi Grafik --}}
-        <div class="tw-bg-n200 tw-relative tw-bg-gradient-to-b tw-from-n100 tw-via-transparent tw-to-n100">
+        <section id="chart" class="tw-bg-n300 tw-relative tw-bg-gradient-to-b tw-from-n100 tw-via-transparent tw-to-n100">
             <div class="tw-z-20 tw-px-5 md:tw-px-[100px] tw-w-full tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10 ">
                 <x-landing.label-group>
                     <x-landing.label>Grafik</x-landing.label>
@@ -130,57 +130,57 @@
             </div>
             {{-- <div class="tw-absolute tw-top-0 tw-w-full tw-h-[300px] tw-bg-gradient-to-b tw-from-n1000 tw-to-transparent"></div> --}}
             {{-- <div class="tw-absolute tw-bottom-0 tw-w-full tw-h-[300px] tw-bg-gradient-to-t tw-from-n1000 tw-to-transparent"></div> --}}
-        </div>
+        </section>
         {{-- / Informasi Grafik --}}
-    </div>
-    <div class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col">
-        {{-- Publikasi Artikel dan Pengumuman --}}
-        <div class="tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
-            <x-landing.label-group>
-                <x-landing.label>Informasi</x-landing.label>
-                <x-landing.title-group>
-                    <x-landing.title>Publikasi Pengumuman</x-landing.title>
-                    <x-landing.subtitle>Informasi terkini yang mencakup kegiatan dan perkembangan terbaru di lingkungan RW
-                        02</x-landing.subtitle>
-                </x-landing.title-group>
-            </x-landing.label-group>
-            <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-w-full">
-                @if (!$announcements)
-                    <div class="tw-col-span-6 tw-flex tw-flex-col tw-items-center tw-justify-center tw-pt-7 tw-pb-16">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none"
-                            viewBox="0 0 150 151">
-                            <g clip-path="url(#a)">
-                                <path fill="#E3E3E3"
-                                    d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z" />
-                                <path fill="#fff"
-                                    d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z" />
-                                <path fill="#0284FF"
-                                    d="M75 102.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24Z" />
-                                <path fill="#fff"
-                                    d="M83.485 89.814 75 81.329l-8.485 8.485-2.829-2.829 8.486-8.485-8.486-8.485 2.829-2.829L75 75.672l8.485-8.486 2.829 2.829-8.486 8.485 8.486 8.485-2.829 2.829Z" />
-                                <path fill="#CCE4FF"
-                                    d="M88 108.5H62a3 3 0 1 0 0 6h26a3 3 0 1 0 0-6Zm9 12H53a3 3 0 1 0 0 6h44a3 3 0 1 0 0-6Z" />
-                            </g>
-                            <defs>
-                                <clipPath id="a">
-                                    <rect width="150" height="150" y=".5" fill="#fff" rx="75" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <p class="tw-placeholder tw-font-semibold tw-text-base">Tidak Ada Pengumuman</p>
-                    </div>
-                @else
-                    @foreach ($announcements as $announcement)
-                        <x-cards.publication url="{{ route('home.baca', ['id' => $announcement->kode]) }}"
-                            image="{{ $announcement->image_url }}" type="{{ $announcement->kategori }}"
-                            title="{{ $announcement->judul }}" writer="{{ $announcement->penulis }}"
-                            day="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('l') }}"
-                            date="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('d F Y') }}"></x-cards.publication>
-                    @endforeach
-                @endif
+        <section id="information" class="tw-px-5 md:tw-px-[100px] tw-flex tw-flex-col">
+            {{-- Publikasi Artikel dan Pengumuman --}}
+            <div class="tw-flex tw-flex-col tw-py-12 tw-items-center tw-gap-10">
+                <x-landing.label-group>
+                    <x-landing.label>Informasi</x-landing.label>
+                    <x-landing.title-group>
+                        <x-landing.title>Publikasi Pengumuman</x-landing.title>
+                        <x-landing.subtitle>Informasi terkini yang mencakup kegiatan dan perkembangan terbaru di lingkungan RW
+                            02</x-landing.subtitle>
+                    </x-landing.title-group>
+                </x-landing.label-group>
+                <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-w-full">
+                    @if (!$announcements)
+                        <div class="tw-col-span-6 tw-flex tw-flex-col tw-items-center tw-justify-center tw-pt-7 tw-pb-16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none"
+                                viewBox="0 0 150 151">
+                                <g clip-path="url(#a)">
+                                    <path fill="#E3E3E3"
+                                        d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z" />
+                                    <path fill="#fff"
+                                        d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z" />
+                                    <path fill="#0284FF"
+                                        d="M75 102.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24Z" />
+                                    <path fill="#fff"
+                                        d="M83.485 89.814 75 81.329l-8.485 8.485-2.829-2.829 8.486-8.485-8.486-8.485 2.829-2.829L75 75.672l8.485-8.486 2.829 2.829-8.486 8.485 8.486 8.485-2.829 2.829Z" />
+                                    <path fill="#CCE4FF"
+                                        d="M88 108.5H62a3 3 0 1 0 0 6h26a3 3 0 1 0 0-6Zm9 12H53a3 3 0 1 0 0 6h44a3 3 0 1 0 0-6Z" />
+                                </g>
+                                <defs>
+                                    <clipPath id="a">
+                                        <rect width="150" height="150" y=".5" fill="#fff" rx="75" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <p class="tw-placeholder tw-font-semibold tw-text-base">Tidak Ada Pengumuman</p>
+                        </div>
+                    @else
+                        @foreach ($announcements as $announcement)
+                            <x-cards.publication url="{{ route('home.baca', ['id' => $announcement->kode]) }}"
+                                image="{{ $announcement->image_url }}" type="{{ $announcement->kategori }}"
+                                title="{{ $announcement->judul }}" writer="{{ $announcement->penulis }}"
+                                day="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('l') }}"
+                                date="{{ Carbon::parse($announcement->tanggal_dibuat)->locale('id')->translatedFormat('d F Y') }}"></x-cards.publication>
+                        @endforeach
+                    @endif
+                </div>
             </div>
-        </div>
-        {{-- / Publikasi Artikel dan Pengumuman --}}
+            {{-- / Publikasi Artikel dan Pengumuman --}}
+        </section>
     </div>
 @endsection
 

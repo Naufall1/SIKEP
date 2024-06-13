@@ -79,6 +79,8 @@ class KeluargaController extends Controller
                 ->get();
         }
 
+        
+
         return DataTables::of($daftar_keluarga)
             ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
             ->addColumn('action', function ($keluarga) {
@@ -98,8 +100,11 @@ class KeluargaController extends Controller
     public function listWarga(Request $request, $no_kk)
     {
         $keluarga = Keluarga::with('warga')->find($no_kk);
-        $keluarga->warga = Warga::where('no_kk', $no_kk)->whereNotIn('status_warga', ['Tidak Aktif', 'Menunggu']);
-        return DataTables::of($keluarga->warga)
+        $kepalaKeluarga = Warga::where('no_kk', $no_kk)->where('status_keluarga', 'Kepala Keluarga')->whereNotIn('status_warga', ['Tidak Aktif', 'Menunggu'])->get();
+        $otherKepalaKeluarga = Warga::where('no_kk', $no_kk)->where('status_keluarga', '!=' , 'Kepala Keluarga')->whereNotIn('status_warga', ['Tidak Aktif', 'Menunggu'])->get();
+        // $mergedWarga = ;
+        $keluarga->warga = $kepalaKeluarga->merge($otherKepalaKeluarga);
+        $warga = DataTables::of($keluarga->warga)
             ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
             ->addColumn('action', function (Warga $warga) {
                 return '
@@ -110,6 +115,8 @@ class KeluargaController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+
+            return $warga;
     }
 
     /**

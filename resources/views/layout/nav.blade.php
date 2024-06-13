@@ -44,7 +44,7 @@
             @if (Auth::user()->hasLevel['level_kode'] == 'ADM')
                 @include('layout.menu.publikasi')
             @endif
-
+        @else
         @endif
 
     </div>
@@ -119,6 +119,14 @@
     </div>
 @else
     @if (Route::currentRouteName() == 'home')
+        <ul class="guestMenu tw-hidden md:tw-flex tw-gap-10">
+            <li class="home active"><a href="#home">Beranda</a></li>
+            <li class="about"><a href="#about">Tentang</a></li>
+            <li class="profile"><a href="#profile">Profile</a></li>
+            <li class="chart"><a href="#chart">Grafik</a></li>
+            <li class="information"><a href="#information">Informasi</a></li>
+        </ul>
+
         <a href="{{ route('login') }}" class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round" type="submit">Masuk</a>
     @endif
 @endif
@@ -174,6 +182,46 @@
     </div>
 </div>
 
+@if (Route::currentRouteName() == 'home')
+    @push('js')
+        <script>
+            const sections = document.querySelectorAll("section");
+            const navLi = document.querySelectorAll("ul.guestMenu > li");
+            window.addEventListener("scroll", () => {
+                let current = "";
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                        current = section.getAttribute("id");
+                    }
+                });
+
+                navLi.forEach((li) => {
+                    li.classList.remove("active");
+                    if (li.classList.contains(current)) {
+                        li.classList.add("active");
+                    }
+                });
+            });
+        </script>
+    @endpush
+@endif
+
+@if (Route::currentRouteName() == 'bansos.perhitungan.detailPerhitungan')
+    @push('js')
+        <script>
+            window.addEventListener("scroll", function() {
+                const scrollableHeight =
+                    document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = window.scrollY;
+                const progressBar = document.getElementById("scroll-progress");
+                const progress = (scrolled / scrollableHeight) * 100;
+                progressBar.style.width = progress + "%";
+            });
+        </script>
+    @endpush
+@endif
 
 <script>
     // $(document).ready( function() {
@@ -182,14 +230,7 @@
     //     })
     // });
 
-    window.addEventListener("scroll", function() {
-        const scrollableHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
-        const scrolled = window.scrollY;
-        const progressBar = document.getElementById("scroll-progress");
-        const progress = (scrolled / scrollableHeight) * 100;
-        progressBar.style.width = progress + "%";
-    });
+
 
     document.addEventListener('DOMContentLoaded', function() {
         const toggleHamburger = document.getElementById('toggleHamburger');
