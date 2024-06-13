@@ -31,13 +31,13 @@
             @switch(session()->get('flash')->type)
                 @case('information')
                     <x-flash-message.information message='{{$message}}'></x-flash-message.information>
-                    @break
+                @break
                 @case('error')
                     <x-flash-message.error message='{{$message}}'></x-flash-message.error>
                 @break
                 @case('success')
                     <x-flash-message.success message='{{$message}}'></x-flash-message.success>
-                    @break
+                @break
                 @default
             @endswitch
         @endif
@@ -63,6 +63,10 @@
     @stack('js')
 
     <script>
+        window.onbeforeunload = function() {
+            window.scrollTo(0, 0);
+        }
+
         document.onreadystatechange = function() {
             // console.log(document.readyState);
             if (document.readyState !== "complete") {

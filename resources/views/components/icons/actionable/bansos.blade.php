@@ -4,7 +4,7 @@
     'stroke' => 2,
 ])
 
-<span {{$active ? $attributes->merge(['class'=>'tw-stroke-n100']) : $attributes->merge(['class'=>'tw-stroke-n1000']) }}>  
+<span {{$active ? $attributes->merge(['class'=>'tw-stroke-n100']) : $attributes->merge(['class'=>'tw-stroke-n700']) }}>  
     <svg width="{{ isset($size) ? $size : 25}}" height="{{ isset($size) ? $size : 24}}"  viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3.81705 7.44L12.647 12.55L21.417 7.47" stroke-width="{{$stroke}}" stroke-linecap="round"
             stroke-linejoin="round" />
