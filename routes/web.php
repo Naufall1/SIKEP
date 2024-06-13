@@ -170,22 +170,25 @@ Route::prefix('profile')->group(function () {
     Route::put('/ubah/{user_id}', [ProfilController::class, 'update'])->name('profilUpdate'); // menangani penerimaan data dari form edit user dan menyimpan pada database
 })->middleware('role:rt,rw,adm');
 
-Route::prefix('publikasi')->middleware(['auth','role:adm,rw'])->group(function () {
-    Route::get('/', [ArticleAnnouncementController::class, 'index_publikasi'])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
-    Route::post('/list', [ArticleAnnouncementController::class, 'list_publikasi'])->name('publikasi.list'); // menampilkan halaman yang berisi tabel daftar publikasi
-    Route::get('/{id}/detail', [ArticleAnnouncementController::class, 'show'])->name('publikasi.detail'); // menampilkan detail dari sebuah publikasi
-    Route::get('/{id}/ubah', [ArticleAnnouncementController::class, 'edit_publikasi'])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
-    Route::put('/{id}/ubah', [ArticleAnnouncementController::class, 'update_publikasi'])->name('publikasi.update');// menyimpan data
-
-    Route::get('/tambah', [ArticleAnnouncementController::class, 'create'])->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
-    Route::post('/tambah', [ArticleAnnouncementController::class, 'store'])->name('publikasi.store'); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
-
-
-    Route::get('/draf', [ArticleAnnouncementController::class, 'index_draf'])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
-    Route::post('/draf/list', [ArticleAnnouncementController::class, 'list_draf'])->name('publikasi.draf.list'); // menampilkan halaman yang berisi tabel daftar draf publikasi
-    Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
-    Route::get('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'edit_draf'])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
-    Route::put('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'update_draf'])->name('publikasi.draf.update'); // menyimpan data
+Route::prefix('publikasi')->group(function () {
+    Route::middleware(['auth','role:adm'])->group(function() {
+        Route::get('/', [ArticleAnnouncementController::class, 'index_publikasi'])->name('publikasi'); // menampilkan halaman yang berisi tabel daftar publikasi
+        Route::post('/list', [ArticleAnnouncementController::class, 'list_publikasi'])->name('publikasi.list'); // menampilkan halaman yang berisi tabel daftar publikasi
+        Route::get('/{id}/ubah', [ArticleAnnouncementController::class, 'edit_publikasi'])->name('publikasi.ubah'); // menampilkan detail dari sebuah publikasi
+        Route::put('/{id}/ubah', [ArticleAnnouncementController::class, 'update_publikasi'])->name('publikasi.update');// menyimpan data
+        
+        Route::get('/tambah', [ArticleAnnouncementController::class, 'create'])->name('publikasi.tambah'); // menampilkan form untuk menambahkan sebuah article atau pengumuman
+        Route::post('/tambah', [ArticleAnnouncementController::class, 'store'])->name('publikasi.store'); // mmelakukan proses menerima data dari form penambahan data dan mrnyimpannya pada databse
+        
+        
+        Route::get('/draf', [ArticleAnnouncementController::class, 'index_draf'])->name('publikasi.draf'); // menampilkan halaman yang berisi tabel daftar draf publikasi
+        Route::post('/draf/list', [ArticleAnnouncementController::class, 'list_draf'])->name('publikasi.draf.list'); // menampilkan halaman yang berisi tabel daftar draf publikasi
+        Route::get('/draf/{id}/detail', [ArticleAnnouncementController::class, 'show_draf'])->name('publikasi.draf.detail'); // menampilkan detail dari sebuah draf publikasi
+        Route::get('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'edit_draf'])->name('publikasi.draf.ubah'); // menampilkan detail dari sebuah draf publikasi
+        Route::put('/draf/{id}/ubah', [ArticleAnnouncementController::class, 'update_draf'])->name('publikasi.draf.update'); // menyimpan data
+    });
+    
+    Route::get('/{id}/detail', [ArticleAnnouncementController::class, 'show'])->name('publikasi.detail')->middleware(['auth','role:adm,rw']); // menampilkan detail dari sebuah publikasi
 
 });
 
