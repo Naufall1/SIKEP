@@ -351,7 +351,7 @@
                                 </x-input.label>
 
                                 <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
-                                    <x-input.input readonly class="tw-input-disabled"
+                                    <x-input.input disabled
                                         value="{{ old('tanggal_kejadian', $demografi ? $demografi->tanggal_kejadian : '') }}"
                                         placeholder="" type="date" id="tanggal_kejadian"
                                         name="tanggal_kejadian"></x-input.input>
@@ -360,29 +360,32 @@
                                     @enderror
                                 </x-input.label>
 
-                                <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                                {{-- <x-input.label for="berkas_demografi" label="Berkas Pendukung">
                                     <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                     @error('berkas_demografi')
                                         <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
-                                </x-input.label>
+                                </x-input.label> --}}
                                 <div id="berkas">
-                                    @php
-                                        $filename = $demografi->dokumen_pendukung;
-                                        $img = (object) [
-                                            'ext' => explode('.', $filename)[1],
-                                            'path' => $filename,
-                                        ];
-                                    @endphp
-                                    @include('components.form.textdetail', [
-                                        'title' => '',
-                                        'isImage' => true,
-                                        'content' =>
-                                            'data:image/' .
-                                            $img->ext .
-                                            ';base64, ' .
-                                            base64_encode(Storage::disk('temp')->get($img->path)),
-                                    ])
+                                        @php
+                                            $filename = $demografi->dokumen_pendukung;
+                                            $img = (object) [
+                                                'ext' => explode('.', $filename)[1],
+                                                'path' => $filename
+                                            ];
+                                        @endphp
+                                        @include('components.form.textdetail', [
+                                            'title' => '',
+                                            'isImage' => true,
+                                            'content' =>
+                                            is_null(Storage::disk('temp')->get($img->path)) ?
+                                            asset(Storage::disk('public')->url(
+                                                        'Dokumen-Pendukung/' . $demografi->dokumen_pendukung)) :
+                                                'data:image/' .
+                                                $img->ext .
+                                                ';base64, ' .
+                                                base64_encode(Storage::disk('temp')->get($img->path)),
+                                        ])
                                 </div>
 
                             </div>
