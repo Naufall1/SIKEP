@@ -167,6 +167,11 @@
         @apply tw-text-r500;
     }
 
+    .onEdit-label::after {
+        content: ' (Sudah Diubah)';
+        @apply tw-italic tw-font-medium tw-text-sm tw-text-y500;
+    }
+
     /* Table */
     thead {
         @apply tw-rounded-lg tw-overflow-hidden;
