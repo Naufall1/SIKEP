@@ -127,7 +127,9 @@
             <li class="information"><a href="#information">Informasi</a></li>
         </ul>
 
-        <a href="{{ route('login') }}" class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round" type="submit">Masuk</a>
+        <div class="tw-h-fit tw-w-[142px] tw-flex tw-justify-end">
+            <a href="{{ route('login') }}" class="tw-btn tw-btn-lg tw-btn-primary tw-btn-round" type="submit">Masuk</a>
+        </div>
     @endif
 @endif
 
