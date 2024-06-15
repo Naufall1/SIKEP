@@ -213,7 +213,7 @@
                                 </x-input.label>
 
                                 <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
-                                    <x-input.input
+                                    <x-input.input disabled
                                         value="{{ old('tanggal_kejadian', $demografi ? $demografi->tanggal_kejadian : '') }}"
                                         placeholder="" type="date" id="tanggal_kejadian"
                                         name="tanggal_kejadian"></x-input.input>
@@ -222,12 +222,12 @@
                                     @enderror
                                 </x-input.label>
 
-                                <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                                {{-- <x-input.label for="berkas_demografi" label="Berkas Pendukung">
                                     <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                     @error('berkas_demografi')
                                         <x-input.error-message>{{ $message }}</x-input.error-message>
                                     @enderror
-                                </x-input.label>
+                                </x-input.label> --}}
                                 <div id="berkas">
                                         @php
                                             $filename = $demografi->dokumen_pendukung;
@@ -240,6 +240,9 @@
                                             'title' => '',
                                             'isImage' => true,
                                             'content' =>
+                                            is_null(Storage::disk('temp')->get($img->path)) ?
+                                            asset(Storage::disk('public')->url(
+                                                        'Dokumen-Pendukung/' . $demografi->dokumen_pendukung)) :
                                                 'data:image/' .
                                                 $img->ext .
                                                 ';base64, ' .

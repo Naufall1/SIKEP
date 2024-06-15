@@ -463,15 +463,15 @@ class WargaController extends Controller
 
         // Jika data demografi sebelumnya ada, maka tambahkan validasi berikut
         else if ($demografi) {
-            $rules = array_merge($rules, [
-                'tanggal_kejadian' => 'required|date|after_or_equal:tanggal_lahir',
-            ]);
+            // $rules = array_merge($rules, [
+            //     'tanggal_kejadian' => 'required|date|after_or_equal:tanggal_lahir',
+            // ]);
 
-            $customMessage = array_merge($customMessage, [
-                'tanggal_kejadian.required' => 'Masukkan Tanggal Kejadian',
-                'tanggal_kejadian.date' => 'Masukan Tanggal Kejadian bukan tanggal. Periksa kembali',
-                'tanggal_kejadian.after_or_equal' => 'Tanggal Kejadian tidak valid. Periksa kembali',
-            ]);
+            // $customMessage = array_merge($customMessage, [
+            //     'tanggal_kejadian.required' => 'Masukkan Tanggal Kejadian',
+            //     'tanggal_kejadian.date' => 'Masukan Tanggal Kejadian bukan tanggal. Periksa kembali',
+            //     'tanggal_kejadian.after_or_equal' => 'Tanggal Kejadian tidak valid. Periksa kembali',
+            // ]);
 
             if ($request->hasFile('berkas_demografi')) {
                 $validator_file_2 = Validator::make($request->only('berkas_demografi'), [
@@ -639,14 +639,14 @@ class WargaController extends Controller
                             'status_request' => 'Menunggu',
                         ]);
                     } else {
-                        $perubahanExist->tanggal_kejadian = $request->tanggal_kejadian_demografi_keluar;
-                        $perubahanExist->tanggal_request = $date;
-                        if ($filenameSimpan ?? session()->get('berkas_demografi_keluar')->path != $perubahanExist->dokumen_pendukung) {
-                            if (Storage::disk('temp')->delete($perubahanExist->dokumen_pendukung)) {
-                                $perubahanExist->dokumen_pendukung = $filenameSimpan ?? session()->get('berkas_demografi_keluar')->path;
-                            }
-                        }
-                        $perubahanExist->save();
+                        // $perubahanExist->tanggal_kejadian = $request->tanggal_kejadian_demografi_keluar;
+                        // $perubahanExist->tanggal_request = $date;
+                        // if ($filenameSimpan ?? session()->get('berkas_demografi_keluar')->path != $perubahanExist->dokumen_pendukung) {
+                        //     if (Storage::disk('temp')->delete($perubahanExist->dokumen_pendukung)) {
+                        //         $perubahanExist->dokumen_pendukung = $filenameSimpan ?? session()->get('berkas_demografi_keluar')->path;
+                        //     }
+                        // }
+                        // $perubahanExist->save();
                     }
                 }
 
