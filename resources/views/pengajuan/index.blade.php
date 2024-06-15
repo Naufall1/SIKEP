@@ -129,7 +129,8 @@
     </div>
 @endsection
 @push('js')
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    {{-- <script src="https://momentjs.com/downloads/moment.min.js"></script> --}}
+    <script src="{{ asset('assets/plugins/moment/moment.js')}}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/3.4.1/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/datatables/1.10.25/js/dataTables.bootstrap.min.js')}}"></script>
