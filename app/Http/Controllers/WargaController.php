@@ -539,6 +539,8 @@ class WargaController extends Controller
             $warga->jenis_pekerjaan = $request->jenis_pekerjaan;
             $warga->penghasilan = $request->penghasilan;
             $warga->pendidikan = $request->pendidikan;
+            $warga->no_paspor = $request->no_paspor;
+            $warga->no_kitas = $request->no_kitas;
             if (isset($demografi)) {
                 $demografi->tanggal_kejadian = $request->tanggal_kejadian;
             }
