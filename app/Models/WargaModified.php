@@ -51,9 +51,10 @@ class WargaModified extends Model
         $modif->save();
     }
 
-    public static function getMenunggu(string $no_kk): WargaModified|null
+    public static function getMenunggu(string $no_kk, string $tanggal_request): WargaModified|null
     {
         return WargaModified::where('no_kk', '=', $no_kk)
+                ->where('tanggal_request', $tanggal_request)
                 ->where('status_request', '=', 'Menunggu')
                 ->first();
     }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']);
+            $table->enum('agama', ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Kristen', 'Konghuchu']);
             $table->enum('status_perkawinan', ['Kawin', 'Belum Kawin', 'Cerai Hidup', 'Cerai Mati']);
             $table->enum('status_keluarga', ["Kepala Keluarga", "Suami", "Istri", "Anak", "Menantu", "Cucu", "Orang Tua", "Mertua", "Famili Lain", "Pembantu", "Lainnya"]);
             $table->enum('status_warga', ['Aktif', 'Meninggal', 'Migrasi Keluar']);

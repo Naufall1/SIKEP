@@ -454,12 +454,12 @@ class PengajuanController extends Controller
                 // Change status keluarga on old kepala keluarga to 'Lainnya'
                 $old_kepala_keluarga->status_keluarga = 'Lainnya';
                 WargaModified::updateWarga($old_kepala_keluarga);
-                Warga::applyModifications(WargaModified::getMenunggu($old_kepala_keluarga->no_kk));
+                Warga::applyModifications(WargaModified::getMenunggu($old_kepala_keluarga->no_kk, $pengajuan->tanggal_request));
 
                 // Change status keluarga on new kepala keluarga to 'Kepala Keluarga'
                 $new_kepala_keluarga->status_keluarga = 'Kepala Keluarga';
                 WargaModified::updateWarga($new_kepala_keluarga);
-                Warga::applyModifications(WargaModified::getMenunggu($new_kepala_keluarga->no_kk));
+                Warga::applyModifications(WargaModified::getMenunggu($new_kepala_keluarga->no_kk, $pengajuan->tanggal_request));
             }
 
             if (!Keluarga::applyModifications($modifiedKeluarga)){
@@ -541,7 +541,7 @@ class PengajuanController extends Controller
 
         if ($pengajuan->status_request == 'Menunggu') {
             $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
-                                    // ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
                                     ->where('status_request', '=', 'Menunggu')
                                     ->first();
 
@@ -553,8 +553,9 @@ class PengajuanController extends Controller
 
         } else if ($pengajuan->status_request == 'Dikonfirmasi') {
             $warga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
-                        ->where('tanggal_request', '>=', Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'))
-                        ->orderBy('id_modify_warga', 'asc')
+                        ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                        // ->where('tanggal_request', '>=', Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'))
+                        // ->orderBy('id_modify_warga', 'asc')
                         ->first();
 // dd($warga);
             $currentWarga = WargaHistory::where('NIK', '=', $warga->NIK)
@@ -566,7 +567,11 @@ class PengajuanController extends Controller
                                     ->orderBy('valid_from', 'asc')
                                     ->first();
             if (!$modifiedWarga) {
-                $modifiedWarga = WargaModified::where('NIK', '=', $warga->NIK)->where('status_request', '=', 'Dikonfirmasi')->orderBy('id_modify_warga', 'desc')->first();
+                $modifiedWarga = WargaModified::where('NIK', $warga->NIK)
+                                    ->where('status_request', '=', 'Dikonfirmasi')
+                                    ->orderBy('id_modify_warga', 'desc')
+                                    ->first();
+                                // dd($modifiedWarga, $warga->NIK);
             }
 
             $demografiKeluarNew = HaveDemografi::getDemografiKeluar($warga->NIK, 'Dikonfirmasi', tanggal_request:Carbon::parse($pengajuan->tanggal_request)->format('Y-m-d H:i'));
@@ -612,14 +617,14 @@ class PengajuanController extends Controller
 
             $pengajuan = PengajuanData::with('keluarga')->find($request->id);
             $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuan->no_kk)
-                                    // ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
                                     ->where('status_request', '=', 'Menunggu')
                                     ->first();
             $currentWarga = Warga::find($modifiedWarga->NIK);
 
             if ($modifiedWarga->status_warga != $currentWarga->status_warga) {
                 $have_demografi = HaveDemografi::where('NIK', '=', $modifiedWarga->NIK)
-                                    // ->where('tanggal_request', '=', $pengajuan->tanggal_request)
+                                    ->where('tanggal_request', '=', $pengajuan->tanggal_request)
                                     ->where('status_request', '=', 'Menunggu')
                                     ->first();
                 $have_demografi->status_request = 'Dikonfirmasi';
@@ -674,7 +679,7 @@ class PengajuanController extends Controller
 
             $pengajuan = PengajuanData::getById($request->id);
 
-            $modifiedWarga = WargaModified::getMenunggu($pengajuan->no_kk);
+            $modifiedWarga = WargaModified::getMenunggu($pengajuan->no_kk, $pengajuan->tanggal_request);
 
             $currentWarga = Warga::find($modifiedWarga->NIK);
 
