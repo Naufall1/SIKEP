@@ -16,7 +16,7 @@
                     title="Jumlah Penduduk" value='{{ $countPenduduk }}'></x-cards.overview>
                 <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" title="Jumlah Keluarga"
                     value='{{ $countKeluarga }}'></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('pengajuan') }}" title="Pengajuan"
+                <x-cards.overview class="tw-col-span-1" url="{{ route('pengajuan') }}" title="Jumlah Pengajuan Menunggu"
                     value='{{ $countPengajuan }}'></x-cards.overview>
             </div>
 
