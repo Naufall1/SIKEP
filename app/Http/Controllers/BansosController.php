@@ -214,6 +214,7 @@ class BansosController extends Controller
             'jenis_bansos' => 'required|exists:bansos,bansos_kode',
             'tanggal_menerima' => 'required|date'
         ], [
+            'jenis_bansos.required' => 'Pilih Jenis Bansos',
             'tanggal_menerima.required' => 'Masukkan Tanggal Penerimaan'
         ]);
 

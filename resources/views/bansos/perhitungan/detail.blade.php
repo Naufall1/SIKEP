@@ -20,16 +20,16 @@
                     @csrf
                     <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full">
                         <x-input.label required class="tw-relative" for="jenis_bansos-list" label="Jenis Bansos">
-                            <x-input.select2 name="jenis_bansos" default="{{old('jenis_bansos', 'Pilih Jenis Bansos')}}"
+                            <x-input.select2 name="jenis_bansos" default="{{old('jenis_bansos', 'Pilih Jenis Bansos') ?? 'Pilih Jenis Bansos'}}"
                                 placeholder="Pilih Jenis Bansos"></x-input.select2>
-                            @error('bansos_kode')
+                            @error('jenis_bansos')
                                 <x-input.error-message>{{ $message }}</x-input.error-message>
                             @enderror
                         </x-input.label>
 
                         <x-input.label required for="tanggal_menerima" label="Tanggal Penerimaan">
                             <x-input.input placeholder="" type="date" id="tanggal_menerima"
-                                name="tanggal_menerima"></x-input.input>
+                                name="tanggal_menerima" value="{{old('tanggal_menerima')}}"></x-input.input>
                             @error('tanggal_menerima')
                             <x-input.error-message>{{ $message }}</x-input.error-message>
                             @enderror
