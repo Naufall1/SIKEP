@@ -39,14 +39,23 @@ class KeluargaModified extends Model
      * @param Keluarga $keluarga
      * @return bool
      */
-    public static function updateKeluarga(Keluarga $keluarga)
+    public static function updateKeluarga(Keluarga $keluarga, string $date)
     {
+        $modif = KeluargaModified::where('no_kk','=', $keluarga->no_kk)
+                    ->where('status_request','=', 'Menunggu')
+                    ->first();
+        if ($modif) {
+            $modif->fill($keluarga->toArray());
+            $modif->tanggal_request = $date;
+            return $modif->save();
+        }
+
         $modif = new KeluargaModified();
         $modif->fill($keluarga->toArray());
         // $modif->no_kk = $keluarga->no_kk;
         $modif->user_id = Auth::user()->user_id;
 
-        $modif->tanggal_request = now();
+        $modif->tanggal_request = $date;
         $modif->status_request = 'Menunggu';
         return $modif->save();
     }

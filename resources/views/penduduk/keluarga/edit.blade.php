@@ -34,7 +34,7 @@
                             <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
                                 <x-input.select name="kepala_keluarga" id="kepala_keluarga">
                                     @foreach ($keluarga->warga as $warga)
-                                        <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga->kepala_keluarga) == $warga->nama)>{{ $warga->nama }}
+                                        <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga_edited->kepala_keluarga ?? $keluarga->kepala_keluarga) == $warga->nama)>{{ $warga->nama }}
                                         </option>
                                     @endforeach
                                     {{-- <option value="option_1">Option 1</option>
@@ -136,12 +136,32 @@
                                     id="provinsi" name="provinsi" disabled>
                             </label>                             --}}
 
-                            <x-input.label for="kartu_keluarga" label="Berkas Pendukung">
+                            <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
                                 <x-input.file accept="image/.jpg,.jpeg,.png" id="kartu_keluarga" name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
+                            <div id="berkas">
+                                    @php
+                                        $img = (object) [
+                                            'path' => $image_kk,
+                                            'ext' =>  explode('.', $image_kk)[1]
+                                        ];
+                                    @endphp
+                                    @include('components.form.textdetail', [
+                                        'title' => '',
+                                        'isImage' => true,
+                                        'content' =>
+                                            is_null(Storage::disk('temp')->get($img->path)) ?
+                                            asset(Storage::disk('public')->url('KK/' . $keluarga->image_kk))
+                                            :
+                                            'data:image/' .
+                                            $img->ext .
+                                            ';base64, ' .
+                                            base64_encode(Storage::disk('temp')->get($img->path)),
+                                    ])
+                            </div>
 
                         </div>
                     </div>
@@ -152,7 +172,7 @@
 
                             <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
                                 <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
-                                    value="{{ old('tagihan_listrik', $keluarga->tagihan_listrik) }}" icon="rupiah"
+                                    value="{{ old('tagihan_listrik', $keluarga_edited->tagihan_listrik  ?? $keluarga->tagihan_listrik) }}" icon="rupiah"
                                     alt="Rp">
                                 </x-input.leadingicon>
                                 @error('tagihan_listrik')
@@ -175,7 +195,7 @@
 
                             <x-input.label for="luas_bangunan" label="Luas Bangunan">
                                 <x-input.input placeholder="Masukkan Luas Bangunan"
-                                    value="{{ old('luas_bangunan', $keluarga->luas_bangunan) }}" type="number"
+                                    value="{{ old('luas_bangunan',$keluarga_edited->luas_bangunan    ?? $keluarga->luas_bangunan) }}" type="number"
                                     min="0" id="luas_bangunan" name="luas_bangunan">
                                 </x-input.input>
                                 @error('luas_bangunan')

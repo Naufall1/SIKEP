@@ -17,7 +17,7 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Keluarga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    @if (!$pengajuanInProgres)
+                    {{-- @if (!$pengajuanInProgres) --}}
                         <a href="{{ route('keluarga-edit', ['no_kk' => $keluarga->no_kk]) }}"
                             class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
@@ -26,7 +26,7 @@
                                 Perbarui
                             </span>
                         </a>
-                    @else
+                    {{-- @else
                         <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
                                 color="n100"></x-icons.actionable.edit>
@@ -34,7 +34,7 @@
                                 Perbarui
                             </span>
                         </button>
-                    @endif
+                    @endif --}}
                 @endif
             </div>
 
