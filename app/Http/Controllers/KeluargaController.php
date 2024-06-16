@@ -79,7 +79,7 @@ class KeluargaController extends Controller
                 ->get();
         }
 
-        
+
 
         return DataTables::of($daftar_keluarga)
             ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
@@ -480,7 +480,9 @@ class KeluargaController extends Controller
         if (!$keluarga) {
             return redirect()->back();
         }
-        return view('penduduk.keluarga.edit', compact('keluarga'));
+        $keluarga_edited = KeluargaModified::where('no_kk', $keluarga->no_kk)->where('status_request', 'Menunggu')->first();
+        $image_kk = $keluarga_edited->image_kk ?? $keluarga->image_kk;
+        return view('penduduk.keluarga.edit', compact(['keluarga', 'keluarga_edited', 'image_kk']));
     }
 
     /**
@@ -563,17 +565,33 @@ class KeluargaController extends Controller
             if (empty($keluarga->getDirty())) {
                 return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'information', 'message' => 'Tidak ada data yang diubah.']);
             }
+            $date = now();
 
-            // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
-            KeluargaModified::updateKeluarga($keluarga);
+            $keluargaModified_exist = KeluargaModified::where('no_kk', $keluarga->no_kk)
+                                        ->where('status_request', 'Menunggu')
+                                        ->first();
 
-            PengajuanData::create([
-                'user_id' => Auth::user()->user_id,
-                'no_kk' => $keluarga->no_kk,
-                'tanggal_request' => now(),
-                'status_request' => 'Menunggu',
-                'tipe' => 'Perubahan Keluarga'
-            ]);
+                                        // perubahan warga akan disimpan pada tabel warga Modified, untuk menunggu dikonfirmasi oleh ketua RW.
+                                        KeluargaModified::updateKeluarga($keluarga, $date);
+                                        // dd($keluargaModified_exist);
+
+            if (is_null($keluargaModified_exist)) {
+                PengajuanData::create([
+                    'user_id' => Auth::user()->user_id,
+                    'no_kk' => $keluarga->no_kk,
+                    'tanggal_request' => now(),
+                    'status_request' => 'Menunggu',
+                    'tipe' => 'Perubahan Keluarga'
+                ]);
+            } else {
+                $pengajuan = PengajuanData::where('no_kk', $keluarga->no_kk)
+                                ->where('tanggal_request', $keluargaModified_exist->tanggal_request)
+                                ->first();
+                $pengajuan->update([
+                    'tanggal_request' => $date
+                ]);
+            }
+
 
             if (session()->has('kartu_keluarga')) {
                 session()->forget('kartu_keluarga');
@@ -583,7 +601,7 @@ class KeluargaController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             // dd($e);
-            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'danger', 'message' => 'Perubahan data gagal!']);
+            return redirect()->route('penduduk.keluarga.detail', ['no_kk' => $request->no_kk])->with('flash', (object) ['type' => 'error', 'message' => 'Perubahan data gagal!']);
         }
     }
 
