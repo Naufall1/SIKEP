@@ -47,28 +47,11 @@
                             </span>
                         </button>
                     @endif
-                    <button
-                        class="tw-relative tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px] tw-border-n400 tw-font-sans tw-font-bold tw-text-base tw-rounded-lg hover:tw-border-n800 hover:tw-bg-n200 active:tw-bg-n100 focus:tw-border-b500 focus:tw-border-2"
-                        type="button">
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center  tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/filter.svg') }}"
-                                alt="back">
-                        </span>
-                        <span class="tw-placeholder">
-                            Filter
-                        </span>
-                    </button>
-                    <div class="tw-relative tw-flex tw-w-full tw-grid-rows-3">
-                        <input type="text" placeholder="Cari"
-                            class="tw-input-enabled md:tw-w-80 tw-h-11 tw-pl-8 tw-pr-3 tw-bg-n100 tw-border-[1.5px]"
-                            type="button" id="searchBox">
-                        </input>
-                        <span
-                            class="tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-2 tw-flex tw-items-center tw-cursor-pointer">
-                            <img class="tw-w-5 tw-bg-cover" src="{{ asset('assets/icons/actionable/search.svg') }}"
-                                alt="back">
-                        </span>
+                    <div class="tw-relative tw-flex tw-grow md:tw-grow-0 md:tw-w-80 tw-grid-rows-3">
+                        <x-input.leadicon type="text" name="searchBox" placeholder="Cari Judul, Penulis">
+                            <x-icons.actionable.search color="n1000" size="20"
+                                stroke="2"></x-icons.actionable.search>
+                        </x-input.leadicon>
                     </div>
                 </div>
                 {{-- End: Tool Bar --}}
