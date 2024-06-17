@@ -2,8 +2,8 @@
     class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
     <div class="tw-w-56">
         <x-input.select id="lineChart" onchange="dropdownChartLine()">
-            <option value="bansos">Bansos</option>
-            <option value="kematian">Kematian</option>
+            <option value="bansos" >Bansos</option>
+            <option value="kematian" selected>Kematian</option>
         </x-input.select>
     </div>
     @if (is_null(Auth::user()) === false && Auth::user()->hasLevel['level_kode'] == 'RW')
