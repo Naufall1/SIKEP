@@ -1,7 +1,8 @@
 @extends('layout.layout', ['isForm' => true])
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         <p class="tw-breadcrumb tw-text-n500">Daftar Keluarga / Detail Keluarga /
             <span class="tw-font-bold tw-text-b500">Perbarui Data</span>
         </p>
@@ -10,8 +11,9 @@
 
             <h1 class="tw-h1 tw-mb-3">Perbarui Data Keluarga</h1>
 
-            <form class="tw-flex tw-flex-col tw-gap-7" action="{{ route('penduduk.keluarga.update', ['no_kk' => $keluarga->no_kk]) }}"
-                method="POST" id="formData" enctype="multipart/form-data">
+            <form class="tw-flex tw-flex-col tw-gap-7"
+                action="{{ route('penduduk.keluarga.update', ['no_kk' => $keluarga->no_kk]) }}" method="POST" id="formData"
+                enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {!! method_field('PUT') !!}
 
@@ -31,16 +33,32 @@
                                     name="no_kk" disabled>
                             </label> --}}
 
-                            <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
-                                <x-input.select name="kepala_keluarga" id="kepala_keluarga">
-                                    @foreach ($keluarga->warga as $warga)
-                                        <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga_edited->kepala_keluarga ?? $keluarga->kepala_keluarga) == $warga->nama)>{{ $warga->nama }}
-                                        </option>
-                                    @endforeach
-                                    {{-- <option value="option_1">Option 1</option>
+                            {{-- @dd($keluarga, $keluarga_edited) --}}
+                            @if ($keluarga->kepala_keluarga != ($keluarga_edited->kepala_keluarga ?? $keluarga->kepala_keluarga))
+                                <x-input.label edited for="kepala_keluarga" label="Kepala Keluarga">
+                                    <x-input.select name="kepala_keluarga" id="kepala_keluarga">
+                                        @foreach ($keluarga->warga as $warga)
+                                            <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga_edited->kepala_keluarga ?? $keluarga->kepala_keluarga) == $warga->nama)>
+                                                {{ $warga->nama }}
+                                            </option>
+                                        @endforeach
+                                        {{-- <option value="option_1">Option 1</option>
                                     <option value="option_2">Option 2</option> --}}
-                                </x-input.select>
-                            </x-input.label>
+                                    </x-input.select>
+                                </x-input.label>
+                            @else
+                                <x-input.label for="kepala_keluarga" label="Kepala Keluarga">
+                                    <x-input.select name="kepala_keluarga" id="kepala_keluarga">
+                                        @foreach ($keluarga->warga as $warga)
+                                            <option value="{{ $warga->NIK }}" @selected(old('kepala_keluarga', $keluarga_edited->kepala_keluarga ?? $keluarga->kepala_keluarga) == $warga->nama)>
+                                                {{ $warga->nama }}
+                                            </option>
+                                        @endforeach
+                                        {{-- <option value="option_1">Option 1</option>
+                                    <option value="option_2">Option 2</option> --}}
+                                    </x-input.select>
+                                </x-input.label>
+                            @endif
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="kepala_keluarga">Kepala Keluarga
                                 <div class="tw-w-full tw-flex tw-flex-col tw-relative tw-group">
@@ -135,32 +153,41 @@
                                 <input class="tw-input-disabled tw-placeholder" value="HERE" type="text"
                                     id="provinsi" name="provinsi" disabled>
                             </label>                             --}}
-
-                            <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
-                                <x-input.file accept="image/.jpg,.jpeg,.png" id="kartu_keluarga" name="kartu_keluarga"></x-input.file>
+                            
+                            @if ($keluarga->image_kk != ($keluarga_edited->image_kk ?? $keluarga->image_kk))
+                            <x-input.label edited for="kartu_keluarga" label="Kartu Keluarga">
+                                <x-input.file accept="image/.jpg,.jpeg,.png" id="kartu_keluarga"
+                                    name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
                             </x-input.label>
+                            @else
+                            <x-input.label for="kartu_keluarga" label="Kartu Keluarga">
+                                <x-input.file accept="image/.jpg,.jpeg,.png" id="kartu_keluarga"
+                                    name="kartu_keluarga"></x-input.file>
+                                @error('kartu_keluarga')
+                                    <x-input.error-message>{{ $message }}</x-input.error-message>
+                                @enderror
+                            </x-input.label>
+                            @endif
                             <div id="berkas">
-                                    @php
-                                        $img = (object) [
-                                            'path' => $image_kk,
-                                            'ext' =>  explode('.', $image_kk)[1]
-                                        ];
-                                    @endphp
-                                    @include('components.form.textdetail', [
-                                        'title' => '',
-                                        'isImage' => true,
-                                        'content' =>
-                                            is_null(Storage::disk('temp')->get($img->path)) ?
-                                            asset(Storage::disk('public')->url('KK/' . $keluarga->image_kk))
-                                            :
-                                            'data:image/' .
+                                @php
+                                    $img = (object) [
+                                        'path' => $image_kk,
+                                        'ext' => explode('.', $image_kk)[1],
+                                    ];
+                                @endphp
+                                @include('components.form.textdetail', [
+                                    'title' => '',
+                                    'isImage' => true,
+                                    'content' => is_null(Storage::disk('temp')->get($img->path))
+                                        ? asset(Storage::disk('public')->url('KK/' . $keluarga->image_kk))
+                                        : 'data:image/' .
                                             $img->ext .
                                             ';base64, ' .
                                             base64_encode(Storage::disk('temp')->get($img->path)),
-                                    ])
+                                ])
                             </div>
 
                         </div>
@@ -170,15 +197,28 @@
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
-                                <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
-                                    value="{{ old('tagihan_listrik', $keluarga_edited->tagihan_listrik  ?? $keluarga->tagihan_listrik) }}" icon="rupiah"
-                                    alt="Rp">
-                                </x-input.leadingicon>
-                                @error('tagihan_listrik')
-                                    <x-input.error-message>{{ $message }}</x-input.error-message>
-                                @enderror
-                            </x-input.label>
+                            @if ($keluarga->tagihan_listrik != ($keluarga_edited->tagihan_listrik ?? $keluarga->tagihan_listrik))
+                                <x-input.label edited for="tagihan_listrik" label="Tagihan Listrik">
+                                    <x-input.leadingicon name="tagihan_listrik" type="number" placeholder="Misal: 1000000"
+                                        value="{{ old('tagihan_listrik', $keluarga_edited->tagihan_listrik ?? $keluarga->tagihan_listrik) }}"
+                                        icon="rupiah" alt="Rp">
+                                    </x-input.leadingicon>
+                                    @error('tagihan_listrik')
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
+                                    @enderror
+                                </x-input.label>
+                            @else
+                                <x-input.label for="tagihan_listrik" label="Tagihan Listrik">
+                                    <x-input.leadingicon name="tagihan_listrik" type="number"
+                                        placeholder="Misal: 1000000"
+                                        value="{{ old('tagihan_listrik', $keluarga_edited->tagihan_listrik ?? $keluarga->tagihan_listrik) }}"
+                                        icon="rupiah" alt="Rp">
+                                    </x-input.leadingicon>
+                                    @error('tagihan_listrik')
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
+                                    @enderror
+                                </x-input.label>
+                            @endif
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="tagihan_listrik">Tagihan Listrik
                                 <div class="tw-relative tw-flex tw-w-full">
@@ -193,15 +233,27 @@
                                 </div>
                             </label> --}}
 
-                            <x-input.label for="luas_bangunan" label="Luas Bangunan">
-                                <x-input.input placeholder="Masukkan Luas Bangunan"
-                                    value="{{ old('luas_bangunan',$keluarga_edited->luas_bangunan    ?? $keluarga->luas_bangunan) }}" type="number"
-                                    min="0" id="luas_bangunan" name="luas_bangunan">
-                                </x-input.input>
-                                @error('luas_bangunan')
-                                    <x-input.error-message>{{ $message }}</x-input.error-message>
-                                @enderror
-                            </x-input.label>
+                            @if ($keluarga->luas_bangunan != ($keluarga_edited->luas_bangunan ?? $keluarga->luas_bangunan))
+                                <x-input.label edited for="luas_bangunan" label="Luas Bangunan">
+                                    <x-input.input placeholder="Masukkan Luas Bangunan"
+                                        value="{{ old('luas_bangunan', $keluarga_edited->luas_bangunan ?? $keluarga->luas_bangunan) }}"
+                                        type="number" min="0" id="luas_bangunan" name="luas_bangunan">
+                                    </x-input.input>
+                                    @error('luas_bangunan')
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
+                                    @enderror
+                                </x-input.label>
+                            @else
+                                <x-input.label for="luas_bangunan" label="Luas Bangunan">
+                                    <x-input.input placeholder="Masukkan Luas Bangunan"
+                                        value="{{ old('luas_bangunan', $keluarga_edited->luas_bangunan ?? $keluarga->luas_bangunan) }}"
+                                        type="number" min="0" id="luas_bangunan" name="luas_bangunan">
+                                    </x-input.input>
+                                    @error('luas_bangunan')
+                                        <x-input.error-message>{{ $message }}</x-input.error-message>
+                                    @enderror
+                                </x-input.label>
+                            @endif
 
                             {{-- <label class="tw-label tw-flex tw-flex-col tw-gap-2" for="luas_bangunan">Luas Bangunan
                                 <input class="tw-input-enabled tw-placeholder tw-appearance-none" placeholder="HERE" value="HERE"
@@ -215,16 +267,15 @@
 
 
                 <div class="tw-flex tw-justify-between  tw-w-full md:tw-w-fit md:tw-gap-3 md:tw-justify-start">
-                    <a href="{{ route('penduduk.keluarga.detail', ['no_kk' => $keluarga->no_kk]) }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
-                        type="button">
+                    <a href="{{ route('penduduk.keluarga.detail', ['no_kk' => $keluarga->no_kk]) }}"
+                        class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline" type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
                         <span class="tw-hidden md:tw-inline-block">
                             Kembali
                         </span>
                     </a>
-                    <button type="submit"
-                        class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
+                    <button type="submit" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round"
                         type="submit">Simpan</button>
                 </div>
             </form>

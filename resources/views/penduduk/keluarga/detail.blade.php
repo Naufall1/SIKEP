@@ -5,7 +5,38 @@
 @endpush
 
 @section('content')
-    <div class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+    <div id="modalConfirm"
+        class="tw-hidden modal-menu tw-px-5 md:tw-px-0 tw-z-40 tw-fixed insert-0 tw-bg-n1000 tw-bg-opacity-20 tw-overflow-y-auto tw-h-full tw-w-full ">
+        <div
+            class="tw-w-mobile-full-w md:tw-w-2/4 tw-relative tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-bg-n100 tw-rounded-md tw-overflow-hidden tw-border-[1px] ">
+            <div id="navMenus" class="tw-flex tw-gap-4 tw-w-full tw-flex-col tw-p-4">
+                <div class="tw-flex tw-flex-col tw-gap-7 tw-items-end">
+                    <div class="tw-flex tw-w-full tw-flex-col tw-gap-2">
+
+                        <h2>Tetap Ubah Data?</h2>
+                        <p class="tw-body tw-text-n800">Anda telah melakukan pengajuan perubahan pada data keluarga ini. Data
+                            yang sedang diajukan dapat Anda ubah kembali.
+                        </p>
+                    </div>
+
+                    <div class="tw-flex tw-gap-2">
+                        <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
+                            id="closeModalConfirm">Batal</button>
+                        <a href="{{ route('keluarga-edit', ['no_kk' => $keluarga->no_kk]) }}"
+                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Perbarui</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
+        {{-- @dd($pengajuanInProgres) --}}
+        @if ($pengajuanInProgres)
+            <x-flash-message.warning message='Anda sedang melakukan pengajuan pada keluarga ini!'></x-flash-message.warning>
+        @endif
         <p class="tw-breadcrumb tw-text-n500">Daftar Keluarga /
             <span class="tw-font-bold tw-text-b500">Detail Keluarga</span>
         </p>
@@ -17,7 +48,7 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Keluarga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    {{-- @if (!$pengajuanInProgres) --}}
+                    @if (!$pengajuanInProgres)
                         <a href="{{ route('keluarga-edit', ['no_kk' => $keluarga->no_kk]) }}"
                             class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
@@ -26,15 +57,15 @@
                                 Perbarui
                             </span>
                         </a>
-                    {{-- @else
-                        <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
+                    @else
+                        <button id="buttonConfirm" class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
                             <x-icons.actionable.edit class="" stroke="2" size="20"
                                 color="n100"></x-icons.actionable.edit>
                             <span class="">
                                 Perbarui
                             </span>
                         </button>
-                    @endif --}}
+                    @endif
                 @endif
             </div>
 
@@ -42,7 +73,8 @@
 
                 <div class="tw-flex tw-flex-col tw-gap-7 tw-divide-y-[1.5px] tw-divide-n400">
 
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
+                    <div
+                        class="tw-flex tw-flex-col tw-gap-2 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[200ms]">
                         <h2 class="">Detail Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
@@ -98,13 +130,14 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
+                    <div
+                        class="tw-flex tw-flex-col tw-gap-2 tw-pt-6 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[400ms]">
                         <h2 class="">Data Tambahan</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
                             @include('components.form.textdetail', [
                                 'title' => 'Tagihan Listrik',
-                                'content' => 'Rp ' . number_format( $keluarga->tagihan_listrik, 0, ",", "."),
+                                'content' => 'Rp ' . number_format($keluarga->tagihan_listrik, 0, ',', '.'),
                             ])
                             @include('components.form.textdetail', [
                                 'title' => 'Luas Bangunan',
@@ -114,7 +147,8 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
+                    <div
+                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[600ms]">
                         <h2 class="">Anggota Keluarga</h2>
                         <div class="tw-flex tw-flex-col tw-w-full tw-gap-3 tw-overflow-x-auto">
 
@@ -151,7 +185,8 @@
                         </div>
                     </div>
 
-                    <div class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
+                    <div
+                        class="tw-flex tw-pt-6 tw-flex-col tw-gap-3 tw-overflow-hidden tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[800ms]">
                         <h2 class="">Daftar Bansos</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3 tw-w-full tw-overflow-x-auto ">
 
@@ -183,7 +218,8 @@
                 </div>
 
 
-                <div class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
+                <div
+                    class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
                     <a href="{{ route('keluarga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
@@ -198,7 +234,9 @@
         </div>
     </div>
     @if (Session::has('message'))
-        <script>alert('{{Session::get('message')[1]}}')</script>
+        <script>
+            alert('{{ Session::get('message')[1] }}')
+        </script>
     @endif
 @endsection
 
@@ -255,7 +293,7 @@
                     searchable: false
                 }],
                 columnDefs: [{
-                    targets: [1,2],
+                    targets: [1, 2],
                     render: function(data, type, row) {
                         if (type === 'display') {
                             return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
@@ -322,7 +360,7 @@
                     searchable: false
                 }],
                 columnDefs: [{
-                    targets: [1,3],
+                    targets: [1, 3],
                     render: function(data, type, row) {
                         if (type === 'display') {
                             return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' +
@@ -335,3 +373,25 @@
         });
     </script>
 @endpush
+
+@if ($pengajuanInProgres)
+    @push('js')
+        <script>
+            $(document).ready(function () {
+                $("#buttonConfirm").click(function() {
+                $("#modalConfirm").removeClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'hidden',
+                });
+            });
+
+            $("#closeModalConfirm").click(function() {
+                $("#modalConfirm").addClass("tw-hidden");
+                $('html, body').css({
+                    overflow: 'auto',
+                });
+            });
+            });
+        </script>
+    @endpush
+@endif
