@@ -733,18 +733,26 @@ class WargaController extends Controller
             ->where('status_request', '=', 'Dikonfirmasi')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
-        $pengajuanInProgres = PengajuanData::where('no_kk', '=', $warga->no_kk)
+        $allPengajuanInProgres = PengajuanData::where('no_kk', '=', $warga->no_kk)
             ->where('status_request', '=', 'Menunggu')
-            ->orderBy('tanggal_request', 'DESC')
-            ->first();
+            ->where('tipe', '=', 'Perubahan Warga')
+            ->orderBy('tanggal_request', 'DESC')->get();
 
         $modifiedWarga = '';
-
-        if (isset($pengajuanInProgres->status_request)) {
-            $modifiedWarga = WargaModified::where('no_kk', '=', $pengajuanInProgres->no_kk)
-                // ->where('tanggal_request', '=', $pengajuan->tanggal_request)
-                ->where('status_request', '=', 'Menunggu')
-                ->first();
+        $pengajuanInProgres = '';
+        if (isset($allPengajuanInProgres)) {
+            foreach ($allPengajuanInProgres as $pengajuanInProgresTemp) {
+                // dd($pengajuanInProgresTemp);
+                $modifiedWargaTemp = WargaModified::where('no_kk', '=', $pengajuanInProgresTemp->no_kk)
+                    ->where('tanggal_request', '=', $pengajuanInProgresTemp->tanggal_request)
+                    ->where('status_request', '=', 'Menunggu')
+                    ->first();
+                if ($modifiedWargaTemp->NIK == $nik) {
+                    $modifiedWarga = $modifiedWargaTemp;
+                    $pengajuanInProgres = $pengajuanInProgresTemp;
+                    break;
+                }
+            }
         }
 
         if (!$warga) {

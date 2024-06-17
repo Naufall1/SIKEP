@@ -33,9 +33,8 @@
     <div
         class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
         @if ($pengajuanInProgres)
-        {{-- @dd($pengajuanInProgres) --}}
             <x-flash-message.warning
-                message='Anda sedang melakukan pengajuan pada warga dengan NIK {{$modifiedWarga->NIK}}!'></x-flash-message.warning>
+                message='Anda sedang melakukan pengajuan pada warga dengan nama {{$modifiedWarga->nama}}!'></x-flash-message.warning>
         @endif
         <p class="tw-breadcrumb tw-text-n500">Daftar Warga /
             <span class="tw-font-bold tw-text-b500">Detail Warga</span>
@@ -66,19 +65,6 @@
                             Perbarui
                         </span>
                     </button>
-
-                    {{-- <button href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="button"
-                                >Konfirmasi</button> --}}
-
-                    {{-- <button href="" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="button"
-                                id="buttonConfirm">Konfirmasi</button> --}}
-                        {{-- <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
-                            <x-icons.actionable.edit class="" stroke="2" size="20"
-                                color="n100"></x-icons.actionable.edit>
-                            <span class="">
-                                Perbarui
-                            </span>
-                        </button> --}}
                     @endif
                 @endif
             </div>

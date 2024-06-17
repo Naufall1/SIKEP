@@ -663,10 +663,12 @@ class KeluargaController extends Controller
         $keluarga = Keluarga::with(['warga', 'bansos', 'detailBansos'])->find($no_kk);
 
         $pengajuanInProgres = PengajuanData::where('no_kk', '=', $keluarga->no_kk)
+            ->where('tipe', '=', 'Perubahan Keluarga')
             ->where('status_request', '=', 'Menunggu')
             ->orderBy('tanggal_request', 'DESC')
             ->first();
 
+        // dd($pengajuanInProgres);
         return view('penduduk.keluarga.detail', compact(['keluarga', 'pengajuanInProgres']));
     }
 
