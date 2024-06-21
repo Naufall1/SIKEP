@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
-
 class WargaController extends Controller
 {
     public function getAll()
@@ -141,7 +140,7 @@ class WargaController extends Controller
     public function store(Request $request)
     {
         // Validasi data yang masuk
-        if (!session()->exists('berkas_demografi') || $request->has('berkas_demografi')) {
+        if ($request->has('berkas_demografi')) {
             $validator_file = Validator::make($request->only('berkas_demografi'), [
                 'berkas_demografi' => 'required|file|image|mimes:jpeg,jpg,png|max:2048'
             ], [
@@ -176,8 +175,8 @@ class WargaController extends Controller
             'penghasilan' => 'required|integer',
             'no_paspor' => 'nullable|string|max:10',
             'no_kitas' => 'nullable|string|max:10',
-            'jenis_demografi' => 'required|in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar',
-            'tanggal_kejadian' => 'required|date|after_or_equal:tanggal_lahir',
+            'jenis_demografi' => 'in:Lahir,Meninggal,Migrasi Masuk,Migrasi Keluar|nullable',
+            'tanggal_kejadian' => !is_null($request->jenis_demografi) ? 'required|date|after_or_equal:tanggal_lahir' : '',
         ];
 
         $customMessage = [
@@ -298,20 +297,23 @@ class WargaController extends Controller
                 ->withInput();
         }
 
-        $demografi = new Demografi();
-        $demografi->user_id = Auth::user()->user_id;
-        $demografi->jenis = $request->jenis_demografi;
+        if (!is_null($request->jenis_demografi)) {
+            $demografi = new Demografi();
+            $demografi->user_id = Auth::user()->user_id;
+            $demografi->jenis = $request->jenis_demografi;
 
-        $haveDemografi = new HaveDemografi();
-        $haveDemografi->NIK = $warga->NIK;
-        if ($request->jenis_demografi == 'Lahir') {
-            $haveDemografi->tanggal_kejadian = $request->tanggal_lahir;
-        } else {
-            $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
+            $haveDemografi = new HaveDemografi();
+            $haveDemografi->NIK = $warga->NIK;
+            if ($request->jenis_demografi == 'Lahir') {
+                $haveDemografi->tanggal_kejadian = $request->tanggal_lahir;
+            } else {
+                $haveDemografi->tanggal_kejadian = $request->tanggal_kejadian;
+            }
+            $haveDemografi->tanggal_request = now();
+            $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
+            $haveDemografi->status_request = 'Menunggu';
         }
-        $haveDemografi->tanggal_request = now();
-        $haveDemografi->dokumen_pendukung = isset($filenameSimpan) ? $filenameSimpan : session()->get('berkas_demografi')->path;
-        $haveDemografi->status_request = 'Menunggu';
+
 
         if ($warga->status_keluarga == 'Kepala Keluarga') {
             FormStateKeluarga::setKepalaKeluarga($warga->nama);
@@ -319,9 +321,9 @@ class WargaController extends Controller
         }
 
         if (!is_null($pengajuan->getWarga($request->NIK))) {
-            $pengajuan->updateWarga($warga, $demografi, $haveDemografi);
+            $pengajuan->updateWarga($warga, $demografi ?? null, $haveDemografi ?? null);
         } else {
-            $pengajuan->tambahWarga($warga, $demografi, $haveDemografi);
+            $pengajuan->tambahWarga($warga, $demografi ?? null, $haveDemografi ?? null);
         }
 
         session()->forget('berkas_demografi');
@@ -592,22 +594,22 @@ class WargaController extends Controller
                         ]);
                     }
                 } else {
-                    $dm = Demografi::find($perubahanExist->demografi_id);
-                    $dm->jenis = $request->jenis_demografi_keluar;
-                    $dm->save();
+                    // $dm = Demografi::find($perubahanExist->demografi_id);
+                    // $dm->jenis = $request->jenis_demografi_keluar;
+                    // $dm->save();
 
-                    $perubahanExist->tanggal_kejadian = $request->tanggal_kejadian_demografi_keluar;
-                    $perubahanExist->tanggal_request = $date->toDateTime();
+                    // $perubahanExist->tanggal_kejadian = $request->tanggal_kejadian_demografi_keluar;
+                    // $perubahanExist->tanggal_request = $date->toDateTime();
 
-                    if ($filenameSimpan ?? session()->get('berkas_demografi_keluar')->path != $perubahanExist->dokumen_pendukung) {
-                        if (Storage::disk('temp')->delete($perubahanExist->dokumen_pendukung)) {
-                            $perubahanExist->dokumen_pendukung = $filenameSimpan ?? session()->get('berkas_demografi_keluar')->path;
-                        }
-                    }
-                    $perubahanExist->save();
-                    $pengajuan->update([
-                        'tanggal_request' => $date
-                    ]);
+                    // if ($filenameSimpan ?? session()->get('berkas_demografi_keluar')->path != $perubahanExist->dokumen_pendukung) {
+                    //     if (Storage::disk('temp')->delete($perubahanExist->dokumen_pendukung)) {
+                    //         $perubahanExist->dokumen_pendukung = $filenameSimpan ?? session()->get('berkas_demografi_keluar')->path;
+                    //     }
+                    // }
+                    // $perubahanExist->save();
+                    // $pengajuan->update([
+                    //     'tanggal_request' => $date
+                    // ]);
                 }
                 $message['message'] = 'Edit Warga Berhasil!';
                 $messageType = 'success';

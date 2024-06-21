@@ -288,9 +288,11 @@ class PengajuanController extends Controller
                     $demografiWarga = HaveDemografi::where('NIK', '=', $wargaN->NIK)
                         ->where('status_request', '=', 'Menunggu')
                         ->first();
-                    $demografiWarga->status_request = 'Dikonfirmasi';
+                    if (!is_null($demografiWarga)) {
+                        $demografiWarga->status_request = 'Dikonfirmasi';
+                        $demografiWarga->save();
+                    }
                     $wargaN->save();
-                    $demografiWarga->save();
                 }
             }
 

@@ -56,19 +56,25 @@ class Pengajuan
                     WargaModified::updateWarga($warga['warga']);
                 } else {
                     $warga['warga']->save();
-                    $warga['demografi']->save();
-                    $warga['haveDemografi']->demografi_id = $warga['demografi']->demografi_id;
-                    $warga['haveDemografi']->save();
 
-                    // Pindahkan file yang berada pada penyimpanan sementara
-                    $res = Storage::disk('local')->put(
-                        'public/Dokumen-Pendukung/' . $warga['haveDemografi']->dokumen_pendukung,
-                        Storage::disk('temp')->get($warga['haveDemografi']->dokumen_pendukung),
-                    );
-                    if (!$res) {
-                        throw new \Exception('Failed to move file from temporary');
+                    if(!is_null($warga['demografi'])){
+                        $warga['demografi']->save();
                     }
-                    Storage::disk('temp')->delete($warga['haveDemografi']->dokumen_pendukung);
+
+                    if(!is_null($warga['haveDemografi'])){
+                        $warga['haveDemografi']->demografi_id = $warga['demografi']->demografi_id;
+                        $warga['haveDemografi']->save();
+
+                        // Pindahkan file yang berada pada penyimpanan sementara
+                        $res = Storage::disk('local')->put(
+                            'public/Dokumen-Pendukung/' . $warga['haveDemografi']->dokumen_pendukung,
+                            Storage::disk('temp')->get($warga['haveDemografi']->dokumen_pendukung),
+                        );
+                        if (!$res) {
+                            throw new \Exception('Failed to move file from temporary');
+                        }
+                    }
+
                     session()->forget('berkas_demografi');
                 }
             }
@@ -84,6 +90,9 @@ class Pengajuan
             $this->clear();
             FormStateKeluarga::clear();
             Storage::disk('temp')->delete($kk);
+            if (isset($warga['haveDemografi']->dokumen_pendukung)) {
+                Storage::disk('temp')->delete($warga['haveDemografi']->dokumen_pendukung);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -92,7 +101,7 @@ class Pengajuan
             return false;
         }
     }
-    public function tambahWarga(Warga $warga, Demografi $demografi, HaveDemografi $haveDemografi)
+    public function tambahWarga(Warga $warga, ?Demografi $demografi, ?HaveDemografi $haveDemografi)
     {
         $this->daftarWarga[] = [
             'warga' => $warga,
@@ -102,7 +111,7 @@ class Pengajuan
 
         $this->save();
     }
-    public function updateWarga(Warga $warga, Demografi $demografi, HaveDemografi $haveDemografi)
+    public function updateWarga(Warga $warga, ?Demografi $demografi, ?HaveDemografi $haveDemografi)
     {
         $index = -1;
         foreach ($this->daftarWarga as $idx => $value) {
