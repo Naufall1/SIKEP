@@ -158,8 +158,8 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label required for="penghasilan" label="Penghasilan">
-                                <x-input.leadingicon value="{{ old('penghasilan', $warga->penghasilan ?? '') }}" type="number" min="0"
+                            <x-input.label for="penghasilan" label="Penghasilan">
+                                <x-input.leadingicon value="{{ old('penghasilan', $warga->penghasilan ?? '0') }}" type="number" min="0"
                                     id="penghasilan" name="penghasilan" placeholder="Misal: 1000000" icon="rupiah"
                                     alt="Rp">
                                 </x-input.leadingicon>
@@ -191,7 +191,7 @@
                         <h2 class="">Demografi Masuk</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label required class="tw-relative" for="jenis_demografi-list" label="Jenis">
+                            <x-input.label class="tw-relative" for="jenis_demografi-list" label="Jenis">
                                 <x-input.select2 name="jenis_demografi"
                                     default="{{ old('jenis_demografi', $demografi->jenis ?? null) ? old('jenis_demografi', $demografi->jenis ?? '') : 'Pilih Jenis Demografi' }}"
                                     placeholder="Pilih Jenis Demografi"></x-input.select2>
@@ -200,7 +200,7 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label required for="tanggal_kejadian" label="Tanggal Kejadian">
+                            <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
                                 @if (isset($demografi) && $demografi->jenis =='Lahir')
                                     <x-input.input readonly class="tw-input-disabled" value="{{ old('tanggal_kejadian', $haveDemografi->tanggal_kejadian ?? '') }}" placeholder="" type="date"
                                         id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
@@ -213,8 +213,8 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
-                                <x-input.file accept="image/.jpg, .jpeg, .png" id="berkas_demografi" name="berkas_demografi"></x-input.file>
+                            <x-input.label for="berkas_demografi" label="Berkas Pendukung">
+                                <x-input.file accept=".jpg, .jpeg, .png" id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                 @error('berkas_demografi')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
@@ -469,7 +469,7 @@
                             <h2 class="">Demografi Masuk</h2>
                             <div class="tw-flex tw-flex-col tw-gap-3">
 
-                                <x-input.label required class="tw-relative" for="jenis_demografi-list" label="Jenis">
+                                <x-input.label class="tw-relative" for="jenis_demografi-list" label="Jenis">
                                     <x-input.select2 name="jenis_demografi"
                                         default="{{ old('jenis_demografi') ? old('jenis_demografi') : 'Pilih Jenis Demografi' }}"
                                         placeholder="Pilih Jenis Demografi"></x-input.select2>
@@ -478,7 +478,7 @@
                                     @enderror
                                 </x-input.label>
 
-                                <x-input.label required for="tanggal_kejadian" label="Tanggal Kejadian">
+                                <x-input.label for="tanggal_kejadian" label="Tanggal Kejadian">
                                     <x-input.input value="{{ old('tanggal_kejadian', $haveDemografi->tanggal_kejadian ?? '') }}" placeholder="" type="date"
                                         id="tanggal_kejadian" name="tanggal_kejadian"></x-input.input>
                                     @error('tanggal_kejadian')
@@ -486,7 +486,7 @@
                                     @enderror
                                 </x-input.label>
 
-                                <x-input.label required for="berkas_demografi" label="Berkas Pendukung">
+                                <x-input.label for="berkas_demografi" label="Berkas Pendukung">
                                     <x-input.file id="berkas_demografi" name="berkas_demografi"></x-input.file>
                                     @error('berkas_demografi')
                                         <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -616,7 +616,7 @@
                 $('#nama_ibu').attr('placeholder', 'Masukkan Nama Ibu');
                 $('#nama_ibu').prop('disabled', false);
 
-                $('#penghasilan').val();
+                $('#penghasilan').val('0');
                 // $('#penghasilan').addClass('tw-input-enabled');
                 // $('#penghasilan').removeClass('tw-input-disabled placeholder:tw-text-n600');
                 $("label[for='penghasilan']").children().first().addClass('required-label');
