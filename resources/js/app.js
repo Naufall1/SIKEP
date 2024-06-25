@@ -187,7 +187,19 @@ $(document).ready(function () {
         }
     });
 
-
-    // console.log($('#jenis_perkawinan').val());
+    $("input[type='file']").on("change", function () {
+        
+        if (this.files[0].size > 2048000) {
+            console.log(this);
+            if (!$('.error-size').length) {
+                $(this).parent().parent().append(`<p class="error-size tw-caption tw-text-r500">Ukuran berkas terlalu besar. Masukkan berkas kurang dari 2MB</p>`);
+            }
+            $(this).val('');
+        } else {
+            if ($('.error-size').length) {
+                $('.error-size').remove();
+            }
+        }
+    });
 
 });

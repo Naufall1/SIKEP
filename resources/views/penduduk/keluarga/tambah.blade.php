@@ -99,7 +99,7 @@
                             </x-input.label>
 
                             <x-input.label required for="kartu_keluarga" label="Kartu Keluarga">
-                                <x-input.file accept="image/.jpg, .jpeg, .png" name="kartu_keluarga"></x-input.file>
+                                <x-input.file accept=".jpg, .jpeg, .png" name="kartu_keluarga"></x-input.file>
                                 @error('kartu_keluarga')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
                                 @enderror
