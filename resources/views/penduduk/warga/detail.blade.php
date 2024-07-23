@@ -15,14 +15,16 @@
                     <div class="tw-flex tw-w-full tw-flex-col tw-gap-2">
 
                         <h2>Tetap Ubah Data?</h2>
-                        <p class="tw-body tw-text-n800">Anda telah melakukan pengajuan perubahan pada data warga ini. Data yang sedang diajukan dapat Anda ubah kembali.
+                        <p class="tw-body tw-text-n800">Anda telah melakukan pengajuan perubahan pada data warga ini. Data
+                            yang sedang diajukan dapat Anda ubah kembali.
                         </p>
                     </div>
 
                     <div class="tw-flex tw-gap-2">
                         <button class="tw-btn tw-btn-text tw-btn-lg tw-btn-round" type="button"
                             id="closeModalConfirm">Batal</button>
-                        <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}" class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Perbarui</a>
+                        <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}"
+                            class="tw-btn tw-btn-primary tw-btn-lg tw-btn-round" type="submit">Perbarui</a>
                     </div>
 
                 </div>
@@ -32,9 +34,12 @@
 
     <div
         class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
-        @if ($pengajuanInProgres)
+        @if ($warga->status_warga != 'Aktif')
             <x-flash-message.warning
-                message='Anda sedang melakukan pengajuan pada warga dengan nama {{$modifiedWarga->nama}}!'></x-flash-message.warning>
+                message='Status warga tidak aktif, sehingga tidak dapat melakukan perubahan'></x-flash-message.warning>
+        @elseif ($pengajuanInProgres)
+            <x-flash-message.warning
+                message='Anda sedang melakukan pengajuan pada warga dengan nama {{ $modifiedWarga->nama }}!'></x-flash-message.warning>
         @endif
         <p class="tw-breadcrumb tw-text-n500">Daftar Warga /
             <span class="tw-font-bold tw-text-b500">Detail Warga</span>
@@ -47,24 +52,31 @@
 
                 <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">Detail Data Warga</h1>
                 @if (Auth::user()->hasLevel['level_kode'] == 'RT')
-                    @if (!$pengajuanInProgres)
-                    <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}"
-                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
-                        <x-icons.actionable.edit class="" stroke="2" size="20"
-                            color="n100"></x-icons.actionable.edit>
-                        <span class="">
-                            Perbarui
-                        </span>
-                    </a>
-                    @else
-                    <button id="buttonConfirm"
-                        class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
-                        <x-icons.actionable.edit class="" stroke="2" size="20"
-                            color="n100"></x-icons.actionable.edit>
-                        <span class="">
-                            Perbarui
-                        </span>
-                    </button>
+                    @if ($warga->status_warga != 'Aktif')
+                        <button disabled class="tw-btn tw-btn-disabled tw-btn-md-ilead tw-rounded-full">
+                            <x-icons.actionable.edit class="" stroke="2" size="20"
+                                color="n100"></x-icons.actionable.edit>
+                            <span class="">
+                                Perbarui
+                            </span>
+                        </button>
+                    @elseif ($pengajuanInProgres)
+                        <button id="buttonConfirm" class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                            <x-icons.actionable.edit class="" stroke="2" size="20"
+                                color="n100"></x-icons.actionable.edit>
+                            <span class="">
+                                Perbarui
+                            </span>
+                        </button>
+                    @elseif (!$pengajuanInProgres && $warga->status_warga == 'Aktif')
+                        <a href="{{ route('warga-edit', ['nik' => $warga->NIK]) }}"
+                            class="tw-btn tw-btn-primary tw-btn-md-ilead tw-rounded-full">
+                            <x-icons.actionable.edit class="" stroke="2" size="20"
+                                color="n100"></x-icons.actionable.edit>
+                            <span class="">
+                                Perbarui
+                            </span>
+                        </a>
                     @endif
                 @endif
             </div>
@@ -276,7 +288,7 @@
 
                 <div
                     class="tw-flex tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1000ms]">
-                    <a href="{{ url()->previous() }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
+                    <a href="{{ route('penduduk.warga') }}" class="tw-btn tw-btn-lg-ilead tw-btn-round tw-btn-outline"
                         type="button">
                         <x-icons.actionable.arrow-left class="" stroke="1.5"
                             color="n1000"></x-icons.actionable.arrow-left>
@@ -300,20 +312,20 @@
 @if ($pengajuanInProgres)
     @push('js')
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $("#buttonConfirm").click(function() {
-                $("#modalConfirm").removeClass("tw-hidden");
-                $('html, body').css({
-                    overflow: 'hidden',
+                    $("#modalConfirm").removeClass("tw-hidden");
+                    $('html, body').css({
+                        overflow: 'hidden',
+                    });
                 });
-            });
 
-            $("#closeModalConfirm").click(function() {
-                $("#modalConfirm").addClass("tw-hidden");
-                $('html, body').css({
-                    overflow: 'auto',
+                $("#closeModalConfirm").click(function() {
+                    $("#modalConfirm").addClass("tw-hidden");
+                    $('html, body').css({
+                        overflow: 'auto',
+                    });
                 });
-            });
             });
         </script>
     @endpush
