@@ -131,12 +131,12 @@
                 </x-cards.chart>
             </div>
         </div>
-        <div class="tw-flex tw-w-full">
+        {{-- <div class="tw-flex tw-w-full">
             <iframe width="100%" height="1000"
                 src="https://lookerstudio.google.com/embed/reporting/02f7484e-e5b8-446a-9b5d-a647347e903d/page/p_8kllclzzhd"
                 frameborder="0" style="border:0" allowfullscreen
                 sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-        </div>
+        </div> --}}
 
 
     </div>
