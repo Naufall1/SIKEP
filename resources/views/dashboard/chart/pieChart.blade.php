@@ -1,6 +1,6 @@
 <div
     class="tw-flex {{ is_null(Auth::user()) ? '' : (Auth::user()->hasLevel['level_kode'] == 'RW' ? 'tw-justify-between' : '') }}">
-    <div class="tw-w-56">
+    <div class="tw-w-40 md:tw-w-56">
         <x-input.select id="chartType" onchange="dropdownChartData()">
             <option value="pekerjaan">Pekerjaan</option>
             <option value="jenis_kelamin">Jenis Kelamin</option>

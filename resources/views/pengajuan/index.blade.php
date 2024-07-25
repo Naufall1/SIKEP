@@ -269,7 +269,7 @@
                     searchable: false
                 }],
                 columnDefs: [{
-                    targets: [3],
+                    targets: [1, 3],
                     render: function(data, type, row) {
                         if (type === 'display') {
                             return '<div class="tw-text-ellipsis tw-overflow-hidden tw-w-full">' + data + '</div>';
