@@ -116,7 +116,7 @@
 
                             <x-input.label required class="tw-relative" for="kewarganegaraan-list" label="Kewarganegaraan">
                                 <x-input.select2 name="kewarganegaraan"
-                                    default="{{ old('kewarganegaraan', $warga->kewarganegaraan ?? null) ? old('kewarganegaraan', $warga->kewarganegaraan ?? '') : 'Pilih Kewarganegaraan' }}"
+                                    default="{{ old('kewarganegaraan', $warga->kewarganegaraan ?? null) ? old('kewarganegaraan', $warga->kewarganegaraan ?? '') : 'WNI' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>
 
                                 @error('kewarganegaraan')
@@ -592,7 +592,7 @@
                 $("label[for='kewarganegaraan']").attr('for', 'kewarganegaraan-list');
                 $("label[for='kewarganegaraan-list']").children().next().remove();
                 $("label[for='kewarganegaraan-list']").append(`<x-input.select2 name="kewarganegaraan"
-                                    default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
+                                    default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'WNI' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>`);
 
                 // $('#kewarganegaraan').addClass('tw-input-enabled');
