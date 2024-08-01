@@ -144,7 +144,7 @@
                     </x-landing.title-group>
                 </x-landing.label-group>
                 <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-w-full">
-                    @if (!$announcements)
+                    @if ($announcements->isEmpty())
                         <div class="tw-col-span-6 tw-flex tw-flex-col tw-items-center tw-justify-center tw-pt-7 tw-pb-16">
                             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none"
                                 viewBox="0 0 150 151">
@@ -179,7 +179,7 @@
                     @endif
                 </div>
             </div>
-            {{-- / Publikasi Artikel dan Pengumuman --}}
+            
         </section>
     </div>
 @endsection

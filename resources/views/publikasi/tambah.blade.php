@@ -21,7 +21,7 @@
                         <h2 class="">Detail Publikasi</h2>
                         <div class="tw-flex tw-flex-col tw-gap-3">
 
-                            <x-input.label for="judul" label="Judul">
+                            <x-input.label required for="judul" label="Judul">
                                 <x-input.input type="text" name="judul" placeholder="Masukkan Judul"
                                     value="{{ old('judul') }}"></x-input.input>
                                 @error('judul')
@@ -37,14 +37,14 @@
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="gambar" label="Gambar">
+                            <x-input.label required for="gambar" label="Gambar">
                                 <x-input.file id="gambar" name="gambar"></x-input.file>
                                 @error('gambar')
                                     <small class="form-text tw-text-red-600">{{ $message }}</small>
                                 @enderror
                             </x-input.label>
 
-                            <x-input.label for="caption" label="Caption">
+                            <x-input.label required for="caption" label="Caption">
                                 <x-input.input type="text" name="caption" value="{{ old('caption') }}"
                                     placeholder="Masukkan Caption"></x-input.input>
 
