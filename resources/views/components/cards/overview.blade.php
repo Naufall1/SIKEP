@@ -1,10 +1,10 @@
 @props([
     'url', 'title', 'value', 
 ])
-<a href="{{$url}}" {{$attributes->merge(['class' => 'previewCount tw-grow tw-flex tw-flex-col tw-h-32 tw-bg-n100 tw-group'])}}>
+<a href="{{$url}}" {{$attributes->merge(['class' => 'previewCount tw-grow tw-rounded-md tw-flex tw-flex-col tw-h-32 tw-bg-n100 tw-group'])}}>
     <div
         class="tw-h-4/6 tw-w-full tw-px-4 tw-border-[1.5px] tw-rounded-t-md tw-flex tw-flex-col tw-gap-1 tw-items-start tw-justify-center tw-cursor-pointer">
-        <h4 class="tw-placeholder tw-text-n600">{{$title}}</h4>
+        {{$slot}}
         <h2 class="tw-text-n1000">{{$value}}</h2>
     </div>
     <div 

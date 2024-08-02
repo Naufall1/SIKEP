@@ -116,7 +116,7 @@
 
                             <x-input.label required class="tw-relative" for="kewarganegaraan-list" label="Kewarganegaraan">
                                 <x-input.select2 name="kewarganegaraan"
-                                    default="{{ old('kewarganegaraan', $warga->kewarganegaraan ?? null) ? old('kewarganegaraan', $warga->kewarganegaraan ?? '') : 'Pilih Kewarganegaraan' }}"
+                                    default="{{ old('kewarganegaraan', $warga->kewarganegaraan ?? null) ? old('kewarganegaraan', $warga->kewarganegaraan ?? '') : 'WNI' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>
 
                                 @error('kewarganegaraan')
@@ -177,7 +177,7 @@
                             </x-input.label>
 
                             <x-input.label for="no_kitas" label="Nomor Kitas">
-                                <x-input.input value="{{ old('no_kitas', $warga->no_kitas ?? '') }}" placeholder="Masukkan Nomor Paspor"
+                                <x-input.input value="{{ old('no_kitas', $warga->no_kitas ?? '') }}" placeholder="Masukkan Nomor Kitas"
                                     type="text" id="no_kitas" name="no_kitas"></x-input.input>
                                 @error('no_kitas')
                                     <x-input.error-message>{{ $message }}</x-input.error-message>
@@ -592,7 +592,7 @@
                 $("label[for='kewarganegaraan']").attr('for', 'kewarganegaraan-list');
                 $("label[for='kewarganegaraan-list']").children().next().remove();
                 $("label[for='kewarganegaraan-list']").append(`<x-input.select2 name="kewarganegaraan"
-                                    default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'Pilih Kewarganegaraan' }}"
+                                    default="{{ old('kewarganegaraan') ? old('kewarganegaraan') : 'WNI' }}"
                                     placeholder="Pilih Kewarganegaraan"></x-input.select2>`);
 
                 // $('#kewarganegaraan').addClass('tw-input-enabled');

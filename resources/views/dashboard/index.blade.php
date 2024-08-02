@@ -12,12 +12,15 @@
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-grid md:tw-grid-flow-col tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-4">
                 {{-- <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4"> --}}
-                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('penduduk.warga') }}"
-                    title="Jumlah Penduduk" value='{{ $countPenduduk }}'></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" title="Jumlah Keluarga"
-                    value='{{ $countKeluarga }}'></x-cards.overview>
-                <x-cards.overview class="tw-col-span-1" url="{{ route('pengajuan') }}" title="Jumlah Pengajuan Menunggu"
-                    value='{{ $countPengajuan }}'></x-cards.overview>
+                <x-cards.overview class="md:tw-col-span-1 tw-col-span-2" url="{{ route('penduduk.warga') }}" value='{{ $countPenduduk }}'>
+                    <h4 class="tw-placeholder tw-text-n600">Jumlah Penduduk</h4>
+                </x-cards.overview>
+                <x-cards.overview class="tw-col-span-1" url="{{ route('keluarga') }}" value='{{ $countKeluarga }}'>
+                    <h4 class="tw-placeholder tw-text-n600">Jumlah Keluarga</h4>
+                </x-cards.overview>
+                <x-cards.overview class="tw-col-span-1" url="{{ route('pengajuan') }}" value='{{ $countPengajuan }}'>
+                    <h4 class="tw-placeholder tw-text-n600"><span class="tw-hidden md:tw-inline">Jumlah&nbsp;</span>Pengajuan<span class="tw-hidden md:tw-inline">&nbsp;Menunggu</span></h4>
+                </x-cards.overview>
             </div>
 
             <div class="tw-grid tw-grid-cols-6 tw-gap-4 tw-h-full tw-w-full">
@@ -49,61 +52,60 @@
                             <tbody class="tw-h-full">
                                 {{-- Maks 5 --}}
                                 @foreach ($pengajuanTable as $pengajuan)
-                                    <tr
-                                        class="tw-h-16 tw-flex">
+                                    <tr class="tw-h-16 tw-flex">
                                         <td class="tw-min-w-[280px] tw-grow tw-shrink">{{ $pengajuan->user->nama }}</td>
                                         <td class="tw-min-w-[220px] tw-max-w-[220px]">{{ $pengajuan->tipe }}</td>
                                         <td class="tw-min-w-[220px] tw-max-w-[220px] tw-table-right-align">
                                             {{ strftime('%d %B %Y', strtotime($pengajuan->tanggal_request)) }}</td>
-                                            @if ($pengajuan->tipe == 'Pembaruan')
+                                        @if ($pengajuan->tipe == 'Pembaruan')
                                             <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
-                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
-                                                href="{{ route('pengajuan.pembaharuan', ['id' => $pengajuan]) }}">Lihat</a>
+                                                    class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
+                                                    href="{{ route('pengajuan.pembaharuan', ['id' => $pengajuan]) }}">Lihat</a>
                                             </td>
-                                            @endif
-                                            @if ($pengajuan->tipe == 'Perubahan Warga')
+                                        @endif
+                                        @if ($pengajuan->tipe == 'Perubahan Warga')
                                             <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
-                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
-                                                href="{{ route('pengajuan.perubahanwarga', ['id' => $pengajuan]) }}">Lihat</a>
-                                             </td>
-                                            @endif
-                                            @if ($pengajuan->tipe == 'Perubahan Keluarga')
+                                                    class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
+                                                    href="{{ route('pengajuan.perubahanwarga', ['id' => $pengajuan]) }}">Lihat</a>
+                                            </td>
+                                        @endif
+                                        @if ($pengajuan->tipe == 'Perubahan Keluarga')
                                             <td class="tw-min-w-[108px] tw-max-w-[108px] "><a
-                                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
-                                                href="{{ route('pengajuan.perubahankeluarga', ['id' => $pengajuan]) }}">Lihat</a>
-                                             </td>
-                                            @endif
+                                                    class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md"
+                                                    href="{{ route('pengajuan.perubahankeluarga', ['id' => $pengajuan]) }}">Lihat</a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 
-                                @if (($pengajuanTable->count() == 0))
-                                <tr class="tw-h-full tw-border-0">
-                                    <td
-                                        class="tw-col-span-4 tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full tw-py-6 tw-gap-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="121" fill="none"
-                                            viewBox="0 0 150 151">
-                                            <g clip-path="url(#a)">
-                                                <path fill="#E3E3E3"
-                                                    d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z" />
-                                                <path fill="#fff"
-                                                    d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z" />
-                                                <path fill="#0284FF"
-                                                    d="M75 102.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24Z" />
-                                                <path fill="#fff"
-                                                    d="M83.485 89.814 75 81.329l-8.485 8.485-2.829-2.829 8.486-8.485-8.486-8.485 2.829-2.829L75 75.672l8.485-8.486 2.829 2.829-8.486 8.485 8.486 8.485-2.829 2.829Z" />
-                                                <path fill="#CCE4FF"
-                                                    d="M88 108.5H62a3 3 0 1 0 0 6h26a3 3 0 1 0 0-6Zm9 12H53a3 3 0 1 0 0 6h44a3 3 0 1 0 0-6Z" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="a">
-                                                    <rect width="150" height="150" y=".5" fill="#fff"
-                                                        rx="75" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                        <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
-                                    </td>
-                                </tr>
+                                @if ($pengajuanTable->count() == 0)
+                                    <tr class="tw-h-full tw-border-0">
+                                        <td
+                                            class="tw-col-span-4 tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-full tw-py-6 tw-gap-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="121"
+                                                fill="none" viewBox="0 0 150 151">
+                                                <g clip-path="url(#a)">
+                                                    <path fill="#E3E3E3"
+                                                        d="M75 150.5c41.421 0 75-33.579 75-75S116.421.5 75 .5 0 34.079 0 75.5s33.579 75 75 75Z" />
+                                                    <path fill="#fff"
+                                                        d="M120 150.5H30v-97a16.018 16.018 0 0 0 16-16h58a15.906 15.906 0 0 0 4.691 11.308A15.89 15.89 0 0 0 120 53.5v97Z" />
+                                                    <path fill="#0284FF"
+                                                        d="M75 102.5c13.255 0 24-10.745 24-24s-10.745-24-24-24-24 10.745-24 24 10.745 24 24 24Z" />
+                                                    <path fill="#fff"
+                                                        d="M83.485 89.814 75 81.329l-8.485 8.485-2.829-2.829 8.486-8.485-8.486-8.485 2.829-2.829L75 75.672l8.485-8.486 2.829 2.829-8.486 8.485 8.486 8.485-2.829 2.829Z" />
+                                                    <path fill="#CCE4FF"
+                                                        d="M88 108.5H62a3 3 0 1 0 0 6h26a3 3 0 1 0 0-6Zm9 12H53a3 3 0 1 0 0 6h44a3 3 0 1 0 0-6Z" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="a">
+                                                        <rect width="150" height="150" y=".5" fill="#fff"
+                                                            rx="75" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <p class="tw-placeholder tw-font-semibold">Tidak ada data</p>
+                                        </td>
+                                    </tr>
                                 @endif
                                 {{-- @foreach ($dataBaru as $data) --}}
                                 {{-- <tr class="tw-h-16 hover:tw-bg-n300">
