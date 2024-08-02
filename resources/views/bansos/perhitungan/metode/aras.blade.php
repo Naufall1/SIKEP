@@ -1,7 +1,7 @@
 <div class="md:tw-w-full tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[600ms] tw-animate-delay-[1400ms]">
 
     <div class="tw-flex tw-w-full tw-justify-between tw-items-center tw-pb-2">
-        <h1 class="tw-h1 tw-w-3/4 md:tw-w-fit">ARAS - Pemeringkatan</h1>
+        <h1 class="tw-h1 tw-w-full md:tw-w-fit">ARAS - Pemeringkatan</h1>
     </div>
 
     <div class="tw-flex tw-flex-col tw-gap-7">

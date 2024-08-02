@@ -161,42 +161,68 @@ class BansosController extends Controller
         $dataKeluargaWithRank = null;
 
         $kriteria = new KriteriaModel();
+        try {
+    
+            $MEREC = new MEREC($kriteria);
+            $MEREC->calculate();
+    
+            $ARAS = new ARAS($kriteria->kriteria(), $kriteria->namaKriteria(), $MEREC->getBobot());
+            $ARAS->calculate();
+    
+            $rankOrder = array_keys($ARAS->getPeringkatUtilitas_K());
+    
+            if (Auth::user()->keterangan === 'ketua') {
+                $dataKeluarga = Keluarga::dataBansos($user->keterangan);
+            } else {
+                $dataKeluarga = Keluarga::dataBansos($user->keterangan);
+            }
+    
+            foreach ($dataKeluarga as $keluarga) {
+                $keluarga['rank'] = array_search($keluarga->no_kk, $rankOrder) + 1;
+            }
+    
+            return DataTables::of(collect($dataKeluarga))
+                // ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+                ->addColumn('action', function ($bansos) {
+                    return '<td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                <a href="'. route('bansos.perhitungan.detail', $bansos->no_kk) . '"
+                                    class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                    Lihat
+                                </a>
+                            </td>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        } catch (Exception $e) {
 
-        $MEREC = new MEREC($kriteria);
-        $MEREC->calculate();
+            if ($e->getMessage() === 'DivisionByZeroError') {
+                $this->list();
+            } else {
+                $dataKeluarga = [];
+                return DataTables::of(collect($dataKeluarga))
+                    // ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
+                    ->addColumn('action', function ($bansos) {
+                        return '<td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
+                                    <a href="'. route('bansos.perhitungan.detail', $bansos->no_kk) . '"
+                                        class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
+                                        Lihat
+                                    </a>
+                                </td>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
 
-        $ARAS = new ARAS($kriteria->kriteria(), $kriteria->namaKriteria(), $MEREC->getBobot());
-        $ARAS->calculate();
-
-        $rankOrder = array_keys($ARAS->getPeringkatUtilitas_K());
-
-        if (Auth::user()->keterangan === 'ketua') {
-            $dataKeluarga = Keluarga::dataBansos($user->keterangan);
-        } else {
-            $dataKeluarga = Keluarga::dataBansos($user->keterangan);
         }
-
-        foreach ($dataKeluarga as $keluarga) {
-            $keluarga['rank'] = array_search($keluarga->no_kk, $rankOrder) + 1;
-        }
-
-        return DataTables::of(collect($dataKeluarga))
-            // ->addIndexColumn() // menambahkan kolom index / no urut (default namakolom: DT_RowIndex)
-            ->addColumn('action', function ($bansos) {
-                return '<td class="tw-w-[108px] tw-h-16 tw-flex tw-items-center tw-justify-center">
-                            <a href="'. route('bansos.perhitungan.detail', $bansos->no_kk) . '"
-                                class="tw-btn tw-btn-primary tw-btn-md tw-btn-round-md">
-                                Lihat
-                            </a>
-                        </td>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
     }
 
     public function calc()
     {
-        return view('bansos.perhitungan.index');
+        $isKeluargaExist = false;
+        if (Keluarga::count('kepala_keluarga') > 0) {
+            $isKeluargaExist = true;
+        }
+        return view('bansos.perhitungan.index', compact(['isKeluargaExist']));
     }
 
     public function detailCalc($id)

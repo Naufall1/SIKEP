@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     });
 
-    console.log('halo');
+    // console.log('halo');
 
     $('#closeFlash').click(function (e) {
         $(this).parent().remove();

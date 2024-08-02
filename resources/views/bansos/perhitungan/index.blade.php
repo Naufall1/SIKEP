@@ -8,9 +8,15 @@
                 Penerimaan Bansos
             </h1>
 
-            <a
-                href="{{ route('bansos.perhitungan.detailPerhitungan') }}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail
-                Perhitungan</a>
+            @if ($isKeluargaExist)
+                <a
+                    href="{{ route('bansos.perhitungan.detailPerhitungan') }}"class="tw-btn tw-btn-primary tw-btn-md md:tw-btn-lg tw-btn-round">Detail
+                    Perhitungan</a>
+            @else
+                <button disabled
+                    href="{{ route('bansos.perhitungan.detailPerhitungan') }}"class="tw-btn tw-btn-disabled tw-btn-md md:tw-btn-lg tw-btn-round">Detail
+                    Perhitungan</button>
+            @endif
         </div>
         <div class="tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex">
