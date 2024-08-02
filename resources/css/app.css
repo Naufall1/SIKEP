@@ -37,6 +37,18 @@
         @apply tw-box-border tw-border-[1.5px] tw-border-n500 tw-bg-n400 placeholder:tw-placeholder placeholder:tw-text-n1000 hover:tw-border-n500;
     }
 
+    input[type=date]{
+        appearance: none;
+    }
+
+    input[type=date]:enabled{
+        background: #fff url('../views/components/icons/actionable/calendar.svg') no-repeat calc(100% - 12px) 50% !important;
+    }
+
+    input[type="date"]:enabled::-webkit-calendar-picker-indicator {
+        display: none;
+        -webkit-appearance: none;
+    }
 
     input {
         @apply focus-visible:tw-outline-none;
@@ -218,10 +230,10 @@
     }
 
     td {
-        @apply tw-w-auto tw-whitespace-nowrap  tw-overflow-ellipsis tw-px-4 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-semibold tw-text-base tw-text-n1000 tw-line-clamp-1;
+        @apply tw-w-auto tw-whitespace-nowrap tw-overflow-ellipsis tw-px-4 tw-flex tw-items-center tw-justify-start tw-font-sans tw-font-semibold tw-text-base tw-text-n1000 tw-line-clamp-1;
     }
 
-    .tw-table-right-align{
+    .tw-table-right-align {
         @apply tw-flex tw-items-center tw-justify-end;
     }
 
@@ -260,13 +272,14 @@
         @apply tw-h-40 tw-py-4 tw-flex tw-items-center tw-justify-center tw-flex-col tw-gap-2
     }
 
-    table[style]{
+    table[style] {
         /* width: 100% !important; */
         margin-top: 0 !important;
         margin-bottom: 12px !important;
     }
 
-    :has(+ tr:hover), tr:hover{
+    :has(+ tr:hover),
+    tr:hover {
         @apply tw-border-opacity-0 tw-border-black;
     }
 
@@ -317,11 +330,11 @@
 
     /* Navbar */
 
-    ul.guestMenu>li{
+    ul.guestMenu>li {
         @apply tw-text-n600 tw-font-medium tw-text-sm tw-font-sans tw-animate-fade
     }
 
-    .guestMenu > li.active{
+    .guestMenu>li.active {
         @apply tw-text-n1000 tw-font-semibold tw-text-sm tw-font-sans tw-animate-fade
     }
 

@@ -34,10 +34,10 @@
 
     <div
         class="tw-pt-[100px] tw-mx-5 md:tw-mx-auto md:tw-w-[702px] tw-flex tw-flex-col tw-gap-2 tw-pb-10 tw-animate-fade-right tw-animate-ease-in-out tw-animate-duration-[500ms]">
-        @if ($warga->status_warga != 'Aktif')
+        @if ($warga->status_warga != 'Aktif' && Auth::user()->hasLevel['level_kode'] == 'RT')
             <x-flash-message.warning
                 message='Status warga tidak aktif, sehingga tidak dapat melakukan perubahan'></x-flash-message.warning>
-        @elseif ($pengajuanInProgres)
+        @elseif ($pengajuanInProgres && Auth::user()->hasLevel['level_kode'] == 'RT')
             <x-flash-message.warning
                 message='Anda sedang melakukan pengajuan pada warga dengan nama {{ $modifiedWarga->nama }}!'></x-flash-message.warning>
         @endif
