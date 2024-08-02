@@ -30,6 +30,8 @@ WORKDIR /var/www/app
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && chown -R $user:$user /home/$user
 
+RUN mkdir /var/www/app/storage/app/public/Dokumen-Pendukung/
+
 # Change owner of the app directory & set permision storage directory
 RUN chown -R sikep:sikep /var/www/app \
     && chmod -R 775 /var/www/app/storage
