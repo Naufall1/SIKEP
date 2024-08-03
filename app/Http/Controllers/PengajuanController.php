@@ -354,7 +354,7 @@ class PengajuanController extends Controller
                         $demografiWarga->status_request = 'Ditolak';
                         $demografiWarga->save();
                     }
-                    $demografiWarga->save();
+                    $wargaN->save();
                 }
             }
 
